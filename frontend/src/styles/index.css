@@ -49,3 +49,12 @@ html {
     padding: 0 1rem;
   }
 }
+.auth-loading {
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  padding: 2rem;
+  background: #f8faff;
+  color: #1e3a8a;
+  font-weight: 600;
+}

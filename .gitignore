@@ -32,6 +32,8 @@ node_modules/
 coverage/
 .nyc_output
 .pytest_cache/
+.pytest-tmp/
+pytest-cache-files-*/
 .mypy_cache/
 .ruff_cache/
 
@@ -43,6 +45,7 @@ dist/
 # IDE
 .vscode/
 .idea/
+.codex/
 *.swp
 *.swo
 *~

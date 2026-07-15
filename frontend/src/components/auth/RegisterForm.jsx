@@ -29,6 +29,23 @@ export default function RegisterForm({
         <FieldError error={errors.email} id="register-email-error" />
       </div>
       <div className="form-group">
+        <label htmlFor="username">
+          Tên tài khoản <span className="required-mark">*</span>
+        </label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          autoComplete="username"
+          placeholder="Ví dụ: huy_legal"
+          value={formData.username}
+          onChange={onChange}
+          aria-invalid={Boolean(errors.username)}
+          aria-describedby={errors.username ? 'username-error' : undefined}
+        />
+        <FieldError error={errors.username} id="username-error" />
+      </div>
+      <div className="form-group">
         <label htmlFor="full-name">
           Họ và tên <span className="required-mark">*</span>
         </label>

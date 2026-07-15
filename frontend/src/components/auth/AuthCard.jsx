@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../context/useAuth'
+import { ApiError } from '../../services/api'
 import './AuthCard.css'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
@@ -9,6 +12,7 @@ const initialFormData = {
   loginPassword: '',
   rememberMe: false,
   email: '',
+  username: '',
   fullName: '',
   phone: '',
   password: '',
@@ -17,6 +21,8 @@ const initialFormData = {
 }
 
 export default function AuthCard() {
+  const navigate = useNavigate()
+  const { login, register } = useAuth()
   const [activeTab, setActiveTab] = useState('login')
   const [formData, setFormData] = useState(initialFormData)
   const [errors, setErrors] = useState({})
@@ -53,6 +59,8 @@ export default function AuthCard() {
     const phonePattern = /^(0|\+84)[0-9]{8,10}$/
 
     if (!emailPattern.test(formData.email.trim())) nextErrors.email = 'Vui lòng nhập email hợp lệ.'
+    if (!/^[a-z0-9_]{3,30}$/.test(formData.username.trim().toLowerCase()))
+      nextErrors.username = 'Tên tài khoản gồm 3–30 chữ thường, số hoặc dấu gạch dưới.'
     if (formData.fullName.trim().length < 2) nextErrors.fullName = 'Vui lòng nhập họ và tên.'
     if (formData.phone && !phonePattern.test(formData.phone.replace(/[.\s-]/g, '')))
       nextErrors.phone = 'Số điện thoại chưa đúng định dạng.'
@@ -63,7 +71,18 @@ export default function AuthCard() {
     return nextErrors
   }
 
-  const handleSubmit = (event) => {
+  const mapBackendErrors = (fields) => ({
+    loginIdentifier: fields.identifier,
+    loginPassword: fields.password,
+    email: fields.email,
+    username: fields.username,
+    fullName: fields.fullName || fields.full_name,
+    phone: fields.phone,
+    password: fields.password,
+    acceptTerms: fields.acceptTerms || fields.accept_terms,
+  })
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const nextErrors = isRegistering ? validateRegistration() : validateLogin()
 
@@ -77,15 +96,35 @@ export default function AuthCard() {
     setFeedback(null)
     setIsSubmitting(true)
 
-    window.setTimeout(() => {
-      setIsSubmitting(false)
+    try {
+      if (isRegistering) {
+        await register({
+          email: formData.email.trim(),
+          username: formData.username.trim().toLowerCase(),
+          fullName: formData.fullName.trim(),
+          phone: formData.phone || undefined,
+          password: formData.password,
+          acceptTerms: formData.acceptTerms,
+        })
+      } else {
+        await login({
+          identifier: formData.loginIdentifier.trim(),
+          password: formData.loginPassword,
+          rememberMe: formData.rememberMe,
+        })
+      }
+      navigate('/chat')
+    } catch (error) {
+      const backendErrors = error instanceof ApiError ? mapBackendErrors(error.fields) : {}
+      setErrors(Object.fromEntries(Object.entries(backendErrors).filter(([, message]) => message)))
       setFeedback({
-        type: 'success',
-        message: isRegistering
-          ? 'Đăng ký thành công (mô phỏng). Bạn có thể đăng nhập bằng tài khoản vừa tạo.'
-          : 'Đăng nhập thành công (mô phỏng).',
+        type: 'error',
+        message:
+          error instanceof ApiError ? error.message : 'Không thể kết nối đến máy chủ. Vui lòng thử lại sau.',
       })
-    }, 650)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const formProps = {
@@ -138,7 +177,15 @@ export default function AuthCard() {
             onToggleConfirmPassword={() => setShowConfirmPassword((value) => !value)}
           />
         ) : (
-          <LoginForm {...formProps} />
+          <LoginForm
+            {...formProps}
+            onForgotPassword={() =>
+              setFeedback({
+                type: 'info',
+                message: 'Tính năng quên mật khẩu sẽ được triển khai ở phiên bản tiếp theo.',
+              })
+            }
+          />
         )}
 
         {feedback && (
@@ -162,7 +209,7 @@ export default function AuthCard() {
           onClick={() =>
             setFeedback({
               type: 'info',
-              message: 'Đăng nhập Google sẽ được kết nối ở bước tích hợp backend.',
+              message: 'Đăng nhập Google chưa được hỗ trợ ở phiên bản này.',
             })
           }
         >

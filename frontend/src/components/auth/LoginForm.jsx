@@ -1,6 +1,13 @@
 import { EyeIcon, FieldError } from './AuthIcons'
 
-export default function LoginForm({ formData, errors, onChange, showPassword, onTogglePassword }) {
+export default function LoginForm({
+  formData,
+  errors,
+  onChange,
+  showPassword,
+  onTogglePassword,
+  onForgotPassword,
+}) {
   return (
     <div id="login-panel" role="tabpanel" aria-labelledby="login-tab">
       <div className="form-group">
@@ -48,9 +55,9 @@ export default function LoginForm({ formData, errors, onChange, showPassword, on
           <input type="checkbox" name="rememberMe" checked={formData.rememberMe} onChange={onChange} />
           Ghi nhớ đăng nhập
         </label>
-        <a href="#forgot" className="forgot-link">
+        <button type="button" className="forgot-link" onClick={onForgotPassword}>
           Quên mật khẩu?
-        </a>
+        </button>
       </div>
     </div>
   )

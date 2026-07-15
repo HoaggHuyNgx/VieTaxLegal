@@ -179,6 +179,14 @@
   text-decoration: none;
 }
 
+.forgot-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
 .terms-label a:hover,
 .forgot-link:hover {
   text-decoration: underline;
