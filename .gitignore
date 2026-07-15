@@ -1,0 +1,130 @@
+# Claude Code working directories and configuration
+.claude/
+docs/
+plans/
+CLAUDE.md
+HOW_TO_USE_CLAUDEKIT.md
+
+# Reference/design files (not source code)
+image.png
+landingpage.png
+*.sketch
+*.fig
+*.xd
+*.psd
+
+# Environment variables
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.key
+*.pem
+*.p12
+secrets/
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+.nyc_output
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Production
+build/
+dist/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+.DS_Store?
+Thumbs.db
+desktop.ini
+*.lnk
+ehthumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Backend Python
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+backend/venv/
+backend/.venv/
+backend/*.egg-info/
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/.cache/
+frontend/.eslintcache
+frontend/.vercel/
+frontend/.netlify/
+frontend/playwright-report/
+frontend/test-results/
+frontend/storybook-static/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+/data/
+backend/data/
+db_backups/
+
+# Runtime user files (never commit uploaded legal documents)
+backend/uploads/
+backend/storage/
+backend/tmp/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.pid
+*.pid.lock
+*.tsbuildinfo
+
+# Cache
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+.turbo/
+
+# Local UI references
+/giao_dien/
