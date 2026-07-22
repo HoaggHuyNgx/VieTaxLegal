@@ -2,7 +2,7 @@ from datetime import datetime
 from uuid import UUID, uuid4
 
 from sqlalchemy import Boolean, DateTime, String, Uuid, func
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base
 
@@ -25,4 +25,7 @@ class User(Base):
     )
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now()
+    )
+    conversations: Mapped[list["Conversation"]] = relationship(  # noqa: F821
+        back_populates="user", cascade="all, delete-orphan"
     )
