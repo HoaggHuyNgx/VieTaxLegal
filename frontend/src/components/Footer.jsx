@@ -14,7 +14,7 @@ export default function Footer() {
               <h3>VieTaxLegal</h3>
             </div>
             <p>
-              Trợ lý pháp lý và thuế thông minh
+              Trợ lý tra cứu pháp luật
               <br />
               cho doanh nghiệp Việt Nam
             </p>

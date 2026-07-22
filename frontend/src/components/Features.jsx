@@ -22,7 +22,7 @@ export default function Features() {
             </div>
           </div>
           <div className="visual-card">
-            <img src={aiIllustration} alt="AI pháp lý & thuế" className="ai-illustration" />
+            <img src={aiIllustration} alt="Trợ lý tra cứu pháp luật" className="ai-illustration" />
           </div>
         </div>
       </div>

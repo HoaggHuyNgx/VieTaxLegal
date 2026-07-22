@@ -7,27 +7,27 @@ import globalAccessIcon from '../assets/images/icons/global-access-icon.webp'
 export const featureItems = [
   {
     icon: legalResearchIcon,
-    title: 'Được xây dựng cho nhu cầu pháp lý và thuế',
-    description: 'Được xây dựng cho nhu cầu pháp lý và thuế của doanh nghiệp Việt Nam.',
+    title: 'Hỏi đáp pháp luật bằng tiếng Việt',
+    description: 'Mô tả tình huống và nhận câu trả lời theo ngữ cảnh cuộc hội thoại.',
   },
   {
     icon: securityShieldIcon,
-    title: 'Mỗi câu trả lời đều có căn cứ pháp lý',
-    description: 'Mỗi câu trả lời đều có căn cứ pháp lý rõ ràng, dễ kiểm chứng.',
+    title: 'Lịch sử riêng theo tài khoản',
+    description: 'Mỗi người dùng chỉ có thể xem và xóa các cuộc hội thoại của chính mình.',
   },
   {
     icon: legalDocumentIcon,
-    title: 'Phân tích hợp đồng nhanh',
-    description: 'Phân tích hợp đồng nhanh, làm nổi bật điều khoản quan trọng.',
+    title: 'Phản hồi trực tiếp',
+    description: 'Nội dung xuất hiện ngay khi trợ lý đang tạo câu trả lời, không phải chờ toàn bộ.',
   },
   {
     icon: analyticsIcon,
-    title: 'Hỗ trợ xử lý câu hỏi về thuế',
-    description: 'Hỗ trợ xử lý câu hỏi về thuế, hóa đơn và nghĩa vụ kê khai.',
+    title: 'Kiểm soát chi phí và lạm dụng',
+    description: 'Giới hạn lượt hỏi và độ dài giúp bảo vệ tài khoản cũng như quota mô hình AI.',
   },
   {
     icon: globalAccessIcon,
-    title: 'Hỗ trợ nghiên cứu pháp lý',
-    description: 'Hỗ trợ nghiên cứu pháp lý mọi lúc, mọi nơi.',
+    title: 'Sẵn sàng mở rộng RAG',
+    description: 'Kiến trúc đã tách lớp truy xuất để bổ sung nguồn luật được kiểm chứng sau này.',
   },
 ]

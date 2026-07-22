@@ -1,199 +1,220 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { suggestedQuestions } from '../../data/chat'
-import {
-  AttachmentIcon,
-  BookmarkIcon,
-  CalculatorIcon,
-  ChevronDownIcon,
-  CopyIcon,
-  LegalIcon,
-  LogoMark,
-  ScanIcon,
-  SendIcon,
-  ShareIcon,
-  ThumbsDownIcon,
-  ThumbsUpIcon,
-} from './ChatIcons'
+import { CopyIcon, LegalIcon, LogoMark, SendIcon } from './ChatIcons'
 
-const toolTabs = [
-  { id: 'legal', label: 'Tra cứu pháp luật', icon: LegalIcon },
-  { id: 'tax', label: 'Tính thuế', icon: CalculatorIcon },
-  { id: 'contract', label: 'Scan hợp đồng', icon: ScanIcon },
-]
+function formatMessageTime(value) {
+  if (!value) return 'Vừa xong'
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return ''
+  return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+}
 
-function Citation({ id, onSelect }) {
+function CitationList({ citations }) {
+  if (!citations?.length) return null
+
   return (
-    <button
-      type="button"
-      className="inline-citation"
-      onClick={() => onSelect(id)}
-      aria-label={`Xem nguồn trích dẫn ${id}`}
-    >
-      {id}
-    </button>
+    <section className="answer-sources" aria-label="Nguồn tham khảo">
+      <h3>Nguồn tham khảo</h3>
+      {citations.map((citation, index) => {
+        const safeUrl = /^https?:\/\//i.test(citation.url || '') ? citation.url : null
+        return (
+          <div className="answer-source-row" key={citation.id || `${citation.title}-${index}`}>
+            <span className="source-number">{index + 1}</span>
+            {safeUrl ? (
+              <a href={safeUrl} target="_blank" rel="noreferrer">
+                {citation.title || citation.name || safeUrl}
+              </a>
+            ) : (
+              <span>{citation.title || citation.name}</span>
+            )}
+            {citation.reference || citation.excerpt ? (
+              <span>{citation.reference || citation.excerpt}</span>
+            ) : null}
+          </div>
+        )
+      })}
+    </section>
   )
 }
 
-function AssistantReply({ onSelectSource }) {
+function SafeMarkdownLink({ children, href }) {
+  const safeHref = /^https?:\/\//i.test(href || '') ? href : null
+  return safeHref ? (
+    <a href={safeHref} target="_blank" rel="noreferrer">
+      {children}
+    </a>
+  ) : (
+    <span>{children}</span>
+  )
+}
+
+function AssistantMessage({ message }) {
+  const [isCopied, setIsCopied] = useState(false)
+  const content = message.content || ''
+  const isPending = message.status === 'pending'
+
+  const copyAnswer = async () => {
+    if (!content) return
+    try {
+      await navigator.clipboard.writeText(content)
+      setIsCopied(true)
+      window.setTimeout(() => setIsCopied(false), 1500)
+    } catch {
+      setIsCopied(false)
+    }
+  }
+
   return (
-    <article className="assistant-message">
+    <article className={`assistant-message message-${message.status || 'completed'}`}>
       <div className="assistant-avatar">
         <LogoMark size={25} />
       </div>
       <div className="assistant-bubble">
-        <p>
-          Doanh nghiệp được khấu trừ thuế GTGT và tính vào chi phí được trừ khi chi hộ cho nhân viên nếu đáp
-          ứng đầy đủ các điều kiện sau:
-        </p>
-        <ol className="answer-list">
-          <li>
-            <strong>Khấu trừ thuế GTGT:</strong> Doanh nghiệp được khấu trừ thuế GTGT đầu vào nếu có hóa đơn
-            GTGT hợp pháp tên và mã số thuế của doanh nghiệp; hàng hóa/dịch vụ phục vụ cho hoạt động sản xuất
-            kinh doanh chịu thuế GTGT. <Citation id={1} onSelect={onSelectSource} />
-          </li>
-          <li>
-            <strong>Tính vào chi phí được trừ khi xác định thuế TNDN:</strong> Khoản chi hộ được tính vào chi
-            phí được trừ nếu đáp ứng đồng thời các điều kiện:
-          </li>
-        </ol>
-        <ul className="check-list">
-          <li>Khoản chi thực tế phát sinh liên quan đến hoạt động sản xuất kinh doanh.</li>
-          <li>Có đủ hóa đơn, chứng từ hợp pháp theo quy định.</li>
-          <li>Có chứng từ thanh toán không dùng tiền mặt đối với khoản chi từ 5 triệu đồng trở lên.</li>
-          <li>
-            Có quyết định cử đi công tác, chương trình công tác và các chứng từ liên quan khác.{' '}
-            <Citation id={2} onSelect={onSelectSource} />
-          </li>
-        </ul>
-        <p className="answer-note">
-          Lưu ý: Trường hợp hóa đơn dịch vụ (vé máy bay, khách sạn) không thể hiện tên doanh nghiệp, cần có
-          thêm chứng từ bổ sung chứng minh việc chi hộ như xác nhận của nhân viên, bảng kê chi hộ, chứng từ
-          thanh toán để đảm bảo tính hợp lệ. <Citation id={3} onSelect={onSelectSource} />
-        </p>
-        <div className="answer-actions">
-          <button type="button" aria-label="Câu trả lời hữu ích">
-            <ThumbsUpIcon />
-          </button>
-          <button type="button" aria-label="Câu trả lời chưa hữu ích">
-            <ThumbsDownIcon />
-          </button>
-          <button type="button" aria-label="Sao chép câu trả lời">
-            <CopyIcon />
-          </button>
-          <button type="button" aria-label="Lưu câu trả lời">
-            <BookmarkIcon />
-          </button>
-          <button type="button" aria-label="Chia sẻ câu trả lời">
-            <ShareIcon />
-          </button>
-        </div>
-        <div className="answer-sources">
-          <h3>Trích dẫn nguồn</h3>
-          <div className="answer-source-row">
-            <Citation id={1} onSelect={onSelectSource} />
-            <span>Luật Thuế GTGT 2008 (sửa đổi 2013)</span>
-            <i /> <span>Điều 12, Khoản 1</span>
+        {content ? (
+          <div className="markdown-answer">
+            <ReactMarkdown
+              components={{
+                a: SafeMarkdownLink,
+              }}
+            >
+              {content}
+            </ReactMarkdown>
           </div>
-          <div className="answer-source-row">
-            <Citation id={2} onSelect={onSelectSource} />
-            <span>Thông tư 78/2014/TT-BTC</span>
-            <i /> <span>Điều 6, Khoản 2.6</span>
+        ) : null}
+        {isPending ? (
+          <span className="streaming-indicator" aria-label="Trợ lý đang trả lời">
+            <i />
+            <i />
+            <i />
+          </span>
+        ) : null}
+        {message.status === 'failed' ? <p className="message-status error">Phản hồi bị gián đoạn.</p> : null}
+        {message.status === 'cancelled' ? <p className="message-status">Đã dừng trả lời.</p> : null}
+        <CitationList citations={message.citations} />
+        {content ? (
+          <div className="answer-actions">
+            <button type="button" aria-label="Sao chép câu trả lời" onClick={copyAnswer}>
+              <CopyIcon />
+              <span>{isCopied ? 'Đã sao chép' : 'Sao chép'}</span>
+            </button>
           </div>
-          <div className="answer-source-row">
-            <Citation id={3} onSelect={onSelectSource} />
-            <span>Công văn 5260/TCT-DNL</span>
-            <i /> <span>Ngày 30/12/2016</span>
-          </div>
-          <button type="button" onClick={() => onSelectSource(1)}>
-            Xem thêm nguồn (2)
-          </button>
-        </div>
+        ) : null}
       </div>
     </article>
   )
 }
 
-export default function ChatWorkspace({ activeTool, onChangeTool, onSelectSource, messages, onSend }) {
+export default function ChatWorkspace({
+  messages,
+  onSend,
+  onStop,
+  isStreaming,
+  isLoading,
+  error,
+  onClearError,
+}) {
   const [message, setMessage] = useState('')
+  const scrollAreaRef = useRef(null)
+
+  useEffect(() => {
+    const scrollArea = scrollAreaRef.current
+    if (scrollArea) scrollArea.scrollTo({ top: scrollArea.scrollHeight, behavior: 'smooth' })
+  }, [messages])
 
   const submitMessage = (event) => {
     event.preventDefault()
     const trimmedMessage = message.trim()
-    if (!trimmedMessage) return
+    if (!trimmedMessage || isStreaming || isLoading) return
+    onClearError()
     onSend(trimmedMessage)
     setMessage('')
   }
 
   return (
     <main className="chat-workspace">
-      <div className="chat-tabs" role="tablist" aria-label="Công cụ VieTaxLegal">
-        {toolTabs.map((tab) => {
-          const TabIcon = tab.icon
-          return (
-            <button
-              type="button"
-              key={tab.id}
-              role="tab"
-              aria-selected={activeTool === tab.id}
-              className={activeTool === tab.id ? 'active' : ''}
-              onClick={() => onChangeTool(tab.id)}
-            >
-              <TabIcon />
-              {tab.label}
-            </button>
-          )
-        })}
+      <div className="chat-tabs single" aria-label="Công cụ VieTaxLegal">
+        <span>
+          <LegalIcon />
+          Tra cứu pháp luật
+        </span>
       </div>
-      <div className="chat-scroll-area">
+      <div className="chat-scroll-area" ref={scrollAreaRef}>
         <div className="chat-thread">
-          <article className="user-message">
-            <p>
-              Khi doanh nghiệp chi hộ cho nhân viên (ví dụ: mua vé máy bay công tác, đặt phòng khách sạn),
-              doanh nghiệp có được khấu trừ thuế GTGT và tính vào chi phí được trừ khi xác định thuế TNDN
-              không?
-            </p>
-            <time>10:24</time>
-          </article>
-          <AssistantReply onSelectSource={onSelectSource} />
-          {messages.map((item) => (
-            <article className="user-message additional-message" key={item.id}>
-              <p>{item.text}</p>
-              <time>Vừa xong</time>
-            </article>
-          ))}
+          {isLoading ? <p className="thread-state">Đang tải cuộc trò chuyện…</p> : null}
+          {!isLoading && messages.length === 0 ? (
+            <section className="chat-empty-state">
+              <LogoMark size={48} />
+              <h2>Bạn cần tra cứu vấn đề pháp luật nào?</h2>
+              <p>Hãy mô tả tình huống và thông tin cần làm rõ để nhận câu trả lời phù hợp hơn.</p>
+            </section>
+          ) : null}
+          {!isLoading
+            ? messages.map((item) =>
+                item.role === 'assistant' ? (
+                  <AssistantMessage message={item} key={item.id} />
+                ) : (
+                  <article className="user-message" key={item.id}>
+                    <p>{item.content}</p>
+                    <time>{formatMessageTime(item.createdAt)}</time>
+                  </article>
+                )
+              )
+            : null}
         </div>
       </div>
       <div className="chat-composer-area">
-        <div className="suggestion-list">
-          {suggestedQuestions.map((question) => (
-            <button type="button" key={question} onClick={() => setMessage(question)}>
-              {question}
+        {!isLoading && messages.length === 0 ? (
+          <div className="suggestion-list">
+            {suggestedQuestions.map((question) => (
+              <button type="button" key={question} onClick={() => setMessage(question)}>
+                {question}
+              </button>
+            ))}
+          </div>
+        ) : null}
+        {error ? (
+          <div className="chat-error" role="alert">
+            <span>{error}</span>
+            <button type="button" onClick={onClearError} aria-label="Đóng thông báo lỗi">
+              ×
             </button>
-          ))}
-        </div>
+          </div>
+        ) : null}
         <form className="chat-composer" onSubmit={submitMessage}>
           <textarea
             value={message}
             onChange={(event) => setMessage(event.target.value)}
-            placeholder="Nhập câu hỏi pháp lý hoặc thuế của bạn..."
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && !event.shiftKey) submitMessage(event)
+            }}
+            placeholder="Nhập câu hỏi pháp luật của bạn…"
             rows="2"
+            maxLength="4000"
+            disabled={isLoading}
             aria-label="Câu hỏi của bạn"
           />
           <div className="composer-actions">
-            <button type="button">
-              <AttachmentIcon />
-              Đính kèm tệp
-            </button>
-            <button type="button">
-              Chọn phạm vi trả lời <ChevronDownIcon />
-            </button>
-            <button type="submit" className="send-button" disabled={!message.trim()} aria-label="Gửi câu hỏi">
-              <SendIcon />
-            </button>
+            <span className="composer-limit">{message.length}/4000</span>
+            {isStreaming ? (
+              <button type="button" className="stop-button" onClick={onStop}>
+                <span /> Dừng trả lời
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="send-button"
+                disabled={!message.trim() || isLoading}
+                aria-label="Gửi câu hỏi"
+              >
+                <SendIcon />
+              </button>
+            )}
           </div>
         </form>
         <p className="chat-disclaimer">
-          VieTaxLegal có thể mắc sai sót. Vui lòng kiểm tra lại thông tin trước khi áp dụng.
+          Nội dung chỉ mang tính tham khảo. Hãy kiểm tra hiệu lực văn bản và tham vấn chuyên gia trước khi áp
+          dụng.
         </p>
       </div>
     </main>

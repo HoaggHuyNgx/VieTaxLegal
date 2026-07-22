@@ -1,16 +1,33 @@
-import { ChevronDownIcon, HelpIcon, LogoMark, PlusIcon, SearchIcon, SettingsIcon } from './ChatIcons'
-import { conversationGroups } from '../../data/chat'
+import { LogoMark, PlusIcon, SearchIcon } from './ChatIcons'
+import { groupConversations } from './conversationGroups'
+
+function formatConversationTime(conversation) {
+  const value = conversation.updatedAt || conversation.createdAt
+  if (!value) return ''
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return ''
+  return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+}
 
 export default function ChatSidebar({
+  conversations,
   activeConversation,
   onSelectConversation,
+  onDeleteConversation,
   searchQuery,
   onSearchChange,
   onNewChat,
+  isLoading,
+  error,
+  onRetry,
   isOpen,
   onClose,
 }) {
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase('vi')
+  const visibleConversations = conversations.filter((item) =>
+    item.title.toLocaleLowerCase('vi').includes(normalizedQuery)
+  )
+  const groups = groupConversations(visibleConversations)
 
   return (
     <aside className={`chat-sidebar ${isOpen ? 'is-open' : ''}`} aria-label="Danh sách cuộc hội thoại">
@@ -19,13 +36,13 @@ export default function ChatSidebar({
           <LogoMark size={39} />
           <div>
             <strong>VieTaxLegal</strong>
-            <span>AI pháp lý &amp; thuế cho doanh nghiệp</span>
+            <span>Trợ lý tra cứu pháp luật</span>
           </div>
         </div>
         <button
           type="button"
           className="chat-mobile-close"
-          aria-label="Đóng danh sách hội thoại"
+          aria-label="Đóng danh sách cuộc hội thoại"
           onClick={onClose}
         >
           ×
@@ -42,52 +59,54 @@ export default function ChatSidebar({
           onChange={(event) => onSearchChange(event.target.value)}
           placeholder="Tìm kiếm hội thoại"
         />
-        <kbd>⌘K</kbd>
       </label>
       <nav className="conversation-list">
-        {conversationGroups.map((group) => {
-          const items = group.items.filter((item) =>
-            item.title.toLocaleLowerCase('vi').includes(normalizedQuery)
-          )
-          return items.length > 0 ? (
-            <section key={group.label} className="conversation-group">
-              <h2>{group.label}</h2>
-              {items.map((item) => (
-                <button
-                  type="button"
-                  key={item.id}
-                  className={`conversation-item ${activeConversation === item.id ? 'active' : ''}`}
-                  onClick={() => onSelectConversation(item.id)}
-                >
-                  <span className="conversation-dot" />
-                  <span className="conversation-title">{item.title}</span>
-                  <time>{item.time}</time>
-                </button>
-              ))}
-            </section>
-          ) : null
-        })}
+        {isLoading ? <p className="sidebar-state">Đang tải lịch sử…</p> : null}
+        {!isLoading && error ? (
+          <div className="sidebar-state sidebar-error">
+            <p>{error}</p>
+            <button type="button" onClick={onRetry}>
+              Thử lại
+            </button>
+          </div>
+        ) : null}
+        {!isLoading && !error && groups.length === 0 ? (
+          <p className="sidebar-state">
+            {normalizedQuery ? 'Không tìm thấy hội thoại.' : 'Chưa có cuộc trò chuyện nào.'}
+          </p>
+        ) : null}
+        {!isLoading && !error
+          ? groups.map((group) => (
+              <section key={group.label} className="conversation-group">
+                <h2>{group.label}</h2>
+                {group.items.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`conversation-item ${activeConversation === item.id ? 'active' : ''}`}
+                  >
+                    <button
+                      type="button"
+                      className="conversation-select"
+                      onClick={() => onSelectConversation(item.id)}
+                    >
+                      <span className="conversation-dot" />
+                      <span className="conversation-title">{item.title}</span>
+                      <time>{formatConversationTime(item)}</time>
+                    </button>
+                    <button
+                      type="button"
+                      className="conversation-delete"
+                      aria-label={`Xóa hội thoại ${item.title}`}
+                      onClick={() => onDeleteConversation(item)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </section>
+            ))
+          : null}
       </nav>
-      <div className="sidebar-bottom">
-        <button type="button" className="organization-switcher">
-          <span className="organization-avatar">DN</span>
-          <span>
-            <strong>Công ty TNHH ABC</strong>
-            <small>Gói Doanh nghiệp</small>
-          </span>
-          <ChevronDownIcon />
-        </button>
-        <div className="sidebar-links">
-          <button type="button">
-            <HelpIcon />
-            Trợ giúp
-          </button>
-          <button type="button">
-            <SettingsIcon />
-            Cài đặt
-          </button>
-        </div>
-      </div>
     </aside>
   )
 }

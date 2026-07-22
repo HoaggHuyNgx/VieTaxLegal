@@ -3,12 +3,12 @@ import logo from '../assets/images/logo/logo.webp'
 import AuthCard from './auth/AuthCard'
 
 const benefits = [
-  'Tra cứu pháp luật doanh nghiệp nhanh và chính xác.',
-  'Câu trả lời có trích dẫn điều, khoản và văn bản liên quan.',
-  'Phân tích hợp đồng và phát hiện điểm cần lưu ý.',
-  'Hỗ trợ thuế, hóa đơn và nghĩa vụ doanh nghiệp.',
-  'Giao diện đơn giản, dễ dùng cho cả doanh nghiệp và kế toán.',
-  'Hoạt động 24/7, hỗ trợ ra quyết định nhanh hơn.',
+  'Đặt câu hỏi pháp luật bằng tiếng Việt.',
+  'Nhận câu trả lời trực tiếp trong thời gian thực.',
+  'Lưu và tìm lại lịch sử theo từng tài khoản.',
+  'Dữ liệu hội thoại chỉ được truy cập qua backend bảo vệ.',
+  'Giao diện đơn giản, phù hợp để tra cứu ban đầu.',
+  'Luôn nhắc kiểm tra hiệu lực văn bản trước khi áp dụng.',
 ]
 
 function CheckIcon() {
@@ -35,11 +35,11 @@ export default function Hero() {
           </div>
           <h1 className="brand-name">VieTaxLegal</h1>
         </div>
-        <p className="brand-tagline">AI pháp lý &amp; thuế cho doanh nghiệp Việt Nam</p>
+        <p className="brand-tagline">Trợ lý tra cứu pháp luật cho doanh nghiệp Việt Nam</p>
         <p className="brand-description">
-          Tra cứu pháp luật, phân tích hợp đồng và hỗ trợ nghiệp vụ thuế
+          Đặt câu hỏi, nhận phản hồi trực tiếp và lưu lại lịch sử
           <br />
-          với câu trả lời có căn cứ rõ ràng.
+          trong một không gian riêng cho tài khoản của bạn.
         </p>
       </div>
 

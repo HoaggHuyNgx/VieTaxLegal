@@ -1,7 +1,8 @@
 export const faqs = [
   {
     question: 'VieTaxLegal có đáng tin cậy không?',
-    answer: 'Hệ thống ưu tiên câu trả lời có căn cứ và hiển thị nguồn để người dùng kiểm chứng.',
+    answer:
+      'Phiên bản Beta hỗ trợ tra cứu ban đầu bằng AI nhưng chưa có kho nguồn luật RAG. Cần kiểm tra hiệu lực văn bản hoặc tham vấn chuyên gia trước khi áp dụng.',
   },
   {
     question: 'Lợi ích của VieTaxLegal đối với doanh nghiệp là gì?',
@@ -10,12 +11,13 @@ export const faqs = [
   },
   {
     question: 'VieTaxLegal có hỗ trợ phân tích hợp đồng không?',
-    answer: 'Có. Hệ thống có thể tóm tắt, nhận diện điều khoản và đánh dấu nội dung cần xem xét.',
+    answer:
+      'Chưa. Phân tích hợp đồng là tính năng dự kiến cho giai đoạn sau và không xuất hiện trong bản Beta.',
   },
   {
     question: 'VieTaxLegal có hỗ trợ câu hỏi về thuế không?',
     answer:
-      'Có. Sản phẩm hỗ trợ các câu hỏi về thuế, hóa đơn và nghĩa vụ kê khai trong phạm vi dữ liệu được tích hợp.',
+      'Bản Beta chưa có công cụ tính thuế chuyên biệt. Người dùng chỉ nên dùng khu vực chat để tra cứu pháp luật ở mức tham khảo.',
   },
   {
     question: 'Khi nào nên tham khảo thêm luật sư?',
@@ -23,11 +25,12 @@ export const faqs = [
   },
   {
     question: 'VieTaxLegal có hỗ trợ tiếng Anh không?',
-    answer: 'Có thể mở rộng song ngữ Việt–Anh trong giai đoạn sau.',
+    answer: 'Chưa. Giao diện và system prompt hiện được tối ưu cho tiếng Việt.',
   },
   {
     question: 'Dữ liệu và tài liệu tải lên có được bảo mật không?',
-    answer: 'Thiết kế hệ thống cần áp dụng mã hóa, kiểm soát truy cập và chính sách lưu trữ rõ ràng.',
+    answer:
+      'Bản Beta chưa hỗ trợ tải tài liệu. Hội thoại được phân quyền theo tài khoản và chỉ truy cập qua backend của ứng dụng.',
   },
   {
     question: 'VieTaxLegal phù hợp với ai?',
