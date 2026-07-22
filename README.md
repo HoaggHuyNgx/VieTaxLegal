@@ -1,142 +1,208 @@
 # VieTaxLegal
 
-Nền tảng hỗ trợ tra cứu pháp lý và thuế bằng tiếng Việt, gồm giao diện React và API FastAPI.
-Phiên bản hiện tại đã hoàn thiện xác thực tài khoản và khu vực chat được bảo vệ.
+VieTaxLegal là nền tảng hỗ trợ tra cứu pháp luật và nghiệp vụ thuế bằng tiếng Việt. Dự án gồm
+frontend React, backend FastAPI, cơ sở dữ liệu Supabase PostgreSQL và lớp AI có thể chuyển đổi giữa
+Anthropic và OpenAI.
+
+Phiên bản hiện tại tập trung vào xác thực tài khoản và chat pháp luật có lịch sử riêng theo từng
+người dùng. Kho dữ liệu pháp luật, RAG, pgvector và trích dẫn nguồn thật đang nằm trong roadmap.
+
+## Trạng thái tính năng
+
+| Tính năng                                       | Trạng thái      |
+| ----------------------------------------------- | --------------- |
+| Đăng ký, đăng nhập, đăng xuất và kiểm tra phiên | Hoàn thành      |
+| Cookie phiên HTTP-only và mật khẩu Argon2       | Hoàn thành      |
+| Chat streaming bằng SSE                         | Hoàn thành      |
+| Lưu, mở và xóa lịch sử hội thoại                | Hoàn thành      |
+| Anthropic và OpenAI provider                    | Hoàn thành      |
+| Rate limit theo phút và theo ngày               | Hoàn thành      |
+| Kho văn bản pháp luật và pgvector               | Chưa triển khai |
+| RAG, hybrid search, reranking và citation thật  | Chưa triển khai |
+| Tính thuế, scan hợp đồng và đính kèm tài liệu   | Chưa triển khai |
+
+Khi chưa có RAG, chatbot không hiển thị nguồn hoặc điều luật giả và luôn cảnh báo người dùng cần
+kiểm tra lại hiệu lực văn bản.
+
+## Kiến trúc hiện tại
+
+```mermaid
+flowchart LR
+    U["Người dùng"] --> F["React / Vite"]
+    F -->|"/api proxy"| B["FastAPI"]
+    B --> D["Supabase PostgreSQL"]
+    B --> A["Anthropic hoặc OpenAI"]
+```
+
+Backend là lớp duy nhất truy cập dữ liệu ứng dụng. Dự án dùng Supabase như PostgreSQL được quản lý,
+không sử dụng Supabase Auth hoặc truy cập bảng trực tiếp từ frontend.
 
 ## Công nghệ
 
-- Frontend: React 18, Vite, React Router DOM
-- Backend: Python 3.12+, FastAPI, Uvicorn
-- Database: Supabase PostgreSQL, SQLAlchemy 2.0, Alembic, Psycopg
-- Xác thực: Argon2 (`pwdlib`), JWT (`PyJWT`) và HTTP-only cookie
-- Chất lượng: Pytest, Ruff, ESLint, Prettier và GitHub Actions
+- Frontend: React 18, Vite, React Router DOM, React Markdown.
+- Backend: Python 3.12+, FastAPI, Uvicorn, Pydantic.
+- Database: Supabase PostgreSQL, SQLAlchemy 2.0, Alembic, Psycopg.
+- Xác thực: Argon2 (`pwdlib`), JWT (`PyJWT`) và cookie HTTP-only.
+- AI: Anthropic Messages API hoặc OpenAI Responses API.
+- Streaming: Server-Sent Events (SSE).
+- Kiểm thử: Pytest, Vitest, Ruff, ESLint và Prettier.
+- CI: GitHub Actions cho frontend và backend.
 
-## Chạy frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-## Cấu trúc frontend
-
-```
-src/
-├── components/     # Reusable components
-│   ├── Hero.jsx
-│   ├── Features.jsx
-│   ├── Process.jsx
-│   ├── FAQ.jsx
-│   └── Footer.jsx
-├── pages/          # Page components
-│   ├── LandingPage.jsx
-│   └── ChatPage.jsx
-├── styles/         # Global styles
-└── App.jsx         # Main app component
-```
-
-## Routes frontend
-
-- `/` - Landing page
-- `/chat` - Chat interface (yêu cầu đăng nhập; dữ liệu chat hiện là minh họa)
-
-## Kiểm tra frontend
-
-- Dev server: `npm run dev` (http://localhost:3000)
-- Build: `npm run build`
-- Preview: `npm run preview`
-
-## Backend và xác thực
-
-Backend cung cấp đăng ký, đăng nhập, đăng xuất, kiểm tra phiên và health check. Frontend Vite
-proxy `/api` tới FastAPI, nên cookie phiên được sử dụng trực tiếp trong quá trình phát triển.
+## Cấu trúc repository
 
 ```text
-Browser → React/Vite (localhost:3000) → /api proxy → FastAPI (localhost:5000) → Supabase PostgreSQL
+VieTaxLegal/
+├── backend/
+│   ├── app/
+│   │   ├── api/           # FastAPI routes và dependencies
+│   │   ├── core/          # Cấu hình, bảo mật và lỗi dùng chung
+│   │   ├── db/            # SQLAlchemy engine và session
+│   │   ├── models/        # Database models
+│   │   ├── schemas/       # Pydantic request/response schemas
+│   │   └── services/      # Auth, chat, provider và retriever
+│   ├── migrations/        # Alembic migrations
+│   ├── tests/             # Backend tests
+│   ├── .env.example
+│   └── README.md          # Tài liệu backend chi tiết
+├── frontend/
+│   ├── src/
+│   │   ├── components/    # Landing page, auth và chat
+│   │   ├── context/       # AuthContext và hook useAuth
+│   │   ├── data/          # Nội dung tĩnh của landing page
+│   │   ├── pages/         # LandingPage và ChatPage
+│   │   ├── services/      # Lời gọi API và SSE client
+│   │   └── styles/        # CSS toàn cục
+│   ├── .env.example
+│   ├── package.json
+│   └── README.md          # Tài liệu frontend chi tiết
+├── .github/workflows/     # CI frontend và backend
+└── README.md
 ```
 
-### Kết nối backend với Supabase
+Tài liệu chi tiết theo từng phần nằm trong [backend/README.md](backend/README.md) và
+[frontend/README.md](frontend/README.md).
 
-Yêu cầu: Python 3.12+ và một Supabase project. Project đã có sẵn database `postgres`, không cần
-tạo thêm database `vietaxlegal`.
+## Yêu cầu
+
+- Node.js 20 trở lên và npm.
+- Python 3.12 trở lên.
+- Một Supabase project.
+- API key của Anthropic hoặc OpenAI nếu muốn dùng chat thật.
+
+## Chạy nhanh trên Windows
+
+### 1. Backend
 
 ```powershell
 cd D:\VieTaxLegal\backend
 Copy-Item .env.example .env
+notepad .env
 ```
 
-Trong Supabase Dashboard, chọn **Connect** và sao chép chuỗi **Session pooler** cổng `5432`.
-Mở `backend/.env`, điền project ref, pooler host và database password theo mẫu. Sau đó tạo JWT
-secret:
-
-```powershell
-python -c "import secrets; print(secrets.token_urlsafe(48))"
-```
-
-Dán secret vào `JWT_SECRET`, rồi cài dependencies, migration và chạy API:
+Điền `DATABASE_URL`, tạo `JWT_SECRET` có ít nhất 32 ký tự và cấu hình một AI provider. Không đưa
+database password, JWT secret hoặc API key lên GitHub.
 
 ```powershell
 py -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -e ".[dev]"
+.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
 .\.venv\Scripts\python.exe -m alembic upgrade head
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 5000
 ```
 
-API chạy tại `http://localhost:5000`; tài liệu OpenAPI ở `http://localhost:5000/docs`.
+Giữ terminal backend mở. Kiểm tra:
 
-### Biến môi trường backend
+- Health: <http://127.0.0.1:5000/api/health>
+- Swagger: <http://127.0.0.1:5000/docs>
 
-| Biến | Mô tả |
-| --- | --- |
-| `APP_ENV` | `development` hoặc `production`; production bật cookie `Secure`. |
-| `DATABASE_URL` | Chuỗi Session pooler Supabase dùng `postgresql+psycopg://...` và `sslmode=require`. |
-| `JWT_SECRET` | Chuỗi ngẫu nhiên ít nhất 32 ký tự. |
-| `SESSION_COOKIE_NAME` | Tên cookie phiên; mặc định `vietaxlegal_session`. |
-| `CORS_ORIGINS` | Các origin frontend, phân tách bằng dấu phẩy; không dùng `*`. |
+Hướng dẫn đầy đủ về Supabase, migration, API và xử lý lỗi nằm trong
+[backend/README.md](backend/README.md).
 
-### API xác thực
+### 2. Frontend
 
-| Method | Endpoint | Mô tả |
-| --- | --- | --- |
-| `GET` | `/api/health` | Kiểm tra API và database. |
-| `POST` | `/api/auth/register` | Tạo tài khoản và bắt đầu phiên đăng nhập. |
-| `POST` | `/api/auth/login` | Đăng nhập bằng email hoặc tên tài khoản. |
-| `POST` | `/api/auth/logout` | Xóa cookie phiên hiện tại. |
-| `GET` | `/api/auth/me` | Lấy người dùng đang đăng nhập. |
+Mở terminal khác:
 
-Ví dụ payload đăng ký:
-
-```json
-{
-  "email": "huy@example.com",
-  "username": "huy_legal",
-  "fullName": "Hoàng Huy",
-  "phone": "0901234567",
-  "password": "mat-khau-an-toan",
-  "acceptTerms": true
-}
+```powershell
+cd D:\VieTaxLegal\frontend
+npm install
+npm run dev
 ```
 
-### Kiểm tra backend
+Mở <http://localhost:3000>. Vite proxy các request `/api` tới backend ở
+`http://localhost:5000`.
+
+Chi tiết về scripts, cấu trúc `src/`, luồng xác thực và SSE client nằm trong
+[frontend/README.md](frontend/README.md).
+
+## Routes frontend
+
+| Route   | Mô tả                               |
+| ------- | ----------------------------------- |
+| `/`     | Landing page, đăng ký và đăng nhập. |
+| `/chat` | Chat pháp luật; yêu cầu đăng nhập.  |
+
+## API chính
+
+| Method   | Endpoint                       | Mô tả                               |
+| -------- | ------------------------------ | ----------------------------------- |
+| `GET`    | `/api/health`                  | Kiểm tra API và database.           |
+| `POST`   | `/api/auth/register`           | Đăng ký và tạo phiên.               |
+| `POST`   | `/api/auth/login`              | Đăng nhập bằng email hoặc username. |
+| `POST`   | `/api/auth/logout`             | Đăng xuất.                          |
+| `GET`    | `/api/auth/me`                 | Lấy người dùng hiện tại.            |
+| `GET`    | `/api/chat/conversations`      | Danh sách hội thoại.                |
+| `GET`    | `/api/chat/conversations/{id}` | Nội dung một hội thoại.             |
+| `DELETE` | `/api/chat/conversations/{id}` | Xóa hội thoại.                      |
+| `POST`   | `/api/chat/messages/stream`    | Gửi câu hỏi và nhận SSE stream.     |
+
+Mọi lỗi dùng chung envelope `{"error": {"code", "message", "fields"}}` với `message` là tiếng Việt
+hiển thị được cho người dùng. Bảng mã lỗi đầy đủ nằm trong
+[backend/README.md](backend/README.md).
+
+## Kiểm tra chất lượng
+
+Backend:
 
 ```powershell
 cd D:\VieTaxLegal\backend
 .\.venv\Scripts\python.exe -m pytest
 .\.venv\Scripts\python.exe -m ruff check app tests
+.\.venv\Scripts\python.exe -m ruff format --check app tests
 ```
 
-Test backend dùng SQLite trong bộ nhớ và không tác động tới Supabase. GitHub Actions chạy
-test và lint khi có thay đổi trong `backend/`.
+Frontend:
 
-## Bảo mật và phạm vi
+```powershell
+cd D:\VieTaxLegal\frontend
+npm run check
+```
 
-- Mật khẩu được băm bằng Argon2, không lưu plaintext.
-- Phiên là JWT trong cookie HTTP-only, `SameSite=Lax`; production có thêm cờ `Secure`.
-- JWT secret yếu và CORS wildcard bị từ chối khi backend khởi động.
-- Email/tên tài khoản được chuẩn hóa, kiểm tra trùng và có validate dữ liệu đầu vào.
-- Giao diện chat đang dùng dữ liệu minh họa; API chat, kho tài liệu pháp luật và tích hợp AI chưa
-  nằm trong phiên bản này.
+`npm run check` chạy Vitest, ESLint, Prettier check và production build. Backend tests dùng SQLite
+trong bộ nhớ và fake AI provider, không truy cập Supabase hoặc API trả phí.
 
-Xem chi tiết API tại [backend/README.md](backend/README.md).
+## Bảo mật
+
+- Mật khẩu được băm bằng Argon2 và không lưu plaintext.
+- JWT được đặt trong cookie HTTP-only, `SameSite=Lax`; production bật thêm `Secure`.
+- Backend từ chối JWT secret yếu và CORS wildcard.
+- Mọi truy vấn hội thoại đều lọc theo người dùng hiện tại; UUID của người khác trả `404`.
+- RLS được bật và quyền `anon`, `authenticated` bị thu hồi trên các bảng ứng dụng.
+- `.env`, key, certificate, database local, upload và log không được commit.
+- API key AI chỉ tồn tại trong backend và không được log hoặc gửi xuống frontend.
+
+## Roadmap RAG
+
+Hướng triển khai dự kiến:
+
+```text
+Văn bản pháp luật
+  → trích xuất/OCR
+  → tách theo Điều/Khoản/Điểm
+  → embedding
+  → Supabase pgvector + metadata
+  → hybrid retrieval
+  → rerank khi cần
+  → model trả lời kèm citation thật
+```
+
+Ưu tiên trước khi thêm nhiều model là xây bộ đánh giá câu hỏi pháp luật có nguồn chuẩn, đo khả năng
+tìm đúng điều luật, độ chính xác citation, hallucination, độ trễ và chi phí.
