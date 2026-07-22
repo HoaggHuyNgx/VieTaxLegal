@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './FAQ.css'
-import { faqs } from '../data/faqs'
+import { faqs } from '../../data/faqs'
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null)

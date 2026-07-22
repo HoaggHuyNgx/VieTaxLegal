@@ -1,5 +1,6 @@
 import { LogoMark, PlusIcon, SearchIcon } from './ChatIcons'
 import { groupConversations } from './conversationGroups'
+import './ChatSidebar.css'
 
 function formatConversationTime(conversation) {
   const value = conversation.updatedAt || conversation.createdAt

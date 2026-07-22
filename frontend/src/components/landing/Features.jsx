@@ -1,6 +1,6 @@
 import './Features.css'
-import aiIllustration from '../assets/images/illustrations/ai-features-illustration.webp'
-import { featureItems } from '../data/features'
+import aiIllustration from '../../assets/images/illustrations/ai-features-illustration.webp'
+import { featureItems } from '../../data/features'
 
 export default function Features() {
   return (

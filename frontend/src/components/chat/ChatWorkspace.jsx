@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { suggestedQuestions } from '../../data/chat'
 import { CopyIcon, LegalIcon, LogoMark, SendIcon } from './ChatIcons'
+import './ChatWorkspace.css'
 
 function formatMessageTime(value) {
   if (!value) return 'Vừa xong'

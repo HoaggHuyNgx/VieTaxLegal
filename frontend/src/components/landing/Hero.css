@@ -10,7 +10,7 @@
 .hero-background {
   position: absolute;
   inset: 0;
-  background-image: url('../assets/images/backgrounds/auth-background.webp');
+  background-image: url('../../assets/images/backgrounds/auth-background.webp');
   background-position: center bottom;
   background-repeat: no-repeat;
   background-size: cover;

@@ -1,6 +1,6 @@
 import './Hero.css'
-import logo from '../assets/images/logo/logo.webp'
-import AuthCard from './auth/AuthCard'
+import logo from '../../assets/images/logo/logo.webp'
+import AuthCard from '../auth/AuthCard'
 
 const benefits = [
   'Đặt câu hỏi pháp luật bằng tiếng Việt.',

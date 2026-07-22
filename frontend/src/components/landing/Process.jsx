@@ -1,5 +1,5 @@
 import './Process.css'
-import { processSteps } from '../data/process'
+import { processSteps } from '../../data/process'
 
 export default function Process() {
   return (
