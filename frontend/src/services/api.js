@@ -6,7 +6,7 @@ export function apiUrl(path) {
 
 export class ApiError extends Error {
   constructor({ status, code, message, fields }) {
-    super(message)
+    super(message || code)
     this.name = 'ApiError'
     this.status = status
     this.code = code
@@ -27,14 +27,26 @@ export async function apiRequest(path, options = {}) {
   })
 
   const responseText = await response.text()
-  const data = responseText ? JSON.parse(responseText) : null
+  let data = null
+
+  if (responseText) {
+    try {
+      data = JSON.parse(responseText)
+    } catch {
+      // A proxy error page or truncated body must still surface as an ApiError,
+      // otherwise callers branching on `instanceof ApiError` lose the status.
+      throw new ApiError({ status: response.status, code: 'INVALID_RESPONSE' })
+    }
+  }
 
   if (!response.ok) {
     const error = data?.error || {}
+    // `message` is the server's Vietnamese copy, carried only as a fallback:
+    // the UI translates by `code` at the render boundary.
     throw new ApiError({
       status: response.status,
       code: error.code || 'REQUEST_FAILED',
-      message: error.message || 'Không thể kết nối đến máy chủ. Vui lòng thử lại.',
+      message: error.message,
       fields: error.fields,
     })
   }

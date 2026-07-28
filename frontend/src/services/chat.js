@@ -1,11 +1,13 @@
 import { ApiError, apiUrl } from './api'
 
+// This layer never carries a language — only a stable `code`. The server's
+// Vietnamese `message` rides along as a fallback for unknown codes.
 function parseErrorPayload(status, data) {
   const error = data?.error || {}
   return new ApiError({
     status,
     code: error.code || 'REQUEST_FAILED',
-    message: error.message || 'Không thể kết nối đến máy chủ. Vui lòng thử lại.',
+    message: error.message,
     fields: error.fields,
   })
 }
@@ -18,11 +20,7 @@ async function parseJsonResponse(response) {
     try {
       data = JSON.parse(responseText)
     } catch {
-      throw new ApiError({
-        status: response.status,
-        code: 'INVALID_RESPONSE',
-        message: 'Máy chủ trả về dữ liệu không hợp lệ.',
-      })
+      throw new ApiError({ status: response.status, code: 'INVALID_RESPONSE' })
     }
   }
 
@@ -45,21 +43,13 @@ function parseEventBlock(block) {
   try {
     return { event, data: JSON.parse(dataLines.join('\n')) }
   } catch {
-    throw new ApiError({
-      status: 200,
-      code: 'INVALID_STREAM_EVENT',
-      message: 'Không thể đọc phản hồi trực tiếp từ máy chủ.',
-    })
+    throw new ApiError({ status: 200, code: 'INVALID_STREAM_EVENT' })
   }
 }
 
 export async function readEventStream(stream, onEvent) {
   if (!stream) {
-    throw new ApiError({
-      status: 200,
-      code: 'EMPTY_STREAM',
-      message: 'Máy chủ không trả về nội dung phản hồi.',
-    })
+    throw new ApiError({ status: 200, code: 'EMPTY_STREAM' })
   }
 
   const reader = stream.getReader()
