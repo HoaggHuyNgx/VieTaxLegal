@@ -3,15 +3,8 @@ import ReactMarkdown from 'react-markdown'
 import { suggestedQuestions } from '../../data/chat'
 import { useI18n } from '../../i18n/useI18n'
 import { CopyIcon, LegalIcon, LogoMark, SendIcon } from './ChatIcons'
+import { formatMessageTime } from './message-time'
 import './ChatWorkspace.css'
-
-// Returns null when there is no timestamp yet so the caller can say "just now".
-function formatMessageTime(value, localeTag) {
-  if (!value) return null
-  const date = new Date(value)
-  if (Number.isNaN(date.getTime())) return ''
-  return date.toLocaleTimeString(localeTag, { hour: '2-digit', minute: '2-digit' })
-}
 
 function CitationList({ citations }) {
   const { t } = useI18n()
