@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/useI18n'
 import { EyeIcon, FieldError } from './AuthIcons'
 
 export default function RegisterForm({
@@ -9,18 +10,20 @@ export default function RegisterForm({
   showConfirmPassword,
   onToggleConfirmPassword,
 }) {
+  const { t } = useI18n()
+
   return (
     <div id="register-panel" className="register-fields" role="tabpanel" aria-labelledby="register-tab">
       <div className="form-group">
         <label htmlFor="register-email">
-          Email <span className="required-mark">*</span>
+          {t('auth.fields.email')} <span className="required-mark">*</span>
         </label>
         <input
           id="register-email"
           name="email"
           type="email"
           autoComplete="email"
-          placeholder="Nhập email của bạn"
+          placeholder={t('auth.fields.emailPlaceholder')}
           value={formData.email}
           onChange={onChange}
           aria-invalid={Boolean(errors.email)}
@@ -30,14 +33,14 @@ export default function RegisterForm({
       </div>
       <div className="form-group">
         <label htmlFor="username">
-          Tên tài khoản <span className="required-mark">*</span>
+          {t('auth.fields.username')} <span className="required-mark">*</span>
         </label>
         <input
           id="username"
           name="username"
           type="text"
           autoComplete="username"
-          placeholder="Ví dụ: huy_legal"
+          placeholder={t('auth.fields.usernamePlaceholder')}
           value={formData.username}
           onChange={onChange}
           aria-invalid={Boolean(errors.username)}
@@ -47,14 +50,14 @@ export default function RegisterForm({
       </div>
       <div className="form-group">
         <label htmlFor="full-name">
-          Họ và tên <span className="required-mark">*</span>
+          {t('auth.fields.fullName')} <span className="required-mark">*</span>
         </label>
         <input
           id="full-name"
           name="fullName"
           type="text"
           autoComplete="name"
-          placeholder="Nhập họ và tên"
+          placeholder={t('auth.fields.fullNamePlaceholder')}
           value={formData.fullName}
           onChange={onChange}
           aria-invalid={Boolean(errors.fullName)}
@@ -64,7 +67,7 @@ export default function RegisterForm({
       </div>
       <div className="form-group">
         <label htmlFor="phone">
-          Số điện thoại <span className="optional-mark">(không bắt buộc)</span>
+          {t('auth.fields.phone')} <span className="optional-mark">{t('auth.fields.phoneOptional')}</span>
         </label>
         <input
           id="phone"
@@ -72,7 +75,7 @@ export default function RegisterForm({
           type="tel"
           inputMode="tel"
           autoComplete="tel"
-          placeholder="Ví dụ: 0901234567"
+          placeholder={t('auth.fields.phonePlaceholder')}
           value={formData.phone}
           onChange={onChange}
           aria-invalid={Boolean(errors.phone)}
@@ -82,7 +85,7 @@ export default function RegisterForm({
       </div>
       <div className="form-group">
         <label htmlFor="register-password">
-          Mật khẩu <span className="required-mark">*</span>
+          {t('auth.fields.password')} <span className="required-mark">*</span>
         </label>
         <div className="password-input">
           <input
@@ -90,7 +93,7 @@ export default function RegisterForm({
             name="password"
             type={showPassword ? 'text' : 'password'}
             autoComplete="new-password"
-            placeholder="Tối thiểu 8 ký tự"
+            placeholder={t('auth.fields.newPasswordPlaceholder')}
             value={formData.password}
             onChange={onChange}
             aria-invalid={Boolean(errors.password)}
@@ -100,7 +103,7 @@ export default function RegisterForm({
             type="button"
             className="toggle-password"
             onClick={onTogglePassword}
-            aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+            aria-label={showPassword ? t('auth.fields.hidePasswordAria') : t('auth.fields.showPasswordAria')}
           >
             <EyeIcon hidden={showPassword} />
           </button>
@@ -109,7 +112,7 @@ export default function RegisterForm({
       </div>
       <div className="form-group">
         <label htmlFor="confirm-password">
-          Nhập lại mật khẩu <span className="required-mark">*</span>
+          {t('auth.fields.confirmPassword')} <span className="required-mark">*</span>
         </label>
         <div className="password-input">
           <input
@@ -117,7 +120,7 @@ export default function RegisterForm({
             name="confirmPassword"
             type={showConfirmPassword ? 'text' : 'password'}
             autoComplete="new-password"
-            placeholder="Nhập lại mật khẩu"
+            placeholder={t('auth.fields.confirmPasswordPlaceholder')}
             value={formData.confirmPassword}
             onChange={onChange}
             aria-invalid={Boolean(errors.confirmPassword)}
@@ -127,7 +130,11 @@ export default function RegisterForm({
             type="button"
             className="toggle-password"
             onClick={onToggleConfirmPassword}
-            aria-label={showConfirmPassword ? 'Ẩn mật khẩu nhập lại' : 'Hiện mật khẩu nhập lại'}
+            aria-label={
+              showConfirmPassword
+                ? t('auth.fields.hideConfirmPasswordAria')
+                : t('auth.fields.showConfirmPasswordAria')
+            }
           >
             <EyeIcon hidden={showConfirmPassword} />
           </button>
@@ -144,7 +151,11 @@ export default function RegisterForm({
           aria-describedby={errors.acceptTerms ? 'accept-terms-error' : undefined}
         />
         <span>
-          Tôi đồng ý với <a href="#terms">Điều khoản sử dụng</a> và <a href="#privacy">Chính sách bảo mật</a>.
+          {t('auth.terms.prefix')}
+          <a href="#terms">{t('auth.terms.termsLink')}</a>
+          {t('auth.terms.middle')}
+          <a href="#privacy">{t('auth.terms.privacyLink')}</a>
+          {t('auth.terms.suffix')}
         </span>
       </label>
       <FieldError error={errors.acceptTerms} id="accept-terms-error" />

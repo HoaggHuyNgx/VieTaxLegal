@@ -1,28 +1,30 @@
 import { useState } from 'react'
 import './FAQ.css'
-import { faqs } from '../../data/faqs'
+import { useI18n } from '../../i18n/useI18n'
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState(null)
+  const { t, tList } = useI18n()
+  // Keyed by id, not by index: switching locale must not reopen a different item.
+  const [openId, setOpenId] = useState(null)
 
   return (
     <section className="faq">
       <div className="container">
         <div className="section-header">
-          <span className="eyebrow">CÂU HỎI THƯỜNG GẶP</span>
+          <span className="eyebrow">{t('landing.faq.eyebrow')}</span>
         </div>
         <div className="faq-grid">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index
+          {tList('landing.faq.items').map((faq) => {
+            const isOpen = openId === faq.id
 
             return (
-              <article key={faq.question} className="faq-item">
+              <article key={faq.id} className="faq-item">
                 <button
                   type="button"
                   className={`faq-question ${isOpen ? 'open' : ''}`}
-                  onClick={() => setOpenIndex((current) => (current === index ? null : index))}
+                  onClick={() => setOpenId((current) => (current === faq.id ? null : faq.id))}
                   aria-expanded={isOpen}
-                  aria-controls={`faq-answer-${index}`}
+                  aria-controls={`faq-answer-${faq.id}`}
                 >
                   {faq.question}
                   <span className="faq-icon" aria-hidden="true">
@@ -30,7 +32,7 @@ export default function FAQ() {
                   </span>
                 </button>
                 {isOpen && (
-                  <div id={`faq-answer-${index}`} className="faq-answer">
+                  <div id={`faq-answer-${faq.id}`} className="faq-answer">
                     <p>{faq.answer}</p>
                   </div>
                 )}

@@ -1,3 +1,4 @@
+import { useI18n } from '../../i18n/useI18n'
 import { EyeIcon, FieldError } from './AuthIcons'
 
 export default function LoginForm({
@@ -8,16 +9,18 @@ export default function LoginForm({
   onTogglePassword,
   onForgotPassword,
 }) {
+  const { t } = useI18n()
+
   return (
     <div id="login-panel" role="tabpanel" aria-labelledby="login-tab">
       <div className="form-group">
-        <label htmlFor="login-identifier">Tên tài khoản hoặc email</label>
+        <label htmlFor="login-identifier">{t('auth.fields.identifier')}</label>
         <input
           id="login-identifier"
           name="loginIdentifier"
           type="text"
           autoComplete="username"
-          placeholder="Nhập tên tài khoản hoặc email"
+          placeholder={t('auth.fields.identifierPlaceholder')}
           value={formData.loginIdentifier}
           onChange={onChange}
           aria-invalid={Boolean(errors.loginIdentifier)}
@@ -26,14 +29,14 @@ export default function LoginForm({
         <FieldError error={errors.loginIdentifier} id="login-identifier-error" />
       </div>
       <div className="form-group">
-        <label htmlFor="login-password">Mật khẩu</label>
+        <label htmlFor="login-password">{t('auth.fields.password')}</label>
         <div className="password-input">
           <input
             id="login-password"
             name="loginPassword"
             type={showPassword ? 'text' : 'password'}
             autoComplete="current-password"
-            placeholder="Nhập mật khẩu"
+            placeholder={t('auth.fields.passwordPlaceholder')}
             value={formData.loginPassword}
             onChange={onChange}
             aria-invalid={Boolean(errors.loginPassword)}
@@ -43,7 +46,7 @@ export default function LoginForm({
             type="button"
             className="toggle-password"
             onClick={onTogglePassword}
-            aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
+            aria-label={showPassword ? t('auth.fields.hidePasswordAria') : t('auth.fields.showPasswordAria')}
           >
             <EyeIcon hidden={showPassword} />
           </button>
@@ -53,10 +56,10 @@ export default function LoginForm({
       <div className="form-row">
         <label className="checkbox-label">
           <input type="checkbox" name="rememberMe" checked={formData.rememberMe} onChange={onChange} />
-          Ghi nhớ đăng nhập
+          {t('auth.fields.rememberMe')}
         </label>
         <button type="button" className="forgot-link" onClick={onForgotPassword}>
-          Quên mật khẩu?
+          {t('auth.fields.forgotPassword')}
         </button>
       </div>
     </div>

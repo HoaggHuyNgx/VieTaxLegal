@@ -1,24 +1,28 @@
 import './Process.css'
-import { processSteps } from '../../data/process'
+import { processIcons } from '../../data/process'
+import { useI18n } from '../../i18n/useI18n'
 
 export default function Process() {
+  const { t, tList } = useI18n()
+  const steps = tList('landing.process.items')
+
   return (
     <section className="process">
       <div className="container">
         <div className="section-header">
-          <span className="eyebrow">CÁCH VIETAXLEGAL HỖ TRỢ BẠN</span>
-          <h2>Quy trình hoạt động</h2>
+          <span className="eyebrow">{t('landing.process.eyebrow')}</span>
+          <h2>{t('landing.process.heading')}</h2>
         </div>
         <div className="steps-grid">
-          {processSteps.map((step, index) => (
-            <article key={step.number} className="step-card">
-              <span className="step-number">{step.number}</span>
+          {steps.map((step, index) => (
+            <article key={step.id} className="step-card">
+              <span className="step-number">{index + 1}</span>
               <div className="step-icon">
-                <img src={step.icon} alt="" aria-hidden="true" />
+                <img src={processIcons[step.id]} alt="" aria-hidden="true" />
               </div>
               <h3>{step.title}</h3>
               <p>{step.description}</p>
-              {index < processSteps.length - 1 && (
+              {index < steps.length - 1 && (
                 <div className="step-arrow" aria-hidden="true">
                   →
                 </div>

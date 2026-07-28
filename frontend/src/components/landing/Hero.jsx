@@ -1,15 +1,8 @@
 import './Hero.css'
 import logo from '../../assets/images/logo/logo.webp'
 import AuthCard from '../auth/AuthCard'
-
-const benefits = [
-  'Đặt câu hỏi pháp luật bằng tiếng Việt.',
-  'Nhận câu trả lời trực tiếp trong thời gian thực.',
-  'Lưu và tìm lại lịch sử theo từng tài khoản.',
-  'Dữ liệu hội thoại chỉ được truy cập qua backend bảo vệ.',
-  'Giao diện đơn giản, phù hợp để tra cứu ban đầu.',
-  'Luôn nhắc kiểm tra hiệu lực văn bản trước khi áp dụng.',
-]
+import LanguageToggle from '../common/LanguageToggle'
+import { useI18n } from '../../i18n/useI18n'
 
 function CheckIcon() {
   return (
@@ -24,33 +17,37 @@ function CheckIcon() {
 }
 
 export default function Hero() {
+  const { t, tList } = useI18n()
+
   return (
     <header className="hero">
       <div className="hero-background" />
 
+      <div className="hero-toolbar">
+        <LanguageToggle />
+      </div>
+
       <div className="brand-center">
         <div className="brand-logo-wrapper">
           <div className="brand-logo">
-            <img src={logo} alt="VieTaxLegal" />
+            <img src={logo} alt={t('common.brandName')} />
           </div>
-          <h1 className="brand-name">VieTaxLegal</h1>
+          <h1 className="brand-name">{t('common.brandName')}</h1>
         </div>
-        <p className="brand-tagline">Trợ lý tra cứu pháp luật cho doanh nghiệp Việt Nam</p>
-        <p className="brand-description">
-          Đặt câu hỏi, nhận phản hồi trực tiếp và lưu lại lịch sử
-          <br />
-          trong một không gian riêng cho tài khoản của bạn.
-        </p>
+        <p className="brand-tagline">{t('landing.hero.tagline')}</p>
+        {/* No <br />: a break tuned to the Vietnamese line length falls in the
+            wrong place in English, so CSS max-width owns the wrap. */}
+        <p className="brand-description">{t('landing.hero.description')}</p>
       </div>
 
       <div className="container hero-content">
         <section className="hero-copy">
-          <h2>VieTaxLegal</h2>
+          <h2>{t('common.brandName')}</h2>
           <ul className="benefit-list">
-            {benefits.map((benefit) => (
-              <li key={benefit}>
+            {tList('landing.hero.benefits').map((benefit) => (
+              <li key={benefit.id}>
                 <CheckIcon />
-                {benefit}
+                {benefit.text}
               </li>
             ))}
           </ul>

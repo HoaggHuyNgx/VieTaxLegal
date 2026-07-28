@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
+import { translateApiError } from '../../i18n/errors'
+import { useI18n } from '../../i18n/useI18n'
 import { ApiError } from '../../services/api'
 import './AuthCard.css'
 import LoginForm from './LoginForm'
@@ -23,6 +25,7 @@ const initialFormData = {
 export default function AuthCard() {
   const navigate = useNavigate()
   const { login, register } = useAuth()
+  const { t } = useI18n()
   const [activeTab, setActiveTab] = useState('login')
   const [formData, setFormData] = useState(initialFormData)
   const [errors, setErrors] = useState({})
@@ -45,11 +48,12 @@ export default function AuthCard() {
     setFeedback(null)
   }
 
+  // These mirror the backend constraints in schemas/auth.py. The backend stays
+  // the source of truth; these only save a round-trip.
   const validateLogin = () => {
     const nextErrors = {}
-    if (!formData.loginIdentifier.trim())
-      nextErrors.loginIdentifier = 'Vui lòng nhập tên tài khoản hoặc email.'
-    if (!formData.loginPassword) nextErrors.loginPassword = 'Vui lòng nhập mật khẩu.'
+    if (!formData.loginIdentifier.trim()) nextErrors.loginIdentifier = 'auth.validation.identifierRequired'
+    if (!formData.loginPassword) nextErrors.loginPassword = 'auth.validation.passwordRequired'
     return nextErrors
   }
 
@@ -58,16 +62,16 @@ export default function AuthCard() {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phonePattern = /^(0|\+84)[0-9]{8,10}$/
 
-    if (!emailPattern.test(formData.email.trim())) nextErrors.email = 'Vui lòng nhập email hợp lệ.'
+    if (!emailPattern.test(formData.email.trim())) nextErrors.email = 'auth.validation.emailInvalid'
     if (!/^[a-z0-9_]{3,30}$/.test(formData.username.trim().toLowerCase()))
-      nextErrors.username = 'Tên tài khoản gồm 3–30 chữ thường, số hoặc dấu gạch dưới.'
-    if (formData.fullName.trim().length < 2) nextErrors.fullName = 'Vui lòng nhập họ và tên.'
+      nextErrors.username = 'auth.validation.usernameInvalid'
+    if (formData.fullName.trim().length < 2) nextErrors.fullName = 'auth.validation.fullNameRequired'
     if (formData.phone && !phonePattern.test(formData.phone.replace(/[.\s-]/g, '')))
-      nextErrors.phone = 'Số điện thoại chưa đúng định dạng.'
-    if (formData.password.length < 8) nextErrors.password = 'Mật khẩu cần có ít nhất 8 ký tự.'
+      nextErrors.phone = 'auth.validation.phoneInvalid'
+    if (formData.password.length < 8) nextErrors.password = 'auth.validation.passwordTooShort'
     if (formData.confirmPassword !== formData.password)
-      nextErrors.confirmPassword = 'Mật khẩu nhập lại chưa khớp.'
-    if (!formData.acceptTerms) nextErrors.acceptTerms = 'Vui lòng đồng ý với Điều khoản sử dụng.'
+      nextErrors.confirmPassword = 'auth.validation.confirmMismatch'
+    if (!formData.acceptTerms) nextErrors.acceptTerms = 'auth.validation.termsRequired'
     return nextErrors
   }
 
@@ -88,7 +92,7 @@ export default function AuthCard() {
 
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors)
-      setFeedback({ type: 'error', message: 'Vui lòng kiểm tra lại thông tin đã nhập.' })
+      setFeedback({ type: 'error', key: 'auth.validation.checkForm' })
       return
     }
 
@@ -117,27 +121,34 @@ export default function AuthCard() {
     } catch (error) {
       const backendErrors = error instanceof ApiError ? mapBackendErrors(error.fields) : {}
       setErrors(Object.fromEntries(Object.entries(backendErrors).filter(([, message]) => message)))
-      setFeedback({
-        type: 'error',
-        message:
-          error instanceof ApiError ? error.message : 'Không thể kết nối đến máy chủ. Vui lòng thử lại sau.',
-      })
+      setFeedback({ type: 'error', error })
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  // Backend field errors are Vietnamese sentences, not keys. t() echoes a miss,
+  // so resolving every value here handles both sources without storing copy.
+  const translatedErrors = Object.fromEntries(
+    Object.entries(errors).map(([field, keyOrMessage]) => [field, t(keyOrMessage)])
+  )
+  const feedbackMessage = feedback
+    ? feedback.key
+      ? t(feedback.key)
+      : translateApiError(t, feedback.error)
+    : ''
+
   const formProps = {
     formData,
-    errors,
+    errors: translatedErrors,
     onChange: handleChange,
     showPassword,
     onTogglePassword: () => setShowPassword((value) => !value),
   }
 
   return (
-    <section className="auth-card" aria-label="Đăng nhập hoặc đăng ký">
-      <div className="tabs" role="tablist" aria-label="Xác thực tài khoản">
+    <section className="auth-card" aria-label={t('auth.cardAria')}>
+      <div className="tabs" role="tablist" aria-label={t('auth.tablistAria')}>
         <button
           id="login-tab"
           type="button"
@@ -147,7 +158,7 @@ export default function AuthCard() {
           className={`tab ${!isRegistering ? 'active' : ''}`}
           onClick={() => changeTab('login')}
         >
-          Đăng nhập
+          {t('auth.tabLogin')}
         </button>
         <button
           id="register-tab"
@@ -158,16 +169,12 @@ export default function AuthCard() {
           className={`tab ${isRegistering ? 'active' : ''}`}
           onClick={() => changeTab('register')}
         >
-          Đăng ký
+          {t('auth.tabRegister')}
         </button>
       </div>
 
-      <h3>{isRegistering ? 'Đăng ký tài khoản' : 'Chào mừng bạn quay trở lại!'}</h3>
-      <p className="auth-subtitle">
-        {isRegistering
-          ? 'Tạo tài khoản để bắt đầu sử dụng VieTaxLegal'
-          : 'Đăng nhập để tiếp tục sử dụng VieTaxLegal'}
-      </p>
+      <h3>{isRegistering ? t('auth.registerHeading') : t('auth.loginHeading')}</h3>
+      <p className="auth-subtitle">{isRegistering ? t('auth.registerSubtitle') : t('auth.loginSubtitle')}</p>
 
       <form onSubmit={handleSubmit} noValidate>
         {isRegistering ? (
@@ -179,12 +186,7 @@ export default function AuthCard() {
         ) : (
           <LoginForm
             {...formProps}
-            onForgotPassword={() =>
-              setFeedback({
-                type: 'info',
-                message: 'Tính năng quên mật khẩu sẽ được triển khai ở phiên bản tiếp theo.',
-              })
-            }
+            onForgotPassword={() => setFeedback({ type: 'info', key: 'auth.forgotPasswordNotice' })}
           />
         )}
 
@@ -193,28 +195,27 @@ export default function AuthCard() {
             className={`auth-feedback ${feedback.type}`}
             role={feedback.type === 'error' ? 'alert' : 'status'}
           >
-            {feedback.message}
+            {feedbackMessage}
           </p>
         )}
 
         <button type="submit" className="primary-btn" disabled={isSubmitting}>
-          {isSubmitting ? 'Đang xử lý...' : isRegistering ? 'Tạo tài khoản' : 'Đăng nhập'}
+          {isSubmitting
+            ? t('auth.submitting')
+            : isRegistering
+              ? t('auth.submitRegister')
+              : t('auth.submitLogin')}
         </button>
         <div className="divider">
-          <span>hoặc</span>
+          <span>{t('auth.divider')}</span>
         </div>
         <button
           type="button"
           className="google-btn"
-          onClick={() =>
-            setFeedback({
-              type: 'info',
-              message: 'Đăng nhập Google chưa được hỗ trợ ở phiên bản này.',
-            })
-          }
+          onClick={() => setFeedback({ type: 'info', key: 'auth.googleNotice' })}
         >
           <GoogleIcon />
-          {isRegistering ? 'Đăng ký với Google' : 'Tiếp tục với Google'}
+          {isRegistering ? t('auth.googleRegister') : t('auth.googleLogin')}
         </button>
       </form>
     </section>

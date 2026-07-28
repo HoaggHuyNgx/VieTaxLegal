@@ -17,6 +17,14 @@
   opacity: 0.6;
 }
 
+.hero-toolbar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 2rem;
+}
+
 .brand-center {
   position: relative;
   z-index: 1;
@@ -112,6 +120,10 @@
   .hero-content {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .hero-toolbar {
+    padding: 0 1rem;
   }
 
   .brand-center {
