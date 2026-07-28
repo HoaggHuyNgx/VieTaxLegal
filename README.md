@@ -67,8 +67,10 @@ VieTaxLegal/
 ├── frontend/
 │   ├── src/
 │   │   ├── components/    # Landing page, auth và chat
+│   │   ├── common/        # Reusable components (LanguageToggle, etc.)
 │   │   ├── context/       # AuthContext và hook useAuth
 │   │   ├── data/          # Nội dung tĩnh của landing page
+│   │   ├── i18n/          # Internalization (VI/EN catalogs)
 │   │   ├── pages/         # LandingPage và ChatPage
 │   │   ├── services/      # Lời gọi API và SSE client
 │   │   └── styles/        # CSS toàn cục
@@ -76,6 +78,7 @@ VieTaxLegal/
 │   ├── package.json
 │   └── README.md          # Tài liệu frontend chi tiết
 ├── .github/workflows/     # CI frontend và backend
+├── docs/                  # Tài liệu dự án (architecture, roadmap, deployment)
 └── README.md
 ```
 
@@ -144,7 +147,7 @@ Chi tiết về scripts, cấu trúc `src/`, luồng xác thực và SSE client 
 
 | Method   | Endpoint                       | Mô tả                               |
 | -------- | ------------------------------ | ----------------------------------- |
-| `GET`    | `/api/health`                  | Kiểm tra API và database.           |
+| `GET`    | `/api/health`                  | Kiểm tra API và database; `503` nếu DB chết. |
 | `POST`   | `/api/auth/register`           | Đăng ký và tạo phiên.               |
 | `POST`   | `/api/auth/login`              | Đăng nhập bằng email hoặc username. |
 | `POST`   | `/api/auth/logout`             | Đăng xuất.                          |
@@ -157,6 +160,19 @@ Chi tiết về scripts, cấu trúc `src/`, luồng xác thực và SSE client 
 Mọi lỗi dùng chung envelope `{"error": {"code", "message", "fields"}}` với `message` là tiếng Việt
 hiển thị được cho người dùng. Bảng mã lỗi đầy đủ nằm trong
 [backend/README.md](backend/README.md).
+
+## Tài liệu chi tiết
+
+Cấu trúc dự án, kiến trúc hệ thống, và hướng dẫn phát triển nằm trong thư mục `docs/`:
+
+| Tài liệu | Nội dung |
+|----------|---------|
+| [project-overview-pdr.md](docs/project-overview-pdr.md) | Tổng quan dự án, PDR, yêu cầu chức năng, rủi ro |
+| [codebase-summary.md](docs/codebase-summary.md) | Bản đồ codebase, vai trò từng module, LOC |
+| [code-standards.md](docs/code-standards.md) | Chuẩn code, quy ước đặt tên, style guide, git workflow |
+| [system-architecture.md](docs/system-architecture.md) | Kiến trúc hệ thống, luồng chat stream 2 pha, data model, bảo mật |
+| [project-roadmap.md](docs/project-roadmap.md) | Lộ trình phát triển, RAG roadmap, bộ đánh giá, tính năng tương lai |
+| [deployment-guide.md](docs/deployment-guide.md) | Chạy local trên Windows, setup Supabase, yêu cầu trước khi triển khai |
 
 ## Kiểm tra chất lượng
 
