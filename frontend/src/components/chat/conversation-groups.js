@@ -5,13 +5,15 @@ function startOfDay(value) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate())
 }
 
+// Returns stable ids, not labels: bucketing is language-independent and the
+// caller translates via chat.groups.<id>.
 export function groupConversations(conversations, now = new Date()) {
   const today = startOfDay(now)
   const groups = [
-    { label: 'HÔM NAY', items: [] },
-    { label: 'HÔM QUA', items: [] },
-    { label: '7 NGÀY QUA', items: [] },
-    { label: 'CŨ HƠN', items: [] },
+    { id: 'today', items: [] },
+    { id: 'yesterday', items: [] },
+    { id: 'last7Days', items: [] },
+    { id: 'older', items: [] },
   ]
 
   for (const conversation of conversations) {

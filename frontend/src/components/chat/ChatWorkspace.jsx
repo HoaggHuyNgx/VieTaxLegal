@@ -1,37 +1,41 @@
 import { useEffect, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { suggestedQuestions } from '../../data/chat'
+import { useI18n } from '../../i18n/useI18n'
 import { CopyIcon, LegalIcon, LogoMark, SendIcon } from './ChatIcons'
 import './ChatWorkspace.css'
 
-function formatMessageTime(value) {
-  if (!value) return 'Vừa xong'
+// Returns null when there is no timestamp yet so the caller can say "just now".
+function formatMessageTime(value, localeTag) {
+  if (!value) return null
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return ''
-  return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+  return date.toLocaleTimeString(localeTag, { hour: '2-digit', minute: '2-digit' })
 }
 
 function CitationList({ citations }) {
+  const { t } = useI18n()
   if (!citations?.length) return null
 
   return (
-    <section className="answer-sources" aria-label="Nguồn tham khảo">
-      <h3>Nguồn tham khảo</h3>
+    <section className="answer-sources" aria-label={t('chat.message.sources')}>
+      <h3>{t('chat.message.sources')}</h3>
       {citations.map((citation, index) => {
+        // `url` and `excerpt` are optional in CitationResponse; `id` and `title`
+        // are not. Anything other than http(s) is dropped rather than rendered:
+        // this text comes from the model.
         const safeUrl = /^https?:\/\//i.test(citation.url || '') ? citation.url : null
         return (
-          <div className="answer-source-row" key={citation.id || `${citation.title}-${index}`}>
+          <div className="answer-source-row" key={citation.id}>
             <span className="source-number">{index + 1}</span>
             {safeUrl ? (
               <a href={safeUrl} target="_blank" rel="noreferrer">
-                {citation.title || citation.name || safeUrl}
+                {citation.title}
               </a>
             ) : (
-              <span>{citation.title || citation.name}</span>
+              <span>{citation.title}</span>
             )}
-            {citation.reference || citation.excerpt ? (
-              <span>{citation.reference || citation.excerpt}</span>
-            ) : null}
+            {citation.excerpt ? <span>{citation.excerpt}</span> : null}
           </div>
         )
       })}
@@ -51,6 +55,7 @@ function SafeMarkdownLink({ children, href }) {
 }
 
 function AssistantMessage({ message }) {
+  const { t } = useI18n()
   const [isCopied, setIsCopied] = useState(false)
   const content = message.content || ''
   const isPending = message.status === 'pending'
@@ -84,20 +89,24 @@ function AssistantMessage({ message }) {
           </div>
         ) : null}
         {isPending ? (
-          <span className="streaming-indicator" aria-label="Trợ lý đang trả lời">
+          <span className="streaming-indicator" aria-label={t('chat.message.streamingAria')}>
             <i />
             <i />
             <i />
           </span>
         ) : null}
-        {message.status === 'failed' ? <p className="message-status error">Phản hồi bị gián đoạn.</p> : null}
-        {message.status === 'cancelled' ? <p className="message-status">Đã dừng trả lời.</p> : null}
+        {message.status === 'failed' ? (
+          <p className="message-status error">{t('chat.message.failed')}</p>
+        ) : null}
+        {message.status === 'cancelled' ? (
+          <p className="message-status">{t('chat.message.cancelled')}</p>
+        ) : null}
         <CitationList citations={message.citations} />
         {content ? (
           <div className="answer-actions">
-            <button type="button" aria-label="Sao chép câu trả lời" onClick={copyAnswer}>
+            <button type="button" aria-label={t('chat.message.copyAria')} onClick={copyAnswer}>
               <CopyIcon />
-              <span>{isCopied ? 'Đã sao chép' : 'Sao chép'}</span>
+              <span>{isCopied ? t('chat.message.copied') : t('chat.message.copy')}</span>
             </button>
           </div>
         ) : null}
@@ -115,6 +124,7 @@ export default function ChatWorkspace({
   error,
   onClearError,
 }) {
+  const { t, localeTag } = useI18n()
   const [message, setMessage] = useState('')
   const scrollAreaRef = useRef(null)
 
@@ -134,20 +144,20 @@ export default function ChatWorkspace({
 
   return (
     <main className="chat-workspace">
-      <div className="chat-tabs single" aria-label="Công cụ VieTaxLegal">
+      <div className="chat-tabs single" aria-label={t('chat.workspace.toolsAria')}>
         <span>
           <LegalIcon />
-          Tra cứu pháp luật
+          {t('chat.workspace.toolLabel')}
         </span>
       </div>
       <div className="chat-scroll-area" ref={scrollAreaRef}>
         <div className="chat-thread">
-          {isLoading ? <p className="thread-state">Đang tải cuộc trò chuyện…</p> : null}
+          {isLoading ? <p className="thread-state">{t('chat.workspace.loading')}</p> : null}
           {!isLoading && messages.length === 0 ? (
             <section className="chat-empty-state">
               <LogoMark size={48} />
-              <h2>Bạn cần tra cứu vấn đề pháp luật nào?</h2>
-              <p>Hãy mô tả tình huống và thông tin cần làm rõ để nhận câu trả lời phù hợp hơn.</p>
+              <h2>{t('chat.workspace.emptyHeading')}</h2>
+              <p>{t('chat.workspace.emptyBody')}</p>
             </section>
           ) : null}
           {!isLoading
@@ -157,7 +167,7 @@ export default function ChatWorkspace({
                 ) : (
                   <article className="user-message" key={item.id}>
                     <p>{item.content}</p>
-                    <time>{formatMessageTime(item.createdAt)}</time>
+                    <time>{formatMessageTime(item.createdAt, localeTag) ?? t('chat.message.justNow')}</time>
                   </article>
                 )
               )
@@ -168,8 +178,8 @@ export default function ChatWorkspace({
         {!isLoading && messages.length === 0 ? (
           <div className="suggestion-list">
             {suggestedQuestions.map((question) => (
-              <button type="button" key={question} onClick={() => setMessage(question)}>
-                {question}
+              <button type="button" key={question.id} onClick={() => setMessage(question.text)}>
+                {question.text}
               </button>
             ))}
           </div>
@@ -177,7 +187,7 @@ export default function ChatWorkspace({
         {error ? (
           <div className="chat-error" role="alert">
             <span>{error}</span>
-            <button type="button" onClick={onClearError} aria-label="Đóng thông báo lỗi">
+            <button type="button" onClick={onClearError} aria-label={t('chat.workspace.dismissErrorAria')}>
               ×
             </button>
           </div>
@@ -187,36 +197,36 @@ export default function ChatWorkspace({
             value={message}
             onChange={(event) => setMessage(event.target.value)}
             onKeyDown={(event) => {
-              if (event.key === 'Enter' && !event.shiftKey) submitMessage(event)
+              // isComposing guards Telex/VNI and mobile IMEs: the Enter that
+              // commits a composition must not also send the message.
+              if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing)
+                submitMessage(event)
             }}
-            placeholder="Nhập câu hỏi pháp luật của bạn…"
+            placeholder={t('chat.workspace.composerPlaceholder')}
             rows="2"
             maxLength="4000"
             disabled={isLoading}
-            aria-label="Câu hỏi của bạn"
+            aria-label={t('chat.workspace.composerAria')}
           />
           <div className="composer-actions">
             <span className="composer-limit">{message.length}/4000</span>
             {isStreaming ? (
               <button type="button" className="stop-button" onClick={onStop}>
-                <span /> Dừng trả lời
+                <span /> {t('chat.workspace.stop')}
               </button>
             ) : (
               <button
                 type="submit"
                 className="send-button"
                 disabled={!message.trim() || isLoading}
-                aria-label="Gửi câu hỏi"
+                aria-label={t('chat.workspace.sendAria')}
               >
                 <SendIcon />
               </button>
             )}
           </div>
         </form>
-        <p className="chat-disclaimer">
-          Nội dung chỉ mang tính tham khảo. Hãy kiểm tra hiệu lực văn bản và tham vấn chuyên gia trước khi áp
-          dụng.
-        </p>
+        <p className="chat-disclaimer">{t('chat.workspace.disclaimer')}</p>
       </div>
     </main>
   )

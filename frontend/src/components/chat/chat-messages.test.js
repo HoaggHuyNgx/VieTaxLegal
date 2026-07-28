@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { markMessage, mergeMessageDelta, replaceMessage } from './chatMessages'
+import { markMessage, mergeMessageDelta, replaceMessage } from './chat-messages'
 
 describe('chat message updates', () => {
   it('joins consecutive streaming deltas on the pending assistant message', () => {

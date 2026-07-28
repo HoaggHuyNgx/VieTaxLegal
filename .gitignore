@@ -1,7 +1,10 @@
-# Claude Code working directories and configuration
+# AI assistants, ClaudeKit, documentation, and planning
+.agents/
 .claude/
+.codex/
 docs/
 plans/
+AGENTS.md
 CLAUDE.md
 HOW_TO_USE_CLAUDEKIT.md
 
@@ -45,7 +48,6 @@ dist/
 # IDE
 .vscode/
 .idea/
-.codex/
 *.swp
 *.swo
 *~

@@ -1,13 +1,14 @@
+import { useI18n } from '../../i18n/useI18n'
 import { LogoMark, PlusIcon, SearchIcon } from './ChatIcons'
-import { groupConversations } from './conversationGroups'
+import { groupConversations } from './conversation-groups'
 import './ChatSidebar.css'
 
-function formatConversationTime(conversation) {
+function formatConversationTime(conversation, localeTag) {
   const value = conversation.updatedAt || conversation.createdAt
   if (!value) return ''
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return ''
-  return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+  return date.toLocaleTimeString(localeTag, { hour: '2-digit', minute: '2-digit' })
 }
 
 export default function ChatSidebar({
@@ -24,26 +25,28 @@ export default function ChatSidebar({
   isOpen,
   onClose,
 }) {
+  const { t, localeTag } = useI18n()
+  // Conversation titles remain Vietnamese data when the surrounding UI changes.
   const normalizedQuery = searchQuery.trim().toLocaleLowerCase('vi')
   const visibleConversations = conversations.filter((item) =>
-    item.title.toLocaleLowerCase('vi').includes(normalizedQuery)
+    (item.title || '').toLocaleLowerCase('vi').includes(normalizedQuery)
   )
   const groups = groupConversations(visibleConversations)
 
   return (
-    <aside className={`chat-sidebar ${isOpen ? 'is-open' : ''}`} aria-label="Danh sách cuộc hội thoại">
+    <aside className={`chat-sidebar ${isOpen ? 'is-open' : ''}`} aria-label={t('chat.sidebar.listAria')}>
       <div className="chat-sidebar-header">
         <div className="chat-brand">
           <LogoMark size={39} />
           <div>
-            <strong>VieTaxLegal</strong>
-            <span>Trợ lý tra cứu pháp luật</span>
+            <strong>{t('common.brandName')}</strong>
+            <span>{t('chat.sidebar.brandSubtitle')}</span>
           </div>
         </div>
         <button
           type="button"
           className="chat-mobile-close"
-          aria-label="Đóng danh sách cuộc hội thoại"
+          aria-label={t('chat.sidebar.closeAria')}
           onClick={onClose}
         >
           ×
@@ -51,35 +54,35 @@ export default function ChatSidebar({
       </div>
       <button type="button" className="new-chat-button" onClick={onNewChat}>
         <PlusIcon />
-        Cuộc trò chuyện mới
+        {t('chat.sidebar.newChat')}
       </button>
       <label className="conversation-search">
         <SearchIcon />
         <input
           value={searchQuery}
           onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="Tìm kiếm hội thoại"
+          placeholder={t('chat.sidebar.searchPlaceholder')}
         />
       </label>
       <nav className="conversation-list">
-        {isLoading ? <p className="sidebar-state">Đang tải lịch sử…</p> : null}
+        {isLoading ? <p className="sidebar-state">{t('chat.sidebar.loading')}</p> : null}
         {!isLoading && error ? (
           <div className="sidebar-state sidebar-error">
             <p>{error}</p>
             <button type="button" onClick={onRetry}>
-              Thử lại
+              {t('chat.sidebar.retry')}
             </button>
           </div>
         ) : null}
         {!isLoading && !error && groups.length === 0 ? (
           <p className="sidebar-state">
-            {normalizedQuery ? 'Không tìm thấy hội thoại.' : 'Chưa có cuộc trò chuyện nào.'}
+            {normalizedQuery ? t('chat.sidebar.noResults') : t('chat.sidebar.empty')}
           </p>
         ) : null}
         {!isLoading && !error
           ? groups.map((group) => (
-              <section key={group.label} className="conversation-group">
-                <h2>{group.label}</h2>
+              <section key={group.id} className="conversation-group">
+                <h2>{t(`chat.groups.${group.id}`)}</h2>
                 {group.items.map((item) => (
                   <div
                     key={item.id}
@@ -92,12 +95,12 @@ export default function ChatSidebar({
                     >
                       <span className="conversation-dot" />
                       <span className="conversation-title">{item.title}</span>
-                      <time>{formatConversationTime(item)}</time>
+                      <time>{formatConversationTime(item, localeTag)}</time>
                     </button>
                     <button
                       type="button"
                       className="conversation-delete"
-                      aria-label={`Xóa hội thoại ${item.title}`}
+                      aria-label={t('chat.sidebar.deleteAria', { title: item.title })}
                       onClick={() => onDeleteConversation(item)}
                     >
                       ×

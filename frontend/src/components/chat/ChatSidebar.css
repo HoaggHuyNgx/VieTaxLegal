@@ -92,6 +92,9 @@
   color: #6c7b9d;
   font-size: 10px;
   font-weight: 750;
+  /* Capitalisation is presentation: the catalog stores "Hôm nay", not "HÔM NAY",
+     so screen readers do not spell the label out letter by letter. */
+  text-transform: uppercase;
 }
 .conversation-item {
   position: relative;
