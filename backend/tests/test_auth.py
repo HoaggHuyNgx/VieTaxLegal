@@ -1,5 +1,6 @@
 from fastapi.testclient import TestClient
 from sqlalchemy import select
+from sqlalchemy.exc import OperationalError
 
 from app.models.user import User
 
@@ -27,6 +28,23 @@ def test_health_reports_database_connection(client: TestClient) -> None:
 
     assert response.status_code == 200
     assert response.json() == {"status": "ok", "database": "ok"}
+
+
+def test_health_reports_unreachable_database(client: TestClient, database_session) -> None:
+    """A dead database is a 503 with a readable body, not an unhandled 500."""
+
+    def fail(*_: object, **__: object) -> None:
+        raise OperationalError("SELECT 1", {}, Exception("connection refused"))
+
+    original_execute = database_session.execute
+    database_session.execute = fail
+    try:
+        response = client.get("/api/health")
+    finally:
+        database_session.execute = original_execute
+
+    assert response.status_code == 503
+    assert response.json() == {"status": "degraded", "database": "down"}
 
 
 def test_register_creates_normalized_user_and_session(client: TestClient) -> None:

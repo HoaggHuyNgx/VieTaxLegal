@@ -18,7 +18,7 @@ from app.schemas.chat import (
     ConversationResponse,
     SendMessageRequest,
 )
-from app.services.chat import _owned_conversation, prepare_chat_stream, stream_chat_events
+from app.services.chat import owned_conversation, prepare_chat_stream, stream_chat_events
 from app.services.chat_provider import ModelProvider, get_model_provider
 from app.services.chat_retriever import Retriever, get_retriever
 
@@ -59,9 +59,9 @@ def get_conversation(
         )
     )
     if not conversation:
-        # Use the shared ownership-safe error shape without revealing whether the UUID exists.
-        _owned_conversation(database, current_user.id, conversation_id)
-        raise AssertionError("unreachable")
+        # A UUID owned by someone else is indistinguishable from one that does not
+        # exist: same 404, same message. Never 403 — that would confirm existence.
+        raise AppError(404, "CONVERSATION_NOT_FOUND", "Không tìm thấy cuộc hội thoại.")
     return ConversationDetailResponse.from_conversation(conversation)
 
 
@@ -71,7 +71,7 @@ def delete_conversation(
     current_user: Annotated[User, Depends(get_current_user)],
     database: Annotated[Session, Depends(get_db)],
 ) -> Response:
-    conversation = _owned_conversation(database, current_user.id, conversation_id, lock=True)
+    conversation = owned_conversation(database, current_user.id, conversation_id, lock=True)
     has_pending = database.scalar(
         select(Message.id).where(
             Message.conversation_id == conversation.id,

@@ -52,7 +52,7 @@ def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
 
 
-def _owned_conversation(
+def owned_conversation(
     database: Session, user_id: UUID, conversation_id: UUID, *, lock: bool = False
 ) -> Conversation:
     statement = select(Conversation).where(
@@ -105,7 +105,7 @@ def prepare_chat_stream(
     _enforce_rate_limits(database, user.id, now)
 
     if payload.conversation_id:
-        conversation = _owned_conversation(database, user.id, payload.conversation_id, lock=True)
+        conversation = owned_conversation(database, user.id, payload.conversation_id, lock=True)
         pending = database.scalar(
             select(Message.id).where(
                 Message.conversation_id == conversation.id,
