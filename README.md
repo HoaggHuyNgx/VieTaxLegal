@@ -1,7 +1,7 @@
 # VieTaxLegal
 
 VieTaxLegal là nền tảng hỗ trợ tra cứu pháp luật và nghiệp vụ thuế bằng tiếng Việt. Dự án gồm
-frontend React, backend FastAPI, cơ sở dữ liệu Supabase PostgreSQL và lớp AI có thể chuyển đổi giữa
+frontend React, backend FastAPI, cơ sở dữ liệu PostgreSQL và lớp AI có thể chuyển đổi giữa
 Anthropic và OpenAI.
 
 Phiên bản hiện tại tập trung vào xác thực tài khoản và chat pháp luật có lịch sử riêng theo từng
@@ -31,18 +31,19 @@ kiểm tra lại hiệu lực văn bản.
 flowchart LR
     U["Người dùng"] --> F["React / Vite"]
     F -->|"/api proxy"| B["FastAPI"]
-    B --> D["Supabase PostgreSQL"]
+    B --> D["PostgreSQL"]
     B --> A["Anthropic hoặc OpenAI"]
 ```
 
-Backend là lớp duy nhất truy cập dữ liệu ứng dụng. Dự án dùng Supabase như PostgreSQL được quản lý,
-không sử dụng Supabase Auth hoặc truy cập bảng trực tiếp từ frontend.
+Backend là lớp duy nhất truy cập dữ liệu ứng dụng; frontend không bao giờ kết nối database trực
+tiếp. Môi trường phát triển dùng PostgreSQL 15 cài trên máy. Có thể trỏ `DATABASE_URL` sang một
+PostgreSQL được quản lý (ví dụ Supabase) mà không cần đổi code.
 
 ## Công nghệ
 
 - Frontend: React 18, Vite, React Router DOM, React Markdown.
 - Backend: Python 3.12+, FastAPI, Uvicorn, Pydantic.
-- Database: Supabase PostgreSQL, SQLAlchemy 2.0, Alembic, Psycopg.
+- Database: PostgreSQL 15, SQLAlchemy 2.0, Alembic, Psycopg.
 - Xác thực: Argon2 (`pwdlib`), JWT (`PyJWT`) và cookie HTTP-only.
 - AI: Anthropic Messages API hoặc OpenAI Responses API.
 - Streaming: Server-Sent Events (SSE).
@@ -82,7 +83,6 @@ VieTaxLegal/
 │   ├── package.json
 │   └── README.md          # Tài liệu frontend chi tiết
 ├── .github/workflows/     # CI frontend và backend
-├── docs/                  # Tài liệu dự án (architecture, roadmap, deployment)
 └── README.md
 ```
 
@@ -93,7 +93,7 @@ Tài liệu chi tiết theo từng phần nằm trong [backend/README.md](backen
 
 - Node.js 20.19+, 22.13+ hoặc 24+ và npm.
 - Python 3.12 trở lên.
-- Một Supabase project.
+- PostgreSQL 15 trở lên chạy trên máy (hoặc một PostgreSQL từ xa có URL kết nối).
 - API key của Anthropic hoặc OpenAI nếu muốn dùng chat thật.
 
 ## Chạy nhanh trên Windows
@@ -106,8 +106,10 @@ Copy-Item .env.example .env
 notepad .env
 ```
 
-Điền `DATABASE_URL`, tạo `JWT_SECRET` có ít nhất 32 ký tự và cấu hình một AI provider. Không đưa
-database password, JWT secret hoặc API key lên GitHub.
+Tạo role và database `vietaxlegal` trong PostgreSQL (xem
+[backend/README.md](backend/README.md#1-tạo-database-postgresql)), rồi điền `DATABASE_URL`, tạo
+`JWT_SECRET` có ít nhất 32 ký tự và cấu hình một AI provider. Không đưa database password, JWT
+secret hoặc API key lên GitHub.
 
 ```powershell
 py -m venv .venv
@@ -121,7 +123,7 @@ Giữ terminal backend mở. Kiểm tra:
 - Health: <http://127.0.0.1:5000/api/health>
 - Swagger: <http://127.0.0.1:5000/docs>
 
-Hướng dẫn đầy đủ về Supabase, migration, API và xử lý lỗi nằm trong
+Hướng dẫn đầy đủ về database, migration, API và xử lý lỗi nằm trong
 [backend/README.md](backend/README.md).
 
 ### 2. Frontend
@@ -165,19 +167,6 @@ Mọi lỗi dùng chung envelope `{"error": {"code", "message", "fields"}}`. Fro
 `code` bằng ngôn ngữ đang chọn; `message` tiếng Việt từ backend chỉ được dùng làm fallback khi chưa
 có bản dịch tương ứng. Bảng mã lỗi đầy đủ nằm trong [backend/README.md](backend/README.md).
 
-## Tài liệu chi tiết
-
-Cấu trúc dự án, kiến trúc hệ thống, và hướng dẫn phát triển nằm trong thư mục `docs/`:
-
-| Tài liệu                                                | Nội dung                                                              |
-| ------------------------------------------------------- | --------------------------------------------------------------------- |
-| [project-overview-pdr.md](docs/project-overview-pdr.md) | Tổng quan dự án, PDR, yêu cầu chức năng, rủi ro                       |
-| [codebase-summary.md](docs/codebase-summary.md)         | Bản đồ codebase, vai trò từng module, LOC                             |
-| [code-standards.md](docs/code-standards.md)             | Chuẩn code, quy ước đặt tên, style guide, git workflow                |
-| [system-architecture.md](docs/system-architecture.md)   | Kiến trúc hệ thống, luồng chat stream 2 pha, data model, bảo mật      |
-| [project-roadmap.md](docs/project-roadmap.md)           | Lộ trình phát triển, RAG roadmap, bộ đánh giá, tính năng tương lai    |
-| [deployment-guide.md](docs/deployment-guide.md)         | Chạy local trên Windows, setup Supabase, yêu cầu trước khi triển khai |
-
 ## Kiểm tra chất lượng
 
 Backend:
@@ -197,7 +186,7 @@ npm run check
 ```
 
 `npm run check` chạy Vitest, ESLint, Prettier check và production build. Backend tests dùng SQLite
-trong bộ nhớ và fake AI provider, không truy cập Supabase hoặc API trả phí.
+trong bộ nhớ và fake AI provider, không truy cập database thật hoặc API trả phí.
 
 ## Bảo mật
 
@@ -205,7 +194,8 @@ trong bộ nhớ và fake AI provider, không truy cập Supabase hoặc API tr�
 - JWT được đặt trong cookie HTTP-only, `SameSite=Lax`; production bật thêm `Secure`.
 - Backend từ chối JWT secret yếu và CORS wildcard.
 - Mọi truy vấn hội thoại đều lọc theo người dùng hiện tại; UUID của người khác trả `404`.
-- RLS được bật và quyền `anon`, `authenticated` bị thu hồi trên các bảng ứng dụng.
+- Khi chạy trên Supabase, migration tự bật RLS và thu hồi quyền `anon`, `authenticated` trên các
+  bảng ứng dụng; trên PostgreSQL thường, bước này được bỏ qua vì hai role đó không tồn tại.
 - `.env`, key, certificate, database local, upload và log không được commit.
 - API key AI chỉ tồn tại trong backend và không được log hoặc gửi xuống frontend.
 
@@ -218,7 +208,7 @@ Văn bản pháp luật
   → trích xuất/OCR
   → tách theo Điều/Khoản/Điểm
   → embedding
-  → Supabase pgvector + metadata
+  → PostgreSQL pgvector + metadata
   → hybrid retrieval
   → rerank khi cần
   → model trả lời kèm citation thật

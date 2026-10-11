@@ -1,7 +1,7 @@
 # VieTaxLegal Backend
 
 Backend FastAPI cung cấp xác thực tài khoản, quản lý phiên, lịch sử hội thoại và streaming câu trả
-lời AI. Dữ liệu được lưu trong Supabase PostgreSQL; frontend chỉ giao tiếp qua API của backend.
+lời AI. Dữ liệu được lưu trong PostgreSQL; frontend chỉ giao tiếp qua API của backend.
 
 ## Thành phần chính
 
@@ -22,18 +22,21 @@ app/
 ## Yêu cầu
 
 - Python 3.12 trở lên.
-- Một Supabase project.
+- PostgreSQL 15 trở lên đang chạy (mặc định `localhost:5432`).
 - API key Anthropic hoặc OpenAI để gọi chat thật.
 
-## 1. Cấu hình Supabase
+## 1. Tạo database PostgreSQL
 
-Supabase project đã có sẵn database tên `postgres`; không tạo thêm database `vietaxlegal` bên
-trong project.
+Mở `psql` bằng tài khoản quản trị (thường là `postgres`) và tạo role cùng database riêng cho dự án:
 
-1. Mở **Supabase Dashboard → Connect**.
-2. Chọn **Session pooler**, cổng `5432`. Đây là lựa chọn phù hợp cho FastAPI chạy lâu dài và máy
-   phát triển chỉ có IPv4.
-3. Copy `.env.example` thành `.env`:
+```sql
+CREATE ROLE vietaxlegal LOGIN PASSWORD 'doi-mat-khau-nay';
+CREATE DATABASE vietaxlegal OWNER vietaxlegal;
+```
+
+Sau đó:
+
+1. Copy `.env.example` thành `.env`:
 
 ```powershell
 cd D:\VieTaxLegal\backend
@@ -41,9 +44,10 @@ Copy-Item .env.example .env
 notepad .env
 ```
 
-4. Thay project ref, pooler host và database password trong `DATABASE_URL`.
-5. Nếu password chứa `@`, `:`, `/`, `#` hoặc `%`, phải URL-encode password trước khi đặt vào URL.
-6. Tạo JWT secret:
+2. Điền password của role `vietaxlegal` vào `DATABASE_URL`
+   (`postgresql+psycopg://vietaxlegal:<password>@localhost:5432/vietaxlegal`).
+3. Nếu password chứa `@`, `:`, `/`, `#` hoặc `%`, phải URL-encode password trước khi đặt vào URL.
+4. Tạo JWT secret:
 
 ```powershell
 py -c "import secrets; print(secrets.token_urlsafe(48))"
@@ -57,11 +61,12 @@ Chỉ hai biến sau là bắt buộc. Thiếu một trong hai thì backend khô
 
 | Biến           | Mô tả                                                            |
 | -------------- | ---------------------------------------------------------------- |
-| `DATABASE_URL` | PostgreSQL Session pooler URL của Supabase.                      |
+| `DATABASE_URL` | URL kết nối PostgreSQL (`postgresql+psycopg://...`).             |
 | `JWT_SECRET`   | Chuỗi ngẫu nhiên tối thiểu 32 ký tự; không được giữ giá trị mẫu. |
 
 Backend tự chuẩn hóa `DATABASE_URL`: tiền tố `postgres://` hoặc `postgresql://` được đổi thành
-`postgresql+psycopg://`, và `sslmode=require` được thêm tự động cho host Supabase nếu URL chưa có.
+`postgresql+psycopg://`. Nếu dùng PostgreSQL Supabase (host chứa `supabase.com`), `sslmode=require`
+được thêm tự động khi URL chưa có.
 
 Các biến còn lại đều có giá trị mặc định, chỉ đặt khi muốn đổi:
 
@@ -81,6 +86,8 @@ Các biến còn lại đều có giá trị mặc định, chỉ đặt khi mu�
 | `CHAT_HISTORY_MESSAGES`      | `20`                    | Số message gần nhất gửi lại model; chỉ chấp nhận `1–100`.    |
 | `CHAT_RATE_LIMIT_PER_MINUTE` | `10`                    | Số câu hỏi tối đa mỗi người dùng trong một phút.             |
 | `CHAT_DAILY_MESSAGE_LIMIT`   | `100`                   | Số câu hỏi tối đa mỗi người dùng trong một ngày UTC.         |
+| `LOGIN_MAX_FAILED_ATTEMPTS`  | `5`                     | Số lần đăng nhập sai tối đa trước khi bị khóa tạm thời.      |
+| `LOGIN_ATTEMPT_WINDOW_MINUTES` | `15`                  | Khung thời gian (phút) dùng để đếm số lần đăng nhập sai.     |
 
 Ngoài `CHAT_HISTORY_MESSAGES`, lịch sử gửi lại model còn bị chặn bởi hằng số
 `MAX_HISTORY_CHARACTERS` (40.000 ký tự) trong `app/services/chat.py`. Hội thoại có nội dung dài
@@ -110,8 +117,12 @@ dạng SSE mà frontend đang sử dụng.
 ```powershell
 cd D:\VieTaxLegal\backend
 py -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+.\.venv\Scripts\python.exe -m pip install -c constraints.txt -e ".[dev]"
 ```
+
+`constraints.txt` ghim phiên bản đã được kiểm thử của mọi package để mỗi lần cài cho kết quả giống
+nhau (CI cũng dùng file này). Sau khi nâng package có chủ đích, tạo lại file bằng
+`.\.venv\Scripts\python.exe -m pip freeze --exclude-editable`.
 
 Không cần kích hoạt virtualenv nếu luôn gọi Python bằng đường dẫn
 `.\.venv\Scripts\python.exe`.
@@ -128,16 +139,14 @@ Migration hiện tại:
 | Revision                       | Nội dung                                                                 |
 | ------------------------------ | ------------------------------------------------------------------------ |
 | `0001_create_users`            | Tạo bảng users và unique index cho email/username.                       |
-| `0002_lock_down_public_tables` | Bật RLS và khóa users/alembic_version khỏi Supabase Data API.            |
+| `0002_lock_down_public_tables` | Chỉ trên Supabase: bật RLS và khóa users/alembic_version khỏi Data API.  |
 | `0003_chat`                    | Tạo conversations, messages, chat_usage_events, index và ràng buộc chat. |
 
-Kết quả `alembic current` phải chứa `0003_chat (head)`. Trong Supabase Table Editor sẽ có:
+Kết quả `alembic current` phải chứa `0003_chat (head)`. Database sẽ có các bảng `users`,
+`conversations`, `messages`, `chat_usage_events` và `alembic_version`.
 
-- `public.users`
-- `public.conversations`
-- `public.messages`
-- `public.chat_usage_events`
-- `public.alembic_version`
+Phần RLS/REVOKE của migration 0002 và 0003 chỉ chạy khi cả hai role `anon` và `authenticated` tồn
+tại (tức là trên Supabase). Trên PostgreSQL thường, các bước đó được bỏ qua.
 
 Supabase Auth không được dùng trong kiến trúc này. Bảng `users` và phiên FastAPI là nguồn xác thực
 duy nhất.
@@ -195,6 +204,13 @@ Payload đăng nhập:
 }
 ```
 
+Đăng nhập sai liên tiếp bị giới hạn theo cặp (địa chỉ client, email/username): quá
+`LOGIN_MAX_FAILED_ATTEMPTS` lần sai trong `LOGIN_ATTEMPT_WINDOW_MINUTES` phút thì `/api/auth/login`
+trả `429 AUTH_RATE_LIMITED`, kể cả khi mật khẩu đúng, cho đến khi hết khung thời gian. Đăng nhập
+thành công xóa bộ đếm. Bộ đếm nằm trong bộ nhớ của tiến trình nên được đặt lại khi khởi động lại
+server và không chia sẻ giữa nhiều worker. Phía sau reverse proxy, mọi client có thể dùng chung
+một địa chỉ; cần xử lý lại khi triển khai thật.
+
 Cookie phiên có `HttpOnly`, `SameSite=Lax` và `Path=/`. Khi `APP_ENV=production`, cookie có thêm
 `Secure`.
 
@@ -238,7 +254,9 @@ Backend lưu user message và assistant `pending` trước khi gọi AI. Khi str
 chuyển thành `completed`; lỗi thành `failed`; người dùng dừng stream thành `cancelled`. Phần nội
 dung đã nhận vẫn được lưu.
 
-Mỗi hội thoại chỉ có tối đa một assistant message `pending`. Truy cập UUID hội thoại của người khác
+Mỗi hội thoại chỉ có tối đa một assistant message `pending`. Nếu stream bị ngắt đột ngột (server
+chết) khiến một message kẹt ở `pending` hơn 5 phút, lần gửi tiếp theo hoặc lần xóa hội thoại sẽ tự
+đánh dấu nó là `failed` để hội thoại không bị khóa. Truy cập UUID hội thoại của người khác
 trả `404` để không tiết lộ tài nguyên có tồn tại hay không.
 
 ## Định dạng lỗi
@@ -270,6 +288,7 @@ hiển thị trực tiếp cho người dùng.
 | `422`  | `VALIDATION_ERROR`         | Payload sai định dạng; luôn kèm `fields`.                    |
 | `429`  | `CHAT_RATE_LIMITED`        | Vượt `CHAT_RATE_LIMIT_PER_MINUTE`.                           |
 | `429`  | `CHAT_DAILY_LIMIT_REACHED` | Vượt `CHAT_DAILY_MESSAGE_LIMIT` trong ngày UTC.              |
+| `429`  | `AUTH_RATE_LIMITED`        | Đăng nhập sai quá `LOGIN_MAX_FAILED_ATTEMPTS` lần trong khung thời gian. |
 
 Riêng `/api/chat/messages/stream`: mọi lỗi trên đều xảy ra **trước** khi SSE bắt đầu, nên client vẫn
 đọc được status code thật. Sau khi stream đã mở, status bị ghim ở `200` và lỗi chỉ còn được báo qua
@@ -290,14 +309,12 @@ users 1 ── n conversations 1 ── n messages
 - `messages.role` chỉ nhận `user|assistant`.
 - `messages.status` chỉ nhận `pending|completed|failed|cancelled`.
 - `provider`, `model` và token usage được lưu theo assistant message.
-- RLS bật trên các bảng ứng dụng; quyền `anon` và `authenticated` bị thu hồi.
-- Frontend không cần Supabase anon key hoặc service-role key.
+- Frontend không bao giờ kết nối database; mọi dữ liệu đi qua FastAPI.
+- Nếu chạy trên Supabase, RLS được bật và quyền `anon`, `authenticated` bị thu hồi trên các bảng
+  ứng dụng (xem migration 0002, 0003).
 - Backend luôn lọc conversation theo `current_user.id`.
 - API key AI dùng `SecretStr` và không được log.
 - Prompt và nội dung hội thoại không được ghi vào application log.
-
-Backend kết nối bằng PostgreSQL credentials trực tiếp nên vẫn thao tác được sau khi khóa Supabase
-Data API.
 
 ## AI và RAG-ready
 
@@ -326,8 +343,8 @@ cd D:\VieTaxLegal\backend
 .\.venv\Scripts\python.exe -m ruff format --check app tests
 ```
 
-Tests sử dụng SQLite trong bộ nhớ và fake provider. Chúng không gọi Supabase, Anthropic hoặc OpenAI
-thật và không phát sinh chi phí API.
+Tests sử dụng SQLite trong bộ nhớ và fake provider. Chúng không gọi database thật, Anthropic hoặc
+OpenAI và không phát sinh chi phí API.
 
 Các nhóm test bao gồm:
 
@@ -336,7 +353,7 @@ Các nhóm test bao gồm:
 - `test_chat.py` — tạo, stream, lưu, mở và xóa hội thoại; ownership isolation; dừng stream và lưu
   partial content; rate limit theo phút/ngày; giới hạn lịch sử.
 - `test_chat_provider.py` — provider selection, lỗi thiếu API key và dịch stream của OpenAI.
-- `test_config.py` — chuẩn hóa Supabase connection string, từ chối JWT secret yếu và CORS wildcard.
+- `test_config.py` — chuẩn hóa connection string, từ chối JWT secret yếu và CORS wildcard.
 
 ## Xử lý lỗi thường gặp
 
@@ -358,14 +375,14 @@ Sau đó chạy lại Uvicorn. Không đổi sang cổng khác nếu frontend v�
 
 ### Database authentication failed
 
-- Kiểm tra password Supabase database, không dùng password tài khoản Supabase.
-- Copy lại Session pooler URL từ Dashboard.
+- Kiểm tra password của role `vietaxlegal` trong PostgreSQL.
 - URL-encode ký tự đặc biệt trong password.
-- Giữ `sslmode=require`.
+- Nếu dùng Supabase: copy lại Session pooler URL từ Dashboard và giữ `sslmode=require`.
 
 ### Health trả database error
 
-Kiểm tra `DATABASE_URL`, trạng thái Supabase project và kết nối mạng. Chạy:
+Kiểm tra `DATABASE_URL`, dịch vụ PostgreSQL đã chạy chưa (Windows: service `postgresql-x64-15`) và
+kết nối mạng. Chạy:
 
 ```powershell
 .\.venv\Scripts\python.exe -m alembic current
@@ -383,5 +400,6 @@ cố ý không gửi chi tiết lỗi upstream nhạy cảm xuống frontend.
 
 ### Supabase hiển thị RLS nhưng không có policy
 
-Đây là cấu hình chủ ý: frontend không truy cập bảng bằng Supabase Data API. RLS kết hợp với việc thu
-hồi quyền `anon`/`authenticated` khóa đường truy cập trực tiếp; mọi dữ liệu đi qua FastAPI.
+Chỉ áp dụng khi chạy trên Supabase. Đây là cấu hình chủ ý: frontend không truy cập bảng bằng
+Supabase Data API. RLS kết hợp với việc thu hồi quyền `anon`/`authenticated` khóa đường truy cập
+trực tiếp; mọi dữ liệu đi qua FastAPI.
