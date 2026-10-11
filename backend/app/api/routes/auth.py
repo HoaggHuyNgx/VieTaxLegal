@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, Request, Response, status
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
@@ -9,7 +9,7 @@ from app.core.security import create_session_token
 from app.db.session import get_db
 from app.models.user import User
 from app.schemas.auth import LoginRequest, RegisterRequest, UserResponse
-from app.services.auth import authenticate_user, register_user
+from app.services.auth import login_user, register_user
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -43,10 +43,11 @@ def register(
 @router.post("/login", response_model=UserResponse)
 def login(
     payload: LoginRequest,
+    request: Request,
     response: Response,
     database: Annotated[Session, Depends(get_db)],
 ) -> User:
-    user = authenticate_user(database, payload)
+    user = login_user(database, payload, request.client.host if request.client else "unknown")
     set_session_cookie(response, user, remember_me=payload.remember_me)
     return user
 

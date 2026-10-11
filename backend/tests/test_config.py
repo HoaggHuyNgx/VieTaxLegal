@@ -18,6 +18,15 @@ def test_settings_reject_wildcard_cors_with_cookie_auth() -> None:
         )
 
 
+def test_settings_reject_non_positive_login_throttle_limits() -> None:
+    with pytest.raises(ValidationError, match="Login throttle"):
+        Settings(
+            database_url="sqlite+pysqlite://",
+            jwt_secret="a-secure-test-secret-with-at-least-32-characters",
+            login_max_failed_attempts=0,
+        )
+
+
 def test_settings_normalizes_supabase_connection_string() -> None:
     settings = Settings(
         database_url=(

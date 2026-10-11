@@ -24,6 +24,8 @@ class Settings(BaseSettings):
     chat_history_messages: int = 20
     chat_rate_limit_per_minute: int = 10
     chat_daily_message_limit: int = 100
+    login_max_failed_attempts: int = 5
+    login_attempt_window_minutes: int = 15
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
@@ -71,6 +73,8 @@ class Settings(BaseSettings):
             raise ValueError("CHAT_HISTORY_MESSAGES must be between 1 and 100.")
         if self.chat_rate_limit_per_minute < 1 or self.chat_daily_message_limit < 1:
             raise ValueError("Chat limits must be greater than zero.")
+        if self.login_max_failed_attempts < 1 or self.login_attempt_window_minutes < 1:
+            raise ValueError("Login throttle limits must be greater than zero.")
         if not self.chat_provider.strip() or not self.chat_model.strip():
             raise ValueError("CHAT_PROVIDER and CHAT_MODEL must not be blank.")
         return self

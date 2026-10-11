@@ -165,6 +165,7 @@ const en = {
       TRUNCATED_STREAM: 'The response was cut off before it finished.',
       UNAUTHENTICATED: 'Your session is invalid or has expired.',
       INVALID_CREDENTIALS: 'That email/username or password is incorrect.',
+      AUTH_RATE_LIMITED: 'Too many failed sign-in attempts. Please try again in a few minutes.',
       EMAIL_TAKEN: 'That email is already in use.',
       USERNAME_TAKEN: 'That username is already taken.',
       REGISTRATION_CONFLICT: 'Could not create the account. Please try again.',

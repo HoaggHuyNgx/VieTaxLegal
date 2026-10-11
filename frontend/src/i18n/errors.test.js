@@ -7,6 +7,7 @@ const localeCases = [
   {
     locale: 'vi',
     conversationNotFound: 'Không tìm thấy cuộc hội thoại.',
+    authRateLimited: 'Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau ít phút.',
     deleteInProgress: 'Hãy dừng câu trả lời trước khi xóa cuộc hội thoại này.',
     generalInProgress: 'Cuộc hội thoại này đang có một câu trả lời được xử lý.',
     requestFailed: 'Không thể kết nối đến máy chủ. Vui lòng thử lại.',
@@ -15,6 +16,7 @@ const localeCases = [
   {
     locale: 'en',
     conversationNotFound: 'Conversation not found.',
+    authRateLimited: 'Too many failed sign-in attempts. Please try again in a few minutes.',
     deleteInProgress: 'Stop the current answer before deleting this conversation.',
     generalInProgress: 'This conversation already has an answer in progress.',
     requestFailed: 'Could not reach the server. Please try again.',
@@ -30,6 +32,12 @@ describe.each(localeCases)('translateApiError in $locale', (copy) => {
 
     expect(error.message).toBe('CONVERSATION_NOT_FOUND')
     expect(translateApiError(t, error)).toBe(copy.conversationNotFound)
+  })
+
+  it('translates the login throttle code', () => {
+    expect(translateApiError(t, new ApiError({ status: 429, code: 'AUTH_RATE_LIMITED' }))).toBe(
+      copy.authRateLimited
+    )
   })
 
   it('resolves a call-site variant', () => {

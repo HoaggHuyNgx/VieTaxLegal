@@ -15,6 +15,15 @@ os.environ.setdefault("CORS_ORIGINS", "http://localhost:3000")
 from app.db.base import Base
 from app.db.session import get_db
 from app.main import app
+from app.services.login_throttle import get_login_throttle
+
+
+@pytest.fixture(autouse=True)
+def fresh_login_throttle() -> Generator[None, None, None]:
+    """The throttle is process-wide state; start every test with an empty one."""
+    get_login_throttle.cache_clear()
+    yield
+    get_login_throttle.cache_clear()
 
 
 @pytest.fixture

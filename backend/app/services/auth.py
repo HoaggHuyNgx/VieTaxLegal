@@ -8,6 +8,7 @@ from app.core.errors import AppError
 from app.core.security import hash_password, verify_dummy_password, verify_password
 from app.models.user import User
 from app.schemas.auth import LoginRequest, RegisterRequest
+from app.services.login_throttle import get_login_throttle
 
 
 def get_registration_conflict(database: Session, payload: RegisterRequest) -> AppError | None:
@@ -70,4 +71,22 @@ def authenticate_user(database: Session, payload: LoginRequest) -> User:
 
     if not verify_password(payload.password, user.password_hash):
         raise AppError(401, "INVALID_CREDENTIALS", "Email/tên tài khoản hoặc mật khẩu không đúng.")
+    return user
+
+
+def login_user(database: Session, payload: LoginRequest, client_host: str) -> User:
+    """Authenticate, rejecting early once a client/identifier pair has failed too often.
+
+    Keyed by client and identifier so one source cannot grind a single account, while a
+    stranger still cannot lock a victim out from every other address.
+    """
+    throttle = get_login_throttle()
+    key = f"{client_host}|{payload.identifier}"
+    throttle.check(key)
+    try:
+        user = authenticate_user(database, payload)
+    except AppError:
+        throttle.record_failure(key)
+        raise
+    throttle.reset(key)
     return user

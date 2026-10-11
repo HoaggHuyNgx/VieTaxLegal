@@ -167,6 +167,7 @@ const vi = {
       TRUNCATED_STREAM: 'Phản hồi bị gián đoạn trước khi hoàn tất.',
       UNAUTHENTICATED: 'Phiên đăng nhập không hợp lệ hoặc đã hết hạn.',
       INVALID_CREDENTIALS: 'Email/tên tài khoản hoặc mật khẩu không đúng.',
+      AUTH_RATE_LIMITED: 'Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau ít phút.',
       EMAIL_TAKEN: 'Email này đã được sử dụng.',
       USERNAME_TAKEN: 'Tên tài khoản này đã được sử dụng.',
       REGISTRATION_CONFLICT: 'Không thể tạo tài khoản. Vui lòng thử lại.',
