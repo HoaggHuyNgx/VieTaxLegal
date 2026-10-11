@@ -6,10 +6,10 @@ import './ChatSourcesPanel.css'
 
 const VISIBLE_SOURCE_LIMIT = 3
 
-// CitationResponse chỉ có {id, title, url?, excerpt?} và url/excerpt được
-// serialize với exclude_none nên có thể vắng hẳn key. Không render số hiệu văn
-// bản, ngày ban hành hay chương/điều: backend không có field nào cho chúng, và
-// bịa ra là rủi ro lớn nhất của một sản phẩm pháp lý.
+// CitationResponse is only {id, title, url?, excerpt?}, and url/excerpt are
+// serialized with exclude_none, so the keys may be absent entirely. Never render
+// a document number, issue date, or chapter/article here: the backend has no
+// field for them, and inventing one is the biggest risk in a legal product.
 function SourceCard({ citation }) {
   const { t } = useI18n()
   const href = safeExternalUrl(citation.url)

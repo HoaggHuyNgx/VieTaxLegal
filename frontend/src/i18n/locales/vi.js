@@ -325,8 +325,9 @@ const vi = {
       title: 'Nguồn tham khảo',
       subtitle: 'Các văn bản pháp luật có thể liên quan đến câu hỏi của bạn.',
       emptyTitle: 'Chưa có nguồn tham khảo',
-      // Câu này đúng ở cả hai trạng thái: chưa có RAG (NullRetriever luôn trả
-      // rỗng) và sau khi có RAG nhưng backend chưa lưu citations xuống DB.
+      // Accurate in both states: before RAG exists (NullRetriever always returns
+      // nothing) and after RAG exists but the backend does not yet persist
+      // citations to the DB.
       emptyBody:
         'Trợ lý chưa trích dẫn văn bản nào cho câu trả lời này. Nguồn chỉ hiển thị cho câu trả lời vừa nhận trong phiên làm việc hiện tại.',
       pending: 'Đang chờ nguồn cho câu trả lời này…',

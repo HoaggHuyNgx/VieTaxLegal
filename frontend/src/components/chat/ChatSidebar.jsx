@@ -12,7 +12,8 @@ import {
 import { groupConversations } from './conversation-groups'
 import './ChatSidebar.css'
 
-// Máy Windows không có phím ⌘, nên keycap phải đổi theo nền tảng thay vì hardcode.
+// Windows keyboards have no ⌘ key, so the keycap hint follows the platform
+// instead of being hardcoded.
 const IS_MAC = typeof navigator !== 'undefined' && /mac/i.test(navigator.userAgent)
 const SEARCH_SHORTCUT = IS_MAC ? '⌘K' : 'Ctrl K'
 
@@ -34,9 +35,9 @@ function formatConversationTime(conversation, localeTag) {
   return date.toLocaleTimeString(localeTag, { hour: '2-digit', minute: '2-digit' })
 }
 
-// groupConversations luôn trả bucket theo thứ tự cố định today → older, nên đảo
-// thứ tự phải đảo cả mảng group lẫn item bên trong; chỉ đảo một trong hai sẽ ra
-// "Hôm nay" nằm trên "Cũ hơn" với item ngược chiều bên trong.
+// groupConversations always returns buckets in a fixed today → older order, so
+// reversing must flip both the group array and the items inside each group.
+// Flipping only one leaves "Today" above "Older" with items running the other way.
 function orderGroups(groups, sortOrder) {
   if (sortOrder !== 'oldest') return groups
   return [...groups].reverse().map((group) => ({ ...group, items: [...group.items].reverse() }))
@@ -68,7 +69,8 @@ export default function ChatSidebar({
   useEffect(() => {
     const handleKeydown = (event) => {
       if (event.key?.toLowerCase() !== 'k' || (!event.metaKey && !event.ctrlKey)) return
-      // Ctrl+K là shortcut thanh địa chỉ của Chrome và thanh tìm kiếm của Firefox.
+      // Ctrl+K is the address-bar shortcut in Chrome and the search-bar shortcut
+      // in Firefox; without preventDefault the browser would swallow it.
       event.preventDefault()
       searchInputRef.current?.focus()
     }
