@@ -105,7 +105,7 @@ Ví dụ OpenAI:
 
 ```env
 CHAT_PROVIDER=openai
-CHAT_MODEL=gpt-5.6-luna
+CHAT_MODEL=gpt-6-luna
 OPENAI_API_KEY=sk-...
 ```
 
