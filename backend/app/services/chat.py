@@ -32,6 +32,9 @@ MAX_HISTORY_CHARACTERS = 40_000
 # A pending reply older than this belongs to a stream that died without finalizing.
 PENDING_REPLY_TIMEOUT = timedelta(minutes=5)
 
+# The no-fabrication rules (document numbers, articles, dates, quotes) and the
+# "cannot verify" fallback are load-bearing for a legal assistant. Keep them when
+# editing the wording; they stay until retrieved, verified sources replace them.
 SYSTEM_PROMPT = """Bạn là trợ lý tra cứu pháp luật Việt Nam của VieTaxLegal.
 Hãy trả lời bằng tiếng Việt, rõ ràng và phân biệt dữ kiện chắc chắn với giả định.
 Không được bịa số hiệu văn bản, điều, khoản, ngày ban hành hoặc trích dẫn.

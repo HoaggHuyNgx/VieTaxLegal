@@ -5,7 +5,7 @@ frontend React, backend FastAPI, cơ sở dữ liệu PostgreSQL và lớp AI c�
 Anthropic và OpenAI.
 
 Phiên bản hiện tại tập trung vào xác thực tài khoản và chat pháp luật có lịch sử riêng theo từng
-người dùng. Kho dữ liệu pháp luật, RAG, pgvector và trích dẫn nguồn thật đang nằm trong roadmap.
+người dùng. Kho dữ liệu pháp luật, RAG, Qdrant và trích dẫn nguồn thật đang nằm trong roadmap.
 
 ## Trạng thái tính năng
 
@@ -18,7 +18,7 @@ người dùng. Kho dữ liệu pháp luật, RAG, pgvector và trích dẫn ngu
 | Anthropic và OpenAI provider                    | Hoàn thành      |
 | Rate limit theo phút và theo ngày               | Hoàn thành      |
 | Giao diện song ngữ Việt–Anh                     | Hoàn thành      |
-| Kho văn bản pháp luật và pgvector               | Chưa triển khai |
+| Kho văn bản pháp luật và Qdrant                 | Chưa triển khai |
 | RAG, hybrid search, reranking và citation thật  | Chưa triển khai |
 | Tính thuế, scan hợp đồng và đính kèm tài liệu   | Chưa triển khai |
 
@@ -208,7 +208,7 @@ Văn bản pháp luật
   → trích xuất/OCR
   → tách theo Điều/Khoản/Điểm
   → embedding
-  → PostgreSQL pgvector + metadata
+  → Qdrant (vector + metadata)
   → hybrid retrieval
   → rerank khi cần
   → model trả lời kèm citation thật

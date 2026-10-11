@@ -327,11 +327,11 @@ ChatOrchestrator → NullRetriever → AnthropicProvider hoặc OpenAIProvider
 `NullRetriever` không trả context/citation. Vì vậy V1 không hiển thị citation panel và system prompt
 yêu cầu model không bịa số hiệu, điều khoản hoặc hiệu lực văn bản.
 
-Giai đoạn RAG sẽ triển khai một retriever mới dùng kho tài liệu và pgvector mà không đổi chat route,
-message schema hoặc định dạng SSE:
+Giai đoạn RAG sẽ triển khai một retriever mới dùng chỉ mục Qdrant mà không đổi chat route hay
+định dạng SSE (chỉ bổ sung thêm trường tùy chọn cho citation):
 
 ```text
-ChatOrchestrator → PgVectorRetriever → ModelProvider
+ChatOrchestrator → QdrantRetriever → ModelProvider
 ```
 
 ## Kiểm thử
