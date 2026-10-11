@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from uuid import UUID
 
-from sqlalchemy import and_, func, or_, select
+from sqlalchemy import and_, func, or_, select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -29,6 +29,8 @@ from app.services.chat_retriever import RetrievalResult, Retriever
 
 logger = logging.getLogger(__name__)
 MAX_HISTORY_CHARACTERS = 40_000
+# A pending reply older than this belongs to a stream that died without finalizing.
+PENDING_REPLY_TIMEOUT = timedelta(minutes=5)
 
 SYSTEM_PROMPT = """Bạn là trợ lý tra cứu pháp luật Việt Nam của VieTaxLegal.
 Hãy trả lời bằng tiếng Việt, rõ ràng và phân biệt dữ kiện chắc chắn với giả định.
@@ -64,6 +66,20 @@ def owned_conversation(
     if not conversation:
         raise AppError(404, "CONVERSATION_NOT_FOUND", "Không tìm thấy cuộc hội thoại.")
     return conversation
+
+
+def expire_stale_pending(database: Session, conversation_id: UUID, now: datetime) -> None:
+    """Mark abandoned pending replies as failed so a crashed stream cannot lock the conversation."""
+    database.execute(
+        update(Message)
+        .where(
+            Message.conversation_id == conversation_id,
+            Message.role == "assistant",
+            Message.status == "pending",
+            Message.created_at < now - PENDING_REPLY_TIMEOUT,
+        )
+        .values(status="failed", updated_at=now)
+    )
 
 
 def _enforce_rate_limits(database: Session, user_id: UUID, now: datetime) -> None:
@@ -106,6 +122,7 @@ def prepare_chat_stream(
 
     if payload.conversation_id:
         conversation = owned_conversation(database, user.id, payload.conversation_id, lock=True)
+        expire_stale_pending(database, conversation.id, now)
         pending = database.scalar(
             select(Message.id).where(
                 Message.conversation_id == conversation.id,

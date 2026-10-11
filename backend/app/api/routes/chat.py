@@ -1,4 +1,5 @@
 from collections.abc import AsyncIterator
+from datetime import datetime, timezone
 from typing import Annotated
 from uuid import UUID
 
@@ -18,7 +19,12 @@ from app.schemas.chat import (
     ConversationResponse,
     SendMessageRequest,
 )
-from app.services.chat import owned_conversation, prepare_chat_stream, stream_chat_events
+from app.services.chat import (
+    expire_stale_pending,
+    owned_conversation,
+    prepare_chat_stream,
+    stream_chat_events,
+)
 from app.services.chat_provider import ModelProvider, get_model_provider
 from app.services.chat_retriever import Retriever, get_retriever
 
@@ -72,6 +78,7 @@ def delete_conversation(
     database: Annotated[Session, Depends(get_db)],
 ) -> Response:
     conversation = owned_conversation(database, current_user.id, conversation_id, lock=True)
+    expire_stale_pending(database, conversation.id, datetime.now(timezone.utc))
     has_pending = database.scalar(
         select(Message.id).where(
             Message.conversation_id == conversation.id,

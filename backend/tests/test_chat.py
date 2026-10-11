@@ -276,6 +276,69 @@ def test_pending_conversation_rejects_send_and_delete(
     assert delete.json()["error"]["code"] == "CHAT_IN_PROGRESS"
 
 
+def add_pending_reply(
+    database_session: Session, user_id: str, age: timedelta
+) -> tuple[Conversation, Message]:
+    created = datetime.now(timezone.utc) - age
+    conversation = Conversation(user_id=UUID(user_id), title="Stuck")
+    database_session.add(conversation)
+    database_session.flush()
+    reply = Message(
+        conversation_id=conversation.id,
+        role="assistant",
+        status="pending",
+        content="",
+        created_at=created,
+        updated_at=created,
+    )
+    database_session.add(reply)
+    database_session.commit()
+    return conversation, reply
+
+
+def test_stale_pending_reply_is_expired_on_send(
+    client: TestClient, database_session: Session
+) -> None:
+    user_data = register(client)
+    conversation, reply = add_pending_reply(database_session, user_data["id"], timedelta(hours=1))
+    install_provider(FakeProvider())
+
+    send = client.post(
+        "/api/chat/messages/stream",
+        json={"conversationId": str(conversation.id), "content": "Câu mới"},
+    )
+
+    assert send.status_code == 200
+    database_session.expire_all()
+    assert database_session.get(Message, reply.id).status == "failed"
+
+
+def test_stale_pending_reply_does_not_block_delete(
+    client: TestClient, database_session: Session
+) -> None:
+    user_data = register(client)
+    conversation, _ = add_pending_reply(database_session, user_data["id"], timedelta(hours=1))
+
+    assert client.delete(f"/api/chat/conversations/{conversation.id}").status_code == 204
+
+
+def test_recent_pending_reply_is_not_expired(client: TestClient, database_session: Session) -> None:
+    user_data = register(client)
+    conversation, reply = add_pending_reply(
+        database_session, user_data["id"], timedelta(seconds=30)
+    )
+    install_provider(FakeProvider())
+
+    send = client.post(
+        "/api/chat/messages/stream",
+        json={"conversationId": str(conversation.id), "content": "Câu mới"},
+    )
+
+    assert send.status_code == 409
+    database_session.expire_all()
+    assert database_session.get(Message, reply.id).status == "pending"
+
+
 def test_abort_persists_partial_content_and_closing_done_stays_completed(
     client: TestClient, database_session: Session
 ) -> None:
