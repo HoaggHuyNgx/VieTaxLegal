@@ -1,0 +1,113 @@
+.chat-topbar {
+  display: flex;
+  min-height: 104px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 26px 30px 16px;
+  background: var(--chat-surface);
+}
+
+.chat-heading h1 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 750;
+  letter-spacing: -0.55px;
+}
+.chat-heading h1 span {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 9px;
+  border-radius: var(--chat-radius-pill);
+  background: var(--chat-light-blue);
+  color: var(--chat-blue);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0;
+  vertical-align: middle;
+}
+.chat-heading p {
+  margin: 4px 0 0;
+  color: var(--chat-muted);
+  font-size: 11px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+/* LanguageToggle dùng chung với landing page (landing/Hero.jsx), nên chỉ override
+   có scope ở đây — không sửa LanguageToggle.css, vì nó đọc các biến --gray- và
+   --blue- từ :root; đổi sang token --chat- sẽ làm landing mất màu. */
+.chat-topbar .language-toggle {
+  padding: 3px;
+  border-color: var(--chat-border);
+  background: var(--chat-panel);
+}
+.chat-topbar .language-option {
+  min-width: 2.5rem;
+  padding: 0.3rem 0.6rem;
+  color: var(--chat-muted);
+  font-size: 0.72rem;
+}
+.chat-topbar .language-option:hover {
+  background: #e7edfa;
+}
+.chat-topbar .language-option.active {
+  background: var(--chat-blue);
+  color: #fff;
+  box-shadow: 0 3px 8px rgb(20 73 234 / 28%);
+}
+.chat-topbar .language-option:focus-visible {
+  outline-color: var(--chat-blue);
+}
+
+.mobile-menu-button {
+  display: none;
+}
+
+@media (max-width: 1220px) {
+  .chat-topbar {
+    padding-right: 22px;
+    padding-left: 24px;
+  }
+}
+
+@media (max-width: 760px) {
+  .chat-topbar {
+    min-height: 85px;
+    padding: 19px 15px 10px;
+    gap: 11px;
+  }
+  .mobile-menu-button {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--chat-border);
+    border-radius: var(--chat-radius-sm);
+    background: var(--chat-surface);
+  }
+  .chat-heading {
+    min-width: 0;
+    flex: 1;
+  }
+  .chat-heading h1 {
+    overflow: hidden;
+    font-size: 17px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .chat-heading p {
+    overflow: hidden;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .topbar-actions {
+    gap: 7px;
+  }
+}

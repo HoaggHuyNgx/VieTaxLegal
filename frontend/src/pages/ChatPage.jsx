@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import ChatSidebar from '../components/chat/ChatSidebar'
+import ChatSourcesPanel from '../components/chat/ChatSourcesPanel'
 import ChatTopbar from '../components/chat/ChatTopbar'
 import ChatWorkspace from '../components/chat/ChatWorkspace'
+import { latestCitations } from '../components/chat/chat-sources'
 import { useChatStream } from '../components/chat/useChatStream'
 import { useAuth } from '../context/useAuth'
 import { translateApiError } from '../i18n/errors'
@@ -26,7 +28,9 @@ export default function ChatPage() {
   const [conversations, setConversations] = useState([])
   const [activeConversation, setActiveConversation] = useState(() => searchParams.get('conversation'))
   const [searchQuery, setSearchQuery] = useState('')
+  const [sortOrder, setSortOrder] = useState('newest')
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSourcesOpen, setIsSourcesOpen] = useState(true)
   const [isHistoryLoading, setIsHistoryLoading] = useState(true)
   // Errors are stored unresolved ({ error, variant, fallbackKey }) and translated
   // at render, so switching language re-renders them without refetching.
@@ -150,7 +154,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="chat-dashboard">
+    <div className={`chat-dashboard ${isSourcesOpen ? '' : 'sources-collapsed'}`}>
       <ChatSidebar
         conversations={conversations}
         activeConversation={activeConversation}
@@ -158,30 +162,34 @@ export default function ChatPage() {
         onDeleteConversation={handleDeleteConversation}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
+        sortOrder={sortOrder}
+        onToggleSort={() => setSortOrder((current) => (current === 'newest' ? 'oldest' : 'newest'))}
         onNewChat={startNewChat}
         isLoading={isHistoryLoading}
         error={errorText(historyError)}
         onRetry={loadConversations}
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
+        profileName={profileName}
+        email={user?.email}
+        onLogout={handleLogout}
       />
-      <section className="chat-app-shell">
-        <ChatTopbar
-          profileName={profileName}
-          email={user?.email}
-          onOpenSidebar={() => setIsSidebarOpen(true)}
-          onLogout={handleLogout}
-        />
-        <ChatWorkspace
-          messages={messages}
-          onSend={sendMessage}
-          onStop={stopStreaming}
-          isStreaming={isStreaming}
-          isLoading={isConversationLoading}
-          error={errorText(chatError)}
-          onClearError={() => setChatError(null)}
-        />
-      </section>
+      <ChatTopbar onOpenSidebar={() => setIsSidebarOpen(true)} />
+      <ChatWorkspace
+        messages={messages}
+        onSend={sendMessage}
+        onStop={stopStreaming}
+        isStreaming={isStreaming}
+        isLoading={isConversationLoading}
+        error={errorText(chatError)}
+        onClearError={() => setChatError(null)}
+      />
+      <ChatSourcesPanel
+        citations={latestCitations(messages)}
+        isStreaming={isStreaming}
+        isOpen={isSourcesOpen}
+        onToggle={() => setIsSourcesOpen((current) => !current)}
+      />
       {isSidebarOpen ? (
         <button
           type="button"

@@ -1,0 +1,155 @@
+.chat-sources-panel {
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  padding: 18px 16px 20px;
+  border-left: 1px solid var(--chat-border);
+  background: var(--chat-surface);
+}
+
+.sources-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.sources-header h2 {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+.sources-header h2 svg {
+  flex: 0 0 auto;
+  color: var(--chat-blue);
+}
+.sources-toggle {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--chat-border);
+  border-radius: 7px;
+  background: var(--chat-surface);
+  color: var(--chat-muted);
+}
+.sources-toggle:hover {
+  border-color: #c8d6f5;
+  color: var(--chat-blue);
+}
+
+.sources-subtitle {
+  margin: 9px 0 15px;
+  color: var(--chat-muted);
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+.sources-empty {
+  padding: 18px 14px;
+  border: 1px dashed var(--chat-border);
+  border-radius: var(--chat-radius);
+  background: var(--chat-panel);
+  text-align: center;
+}
+.sources-empty h3 {
+  margin: 0 0 6px;
+  color: var(--chat-ink-soft);
+  font-size: 11.5px;
+  font-weight: 650;
+}
+.sources-empty p {
+  margin: 0;
+  color: var(--chat-muted);
+  font-size: 10.5px;
+  line-height: 1.65;
+}
+
+.sources-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.source-card {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 9px;
+  padding: 11px 12px;
+  border: 1px solid var(--chat-border);
+  border-radius: var(--chat-radius);
+  background: var(--chat-surface);
+  box-shadow: var(--chat-shadow-soft);
+}
+.source-card:hover {
+  border-color: #c8d6f5;
+}
+.source-card-icon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: var(--chat-radius-sm);
+  background: var(--chat-light-blue);
+  color: var(--chat-blue);
+}
+.source-card-body {
+  min-width: 0;
+}
+.source-card-body a,
+.source-card-title {
+  display: block;
+  color: var(--chat-ink-soft);
+  font-size: 11.5px;
+  font-weight: 650;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.source-card-body a {
+  color: var(--chat-blue);
+}
+.source-card-body p {
+  margin: 5px 0 0;
+  color: var(--chat-muted);
+  font-size: 10px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.sources-show-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 9px 10px;
+  border: 1px solid var(--chat-border);
+  border-radius: var(--chat-radius-sm);
+  background: var(--chat-panel);
+  color: var(--chat-blue);
+  font-size: 10.5px;
+  font-weight: 650;
+}
+.sources-show-all:hover {
+  border-color: #c8d6f5;
+  background: var(--chat-light-blue);
+}
+
+/* Rail thu gọn: chỉ còn nút toggle, panel vẫn mounted nên affordance mở lại
+   không bao giờ mất. */
+.sources-collapsed .chat-sources-panel {
+  align-items: center;
+  padding: 18px 8px;
+}
+.sources-collapsed .chat-sources-panel > :not(.sources-header) {
+  display: none;
+}
+.sources-collapsed .sources-header h2 {
+  display: none;
+}

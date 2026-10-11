@@ -1,17 +1,91 @@
-/* Biến màu khai báo ở đây và được ChatSidebar.css / ChatWorkspace.css kế thừa
-   qua .chat-dashboard, nên file này phải luôn được import cùng trang chat. */
+/* Biến màu khai báo ở đây và được ChatSidebar.css / ChatTopbar.css /
+   ChatWorkspace.css / ChatSourcesPanel.css kế thừa qua .chat-dashboard, nên file
+   này phải luôn được import cùng trang chat.
+
+   Scope là .chat-dashboard chứ không phải :root: styles/index.css phục vụ landing
+   + auth với một palette khác (--cream, --gray-*, --blue-primary). Đẩy màu chat
+   lên global sẽ tạo nguồn sự thật thứ hai cho "màu xanh". */
 .chat-dashboard {
+  /* surfaces */
+  --chat-canvas: #f9fbff;
+  --chat-surface: #fff;
+  --chat-panel: #f7f9fd;
+  /* text */
   --chat-ink: #122257;
+  --chat-ink-soft: #20335f;
   --chat-muted: #7180a4;
+  --chat-faint: #8592ab;
+  /* lines */
   --chat-border: #e5eaf4;
+  --chat-border-soft: #edf1f8;
+  /* brand */
   --chat-blue: #1449ea;
+  --chat-blue-strong: #0d3cdf;
   --chat-light-blue: #eff4ff;
-  display: flex;
-  min-height: 100dvh;
+  --chat-tab-active: #eef3ff;
+  --chat-gradient: linear-gradient(130deg, #0d3cdf, #1654f5);
+  /* state */
+  --chat-danger: #b43f4d;
+  --chat-danger-soft: #fff6f7;
+  /* radius */
+  --chat-radius-sm: 8px;
+  --chat-radius: 12px;
+  --chat-radius-lg: 16px;
+  --chat-radius-pill: 999px;
+  /* elevation */
+  --chat-shadow-soft: 0 2px 6px rgb(25 48 108 / 5%);
+  --chat-shadow-card: 0 10px 28px rgb(29 54 114 / 13%);
+  /* layout */
+  --chat-sidebar-width: 300px;
+  --chat-sources-width: 300px;
+  --chat-center-max: 820px;
+  /* tints cho thẻ gợi ý */
+  --tint-blue-bg: #eef3ff;
+  --tint-blue-fg: #1449ea;
+  --tint-violet-bg: #f1ecff;
+  --tint-violet-fg: #6d43d6;
+  --tint-green-bg: #e8f7ef;
+  --tint-green-fg: #157a4e;
+  --tint-orange-bg: #fff1e4;
+  --tint-orange-fg: #b3600f;
+
+  display: grid;
+  grid-template-columns: var(--chat-sidebar-width) minmax(0, 1fr) var(--chat-sources-width);
+  /* height chứ không phải min-height: các cột con cần một chiều cao xác định để
+     .chat-scroll-area{flex:1;overflow-y:auto} cuộn được thay vì đẩy trang dài ra. */
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100dvh;
   overflow: hidden;
-  background: #f9fbff;
+  background: var(--chat-canvas);
   color: var(--chat-ink);
   font-size: 14px;
+  transition: grid-template-columns 0.18s ease;
+}
+
+.chat-sidebar {
+  grid-row: 1 / -1;
+  grid-column: 1;
+}
+.chat-topbar {
+  grid-row: 1;
+  grid-column: 2 / -1;
+}
+.chat-workspace {
+  grid-row: 2;
+  grid-column: 2;
+  min-width: 0;
+  min-height: 0;
+}
+.chat-sources-panel {
+  grid-row: 2;
+  grid-column: 3;
+  min-height: 0;
+}
+
+/* Panel luôn mounted — thu gọn thành một rail 44px chỉ còn nút mở lại, nên
+   affordance không bao giờ biến mất và không cần thêm nút ở topbar. */
+.chat-dashboard.sources-collapsed {
+  grid-template-columns: var(--chat-sidebar-width) minmax(0, 1fr) 44px;
 }
 
 .chat-dashboard button,
@@ -25,146 +99,54 @@
   cursor: pointer;
 }
 
-.profile-button span {
-  display: grid;
-  width: 30px;
-  height: 30px;
-  place-items: center;
-  border-radius: 50%;
-  background: #e6a807;
-  color: #fff;
-  font-size: 10px;
-  font-weight: 750;
-}
-
-.chat-app-shell {
-  display: flex;
-  min-width: 0;
-  flex: 1;
-  flex-direction: column;
-  height: 100dvh;
-  background: #fff;
-}
-.chat-topbar {
-  display: flex;
-  min-height: 104px;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 29px 32px 15px;
-}
-.chat-heading h1 {
-  margin: 0;
-  font-size: 21px;
-  font-weight: 750;
-  letter-spacing: -0.55px;
-}
-.chat-heading h1 span {
-  display: inline-block;
-  margin-left: 7px;
-  padding: 3px 8px;
-  border-radius: 5px;
-  background: #e9efff;
-  color: #1550ea;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0;
-  vertical-align: middle;
-}
-.chat-heading p {
-  margin: 3px 0 0;
-  color: #60709a;
-  font-size: 11px;
-}
-.topbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.topbar-actions > button {
-  display: grid;
-  width: 35px;
-  height: 35px;
-  place-items: center;
-  padding: 0;
-  border: 1px solid var(--chat-border);
-  border-radius: 50%;
-  background: #fff;
-  color: #263a70;
-}
-.topbar-actions .profile-button {
-  display: flex;
-  width: auto;
-  height: auto;
-  gap: 8px;
-  border: 0;
-  background: transparent;
-}
-.profile-menu-wrapper {
-  position: relative;
-}
-.profile-menu {
-  position: absolute;
-  z-index: 6;
-  top: calc(100% + 9px);
-  right: 0;
-  min-width: 190px;
-  padding: 7px;
-  border: 1px solid var(--chat-border);
-  border-radius: 9px;
-  background: #fff;
-  box-shadow: 0 10px 28px rgb(29 54 114 / 13%);
-}
-.profile-menu p {
-  overflow: hidden;
-  margin: 2px 6px 7px;
-  color: #7180a4;
-  font-size: 10px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.profile-menu button {
-  display: block;
-  width: 100%;
-  padding: 8px 6px;
-  border: 0;
-  border-radius: 5px;
-  background: transparent;
-  color: #be3344;
-  font-size: 11px;
-  font-weight: 650;
-  text-align: left;
-}
-.profile-menu button:hover {
-  background: #fff3f4;
-}
-.profile-button strong {
-  font-size: 11px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.profile-button span {
-  width: 30px;
-  height: 30px;
-}
-.mobile-menu-button {
-  display: none;
+.chat-dashboard :focus-visible {
+  outline: 2px solid var(--chat-blue);
+  outline-offset: 2px;
 }
 
 .chat-backdrop {
   display: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .chat-dashboard {
+    transition: none;
+  }
+}
+
 @media (max-width: 1220px) {
-  .chat-topbar {
-    padding-right: 22px;
-    padding-left: 24px;
+  .chat-dashboard {
+    --chat-sidebar-width: 260px;
+    --chat-sources-width: 260px;
+  }
+}
+
+/* Panel nguồn ẩn hẳn thay vì thành drawer: CitationList inline trong từng câu
+   trả lời đã hiển thị đúng tập dữ liệu đó ở mọi bề rộng. */
+@media (max-width: 1100px) {
+  .chat-dashboard,
+  .chat-dashboard.sources-collapsed {
+    grid-template-columns: var(--chat-sidebar-width) minmax(0, 1fr);
+  }
+  .chat-sources-panel {
+    display: none;
   }
 }
 
 @media (max-width: 760px) {
-  .chat-dashboard {
+  .chat-dashboard,
+  .chat-dashboard.sources-collapsed {
+    grid-template-columns: minmax(0, 1fr);
     font-size: 13px;
   }
+  .chat-topbar {
+    grid-column: 1;
+  }
+  .chat-workspace {
+    grid-column: 1;
+  }
+  /* Sidebar chuyển sang position:fixed nên bị loại khỏi grid flow — không cần
+     đặt lại grid-column cho nó. */
   .chat-backdrop {
     display: block;
     position: fixed;
@@ -172,43 +154,5 @@
     inset: 0;
     border: 0;
     background: rgb(13 25 60 / 28%);
-  }
-  .chat-topbar {
-    min-height: 85px;
-    padding: 19px 15px 10px;
-    gap: 11px;
-  }
-  .mobile-menu-button {
-    display: grid;
-    width: 34px;
-    height: 34px;
-    flex: 0 0 auto;
-    place-items: center;
-    padding: 0;
-    border: 1px solid var(--chat-border);
-    border-radius: 7px;
-    background: #fff;
-  }
-  .chat-heading {
-    min-width: 0;
-    flex: 1;
-  }
-  .chat-heading h1 {
-    overflow: hidden;
-    font-size: 17px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .chat-heading p {
-    overflow: hidden;
-    font-size: 10px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .topbar-actions {
-    gap: 7px;
-  }
-  .topbar-actions .profile-menu-wrapper {
-    display: none;
   }
 }

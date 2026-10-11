@@ -1,21 +1,10 @@
-import { useState } from 'react'
-import { ChevronDownIcon, MenuIcon } from './ChatIcons'
+import { MenuIcon } from './ChatIcons'
 import LanguageToggle from '../common/LanguageToggle'
 import { useI18n } from '../../i18n/useI18n'
+import './ChatTopbar.css'
 
-function initialsFrom(name) {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(-2)
-    .map((part) => part[0])
-    .join('')
-    .toUpperCase()
-}
-
-export default function ChatTopbar({ profileName, email, onOpenSidebar, onLogout }) {
+export default function ChatTopbar({ onOpenSidebar }) {
   const { t } = useI18n()
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false)
 
   return (
     <header className="chat-topbar">
@@ -35,27 +24,6 @@ export default function ChatTopbar({ profileName, email, onOpenSidebar, onLogout
       </div>
       <div className="topbar-actions">
         <LanguageToggle />
-        <div className="profile-menu-wrapper">
-          <button
-            type="button"
-            className="profile-button"
-            onClick={() => setIsProfileMenuOpen((current) => !current)}
-            aria-expanded={isProfileMenuOpen}
-            aria-haspopup="menu"
-          >
-            <span>{initialsFrom(profileName)}</span>
-            <strong>{profileName}</strong>
-            <ChevronDownIcon />
-          </button>
-          {isProfileMenuOpen ? (
-            <div className="profile-menu" role="menu">
-              <p>{email}</p>
-              <button type="button" role="menuitem" onClick={onLogout}>
-                {t('chat.page.logout')}
-              </button>
-            </div>
-          ) : null}
-        </div>
       </div>
     </header>
   )

@@ -2,9 +2,75 @@ import { useEffect, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { suggestedQuestions } from '../../data/chat'
 import { useI18n } from '../../i18n/useI18n'
-import { CopyIcon, LegalIcon, LogoMark, SendIcon } from './ChatIcons'
+import { safeExternalUrl } from './chat-sources'
+import {
+  ArrowRightIcon,
+  BuildingIcon,
+  CalculatorIcon,
+  CopyIcon,
+  DocumentCheckIcon,
+  DocumentIcon,
+  LegalIcon,
+  LogoMark,
+  PaperclipIcon,
+  PeopleIcon,
+  ReceiptIcon,
+  ScanIcon,
+  SendIcon,
+  ShieldIcon,
+  SparkleIcon,
+} from './ChatIcons'
 import { formatMessageTime } from './message-time'
 import './ChatWorkspace.css'
+
+const MAX_MESSAGE_LENGTH = 4000
+
+// Cục bộ và không export: ChatIcons.jsx export toàn component, thêm một const
+// non-component vào đó sẽ trip react-refresh/only-export-components, mà eslint
+// chạy với --max-warnings 0 nên warning thành lỗi build.
+const SUGGESTION_ICONS = {
+  receipt: ReceiptIcon,
+  people: PeopleIcon,
+  documentCheck: DocumentCheckIcon,
+  building: BuildingIcon,
+}
+
+// "Tính thuế" và "Scan hợp đồng" chưa có endpoint nào ở backend, nên chúng render
+// disabled kèm badge "Sắp có" thay vì giả lập một tính năng không tồn tại.
+const TOOL_TABS = [
+  { id: 'legal', labelKey: 'chat.workspace.toolLabel', Icon: LegalIcon, available: true },
+  { id: 'tax', labelKey: 'chat.workspace.toolTax', Icon: CalculatorIcon, available: false },
+  { id: 'scan', labelKey: 'chat.workspace.toolScan', Icon: ScanIcon, available: false },
+]
+
+// Cùng lý do: không có endpoint upload nào trong backend.
+const COMPOSER_TOOLS = [
+  { id: 'attach', labelKey: 'chat.workspace.attachFile', Icon: PaperclipIcon },
+  { id: 'document', labelKey: 'chat.workspace.attachDocument', Icon: DocumentIcon },
+]
+
+function ToolTabs() {
+  const { t } = useI18n()
+
+  return (
+    <div className="chat-tool-tabs" role="group" aria-label={t('chat.workspace.toolsAria')}>
+      {TOOL_TABS.map(({ id, labelKey, Icon, available }) =>
+        available ? (
+          <span className="tool-tab is-active" key={id}>
+            <Icon />
+            {t(labelKey)}
+          </span>
+        ) : (
+          <button type="button" className="tool-tab is-coming-soon" key={id} disabled aria-disabled="true">
+            <Icon />
+            {t(labelKey)}
+            <span className="coming-soon-badge">{t('chat.workspace.comingSoon')}</span>
+          </button>
+        )
+      )}
+    </div>
+  )
+}
 
 function CitationList({ citations }) {
   const { t } = useI18n()
@@ -17,7 +83,7 @@ function CitationList({ citations }) {
         // `url` and `excerpt` are optional in CitationResponse; `id` and `title`
         // are not. Anything other than http(s) is dropped rather than rendered:
         // this text comes from the model.
-        const safeUrl = /^https?:\/\//i.test(citation.url || '') ? citation.url : null
+        const safeUrl = safeExternalUrl(citation.url)
         return (
           <div className="answer-source-row" key={citation.id}>
             <span className="source-number">{index + 1}</span>
@@ -37,7 +103,7 @@ function CitationList({ citations }) {
 }
 
 function SafeMarkdownLink({ children, href }) {
-  const safeHref = /^https?:\/\//i.test(href || '') ? href : null
+  const safeHref = safeExternalUrl(href)
   return safeHref ? (
     <a href={safeHref} target="_blank" rel="noreferrer">
       {children}
@@ -108,6 +174,35 @@ function AssistantMessage({ message }) {
   )
 }
 
+function SuggestionGrid({ onPick }) {
+  const { t } = useI18n()
+
+  return (
+    <div className="suggestion-grid">
+      {suggestedQuestions.map((question) => {
+        const Icon = SUGGESTION_ICONS[question.icon]
+        return (
+          <button
+            type="button"
+            className="suggestion-card"
+            key={question.id}
+            aria-label={t('chat.workspace.suggestionAria', { question: question.text })}
+            onClick={() => onPick(question.text)}
+          >
+            <span className={`suggestion-icon tint-${question.tint}`} aria-hidden="true">
+              {Icon ? <Icon /> : null}
+            </span>
+            <span className="suggestion-text">{question.text}</span>
+            <span className="suggestion-arrow" aria-hidden="true">
+              <ArrowRightIcon />
+            </span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
 export default function ChatWorkspace({
   messages,
   onSend,
@@ -135,20 +230,28 @@ export default function ChatWorkspace({
     setMessage('')
   }
 
+  const isEmptyThread = !isLoading && messages.length === 0
+
   return (
     <main className="chat-workspace">
-      <div className="chat-tabs single" aria-label={t('chat.workspace.toolsAria')}>
-        <span>
-          <LegalIcon />
-          {t('chat.workspace.toolLabel')}
-        </span>
-      </div>
+      <ToolTabs />
       <div className="chat-scroll-area" ref={scrollAreaRef}>
         <div className="chat-thread">
           {isLoading ? <p className="thread-state">{t('chat.workspace.loading')}</p> : null}
-          {!isLoading && messages.length === 0 ? (
+          {isEmptyThread ? (
             <section className="chat-empty-state">
-              <LogoMark size={48} />
+              <span className="empty-state-mark">
+                <LogoMark size={56} />
+                <i className="empty-state-sparkle sparkle-a">
+                  <SparkleIcon size={14} />
+                </i>
+                <i className="empty-state-sparkle sparkle-b">
+                  <SparkleIcon size={10} />
+                </i>
+                <i className="empty-state-sparkle sparkle-c">
+                  <SparkleIcon size={8} />
+                </i>
+              </span>
               <h2>{t('chat.workspace.emptyHeading')}</h2>
               <p>{t('chat.workspace.emptyBody')}</p>
             </section>
@@ -168,15 +271,7 @@ export default function ChatWorkspace({
         </div>
       </div>
       <div className="chat-composer-area">
-        {!isLoading && messages.length === 0 ? (
-          <div className="suggestion-list">
-            {suggestedQuestions.map((question) => (
-              <button type="button" key={question.id} onClick={() => setMessage(question.text)}>
-                {question.text}
-              </button>
-            ))}
-          </div>
-        ) : null}
+        {isEmptyThread ? <SuggestionGrid onPick={setMessage} /> : null}
         {error ? (
           <div className="chat-error" role="alert">
             <span>{error}</span>
@@ -197,12 +292,31 @@ export default function ChatWorkspace({
             }}
             placeholder={t('chat.workspace.composerPlaceholder')}
             rows="2"
-            maxLength="4000"
+            maxLength={MAX_MESSAGE_LENGTH}
             disabled={isLoading}
             aria-label={t('chat.workspace.composerAria')}
           />
           <div className="composer-actions">
-            <span className="composer-limit">{message.length}/4000</span>
+            <span className="composer-limit">
+              {message.length}/{MAX_MESSAGE_LENGTH}
+            </span>
+            <div className="composer-tools">
+              {COMPOSER_TOOLS.map(({ id, labelKey, Icon }) => (
+                // Nút disabled không phát pointer event, nên tooltip phải nằm
+                // trên wrapper không-disabled thì :hover mới kích hoạt được.
+                <span className="coming-soon-wrap" key={id} data-tooltip={t('chat.workspace.comingSoon')}>
+                  <button
+                    type="button"
+                    className="composer-icon-button is-coming-soon"
+                    disabled
+                    aria-disabled="true"
+                    aria-label={t('chat.workspace.comingSoonAria', { name: t(labelKey) })}
+                  >
+                    <Icon />
+                  </button>
+                </span>
+              ))}
+            </div>
             {isStreaming ? (
               <button type="button" className="stop-button" onClick={onStop}>
                 <span /> {t('chat.workspace.stop')}
@@ -219,7 +333,10 @@ export default function ChatWorkspace({
             )}
           </div>
         </form>
-        <p className="chat-disclaimer">{t('chat.workspace.disclaimer')}</p>
+        <p className="chat-disclaimer">
+          <ShieldIcon size={13} />
+          {t('chat.workspace.disclaimer')}
+        </p>
       </div>
     </main>
   )
