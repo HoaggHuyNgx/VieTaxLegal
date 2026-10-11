@@ -16,6 +16,16 @@ branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 
 
+def _has_supabase_roles() -> bool:
+    """anon/authenticated exist only on Supabase; plain PostgreSQL has neither."""
+    if op.get_context().as_sql:
+        return True  # offline SQL generation cannot query the server
+    found = op.get_bind().execute(
+        sa.text("SELECT count(*) FROM pg_roles WHERE rolname IN ('anon', 'authenticated')")
+    )
+    return found.scalar() == 2
+
+
 def upgrade() -> None:
     op.create_table(
         "conversations",
@@ -101,6 +111,9 @@ def upgrade() -> None:
         "chat_usage_events",
         ["user_id", "created_at"],
     )
+
+    if not _has_supabase_roles():
+        return
 
     op.execute("ALTER TABLE public.conversations ENABLE ROW LEVEL SECURITY")
     op.execute("REVOKE ALL PRIVILEGES ON TABLE public.conversations FROM anon, authenticated")
