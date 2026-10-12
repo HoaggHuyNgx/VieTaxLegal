@@ -3,10 +3,10 @@ import json
 import logging
 from collections.abc import AsyncIterator
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from uuid import UUID
 
-from sqlalchemy import and_, func, or_, select, update
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
@@ -22,20 +22,17 @@ from app.schemas.chat import (
 from app.services.chat_citations import (
     citation_snapshot,
     select_cited,
-    strip_markers,
 )
+from app.services.chat_history import provider_history, retrieval_query
+from app.services.chat_limits import enforce_rate_limits, expire_stale_pending
 from app.services.chat_prompt import prompt_with_context
 from app.services.chat_provider import (
     ModelProvider,
     ProviderConfigurationError,
-    ProviderMessage,
 )
 from app.services.chat_retriever import Retriever
 
 logger = logging.getLogger(__name__)
-MAX_HISTORY_CHARACTERS = 40_000
-# A pending reply older than this belongs to a stream that died without finalizing.
-PENDING_REPLY_TIMEOUT = timedelta(minutes=5)
 
 
 @dataclass(frozen=True, slots=True)
@@ -65,43 +62,6 @@ def owned_conversation(
     return conversation
 
 
-def expire_stale_pending(database: Session, conversation_id: UUID, now: datetime) -> None:
-    """Mark abandoned pending replies as failed so a crashed stream cannot lock the conversation."""
-    database.execute(
-        update(Message)
-        .where(
-            Message.conversation_id == conversation_id,
-            Message.role == "assistant",
-            Message.status == "pending",
-            Message.created_at < now - PENDING_REPLY_TIMEOUT,
-        )
-        .values(status="failed", updated_at=now)
-    )
-
-
-def _enforce_rate_limits(database: Session, user_id: UUID, now: datetime) -> None:
-    settings = get_settings()
-    count_statement = select(func.count(ChatUsageEvent.id)).where(ChatUsageEvent.user_id == user_id)
-    minute_count = database.scalar(
-        count_statement.where(ChatUsageEvent.created_at >= now - timedelta(minutes=1))
-    )
-    if (minute_count or 0) >= settings.chat_rate_limit_per_minute:
-        raise AppError(
-            429,
-            "CHAT_RATE_LIMITED",
-            "Bạn gửi câu hỏi quá nhanh. Vui lòng thử lại sau ít phút.",
-        )
-
-    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    daily_count = database.scalar(count_statement.where(ChatUsageEvent.created_at >= start_of_day))
-    if (daily_count or 0) >= settings.chat_daily_message_limit:
-        raise AppError(
-            429,
-            "CHAT_DAILY_LIMIT_REACHED",
-            "Bạn đã dùng hết lượt chat hôm nay. Vui lòng quay lại vào ngày mai.",
-        )
-
-
 def _title_from_content(content: str) -> str:
     return " ".join(content.split())[:80]
 
@@ -115,7 +75,7 @@ def prepare_chat_stream(
     now = _utcnow()
     # Serializing on the user row makes the database-backed rate check atomic per account.
     database.scalar(select(User.id).where(User.id == user.id).with_for_update())
-    _enforce_rate_limits(database, user.id, now)
+    enforce_rate_limits(database, user.id, now)
 
     if payload.conversation_id:
         conversation = owned_conversation(database, user.id, payload.conversation_id, lock=True)
@@ -202,46 +162,6 @@ def prepare_chat_stream(
     return prepared
 
 
-def _provider_history(database: Session, conversation_id: UUID) -> list[ProviderMessage]:
-    settings = get_settings()
-    eligible = or_(
-        and_(Message.role == "user", Message.status == "completed"),
-        and_(Message.role == "assistant", Message.status == "completed"),
-    )
-    newest = list(
-        database.scalars(
-            select(Message)
-            .where(Message.conversation_id == conversation_id, eligible)
-            .order_by(Message.created_at.desc(), Message.id.desc())
-            .limit(settings.chat_history_messages)
-        )
-    )
-
-    selected: list[Message] = []
-    character_count = 0
-    for message in newest:
-        if character_count + len(message.content) > MAX_HISTORY_CHARACTERS:
-            break
-        selected.append(message)
-        character_count += len(message.content)
-    selected.reverse()
-
-    normalized: list[ProviderMessage] = []
-    for message in selected:
-        role = message.role
-        content = strip_markers(message.content) if role == "assistant" else message.content
-        if role == "assistant" and not normalized:
-            continue
-        if normalized and normalized[-1].role == role:
-            previous = normalized[-1]
-            normalized[-1] = ProviderMessage(
-                role=previous.role, content=f"{previous.content}\n\n{content}"
-            )
-        else:
-            normalized.append(ProviderMessage(role=role, content=content))  # type: ignore[arg-type]
-    return normalized
-
-
 def _sse(event: str, data: dict[str, object]) -> str:
     payload = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
     return f"event: {event}\ndata: {payload}\n\n"
@@ -277,6 +197,29 @@ def _finalize_message(
     return message
 
 
+def _finalize_quietly(
+    database: Session, prepared: PreparedChatStream, status: str, content: str
+) -> None:
+    """Best-effort terminal write for error paths.
+
+    If the database is also failing, raising here would replace the original error and the
+    client would never get an `error` event. The stale-pending sweep recovers the row later.
+    """
+    try:
+        database.rollback()
+        _finalize_message(database, prepared, status, content)
+    except Exception:
+        database.rollback()
+        logger.warning(
+            "Could not mark assistant message %s as %s", prepared.assistant_message_id, status
+        )
+
+
+def _error_event(prepared: PreparedChatStream, code: str, message: str, retryable: bool) -> str:
+    error = {"code": code, "message": message, "retryable": retryable}
+    return _sse("error", {"messageId": str(prepared.assistant_message_id), "error": error})
+
+
 async def stream_chat_events(
     database: Session,
     prepared: PreparedChatStream,
@@ -289,10 +232,10 @@ async def stream_chat_events(
     terminal_persisted = False
     try:
         yield _sse("meta", prepared.meta)
-        retrieval = await retriever.retrieve(prepared.query)
-        history = _provider_history(database, prepared.conversation_id)
-        # Release the read-only transaction/connection before waiting on the model stream.
+        history = provider_history(database, prepared.conversation_id)
+        # Release the read-only transaction/connection before waiting on retrieval or the model.
         database.rollback()
+        retrieval = await retriever.retrieve(retrieval_query(history, prepared.query))
         settings = get_settings()
         async for event in provider.stream(
             history,
@@ -330,36 +273,28 @@ async def stream_chat_events(
             {"message": message_payload, "usage": message_payload["tokenUsage"]},
         )
     except (asyncio.CancelledError, GeneratorExit):
-        database.rollback()
         if not terminal_persisted:
-            _finalize_message(database, prepared, "cancelled", partial_content)
+            _finalize_quietly(database, prepared, "cancelled", partial_content)
         raise
-    except ProviderConfigurationError:
-        database.rollback()
-        _finalize_message(database, prepared, "failed", partial_content)
-        yield _sse(
-            "error",
-            {
-                "messageId": str(prepared.assistant_message_id),
-                "error": {
-                    "code": "CHAT_NOT_CONFIGURED",
-                    "message": "Dịch vụ chat chưa được cấu hình. Vui lòng liên hệ quản trị viên.",
-                    "retryable": False,
-                },
-            },
-        )
-    except Exception:
-        database.rollback()
+    except Exception as error:
+        if terminal_persisted:
+            # The answer is already saved as completed; do not overwrite it with "failed".
+            # The client sees a truncated stream and reloads the finished message.
+            logger.warning("Chat stream failed after completion: %s", type(error).__name__)
+            return
         logger.warning("Chat stream failed for assistant message %s", prepared.assistant_message_id)
-        _finalize_message(database, prepared, "failed", partial_content)
-        yield _sse(
-            "error",
-            {
-                "messageId": str(prepared.assistant_message_id),
-                "error": {
-                    "code": "CHAT_PROVIDER_UNAVAILABLE",
-                    "message": "Dịch vụ trả lời đang tạm thời gián đoạn. Vui lòng thử lại sau.",
-                    "retryable": True,
-                },
-            },
-        )
+        _finalize_quietly(database, prepared, "failed", partial_content)
+        if isinstance(error, ProviderConfigurationError):
+            yield _error_event(
+                prepared,
+                "CHAT_NOT_CONFIGURED",
+                "Dịch vụ chat chưa được cấu hình. Vui lòng liên hệ quản trị viên.",
+                retryable=False,
+            )
+        else:
+            yield _error_event(
+                prepared,
+                "CHAT_PROVIDER_UNAVAILABLE",
+                "Dịch vụ trả lời đang tạm thời gián đoạn. Vui lòng thử lại sau.",
+                retryable=True,
+            )

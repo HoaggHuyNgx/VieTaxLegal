@@ -12,7 +12,8 @@ from app.main import app
 from app.models.chat import ChatUsageEvent, Conversation, Message
 from app.models.user import User
 from app.schemas.chat import SendMessageRequest
-from app.services.chat import _provider_history, prepare_chat_stream, stream_chat_events
+from app.services.chat import prepare_chat_stream, stream_chat_events
+from app.services.chat_history import provider_history
 from app.services.chat_provider import (
     ModelProvider,
     ProviderError,
@@ -426,6 +427,6 @@ def test_history_respects_message_and_character_caps(
     from app.core.config import get_settings
 
     monkeypatch.setattr(get_settings(), "chat_history_messages", 20)
-    history = _provider_history(database_session, conversation.id)
+    history = provider_history(database_session, conversation.id)
     assert len(history) <= 20
     assert sum(len(item.content) for item in history) <= 40_000
