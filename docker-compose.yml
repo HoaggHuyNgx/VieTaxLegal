@@ -1,0 +1,59 @@
+# One-command demo: docker compose up --build   ->  http://localhost:3000
+# Secrets come from the shell or a root-level `.env` (never committed); see backend/.env.example.
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: vietaxlegal
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: vietaxlegal
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vietaxlegal"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+
+  qdrant:
+    image: qdrant/qdrant:v1.19.2 # keep in sync with the pinned qdrant-client minor
+    volumes:
+      - qdrant_data:/qdrant/storage
+    ports:
+      - "127.0.0.1:6333:6333" # dashboard / ingest scripts from the host; loopback only
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+    environment:
+      APP_ENV: ${APP_ENV:-development}
+      DATABASE_URL: postgresql+psycopg://vietaxlegal:${POSTGRES_PASSWORD}@db:5432/vietaxlegal
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET (>=32 random chars)}
+      CORS_ORIGINS: http://localhost:3000
+      LOG_JSON: "true"
+      CHAT_PROVIDER: ${CHAT_PROVIDER:-anthropic}
+      CHAT_MODEL: ${CHAT_MODEL:-claude-sonnet-5}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      RAG_ENABLED: ${RAG_ENABLED:-false}
+      QDRANT_URL: http://qdrant:6333
+    volumes:
+      - ./backend/corpus:/app/corpus:ro # source of truth for RAG; the index is rebuildable
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  qdrant_data:
