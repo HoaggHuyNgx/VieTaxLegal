@@ -17,6 +17,7 @@ dependencies = [
   "pydantic-settings>=2.6",
   "PyJWT>=2.15",
   "pwdlib[argon2]>=0.2",
+  "qdrant-client>=1.19,<1.20",
   "sqlalchemy>=2.0",
   "uvicorn[standard]>=0.32",
 ]
@@ -28,8 +29,20 @@ dev = [
   "ruff>=0.9",
 ]
 
+# Offline corpus tooling (PDF text extraction); not needed by the app or CI tests.
+corpus = [
+  "pymupdf>=1.24",
+]
+
+# Local BKAI embedding model (CPU torch, large download); experiment 4 only.
+local-embed = [
+  "sentence-transformers>=3",
+  "pyvi>=0.1.1",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = "-p no:cacheprovider"
 
 [tool.ruff]

@@ -6,13 +6,17 @@ import './ChatSourcesPanel.css'
 
 const VISIBLE_SOURCE_LIMIT = 3
 
-// CitationResponse is only {id, title, url?, excerpt?}, and url/excerpt are
-// serialized with exclude_none, so the keys may be absent entirely. Never render
-// a document number, issue date, or chapter/article here: the backend has no
-// field for them, and inventing one is the biggest risk in a legal product.
+// Every optional key (url, excerpt, locator, documentNumber, issuedOn) may be
+// absent. Render a field only when the backend sent it, and never invent one:
+// a made-up article or document number is the biggest risk in a legal product.
 function SourceCard({ citation }) {
   const { t } = useI18n()
   const href = safeExternalUrl(citation.url)
+  const meta = [
+    citation.locator,
+    citation.documentNumber,
+    citation.issuedOn ? t('chat.sources.issuedOn', { date: citation.issuedOn }) : null,
+  ].filter(Boolean)
 
   return (
     <li className="source-card">
@@ -32,7 +36,8 @@ function SourceCard({ citation }) {
         ) : (
           <span className="source-card-title">{citation.title}</span>
         )}
-        {citation.excerpt ? <p>{citation.excerpt}</p> : null}
+        {meta.length > 0 ? <p className="source-card-meta">{meta.join(' · ')}</p> : null}
+        {citation.excerpt ? <p className="source-card-excerpt">{citation.excerpt}</p> : null}
       </div>
     </li>
   )

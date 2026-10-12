@@ -28,10 +28,15 @@ class TokenUsage(BaseModel):
 
 
 class CitationResponse(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
     id: str
     title: str
     url: str | None = None
     excerpt: str | None = None
+    document_number: str | None = Field(default=None, alias="documentNumber")
+    locator: str | None = None
+    issued_on: str | None = Field(default=None, alias="issuedOn")
 
 
 class MessageResponse(BaseModel):
@@ -63,7 +68,7 @@ class MessageResponse(BaseModel):
                 input_tokens=message.input_tokens,
                 output_tokens=message.output_tokens,
             ),
-            citations=[],
+            citations=[CitationResponse.model_validate(c) for c in message.citations or []],
             created_at=message.created_at,
             updated_at=message.updated_at,
         )

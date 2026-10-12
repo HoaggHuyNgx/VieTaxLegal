@@ -327,13 +327,12 @@ const vi = {
     },
     sources: {
       title: 'Nguồn tham khảo',
-      subtitle: 'Các văn bản pháp luật có thể liên quan đến câu hỏi của bạn.',
+      subtitle: 'Các văn bản pháp luật mà câu trả lời này đã viện dẫn.',
       emptyTitle: 'Chưa có nguồn tham khảo',
-      // Accurate in both states: before RAG exists (NullRetriever always returns
-      // nothing) and after RAG exists but the backend does not yet persist
-      // citations to the DB.
+      // True whether retrieval found nothing or the answer simply cited nothing.
       emptyBody:
-        'Trợ lý chưa trích dẫn văn bản nào cho câu trả lời này. Nguồn chỉ hiển thị cho câu trả lời vừa nhận trong phiên làm việc hiện tại.',
+        'Trợ lý chưa trích dẫn văn bản nào cho câu trả lời này. Hãy kiểm tra lại hiệu lực văn bản trước khi áp dụng.',
+      issuedOn: 'Ban hành {{date}}',
       pending: 'Đang chờ nguồn cho câu trả lời này…',
       showAll: 'Xem tất cả nguồn ({{count}})',
       showLess: 'Thu gọn',

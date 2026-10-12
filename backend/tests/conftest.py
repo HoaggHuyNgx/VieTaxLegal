@@ -3,6 +3,7 @@ from collections.abc import Generator
 
 import pytest
 from fastapi.testclient import TestClient
+from qdrant_client import QdrantClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
@@ -22,11 +23,11 @@ from app.services.login_throttle import get_login_throttle, get_register_throttl
 def fresh_login_throttle() -> Generator[None, None, None]:
     """The throttle is process-wide state; start every test with an empty one."""
     get_login_throttle.cache_clear()
+    get_register_throttle.cache_clear()
     yield
-    get_register_throttle.cache_clear()
     get_login_throttle.cache_clear()
-
     get_register_throttle.cache_clear()
+
 
 @pytest.fixture
 def database_session() -> Generator[Session, None, None]:
@@ -58,3 +59,13 @@ def client(database_session: Session) -> Generator[TestClient, None, None]:
     with TestClient(app) as test_client:
         yield test_client
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def qdrant_memory() -> Generator[QdrantClient, None, None]:
+    """In-memory Qdrant: tests never need the Docker server."""
+    qdrant = QdrantClient(":memory:")
+    try:
+        yield qdrant
+    finally:
+        qdrant.close()

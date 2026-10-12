@@ -1,6 +1,11 @@
+import logging
 from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Protocol
+
+from app.core.config import get_settings
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True, slots=True)
@@ -9,6 +14,9 @@ class Citation:
     title: str
     url: str | None = None
     excerpt: str | None = None
+    doc_number: str | None = None
+    locator: str | None = None  # e.g. "Điều 5 khoản 2"
+    issued_on: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -45,4 +53,12 @@ class NullRetriever:
 
 def get_retriever() -> Retriever:
     # The single seam for plugging in RAG; the stream code should not change.
-    return NullRetriever()
+    if not get_settings().rag_enabled:
+        return NullRetriever()
+    from app.services.rag.qdrant_retriever import get_qdrant_retriever
+
+    try:
+        return get_qdrant_retriever()
+    except Exception as error:  # e.g. missing OPENAI_API_KEY: chat must still work, without sources
+        logger.warning("RAG disabled for this request: %s", type(error).__name__)
+        return NullRetriever()

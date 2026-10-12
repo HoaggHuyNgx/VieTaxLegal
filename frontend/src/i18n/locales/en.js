@@ -323,10 +323,11 @@ const en = {
     },
     sources: {
       title: 'Reference sources',
-      subtitle: 'Legal documents that may relate to your question.',
+      subtitle: 'The legal documents this answer cited.',
       emptyTitle: 'No sources yet',
       emptyBody:
-        'The assistant has not cited any document for this answer. Sources are only shown for answers received in the current session.',
+        'The assistant has not cited any document for this answer. Check that a document is still in force before relying on it.',
+      issuedOn: 'Issued {{date}}',
       pending: 'Waiting for sources for this answer…',
       showAll: 'View all sources ({{count}})',
       showLess: 'Show less',

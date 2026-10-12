@@ -21,7 +21,7 @@ function citation(id, extra = {}) {
 }
 
 describe('ChatSourcesPanel', () => {
-  // NullRetriever means this is the state every real user sees today.
+  // Shown when retrieval found nothing or the answer cited nothing.
   it('shows the empty state and no links when there are no citations', () => {
     renderPanel()
     expect(screen.getByText('Chưa có nguồn tham khảo')).toBeTruthy()
@@ -61,6 +61,22 @@ describe('ChatSourcesPanel', () => {
     expect(excerpts).toHaveLength(1)
     expect(excerpts[0].textContent).toBe('Trích dẫn')
     expect(screen.queryByText('undefined')).toBeNull()
+  })
+
+  it('shows locator, document number and issue date only when the backend sent them', () => {
+    const { container } = renderPanel({
+      citations: [
+        citation('a', {
+          locator: 'Điều 16 khoản 2',
+          documentNumber: '108/2025/QH15',
+          issuedOn: '2025-12-10',
+        }),
+        citation('b', { documentNumber: '48/2024/QH15' }),
+        citation('c'),
+      ],
+    })
+    const metas = [...container.querySelectorAll('.source-card-meta')].map((node) => node.textContent)
+    expect(metas).toEqual(['Điều 16 khoản 2 · 108/2025/QH15 · Ban hành 2025-12-10', '48/2024/QH15'])
   })
 
   it('collapses past three sources behind a real count', () => {
