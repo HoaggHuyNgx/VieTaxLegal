@@ -1,3 +1,5 @@
+import threading
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -20,53 +22,97 @@ def make_throttle(clock: FakeClock, max_failures: int = 3) -> LoginThrottle:
     return LoginThrottle(max_failures, window_seconds=60, clock=clock)
 
 
-def test_locks_after_max_failures_and_unlocks_when_window_passes() -> None:
+def attempt(throttle: LoginThrottle, key: str = "key") -> None:
+    throttle.acquire(key)
+
+
+def test_locks_after_max_attempts_and_unlocks_when_window_passes() -> None:
     clock = FakeClock()
     throttle = make_throttle(clock)
     for _ in range(3):
-        throttle.check("key")
-        throttle.record_failure("key")
+        attempt(throttle)
 
     with pytest.raises(AppError) as locked:
-        throttle.check("key")
+        attempt(throttle)
     assert locked.value.status_code == 429
     assert locked.value.code == "AUTH_RATE_LIMITED"
 
     clock.now += 61
-    throttle.check("key")
+    attempt(throttle)
 
 
-def test_failures_expire_individually() -> None:
+def test_attempts_expire_individually() -> None:
     clock = FakeClock()
     throttle = make_throttle(clock)
-    throttle.record_failure("key")
+    attempt(throttle)
     clock.now += 40
-    throttle.record_failure("key")
-    throttle.record_failure("key")
+    attempt(throttle)
+    attempt(throttle)
     with pytest.raises(AppError):
-        throttle.check("key")
+        attempt(throttle)
 
-    clock.now += 30  # the first failure is now 70s old and drops out of the window
-    throttle.check("key")
+    clock.now += 30  # the first attempt is now 70s old and drops out of the window
+    attempt(throttle)
+
+
+def test_blocked_attempts_do_not_extend_the_lock() -> None:
+    clock = FakeClock()
+    throttle = make_throttle(clock)
+    for _ in range(3):
+        attempt(throttle)
+    clock.now += 30
+    with pytest.raises(AppError):
+        attempt(throttle)
+
+    clock.now += 31  # 61s after the real attempts, only 31s after the blocked one
+    attempt(throttle)
 
 
 def test_reset_and_other_keys_are_independent() -> None:
     throttle = make_throttle(FakeClock())
     for _ in range(3):
-        throttle.record_failure("a")
+        attempt(throttle, "a")
 
-    throttle.check("b")
+    attempt(throttle, "b")
     throttle.reset("a")
-    throttle.check("a")
+    attempt(throttle, "a")
 
 
-def test_tracked_keys_are_capped(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_parallel_attempts_cannot_exceed_the_limit() -> None:
+    throttle = make_throttle(FakeClock(), max_failures=5)
+    allowed = 0
+    lock = threading.Lock()
+
+    def worker() -> None:
+        nonlocal allowed
+        try:
+            throttle.acquire("key")
+        except AppError:
+            return
+        with lock:
+            allowed += 1
+
+    threads = [threading.Thread(target=worker) for _ in range(50)]
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+
+    assert allowed == 5
+
+
+def test_full_table_evicts_least_recently_used_key(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(login_throttle, "MAX_TRACKED_KEYS", 2)
-    throttle = make_throttle(FakeClock())
-    for key in ("a", "b", "c"):
-        throttle.record_failure(key)
+    throttle = make_throttle(FakeClock(), max_failures=2)
+    attempt(throttle, "target")
+    attempt(throttle, "other")
+    attempt(throttle, "target")  # target is now the most recently used
 
-    assert list(throttle._failures) == ["b", "c"]
+    attempt(throttle, "flood")  # evicts "other", not "target"
+
+    assert set(throttle._failures) == {"target", "flood"}
+    with pytest.raises(AppError):
+        attempt(throttle, "target")  # its count survived the flood
 
 
 def register(client: TestClient) -> None:

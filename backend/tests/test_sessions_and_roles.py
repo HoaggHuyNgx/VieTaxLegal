@@ -152,3 +152,26 @@ def test_register_is_rate_limited_per_client(client: TestClient) -> None:
 
     assert blocked.status_code == 429
     assert blocked.json()["error"]["code"] == "REGISTER_RATE_LIMITED"
+
+
+def test_second_tab_losing_refresh_race_keeps_the_winners_cookies(
+    client: TestClient, database_session
+) -> None:
+    create_user(client)
+    stale = refresh_cookie(client)
+    assert client.post("/api/auth/refresh").status_code == 200
+    winner = refresh_cookie(client)
+
+    # Second tab still presents the token that was rotated a moment ago.
+    client.cookies.set("vietaxlegal_refresh", stale, path="/api/auth")
+    response = client.post("/api/auth/refresh")
+
+    assert response.status_code == 204
+    assert response.content == b""
+    assert "set-cookie" not in response.headers
+    live = database_session.scalars(
+        select(RefreshToken).where(RefreshToken.revoked_at.is_(None))
+    ).all()
+    assert len(live) == 1  # family not revoked; the winner's token still works
+    client.cookies.set("vietaxlegal_refresh", winner, path="/api/auth")
+    assert client.post("/api/auth/refresh").status_code == 200

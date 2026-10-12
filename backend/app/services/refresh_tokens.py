@@ -31,6 +31,14 @@ def _aware(value: datetime) -> datetime:
     return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
 
 
+class RefreshRaceLost(Exception):
+    """A token rotated moments ago was presented again: another tab won the race.
+
+    Not an auth failure. The winner's Set-Cookie already holds a valid session, so the
+    caller must answer without touching cookies (clearing them would undo the winner's).
+    """
+
+
 def _invalid() -> AppError:
     return AppError(401, "UNAUTHENTICATED", "Phiên đăng nhập không hợp lệ hoặc đã hết hạn.")
 
@@ -90,7 +98,10 @@ def revoke_session(database: Session, raw_token: str | None) -> None:
 
 
 def rotate_refresh_token(database: Session, raw_token: str | None) -> tuple[User, str, bool]:
-    """Validate and consume a refresh token; return (user, next raw token, remember_me)."""
+    """Validate and consume a refresh token; return (user, next raw token, remember_me).
+
+    Raises AppError(401) for a dead token and RefreshRaceLost for a just-rotated one.
+    """
     if not raw_token:
         raise _invalid()
     row = database.scalar(
@@ -103,8 +114,15 @@ def rotate_refresh_token(database: Session, raw_token: str | None) -> tuple[User
 
     now = _now()
     if row.revoked_at is not None:
-        if now - _aware(row.revoked_at) > REUSE_GRACE:
-            _revoke(database, RefreshToken.family_id == row.family_id)
+        # A race means a successor is alive in the family; logout/deactivation revoke them all.
+        successor_alive = database.scalar(
+            select(RefreshToken.id)
+            .where(RefreshToken.family_id == row.family_id, RefreshToken.revoked_at.is_(None))
+            .limit(1)
+        )
+        if successor_alive and now - _aware(row.revoked_at) <= REUSE_GRACE:
+            raise RefreshRaceLost
+        _revoke(database, RefreshToken.family_id == row.family_id)
         raise _invalid()
     if _aware(row.expires_at) <= now:
         raise _invalid()

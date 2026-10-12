@@ -13,6 +13,7 @@ from app.schemas.auth import LoginRequest, RegisterRequest, UserResponse
 from app.services.auth import login_user, register_user
 from app.services.login_throttle import get_register_throttle
 from app.services.refresh_tokens import (
+    RefreshRaceLost,
     issue_refresh_token,
     revoke_session,
     rotate_refresh_token,
@@ -67,9 +68,7 @@ def register(
     response: Response,
     database: Annotated[Session, Depends(get_db)],
 ) -> User:
-    throttle = get_register_throttle()
-    throttle.check(client_host(request))
-    throttle.record_failure(client_host(request))  # counts every attempt, not just failures
+    get_register_throttle().acquire(client_host(request))  # every attempt counts
     user = register_user(database, payload)
     set_auth_cookies(response, user, issue_refresh_token(database, user, False), False)
     return user
@@ -97,6 +96,10 @@ def refresh(
 ) -> User | Response:
     try:
         user, next_token, remember_me = rotate_refresh_token(database, refresh_token)
+    except RefreshRaceLost:
+        # Another tab rotated this token first; its cookies are already in the shared jar.
+        # Reply without Set-Cookie so we neither clear nor overwrite them, and reveal no user.
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
     except AppError as error:
         # Headers set on the injected `response` are dropped when an error is raised, so
         # build the error response here to clear the dead cookies on it.

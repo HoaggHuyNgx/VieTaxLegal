@@ -35,23 +35,26 @@ class LoginThrottle:
 
     def _recent(self, key: str, now: float) -> list[float]:
         cutoff = now - self._window_seconds
-        recent = [stamp for stamp in self._failures.get(key, []) if stamp > cutoff]
+        recent = [stamp for stamp in self._failures.pop(key, []) if stamp > cutoff]
         if recent:
-            self._failures[key] = recent
-        else:
-            self._failures.pop(key, None)
+            self._failures[key] = recent  # re-inserted last: dict order doubles as LRU order
         return recent
 
-    def check(self, key: str) -> None:
-        with self._lock:
-            if len(self._recent(key, self._clock())) >= self._max_failures:
-                raise AppError(429, self._error_code, self._error_message)
+    def acquire(self, key: str) -> None:
+        """Count this attempt, or raise 429 if the key is already at its limit.
 
-    def record_failure(self, key: str) -> None:
+        Check and count happen under one lock, so a burst of parallel requests cannot all
+        pass the check before any of them is recorded. Callers `reset` on success.
+        """
         with self._lock:
             now = self._clock()
             recent = self._recent(key, now)
-            if key not in self._failures and len(self._failures) >= MAX_TRACKED_KEYS:
+            if len(recent) >= self._max_failures:
+                self._failures[key] = recent
+                raise AppError(429, self._error_code, self._error_message)
+            if not recent and len(self._failures) >= MAX_TRACKED_KEYS:
+                # Evict the least recently used key, so an active attacker's own key
+                # survives while idle ones go.
                 self._failures.pop(next(iter(self._failures)))
             self._failures[key] = [*recent, now]
 

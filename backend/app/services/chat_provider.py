@@ -8,6 +8,10 @@ from pydantic import SecretStr
 
 from app.core.config import get_settings
 
+# Per-read timeout (also applies between streamed chunks), so a stalled provider cannot hold
+# a chat request, and its row lock on the conversation, for the SDK default of 10 minutes.
+PROVIDER_TIMEOUT_SECONDS = 60.0
+
 
 class ProviderError(Exception):
     """A provider failure that is safe to translate to a generic client error."""
@@ -60,7 +64,7 @@ class AnthropicProvider:
         if not api_key or api_key.startswith("replace-with-"):
             raise ProviderConfigurationError("ANTHROPIC_API_KEY is not configured")
 
-        client = AsyncAnthropic(api_key=api_key)
+        client = AsyncAnthropic(api_key=api_key, timeout=PROVIDER_TIMEOUT_SECONDS)
         try:
             async with client.messages.stream(
                 model=self.model,
@@ -102,7 +106,7 @@ class OpenAIProvider:
         if not api_key or api_key.startswith("replace-with-"):
             raise ProviderConfigurationError("OPENAI_API_KEY is not configured")
 
-        client = AsyncOpenAI(api_key=api_key)
+        client = AsyncOpenAI(api_key=api_key, timeout=PROVIDER_TIMEOUT_SECONDS)
         completed = False
         try:
             stream = await client.responses.create(

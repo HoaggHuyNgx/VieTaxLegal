@@ -36,6 +36,9 @@ services:
       JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET (>=32 random chars)}
       CORS_ORIGINS: http://localhost:3000
       LOG_JSON: "true"
+      # Trust X-Forwarded-For from any peer: the backend publishes no port, so its only
+      # client is the nginx container, which overwrites the header with the real address.
+      FORWARDED_ALLOW_IPS: "*"
       CHAT_PROVIDER: ${CHAT_PROVIDER:-anthropic}
       CHAT_MODEL: ${CHAT_MODEL:-claude-sonnet-5}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}

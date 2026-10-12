@@ -74,6 +74,9 @@ class FakeEmbedder:
         return self._vector(text)
 
 
+QUERY_TIMEOUT_SECONDS = 15.0
+
+
 class OpenAIEmbedder:
     name = "openai"
     short_prefix = False
@@ -85,7 +88,9 @@ class OpenAIEmbedder:
         self.model, self.dims = model, dims
         self._custom_dimensions = dimensions
         self._sync = OpenAI(api_key=api_key, max_retries=5)  # SDK backs off on 429/5xx
-        self._async = AsyncOpenAI(api_key=api_key, max_retries=5)
+        # Query-time embedding sits in front of the first chat token: fail fast, and let the
+        # retriever degrade to "no sources" instead of keeping the user waiting for minutes.
+        self._async = AsyncOpenAI(api_key=api_key, max_retries=1, timeout=QUERY_TIMEOUT_SECONDS)
 
     def _kwargs(self) -> dict:
         extra = {"dimensions": self._custom_dimensions} if self._custom_dimensions else {}

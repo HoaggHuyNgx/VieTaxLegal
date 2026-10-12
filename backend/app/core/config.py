@@ -104,6 +104,8 @@ class Settings(BaseSettings):
             raise ValueError("JWT_SECRET phải là một chuỗi ngẫu nhiên có ít nhất 32 ký tự.")
         if "*" in self.cors_origin_list:
             raise ValueError("CORS_ORIGINS không được dùng '*' khi xác thực bằng cookie.")
+        if self.jwt_algorithm not in ("HS256", "HS384", "HS512"):
+            raise ValueError("JWT_ALGORITHM must be HS256, HS384 or HS512.")
         if self.log_level.upper() not in ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"):
             raise ValueError("LOG_LEVEL must be DEBUG, INFO, WARNING, ERROR or CRITICAL.")
         if self.chat_max_output_tokens < 1 or self.chat_max_output_tokens > 8192:

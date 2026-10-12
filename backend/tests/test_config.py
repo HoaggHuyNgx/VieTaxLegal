@@ -79,3 +79,12 @@ def test_rag_retrieval_mode_defaults_to_hybrid_and_rejects_unknown_values() -> N
     assert _rag_settings(rag_retrieval_mode="sparse").rag_retrieval_mode == "sparse"
     with pytest.raises(ValidationError, match="RAG_RETRIEVAL_MODE"):
         _rag_settings(rag_retrieval_mode="graph")
+
+
+def test_settings_reject_unsupported_jwt_algorithm() -> None:
+    with pytest.raises(ValidationError, match="JWT_ALGORITHM"):
+        Settings(
+            database_url="sqlite+pysqlite://",
+            jwt_secret="a-secure-test-secret-with-at-least-32-characters",
+            jwt_algorithm="none",
+        )

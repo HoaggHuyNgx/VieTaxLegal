@@ -50,6 +50,11 @@ class RequestLogMiddleware:
         finally:
             elapsed_ms = (time.perf_counter() - started) * 1000
             logger.info(
-                "%s %s -> %d in %.0f ms", scope["method"], scope["path"], status_code, elapsed_ms
+                "%s %s -> %d in %.0f ms ip=%s",
+                scope["method"],
+                scope["path"],
+                status_code,
+                elapsed_ms,
+                scope["client"][0] if scope.get("client") else "-",
             )
             request_id_var.reset(token)

@@ -174,8 +174,12 @@ Nếu đang chạy container Qdrant riêng (`scripts/start-qdrant.ps1`) thì d�
 - **Refresh token**: chuỗi ngẫu nhiên, chỉ lưu hash SHA-256 trong bảng `refresh_tokens`, cookie httponly `vietaxlegal_refresh` giới hạn path `/api/auth`. Mỗi lần dùng sẽ bị thu hồi và cấp token mới (rotation); dùng lại token cũ coi là bị lộ và thu hồi cả phiên. Sống 24 giờ, hoặc 30 ngày nếu chọn "ghi nhớ".
 - **Logout** thu hồi phiên phía server; khoá user (`isActive=false`) thu hồi mọi phiên của user đó.
 - **RBAC**: cột `users.role` (`user` | `admin`), dependency `require_role(...)` trả `403 FORBIDDEN`. Admin đầu tiên tạo bằng `python scripts/create_admin.py email@...` (không có đường HTTP để tự nâng quyền).
-- **Rate limit**: đăng nhập sai 5 lần/15 phút theo `ip|identifier`; đăng ký `REGISTER_MAX_PER_HOUR` (10) lần/giờ theo IP; chat 10 tin/phút và 100 tin/ngày theo user. Bộ đếm đăng nhập/đăng ký nằm trong bộ nhớ process.
+- **Rate limit**: đăng nhập sai 5 lần/15 phút theo `ip|identifier`; đăng ký `REGISTER_MAX_PER_HOUR` (10) lần/giờ theo IP; chat 10 tin/phút và 100 tin/ngày theo user. Bộ đếm đăng nhập/đăng ký nằm trong bộ nhớ process (kiểm tra và đếm nguyên tử dưới một lock, loại key ít dùng nhất khi đầy), nên chỉ đúng với một worker; cần nhiều worker thì chuyển sang Postgres/Redis. Sau nginx, IP lấy từ `X-Forwarded-For` do nginx ghi đè.
 - Frontend tự gọi `/auth/refresh` một lần khi gặp `401` rồi gửi lại request (`authFetch` trong `services/api.js`).
+
+## Bảo mật triển khai
+
+nginx gắn CSP, `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options` (HSTS đặt ở lớp TLS phía trước). Ở `APP_ENV=production` các trang `/docs`, `/redoc`, `/openapi.json` bị tắt. Gọi provider chat có timeout 60 giây, embedding lúc truy vấn 15 giây (lỗi thì chat chạy không có nguồn).
 
 ## Logging
 

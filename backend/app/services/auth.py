@@ -82,11 +82,7 @@ def login_user(database: Session, payload: LoginRequest, client_host: str) -> Us
     """
     throttle = get_login_throttle()
     key = f"{client_host}|{payload.identifier}"
-    throttle.check(key)
-    try:
-        user = authenticate_user(database, payload)
-    except AppError:
-        throttle.record_failure(key)
-        raise
+    throttle.acquire(key)  # counts the attempt up front; a success clears it
+    user = authenticate_user(database, payload)
     throttle.reset(key)
     return user
