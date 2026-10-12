@@ -4,8 +4,10 @@ VieTaxLegal là nền tảng hỗ trợ tra cứu pháp luật và nghiệp vụ
 frontend React, backend FastAPI, cơ sở dữ liệu PostgreSQL và lớp AI có thể chuyển đổi giữa
 Anthropic và OpenAI.
 
-Phiên bản hiện tại tập trung vào xác thực tài khoản và chat pháp luật có lịch sử riêng theo từng
-người dùng. Kho dữ liệu pháp luật, RAG, Qdrant và trích dẫn nguồn thật đang nằm trong roadmap.
+Phiên bản hiện tại có xác thực tài khoản, chat pháp luật có lịch sử riêng theo từng người dùng và
+một pipeline RAG: kho văn bản pháp luật → chỉ mục Qdrant → truy xuất (dense/sparse/hybrid) → câu
+trả lời kèm trích dẫn thật. RAG tắt mặc định (`RAG_ENABLED=false`) và cần điền hiệu lực văn bản
+trước khi bật (xem [backend/README.md](backend/README.md)).
 
 ## Trạng thái tính năng
 
@@ -18,12 +20,18 @@ người dùng. Kho dữ liệu pháp luật, RAG, Qdrant và trích dẫn ngu�
 | Anthropic và OpenAI provider                    | Hoàn thành      |
 | Rate limit theo phút và theo ngày               | Hoàn thành      |
 | Giao diện song ngữ Việt–Anh                     | Hoàn thành      |
-| Kho văn bản pháp luật và Qdrant                 | Chưa triển khai |
-| RAG, hybrid search, reranking và citation thật  | Chưa triển khai |
+| Kho văn bản pháp luật (21 văn bản) và parser     | Hoàn thành*     |
+| Chỉ mục Qdrant, embedding OpenAI, dense/hybrid   | Hoàn thành      |
+| Citation thật: lưu, trả về và hiển thị nguồn     | Hoàn thành      |
+| Bộ đánh giá RAG (câu hỏi, metric, runner, export) | Hoàn thành*     |
+| So sánh embedding BKAI (local) với OpenAI         | Chưa chạy       |
 | Tính thuế, scan hợp đồng và đính kèm tài liệu   | Chưa triển khai |
 
-Khi chưa có RAG, chatbot không hiển thị nguồn hoặc điều luật giả và luôn cảnh báo người dùng cần
-kiểm tra lại hiệu lực văn bản.
+\* Cần con người hoàn tất: điền hiệu lực văn bản, bổ sung văn bản còn thiếu và duyệt bộ câu hỏi
+đánh giá. Danh sách việc còn nợ nằm trong `plans/261011-1330-rag-legal-retrieval/debts.md`.
+
+Khi RAG tắt hoặc không tìm thấy nguồn, chatbot không hiển thị nguồn hoặc điều luật giả và luôn
+cảnh báo người dùng cần kiểm tra lại hiệu lực văn bản.
 
 ## Kiến trúc hiện tại
 
@@ -33,6 +41,8 @@ flowchart LR
     F -->|"/api proxy"| B["FastAPI"]
     B --> D["PostgreSQL"]
     B --> A["Anthropic hoặc OpenAI"]
+    B -->|"RAG_ENABLED"| Q["Qdrant (chỉ mục dựng lại được)"]
+    B -->|"nhúng truy vấn"| E["OpenAI Embeddings"]
 ```
 
 Backend là lớp duy nhất truy cập dữ liệu ứng dụng; frontend không bao giờ kết nối database trực
@@ -46,6 +56,8 @@ PostgreSQL được quản lý (ví dụ Supabase) mà không cần đổi code.
 - Database: PostgreSQL 15, SQLAlchemy 2.0, Alembic, Psycopg.
 - Xác thực: Argon2 (`pwdlib`), JWT (`PyJWT`) và cookie HTTP-only.
 - AI: Anthropic Messages API hoặc OpenAI Responses API.
+- RAG: Qdrant (Docker), embedding OpenAI `text-embedding-3-small` (BKAI chạy local là tùy chọn),
+  truy xuất dense, sparse (BM25 tự cài) và hybrid (RRF).
 - Streaming: Server-Sent Events (SSE).
 - Kiểm thử: Pytest, Vitest, Ruff, ESLint và Prettier.
 - CI: GitHub Actions cho frontend và backend.
@@ -142,6 +154,33 @@ Mở <http://localhost:3000>. Vite proxy các request `/api` tới backend ở
 Chi tiết về scripts, cấu trúc `src/`, luồng xác thực và SSE client nằm trong
 [frontend/README.md](frontend/README.md).
 
+## Chạy bằng Docker
+
+Một lệnh dựng cả Postgres, Qdrant, backend (tự chạy `alembic upgrade head`) và frontend (nginx, proxy `/api`):
+
+```powershell
+$env:POSTGRES_PASSWORD = "doi-mat-khau-nay"
+$env:JWT_SECRET = "chuoi-ngau-nhien-it-nhat-32-ky-tu"
+$env:ANTHROPIC_API_KEY = "..."   # hoặc OPENAI_API_KEY + CHAT_PROVIDER=openai
+docker compose up --build
+```
+
+Mở `http://localhost:3000`. Có thể đặt các biến trên vào file `.env` ở thư mục gốc (đã gitignore). `RAG_ENABLED=true` để bật RAG; `backend/corpus/` được mount read-only, index Qdrant dựng lại bằng `scripts/ingest_corpus.py`.
+Nếu đang chạy container Qdrant riêng (`scripts/start-qdrant.ps1`) thì dừng nó trước, vì cùng cổng 6333.
+
+## Xác thực & phân quyền
+
+- **Access token**: JWT sống ngắn (`ACCESS_TOKEN_MINUTES`, mặc định 15) trong cookie httponly `vietaxlegal_session`.
+- **Refresh token**: chuỗi ngẫu nhiên, chỉ lưu hash SHA-256 trong bảng `refresh_tokens`, cookie httponly `vietaxlegal_refresh` giới hạn path `/api/auth`. Mỗi lần dùng sẽ bị thu hồi và cấp token mới (rotation); dùng lại token cũ coi là bị lộ và thu hồi cả phiên. Sống 24 giờ, hoặc 30 ngày nếu chọn "ghi nhớ".
+- **Logout** thu hồi phiên phía server; khoá user (`isActive=false`) thu hồi mọi phiên của user đó.
+- **RBAC**: cột `users.role` (`user` | `admin`), dependency `require_role(...)` trả `403 FORBIDDEN`. Admin đầu tiên tạo bằng `python scripts/create_admin.py email@...` (không có đường HTTP để tự nâng quyền).
+- **Rate limit**: đăng nhập sai 5 lần/15 phút theo `ip|identifier`; đăng ký `REGISTER_MAX_PER_HOUR` (10) lần/giờ theo IP; chat 10 tin/phút và 100 tin/ngày theo user. Bộ đếm đăng nhập/đăng ký nằm trong bộ nhớ process.
+- Frontend tự gọi `/auth/refresh` một lần khi gặp `401` rồi gửi lại request (`authFetch` trong `services/api.js`).
+
+## Logging
+
+Cấu hình tập trung ở `app/core/logging.py`. `LOG_LEVEL` (mặc định `INFO`) và `LOG_JSON` (`true` = mỗi dòng một JSON, compose bật sẵn). Mỗi request có `X-Request-ID` (nhận từ client nếu hợp lệ, không thì tự sinh), được trả về trong response header và gắn vào mọi dòng log của request đó. Access log chỉ ghi method, path, status, thời gian; không ghi query string hay body.
+
 ## Routes frontend
 
 | Route   | Mô tả                               |
@@ -156,8 +195,11 @@ Chi tiết về scripts, cấu trúc `src/`, luồng xác thực và SSE client 
 | `GET`    | `/api/health`                  | Kiểm tra API và database; `503` nếu DB chết. |
 | `POST`   | `/api/auth/register`           | Đăng ký và tạo phiên.                        |
 | `POST`   | `/api/auth/login`              | Đăng nhập bằng email hoặc username.          |
-| `POST`   | `/api/auth/logout`             | Đăng xuất.                                   |
+| `POST`   | `/api/auth/refresh`            | Đổi refresh token (xoay vòng), cấp access mới. |
+| `POST`   | `/api/auth/logout`             | Đăng xuất, thu hồi refresh token phía server. |
 | `GET`    | `/api/auth/me`                 | Lấy người dùng hiện tại.                     |
+| `GET`    | `/api/admin/users`             | (admin) Danh sách người dùng.                |
+| `PATCH`  | `/api/admin/users/{id}`        | (admin) Đổi `role` / khoá `isActive`.        |
 | `GET`    | `/api/chat/conversations`      | Danh sách hội thoại.                         |
 | `GET`    | `/api/chat/conversations/{id}` | Nội dung một hội thoại.                      |
 | `DELETE` | `/api/chat/conversations/{id}` | Xóa hội thoại.                               |
@@ -199,20 +241,23 @@ trong bộ nhớ và fake AI provider, không truy cập database thật hoặc 
 - `.env`, key, certificate, database local, upload và log không được commit.
 - API key AI chỉ tồn tại trong backend và không được log hoặc gửi xuống frontend.
 
-## Roadmap RAG
+## RAG
 
-Hướng triển khai dự kiến:
+Pipeline đã triển khai:
 
 ```text
-Văn bản pháp luật
-  → trích xuất/OCR
-  → tách theo Điều/Khoản/Điểm
-  → embedding
-  → Qdrant (vector + metadata)
-  → hybrid retrieval
-  → rerank khi cần
-  → model trả lời kèm citation thật
+Văn bản pháp luật (corpus/, nguồn gốc trong git)
+  → trích xuất text (DOCX/PDF)
+  → tách theo Điều/Khoản/Điểm, kiểm tra thứ tự và khoảng trống
+  → embedding (OpenAI) + vector sparse (BM25 tự cài)
+  → Qdrant (dựng lại được từ corpus/)
+  → truy xuất dense / sparse / hybrid, chỉ lấy văn bản in_force
+  → model trả lời, ghi [n]; chỉ nguồn được trích mới được lưu và hiển thị
 ```
 
-Ưu tiên trước khi thêm nhiều model là xây bộ đánh giá câu hỏi pháp luật có nguồn chuẩn, đo khả năng
-tìm đúng điều luật, độ chính xác citation, hallucination, độ trễ và chi phí.
+Số liệu đánh giá nằm ở `backend/rag_eval/results/SUMMARY.md` (sinh bằng `scripts/export_results.py`).
+Các số liệu đang đánh dấu `provisional` vì bộ câu hỏi chưa được con người duyệt; chỉ trích dẫn số
+liệu trong luận văn sau khi duyệt xong. Cách chạy từng bước xem [backend/README.md](backend/README.md).
+
+Còn lại: điền hiệu lực văn bản, bổ sung văn bản bị cắt/thiếu, duyệt bộ câu hỏi, chạy so sánh
+embedding BKAI, rồi tinh chỉnh ngưỡng điểm và cân nhắc rerank dựa trên số liệu đã duyệt.

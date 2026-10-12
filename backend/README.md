@@ -86,6 +86,19 @@ Các biến còn lại đều có giá trị mặc định, chỉ đặt khi mu�
 | `CHAT_HISTORY_MESSAGES`      | `20`                    | Số message gần nhất gửi lại model; chỉ chấp nhận `1–100`.    |
 | `CHAT_RATE_LIMIT_PER_MINUTE` | `10`                    | Số câu hỏi tối đa mỗi người dùng trong một phút.             |
 | `CHAT_DAILY_MESSAGE_LIMIT`   | `100`                   | Số câu hỏi tối đa mỗi người dùng trong một ngày UTC.         |
+| `RAG_ENABLED`                | `false`                 | Bật truy xuất RAG vào chat (cần Qdrant đã ingest).           |
+| `RAG_RETRIEVAL_MODE`         | `hybrid`                | `dense`, `sparse` hoặc `hybrid` (xem phần AI và RAG).        |
+| `RAG_REQUIRE_IN_FORCE`       | `true`                  | Chỉ trả văn bản `status = in_force`; `false` chỉ để dev.     |
+| `EMBEDDING_PROVIDER`         | `openai`                | `openai`, `bkai` (extra `local-embed`) hoặc `fake` (test).   |
+| `EMBEDDING_MODEL`            | `text-embedding-3-small` | Model nhúng; tên collection Qdrant suy ra từ model này.     |
+| `EMBEDDING_DIMENSIONS`       | trống                   | Chỉ OpenAI: rút ngắn vector; trống = mặc định của model.     |
+| `EMBEDDING_BATCH_SIZE`       | `64`                    | Số chunk mỗi lần gọi nhúng (`1–512`).                        |
+| `EVAL_GENERATOR_MODEL`       | trống                   | Model sinh câu hỏi đánh giá; trống = `CHAT_MODEL`.           |
+| `RAG_CHUNK_SET`              | `article`               | Cách chia chunk; chỉ `a-z`, `0-9`, `_` (tối đa 32 ký tự).   |
+| `RAG_TOP_K`                  | `5`                     | Số đoạn luật lấy về; chỉ chấp nhận `1–50`.                   |
+| `RAG_MIN_SIMILARITY`         | `0`                     | Ngưỡng cosine tối thiểu `0–1`; `0` là giữ tất cả.            |
+| `QDRANT_URL`                 | `http://127.0.0.1:6333` | Địa chỉ Qdrant (`http://` hoặc `https://`).                  |
+| `QDRANT_API_KEY`             | trống                   | Chỉ đặt khi dùng Qdrant ngoài máy local.                     |
 | `LOGIN_MAX_FAILED_ATTEMPTS`  | `5`                     | Số lần đăng nhập sai tối đa trước khi bị khóa tạm thời.      |
 | `LOGIN_ATTEMPT_WINDOW_MINUTES` | `15`                  | Khung thời gian (phút) dùng để đếm số lần đăng nhập sai.     |
 
@@ -124,6 +137,9 @@ py -m venv .venv
 nhau (CI cũng dùng file này). Sau khi nâng package có chủ đích, tạo lại file bằng
 `.\.venv\Scripts\python.exe -m pip freeze --exclude-editable`.
 
+Công cụ xử lý kho văn bản (`scripts/extract_corpus_text.py`, `scripts/corpus_report.py`) cần thêm
+`pymupdf` để đọc PDF: `.\.venv\Scripts\python.exe -m pip install -e ".[corpus]"`. App và CI không cần gói này.
+
 Không cần kích hoạt virtualenv nếu luôn gọi Python bằng đường dẫn
 `.\.venv\Scripts\python.exe`.
 
@@ -141,8 +157,9 @@ Migration hiện tại:
 | `0001_create_users`            | Tạo bảng users và unique index cho email/username.                       |
 | `0002_lock_down_public_tables` | Chỉ trên Supabase: bật RLS và khóa users/alembic_version khỏi Data API.  |
 | `0003_chat`                    | Tạo conversations, messages, chat_usage_events, index và ràng buộc chat. |
+| `0004_message_citations`       | Thêm cột `messages.citations` (JSON, nullable) lưu nguồn trích dẫn.      |
 
-Kết quả `alembic current` phải chứa `0003_chat (head)`. Database sẽ có các bảng `users`,
+Kết quả `alembic current` phải chứa `0004_message_citations (head)`. Database sẽ có các bảng `users`,
 `conversations`, `messages`, `chat_usage_events` và `alembic_version`.
 
 Phần RLS/REVOKE của migration 0002 và 0003 chỉ chạy khi cả hai role `anon` và `authenticated` tồn
@@ -316,23 +333,69 @@ users 1 ── n conversations 1 ── n messages
 - API key AI dùng `SecretStr` và không được log.
 - Prompt và nội dung hội thoại không được ghi vào application log.
 
-## AI và RAG-ready
+## AI và RAG
 
-Luồng hiện tại:
-
-```text
-ChatOrchestrator → NullRetriever → AnthropicProvider hoặc OpenAIProvider
-```
-
-`NullRetriever` không trả context/citation. Vì vậy V1 không hiển thị citation panel và system prompt
-yêu cầu model không bịa số hiệu, điều khoản hoặc hiệu lực văn bản.
-
-Giai đoạn RAG sẽ triển khai một retriever mới dùng chỉ mục Qdrant mà không đổi chat route hay
-định dạng SSE (chỉ bổ sung thêm trường tùy chọn cho citation):
+Luồng chat:
 
 ```text
-ChatOrchestrator → QdrantRetriever → ModelProvider
+RAG_ENABLED=false  ChatOrchestrator → NullRetriever   → ModelProvider   (không nguồn)
+RAG_ENABLED=true   ChatOrchestrator → QdrantRetriever → ModelProvider   (có nguồn)
 ```
+
+Khi không có nguồn, system prompt yêu cầu model không bịa số hiệu, điều khoản hoặc hiệu lực văn
+bản. Khi có nguồn, mỗi đoạn được đưa vào prompt trong thẻ `<reference id="n">`; model được yêu cầu
+ghi `[n]` sau mỗi nhận định. Chỉ những nguồn thực sự được trích `[n]` mới được trả về và lưu vào
+`messages.citations` (ảnh chụp tại thời điểm trả lời, nên nạp lại sẽ giữ nguyên). Số `[n]` không
+tồn tại bị bỏ qua. Nếu Qdrant hoặc embedding lỗi, retriever trả kết quả rỗng và chat vẫn chạy.
+
+### Kho văn bản và chỉ mục
+
+- Nguồn gốc dữ liệu là `corpus/` trong git: `manifest.json` (do con người duy trì), `raw/` (file
+  tải về) và `texts/` (văn bản đã trích xuất). Qdrant chỉ là chỉ mục dẫn xuất, xóa đi dựng lại được.
+- `status`, `effective_from`, `effective_to` trong manifest do con người điền sau khi kiểm tra
+  nguồn chính thức, không bao giờ tự suy ra. Với `RAG_REQUIRE_IN_FORCE=true` (mặc định) chỉ văn bản
+  `in_force` được truy xuất; khi chưa điền thì không có nguồn nào được trả về.
+- `truncated: true` đánh dấu file tải về chỉ là một phần văn bản; `ingest: false` loại file khỏi
+  chỉ mục. Phụ lục/biểu mẫu không được lập chỉ mục.
+- Ba bộ chunk: `article` (mỗi Điều, tách theo Khoản khi dài), `article_s256` (cắt nhỏ cho model 256
+  token) và `fixed` (cửa sổ cố định, dùng cho thí nghiệm). Mỗi bộ + mỗi model embedding là một
+  collection riêng `legal_<chunk_set>_<model>`.
+
+Chạy từ thư mục `backend` (Qdrant: `scripts/start-qdrant.ps1`, cần Docker Desktop):
+
+```powershell
+pip install -e ".[corpus]"                                   # chỉ cần để đọc PDF
+.\.venv\Scripts\python.exe scripts\extract_corpus_text.py    # raw/ → texts/
+.\.venv\Scripts\python.exe scripts\corpus_report.py          # kiểm tra parser, thoát 1 nếu có lỗi
+.\.venv\Scripts\python.exe scripts\ingest_corpus.py --chunk-set article --dry-run
+.\.venv\Scripts\python.exe scripts\ingest_corpus.py --chunk-set article
+.\.venv\Scripts\python.exe scripts\backfill_sparse.py --chunk-set article   # chỉ khi cần dựng lại sparse
+```
+
+`ingest_corpus.py` chạy lại được nhiều lần: chỉ nhúng chunk mới, cập nhật `status` mà không nhúng
+lại, và xóa điểm cũ của văn bản đã sửa. Biến môi trường liên quan nằm trong `.env.example`
+(`RAG_*`, `QDRANT_*`, `EMBEDDING_*`, `EVAL_GENERATOR_MODEL`). `RAG_RETRIEVAL_MODE` nhận `dense`,
+`sparse` hoặc `hybrid` (dense + sparse hợp nhất bằng RRF, hòa điểm được phá theo thứ hạng dense).
+
+### Đánh giá
+
+```powershell
+.\.venv\Scripts\python.exe scripts\eval_generate.py          # sinh câu hỏi (trạng thái pending)
+.\.venv\Scripts\python.exe scripts\eval_review.py            # con người duyệt: a/r/e/s/q
+.\.venv\Scripts\python.exe scripts\run_eval.py rag_eval/configs/hybrid-article.json
+.\.venv\Scripts\python.exe scripts\export_results.py         # rag_eval/results/SUMMARY.md + CSV
+```
+
+Chỉ câu hỏi `approved` được chấm; `--provisional` chấm cả câu chưa duyệt để chỉnh tham số và kết
+quả được đánh dấu `provisional`, không dùng làm số liệu trong luận văn. Tầng `retrieval` chỉ tốn
+một lần nhúng truy vấn; tầng `generation` gọi model chat (đo citation precision/recall, tham chiếu
+bịa, từ chối câu ngoài phạm vi, độ trễ và token).
+
+### Quyền riêng tư
+
+Câu hỏi của người dùng được gửi tới OpenAI để nhúng truy vấn (khi `EMBEDDING_PROVIDER=openai`) và
+để sinh câu trả lời. Dữ liệu chỉ mục là văn bản pháp luật công khai. Dùng `EMBEDDING_PROVIDER=bkai`
+(extra `.[local-embed]`) để nhúng truy vấn ngay trên máy; câu hỏi vẫn tới model chat khi trả lời.
 
 ## Kiểm thử
 
