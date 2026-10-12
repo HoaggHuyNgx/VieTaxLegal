@@ -1,0 +1,10 @@
+{
+  "require_in_force": true,
+  "top_k": 5,
+  "min_similarity": 0.0,
+  "name": "dense-s256-bkai",
+  "tier": "retrieval",
+  "chunk_set": "article_s256",
+  "embedding_provider": "bkai",
+  "embedding_model": "bkai-foundation-models/vietnamese-bi-encoder"
+}

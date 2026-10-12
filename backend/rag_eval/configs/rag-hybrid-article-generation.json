@@ -1,0 +1,10 @@
+{
+  "require_in_force": true,
+  "top_k": 5,
+  "min_similarity": 0.0,
+  "name": "rag-hybrid-article",
+  "tier": "generation",
+  "chunk_set": "article",
+  "max_output_tokens": 4000,
+  "mode": "hybrid"
+}

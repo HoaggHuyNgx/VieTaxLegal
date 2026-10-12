@@ -1,0 +1,9 @@
+{
+  "require_in_force": true,
+  "top_k": 5,
+  "min_similarity": 0.0,
+  "name": "rag-article",
+  "tier": "generation",
+  "chunk_set": "article",
+  "max_output_tokens": 4000
+}

@@ -1,0 +1,10 @@
+{
+  "require_in_force": true,
+  "top_k": 5,
+  "min_similarity": 0.0,
+  "name": "hybrid-article-llmrerank",
+  "tier": "retrieval",
+  "chunk_set": "article",
+  "mode": "hybrid",
+  "rerank": "llm"
+}
