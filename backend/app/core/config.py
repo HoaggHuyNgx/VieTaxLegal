@@ -12,9 +12,12 @@ class Settings(BaseSettings):
     database_url: str
     jwt_secret: SecretStr
     jwt_algorithm: str = "HS256"
-    session_cookie_name: str = "vietaxlegal_session"
-    remember_me_days: int = 30
-    session_token_hours: int = 24
+    session_cookie_name: str = "vietaxlegal_session"  # short-lived access JWT
+    refresh_cookie_name: str = "vietaxlegal_refresh"  # opaque, rotating, stored hashed
+    access_token_minutes: int = 15
+    remember_me_days: int = 30  # refresh-token lifetime with "remember me"
+    session_token_hours: int = 24  # refresh-token lifetime without it
+    register_max_per_hour: int = 10  # per client address
     cors_origins: str = "http://localhost:3000"
     chat_provider: str = "anthropic"
     chat_model: str = "claude-sonnet-5"
@@ -87,3 +90,5 @@ def get_settings() -> Settings:
     return Settings()
         if self.log_level.upper() not in ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"):
             raise ValueError("LOG_LEVEL must be DEBUG, INFO, WARNING, ERROR or CRITICAL.")
+        if min(self.access_token_minutes, self.register_max_per_hour) < 1:
+            raise ValueError("ACCESS_TOKEN_MINUTES and REGISTER_MAX_PER_HOUR must be positive.")

@@ -60,6 +60,7 @@ def test_register_creates_normalized_user_and_session(client: TestClient) -> Non
         "username": "huy_legal",
         "fullName": "Hoàng Huy",
         "phone": "0901234567",
+        "role": "user",
     }
     cookie = response.headers["set-cookie"].lower()
     assert "httponly" in cookie

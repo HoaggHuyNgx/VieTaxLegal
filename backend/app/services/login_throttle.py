@@ -22,7 +22,11 @@ class LoginThrottle:
         max_failures: int,
         window_seconds: float,
         clock: Callable[[], float] = time.monotonic,
+        error_code: str = "AUTH_RATE_LIMITED",
+        error_message: str = "Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau ít phút.",
     ) -> None:
+        self._error_code = error_code
+        self._error_message = error_message
         self._max_failures = max_failures
         self._window_seconds = window_seconds
         self._clock = clock
@@ -41,11 +45,7 @@ class LoginThrottle:
     def check(self, key: str) -> None:
         with self._lock:
             if len(self._recent(key, self._clock())) >= self._max_failures:
-                raise AppError(
-                    429,
-                    "AUTH_RATE_LIMITED",
-                    "Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau ít phút.",
-                )
+                raise AppError(429, self._error_code, self._error_message)
 
     def record_failure(self, key: str) -> None:
         with self._lock:
@@ -58,6 +58,17 @@ class LoginThrottle:
     def reset(self, key: str) -> None:
         with self._lock:
             self._failures.pop(key, None)
+
+
+@lru_cache
+def get_register_throttle() -> LoginThrottle:
+    """Counts every registration attempt per client address (not only failures)."""
+    return LoginThrottle(
+        get_settings().register_max_per_hour,
+        3600,
+        error_code="REGISTER_RATE_LIMITED",
+        error_message="Bạn đã tạo tài khoản quá nhiều lần. Vui lòng thử lại sau.",
+    )
 
 
 @lru_cache

@@ -1,4 +1,4 @@
-import { ApiError, apiUrl } from './api'
+import { ApiError, authFetch } from './api'
 
 // This layer never carries a language — only a stable `code`. The server's
 // Vietnamese `message` rides along as a fallback for unknown codes.
@@ -95,21 +95,21 @@ export async function readEventStream(stream, onEvent) {
 }
 
 export async function getConversations(limit = 50) {
-  const response = await fetch(apiUrl(`/chat/conversations?limit=${limit}`), {
+  const response = await authFetch(`/chat/conversations?limit=${limit}`, {
     credentials: 'include',
   })
   return parseJsonResponse(response)
 }
 
 export async function getConversation(conversationId) {
-  const response = await fetch(apiUrl(`/chat/conversations/${encodeURIComponent(conversationId)}`), {
+  const response = await authFetch(`/chat/conversations/${encodeURIComponent(conversationId)}`, {
     credentials: 'include',
   })
   return parseJsonResponse(response)
 }
 
 export async function deleteConversation(conversationId) {
-  const response = await fetch(apiUrl(`/chat/conversations/${encodeURIComponent(conversationId)}`), {
+  const response = await authFetch(`/chat/conversations/${encodeURIComponent(conversationId)}`, {
     method: 'DELETE',
     credentials: 'include',
   })
@@ -117,7 +117,7 @@ export async function deleteConversation(conversationId) {
 }
 
 export async function streamChatMessage(payload, { signal, onEvent }) {
-  const response = await fetch(apiUrl('/chat/messages/stream'), {
+  const response = await authFetch('/chat/messages/stream', {
     method: 'POST',
     credentials: 'include',
     signal,

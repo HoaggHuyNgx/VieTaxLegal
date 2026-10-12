@@ -4,6 +4,29 @@ export function apiUrl(path) {
   return `${apiBaseUrl}${path}`
 }
 
+// The access cookie lives ~15 minutes; the refresh cookie renews it silently. One shared
+// in-flight refresh keeps parallel 401s from rotating (and so invalidating) the token twice.
+let refreshInFlight = null
+
+function refreshSession() {
+  refreshInFlight ??= fetch(apiUrl('/auth/refresh'), { method: 'POST', credentials: 'include' })
+    .then((response) => response.ok)
+    .catch(() => false)
+    .finally(() => {
+      refreshInFlight = null
+    })
+  return refreshInFlight
+}
+
+// fetch that, on a 401 from a normal endpoint, refreshes the session and retries once.
+// /auth/me is included so a returning visitor with an expired access cookie stays signed in.
+export async function authFetch(path, init) {
+  const response = await fetch(apiUrl(path), init)
+  const isAuthEndpoint = path.startsWith('/auth/') && path !== '/auth/me'
+  if (response.status !== 401 || isAuthEndpoint) return response
+  return (await refreshSession()) ? fetch(apiUrl(path), init) : response
+}
+
 export class ApiError extends Error {
   constructor({ status, code, message, fields }) {
     super(message || code)
@@ -16,7 +39,7 @@ export class ApiError extends Error {
 
 export async function apiRequest(path, options = {}) {
   const { body, headers, ...requestOptions } = options
-  const response = await fetch(apiUrl(path), {
+  const response = await authFetch(path, {
     ...requestOptions,
     body: body ? JSON.stringify(body) : undefined,
     credentials: 'include',
