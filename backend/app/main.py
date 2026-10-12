@@ -5,8 +5,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.router import api_router
 from app.core.config import get_settings
 from app.core.errors import AppError, app_error_handler, validation_error_handler
+from app.core.logging import setup_logging
+from app.core.request_log import RequestLogMiddleware
 
 settings = get_settings()
+setup_logging(settings.log_level, settings.log_json)
 
 app = FastAPI(title=settings.app_name, version="0.1.0")
 app.add_middleware(
@@ -16,6 +19,7 @@ app.add_middleware(
     allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "Accept"],
 )
+app.add_middleware(RequestLogMiddleware)  # added last = outermost, so it also times CORS
 app.add_exception_handler(AppError, app_error_handler)
 app.add_exception_handler(RequestValidationError, validation_error_handler)
 app.include_router(api_router, prefix=settings.api_prefix)

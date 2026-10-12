@@ -20,6 +20,8 @@ class Settings(BaseSettings):
     chat_model: str = "claude-sonnet-5"
     anthropic_api_key: SecretStr | None = None
     openai_api_key: SecretStr | None = None
+    log_level: str = "INFO"
+    log_json: bool = False
     chat_max_output_tokens: int = 1500
     chat_history_messages: int = 20
     chat_rate_limit_per_minute: int = 10
@@ -83,3 +85,5 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
+        if self.log_level.upper() not in ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"):
+            raise ValueError("LOG_LEVEL must be DEBUG, INFO, WARNING, ERROR or CRITICAL.")
