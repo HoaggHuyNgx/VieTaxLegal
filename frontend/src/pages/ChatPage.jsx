@@ -58,7 +58,6 @@ export default function ChatPage() {
       setIsHistoryLoading(true)
       setHistoryError(null)
     }
-
     try {
       const data = await getConversations(50)
       setConversations(sortConversations(Array.isArray(data) ? data : data?.items || []))

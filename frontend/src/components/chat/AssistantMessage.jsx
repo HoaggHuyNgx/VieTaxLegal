@@ -11,14 +11,14 @@ function CitationList({ citations }) {
   return (
     <section className="answer-sources" aria-label={t('chat.message.sources')}>
       <h3>{t('chat.message.sources')}</h3>
-      {citations.map((citation, index) => {
+      {citations.map((citation) => {
         // `url` and `excerpt` are optional in CitationResponse; `id` and `title`
         // are not. Anything other than http(s) is dropped rather than rendered:
         // this text comes from the model.
         const safeUrl = safeExternalUrl(citation.url)
         return (
           <div className="answer-source-row" key={citation.id}>
-            <span className="source-number">{index + 1}</span>
+            <span className="source-number">{citation.id}</span>
             {safeUrl ? (
               <a href={safeUrl} target="_blank" rel="noreferrer">
                 {citation.title}
