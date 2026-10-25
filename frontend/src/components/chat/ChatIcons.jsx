@@ -1,3 +1,5 @@
+import logo from '../../assets/images/logo/logo.webp'
+
 function Icon({ children, size = 20, ...props }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
@@ -6,18 +8,10 @@ function Icon({ children, size = 20, ...props }) {
   )
 }
 
+// Same artwork as the landing/login hero (assets/images/logo/logo.webp), so the brand mark is
+// identical everywhere. Decorative: the brand name is always rendered as text next to it.
 export function LogoMark({ size = 38 }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 40 36" fill="none" aria-hidden="true">
-      <path d="M3 4h11.2L20 17.1 25.8 4H37L20 33 3 4Z" fill="url(#logo-gradient)" />
-      <defs>
-        <linearGradient id="logo-gradient" x1="5" y1="4" x2="31" y2="32" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#12C7FF" />
-          <stop offset="1" stopColor="#1648E6" />
-        </linearGradient>
-      </defs>
-    </svg>
-  )
+  return <img src={logo} width={size} height={size} alt="" aria-hidden="true" className="object-contain" />
 }
 
 export function PlusIcon() {
