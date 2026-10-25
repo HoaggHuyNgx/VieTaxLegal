@@ -24,6 +24,8 @@ export default function Features() {
                       className="size-8 object-contain"
                       src={featureIcons[feature.id]}
                       alt={feature.title}
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <p className="m-0 pt-2 text-[0.95rem] leading-[1.6] text-gray-700">{feature.description}</p>
@@ -36,6 +38,8 @@ export default function Features() {
               src={aiIllustration}
               alt={t('landing.features.illustrationAlt')}
               className="block h-full w-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
