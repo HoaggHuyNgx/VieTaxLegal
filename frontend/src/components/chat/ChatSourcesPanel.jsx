@@ -37,7 +37,7 @@ function SourceCard({ citation }) {
       <div className="source-card-body min-w-0">
         {href ? (
           <a
-            className={`${CARD_TEXT} text-chat-blue`}
+            className={`${CARD_TEXT} text-chat-blue underline`}
             href={href}
             target="_blank"
             rel="noreferrer"

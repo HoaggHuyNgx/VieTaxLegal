@@ -1,11 +1,10 @@
-/* Layer order is explicit: legacy component CSS is unlayered, so it always beats
-   utilities. That is intentional while components are migrated one slice at a
-   time (see plans/261025-1417-tailwind-v4-frontend-migration). */
+/* This is the only stylesheet. Components are styled with Tailwind utilities in JSX;
+   what lives here is tokens (@theme), breakpoint variants, chat-wide base rules,
+   and the CSS that utilities cannot express (react-markdown output, keyframes). */
 @layer theme, base, components, utilities;
 
-/* No preflight yet: it would restyle every component that has not been
-   migrated. It is enabled in the last migration phase. */
 @import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css' layer(utilities);
 
 /* Tailwind 4 wraps hover in (hover: hover); keep the plain :hover the app had.
@@ -23,9 +22,8 @@
 @custom-variant lte-760 (@media (max-width: 760px));
 @custom-variant lte-640 (@media (max-width: 640px));
 
-/* Single source for every design token. `static` emits all variables even when
-   no utility uses them, which legacy CSS (var(--...)) needs until it is gone. */
-@theme static {
+/* Single source for every design token. */
+@theme {
   --color-*: initial;
 
   /* landing + auth palette */
@@ -175,6 +173,7 @@
   --color-chat-disclaimer: #a3aec5;
   --color-chat-link: #1450e9;
   --color-chat-code-bg: #f2f5fa;
+  --color-chat-source-link: #0000ee;
   --shadow-chat-bubble: 0 2px 4px rgb(25 48 108 / 2%);
   --shadow-chat-suggestion-hover: 0 8px 20px rgb(29 54 114 / 9%);
   --shadow-chat-composer: 0 3px 11px rgb(35 67 133 / 5%);
@@ -188,70 +187,11 @@
   --chat-center-max: 820px;
 }
 
-/* Legacy names still referenced by unmigrated CSS. Delete each alias once
-   `grep "var(--<name>"` finds nothing; all of them go in the final phase. */
-:root {
-  --blue-deep: var(--color-blue-deep);
-  --blue-primary: var(--color-blue-primary);
-  --blue-bright: var(--color-blue-bright);
-  --white: var(--color-white);
-  --cream: var(--color-cream);
-  --gray-50: var(--color-gray-50);
-  --gray-100: var(--color-gray-100);
-  --gray-200: var(--color-gray-200);
-  --gray-300: var(--color-gray-300);
-  --gray-700: var(--color-gray-700);
-  --gray-900: var(--color-gray-900);
-
-  --chat-canvas: var(--color-chat-canvas);
-  --chat-surface: var(--color-chat-surface);
-  --chat-panel: var(--color-chat-panel);
-  --chat-ink: var(--color-chat-ink);
-  --chat-ink-soft: var(--color-chat-ink-soft);
-  --chat-muted: var(--color-chat-muted);
-  --chat-faint: var(--color-chat-faint);
-  --chat-border: var(--color-chat-border);
-  --chat-border-soft: var(--color-chat-border-soft);
-  --chat-blue: var(--color-chat-blue);
-  --chat-blue-strong: var(--color-chat-blue-strong);
-  --chat-light-blue: var(--color-chat-light-blue);
-  --chat-tab-active: var(--color-chat-tab-active);
-  --chat-danger: var(--color-chat-danger);
-  --chat-danger-soft: var(--color-chat-danger-soft);
-
-  --tint-blue-bg: var(--color-tint-blue-bg);
-  --tint-blue-fg: var(--color-tint-blue-fg);
-  --tint-violet-bg: var(--color-tint-violet-bg);
-  --tint-violet-fg: var(--color-tint-violet-fg);
-  --tint-green-bg: var(--color-tint-green-bg);
-  --tint-green-fg: var(--color-tint-green-fg);
-  --tint-orange-bg: var(--color-tint-orange-bg);
-  --tint-orange-fg: var(--color-tint-orange-fg);
-
-  --chat-radius-sm: var(--radius-chat-sm);
-  --chat-radius: var(--radius-chat);
-  --chat-radius-lg: var(--radius-chat-lg);
-  --chat-radius-pill: var(--radius-chat-pill);
-
-  --chat-shadow-soft: var(--shadow-chat-soft);
-  --chat-shadow-card: var(--shadow-chat-card);
-}
-
-/* Same reset as before, but layered so it no longer beats margin/padding
-   utilities. Intentionally `*` only (pseudo-elements were never reset). */
-@layer base {
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-}
-
 body {
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--gray-900);
+  color: var(--color-gray-900);
   line-height: 1.6;
 }
 
@@ -264,8 +204,36 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Chat-wide element resets (formerly ChatPage.css). In the base layer so component
-   utilities win, as they will once Preflight owns these defaults. */
+/* Pre-migration rendering, kept on purpose so enabling Preflight is a pixel-identical
+   change. Preflight makes images/SVGs block-level and form controls inherit the page
+   font; the old stylesheet never did either, and several components (the FAQ and tab
+   buttons, inline icons) are laid out against the browser defaults. `revert` rolls the
+   property back to the browser's own value. Delete this block to adopt Preflight's
+   behavior everywhere (form controls would switch from Arial to Inter and grow taller). */
+@layer base {
+  img,
+  svg {
+    display: revert;
+    vertical-align: revert;
+  }
+
+  img {
+    max-width: revert;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: revert;
+    letter-spacing: revert;
+    color: revert;
+    background-color: revert;
+    border-radius: revert;
+  }
+}
+
+/* Chat-wide element resets. In the base layer so component utilities win. */
 @layer base {
   .chat-dashboard button,
   .chat-dashboard input,
@@ -279,13 +247,24 @@ html {
   }
 
   .chat-dashboard :focus-visible {
-    outline: 2px solid var(--chat-blue);
+    outline: 2px solid var(--color-chat-blue);
     outline-offset: 2px;
   }
 }
 
 /* Markdown rendered by react-markdown: descendant elements cannot take classNames,
    so these stay CSS. Selectors and values are unchanged from ChatWorkspace.css. */
+/* Preflight strips semantic defaults; the answer text relies on them. */
+.markdown-answer :is(h1, h2, h3, h4, h5, h6) {
+  font-size: revert;
+  font-weight: revert;
+}
+.markdown-answer :is(ul, ol) {
+  list-style: revert;
+}
+.markdown-answer :is(code, pre) {
+  font-family: monospace;
+}
 .markdown-answer > :first-child {
   margin-top: 0;
 }
@@ -308,6 +287,7 @@ html {
 }
 .markdown-answer a {
   color: var(--color-chat-link);
+  text-decoration: underline;
 }
 .markdown-answer code {
   border-radius: 4px;

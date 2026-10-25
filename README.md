@@ -90,7 +90,7 @@ VieTaxLegal/
 │   │   ├── i18n/          # Internationalization và catalog VI/EN
 │   │   ├── pages/         # LandingPage và ChatPage
 │   │   ├── services/      # Lời gọi API và SSE client
-│   │   └── styles/        # CSS toàn cục
+│   │   └── styles/        # index.css: token và luật nền Tailwind
 │   ├── .env.example
 │   ├── package.json
 │   └── README.md          # Tài liệu frontend chi tiết

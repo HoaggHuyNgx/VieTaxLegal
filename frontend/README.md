@@ -65,10 +65,24 @@ src/
 ├── i18n/            # Provider, translator và catalog tiếng Việt/Anh
 ├── pages/           # LandingPage, ChatPage
 ├── services/        # api, auth, chat — toàn bộ lời gọi HTTP
-└── styles/          # CSS toàn cục
+└── styles/          # index.css: token Tailwind (@theme), biến thể breakpoint, luật nền
 ```
 
-CSS đặt cạnh component, không dùng CSS framework. Không có TypeScript.
+Giao diện dùng Tailwind CSS v4 (plugin `@tailwindcss/vite`), viết thẳng bằng utility trong JSX; không còn file CSS riêng
+cho từng component. `src/styles/index.css` là stylesheet duy nhất. Không có TypeScript.
+
+### Styling
+
+- **Token** (màu, bo góc, bóng, gradient) khai báo một lần trong khối `@theme` của `index.css`; dùng qua utility như
+  `bg-chat-surface`, `rounded-chat`, `shadow-chat-soft`. Không viết mã hex trong JSX (trừ fill SVG của logo).
+- **Breakpoint**: các biến thể `lte-1220`, `lte-1100`, `lte-1024`, `lte-968`, `lte-768`, `lte-760`, `lte-640` (kiểu
+  desktop-first, tính cả biên, giống CSS cũ). Thêm biến thể mới bằng `@custom-variant` theo thứ tự từ rộng đến hẹp.
+- **Class phải là chuỗi đầy đủ** để Tailwind quét được: dùng bảng tra hoặc toán tử 3 ngôi, không ghép chuỗi kiểu
+  `tint-${x}`. Chuỗi dùng chung nằm trong module `.js` (ví dụ `components/auth/auth-styles.js`).
+- Phần không viết được bằng utility vẫn ở `index.css`: CSS cho nội dung markdown (react-markdown), `@keyframes`,
+  và các luật nền của khu vực chat. Khối `@layer base` có đoạn "pre-migration rendering" giữ hình ảnh/SVG và form control
+  như trình duyệt mặc định; xóa đoạn đó nếu muốn dùng hẳn Preflight (form control sẽ chuyển từ Arial sang Inter).
+- Một số class không có style vẫn được giữ làm "marker" vì test hoặc script kiểm thử hình ảnh truy vấn theo tên.
 
 ## Routes
 

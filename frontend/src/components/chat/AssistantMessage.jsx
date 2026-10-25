@@ -22,7 +22,9 @@ function CitationList({ citations }) {
       className="relative mt-[14px] border-t border-chat-sources-border pt-3 text-[10px] text-chat-sources-text"
       aria-label={t('chat.message.sources')}
     >
-      <h3 className="mb-[6px] text-[10px] text-chat-sources-heading">{t('chat.message.sources')}</h3>
+      <h3 className="mb-[6px] text-[10px] font-bold text-chat-sources-heading">
+        {t('chat.message.sources')}
+      </h3>
       {citations.map((citation) => {
         // `url` and `excerpt` are optional in CitationResponse; `id` and `title`
         // are not. Anything other than http(s) is dropped rather than rendered:
@@ -34,7 +36,7 @@ function CitationList({ citations }) {
               {citation.id}
             </span>
             {safeUrl ? (
-              <a href={safeUrl} target="_blank" rel="noreferrer">
+              <a className="text-chat-source-link underline" href={safeUrl} target="_blank" rel="noreferrer">
                 {citation.title}
               </a>
             ) : (
