@@ -4,11 +4,10 @@ import { useI18n } from '../../i18n/useI18n'
 
 // LanguageToggle is shared with the landing page, so its chat look is applied here by
 // descendant selectors on the marker classes it keeps (language-toggle / language-option),
-// not inside the component. color and font-size need `!`: the unlayered
-// `.chat-dashboard button { font: inherit; color: inherit }` in ChatPage.css would
-// otherwise beat these layered utilities (drop the `!` when that rule goes).
+// not inside the component. font-normal undoes LanguageToggle's own weight: inside the chat the
+// button reset made it inherit 400, so that is the look to keep.
 const LANGUAGE_TOGGLE_SKIN =
-  '[&_.language-toggle]:border-chat-border [&_.language-toggle]:bg-chat-panel [&_.language-toggle]:p-[3px] [&_.language-option]:min-w-[2.5rem] [&_.language-option]:px-[0.6rem] [&_.language-option]:py-[0.3rem] [&_.language-option]:text-[0.72rem]! [&_.language-option:not(.active)]:text-chat-muted! [&_.language-option:not(.active):hover]:bg-chat-lang-hover [&_.language-option.active]:bg-chat-blue [&_.language-option.active]:text-white! [&_.language-option.active]:shadow-chat-lang-active'
+  '[&_.language-toggle]:border-chat-border [&_.language-toggle]:bg-chat-panel [&_.language-toggle]:p-[3px] [&_.language-option]:min-w-[2.5rem] [&_.language-option]:px-[0.6rem] [&_.language-option]:py-[0.3rem] [&_.language-option]:text-[0.72rem] [&_.language-option]:font-normal [&_.language-option:not(.active)]:text-chat-muted [&_.language-option:focus-visible]:outline-chat-blue [&_.language-option:not(.active):hover]:bg-chat-lang-hover [&_.language-option.active]:bg-chat-blue [&_.language-option.active]:text-white [&_.language-option.active]:shadow-chat-lang-active'
 
 export default function ChatTopbar({ onOpenSidebar }) {
   const { t } = useI18n()

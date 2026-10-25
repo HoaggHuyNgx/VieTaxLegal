@@ -10,10 +10,9 @@ import { useAuth } from '../context/useAuth'
 import { translateApiError } from '../i18n/errors'
 import { useI18n } from '../i18n/useI18n'
 import { deleteConversation, getConversations } from '../services/chat'
-import './ChatPage.css'
 
-// `chat-dashboard` stays as a marker: ChatPage.css (rules ChatWorkspace still needs)
-// is scoped by it. The grid height is definite (h-dvh, not min-h) so the child
+// `chat-dashboard` stays as a marker: the chat-wide base rules in index.css are scoped by
+// it. The grid height is definite (h-dvh, not min-h) so the child
 // columns can scroll internally instead of stretching the page.
 // Below 1100px the sources column is dropped entirely (CitationList inline in each
 // answer shows the same data at every width), so collapsed/open no longer matter.

@@ -16,9 +16,9 @@ import { groupConversations } from './conversation-groups'
 const IS_MAC = typeof navigator !== 'undefined' && /mac/i.test(navigator.userAgent)
 const SEARCH_SHORTCUT = IS_MAC ? '⌘K' : 'Ctrl K'
 
-// color/font utilities on <button>s lose to the unlayered `.chat-dashboard button` rule in
-// ChatPage.css (it goes with ChatWorkspace in phase 4). `!` is used only where the old CSS
-// had a more specific rule that beat it.
+// Buttons inherit font and color through the chat-wide base rule (index.css), exactly as before
+// the migration: the old per-button font-size/weight/color declarations never won over it, so they
+// are not carried over.
 const SIDEBAR =
   'z-4 col-1 row-[1/-1] flex min-w-0 flex-col border-r border-chat-border bg-chat-panel lte-760:fixed lte-760:top-0 lte-760:left-0 lte-760:h-dvh lte-760:w-[min(300px,88vw)] lte-760:min-w-0 lte-760:shadow-chat-drawer lte-760:transition-[transform] lte-760:duration-200 lte-760:ease-[ease]'
 const SIDEBAR_CLOSED = 'lte-760:[transform:translateX(-105%)]'
@@ -115,7 +115,7 @@ export default function ChatSidebar({
         </div>
         <button
           type="button"
-          className="hidden lte-760:absolute lte-760:top-[13px] lte-760:right-[13px] lte-760:grid lte-760:size-[29px] lte-760:place-items-center lte-760:rounded-[50%] lte-760:border-0 lte-760:bg-chat-close-bg lte-760:text-[22px]"
+          className="hidden lte-760:absolute lte-760:top-[13px] lte-760:right-[13px] lte-760:grid lte-760:size-[29px] lte-760:place-items-center lte-760:rounded-[50%] lte-760:border-0 lte-760:bg-chat-close-bg"
           aria-label={t('chat.sidebar.closeAria')}
           onClick={onClose}
         >
@@ -124,7 +124,7 @@ export default function ChatSidebar({
       </div>
       <button
         type="button"
-        className="mx-4 mb-[14px] flex h-[42px] w-[calc(100%-32px)] items-center justify-center gap-2 rounded-chat border-0 bg-transparent bg-[image:var(--chat-gradient)] text-[13px] font-[650] text-white shadow-chat-new-chat hover:shadow-chat-new-chat-hover"
+        className="mx-4 mb-[14px] flex h-[42px] w-[calc(100%-32px)] items-center justify-center gap-2 rounded-chat border-0 bg-transparent bg-[image:var(--chat-gradient)] shadow-chat-new-chat hover:shadow-chat-new-chat-hover"
         onClick={onNewChat}
       >
         <PlusIcon />
@@ -134,7 +134,7 @@ export default function ChatSidebar({
         <SearchIcon />
         <input
           ref={searchInputRef}
-          className="w-full min-w-0 border-0 bg-transparent text-[12px] text-chat-ink outline-0 outline-none placeholder:text-chat-placeholder"
+          className="w-full min-w-0 border-0 bg-transparent text-chat-ink outline-0 outline-none placeholder:text-chat-placeholder"
           value={searchQuery}
           onChange={(event) => onSearchChange(event.target.value)}
           placeholder={t('chat.sidebar.searchPlaceholder')}
@@ -150,7 +150,7 @@ export default function ChatSidebar({
         <h2 className={GROUP_HEADING}>{t('chat.sidebar.conversationsLabel')}</h2>
         <button
           type="button"
-          className="grid size-6 place-items-center rounded-[6px] border-0 bg-transparent p-0 text-chat-icon-btn hover:bg-chat-icon-btn-hover hover:text-chat-blue!"
+          className="grid size-6 place-items-center rounded-[6px] border-0 bg-transparent p-0 hover:bg-chat-icon-btn-hover hover:text-chat-blue"
           aria-label={t('chat.sidebar.sortAria')}
           title={sortOrder === 'oldest' ? t('chat.sidebar.sortOldest') : t('chat.sidebar.sortNewest')}
           onClick={onToggleSort}
@@ -165,7 +165,7 @@ export default function ChatSidebar({
             <p>{error}</p>
             <button
               type="button"
-              className="rounded-[5px] border border-chat-retry-border bg-chat-surface px-[10px] py-[6px] text-[10px] text-chat-blue"
+              className="rounded-[5px] border border-chat-retry-border bg-chat-surface px-[10px] py-[6px]"
               onClick={onRetry}
             >
               {t('chat.sidebar.retry')}
@@ -226,7 +226,7 @@ export default function ChatSidebar({
                     </button>
                     <button
                       type="button"
-                      className="absolute right-[6px] flex size-[22px] items-center justify-center rounded-[4px] border-0 bg-white p-0 text-[18px] text-chat-delete opacity-[0.45] focus-visible:opacity-100 [.group:hover_&]:opacity-100"
+                      className="absolute right-[6px] flex size-[22px] items-center justify-center rounded-[4px] border-0 bg-white p-0 opacity-[0.45] focus-visible:opacity-100 [.group:hover_&]:opacity-100"
                       aria-label={t('chat.sidebar.deleteAria', { title: item.title })}
                       onClick={() => onDeleteConversation(item)}
                     >
@@ -265,7 +265,7 @@ export default function ChatSidebar({
             <button
               type="button"
               role="menuitem"
-              className="block w-full rounded-[6px] border-0 bg-transparent px-[6px] py-2 text-left text-[11px] font-[650] text-chat-logout hover:bg-chat-danger-soft"
+              className="block w-full rounded-[6px] border-0 bg-transparent px-[6px] py-2 text-left hover:bg-chat-danger-soft"
               onClick={onLogout}
             >
               {t('chat.page.logout')}

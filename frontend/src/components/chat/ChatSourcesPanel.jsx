@@ -84,7 +84,7 @@ export default function ChatSourcesPanel({ citations, isStreaming, isOpen, onTog
         </h2>
         <button
           type="button"
-          className="sources-toggle grid size-[26px] flex-none place-items-center rounded-[7px] border border-chat-border bg-chat-surface p-0 text-chat-muted hover:border-chat-border-hover hover:text-chat-blue!"
+          className="sources-toggle grid size-[26px] flex-none place-items-center rounded-[7px] border border-chat-border bg-chat-surface p-0 hover:border-chat-border-hover hover:text-chat-blue"
           aria-expanded={isOpen}
           aria-label={isOpen ? t('chat.sources.collapseAria') : t('chat.sources.expandAria')}
           onClick={onToggle}
@@ -123,7 +123,7 @@ export default function ChatSourcesPanel({ citations, isStreaming, isOpen, onTog
           {hasOverflow ? (
             <button
               type="button"
-              className={`${isOpen ? 'flex' : 'hidden'} mt-3 items-center justify-center rounded-chat-sm border border-chat-border bg-chat-panel px-[10px] py-[9px] text-[10.5px] font-[650] text-chat-blue hover:border-chat-border-hover hover:bg-chat-light-blue`}
+              className={`${isOpen ? 'flex' : 'hidden'} mt-3 items-center justify-center rounded-chat-sm border border-chat-border bg-chat-panel px-[10px] py-[9px] hover:border-chat-border-hover hover:bg-chat-light-blue`}
               onClick={() => setIsExpanded((current) => !current)}
             >
               {isExpanded ? t('chat.sources.showLess') : t('chat.sources.showAll', { count: items.length })}
