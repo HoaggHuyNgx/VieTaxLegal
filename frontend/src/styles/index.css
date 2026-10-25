@@ -1,23 +1,132 @@
-:root {
-  --blue-deep: #0a2463;
-  --blue-primary: #1e40af;
-  --blue-bright: #2563eb;
-  --white: #ffffff;
-  --cream: #f7f4ef;
-  --gray-50: #f9fafb;
-  --gray-100: #f3f4f6;
-  --gray-200: #e5e7eb;
-  --gray-300: #d1d5db;
-  --gray-700: #374151;
-  --gray-900: #111827;
+/* Layer order is explicit: legacy component CSS is unlayered, so it always beats
+   utilities. That is intentional while components are migrated one slice at a
+   time (see plans/261025-1417-tailwind-v4-frontend-migration). */
+@layer theme, base, components, utilities;
+
+/* No preflight yet: it would restyle every component that has not been
+   migrated. It is enabled in the last migration phase. */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+/* Single source for every design token. `static` emits all variables even when
+   no utility uses them, which legacy CSS (var(--...)) needs until it is gone. */
+@theme static {
+  --color-*: initial;
+
+  /* landing + auth palette */
+  --color-blue-deep: #0a2463;
+  --color-blue-primary: #1e40af;
+  --color-blue-bright: #2563eb;
+  --color-white: #ffffff;
+  --color-cream: #f7f4ef;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-700: #374151;
+  --color-gray-900: #111827;
 
   --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* chat palette (a different blue on purpose: do not merge with landing) */
+  --color-chat-canvas: #f9fbff;
+  --color-chat-surface: #fff;
+  --color-chat-panel: #f7f9fd;
+  --color-chat-ink: #122257;
+  --color-chat-ink-soft: #20335f;
+  --color-chat-muted: #7180a4;
+  --color-chat-faint: #8592ab;
+  --color-chat-border: #e5eaf4;
+  --color-chat-border-soft: #edf1f8;
+  --color-chat-blue: #1449ea;
+  --color-chat-blue-strong: #0d3cdf;
+  --color-chat-light-blue: #eff4ff;
+  --color-chat-tab-active: #eef3ff;
+  --color-chat-danger: #b43f4d;
+  --color-chat-danger-soft: #fff6f7;
+
+  /* suggestion card tints */
+  --color-tint-blue-bg: #eef3ff;
+  --color-tint-blue-fg: #1449ea;
+  --color-tint-violet-bg: #f1ecff;
+  --color-tint-violet-fg: #6d43d6;
+  --color-tint-green-bg: #e8f7ef;
+  --color-tint-green-fg: #157a4e;
+  --color-tint-orange-bg: #fff1e4;
+  --color-tint-orange-fg: #b3600f;
+
+  --radius-chat-sm: 8px;
+  --radius-chat: 12px;
+  --radius-chat-lg: 16px;
+  --radius-chat-pill: 999px;
+
+  --shadow-chat-soft: 0 2px 6px rgb(25 48 108 / 5%);
+  --shadow-chat-card: 0 10px 28px rgb(29 54 114 / 13%);
+
+  /* chat layout + gradient (no utility namespace; used via var()) */
+  --chat-gradient: linear-gradient(130deg, #0d3cdf, #1654f5);
+  --chat-sidebar-width: 300px;
+  --chat-sources-width: 300px;
+  --chat-center-max: 820px;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Legacy names still referenced by unmigrated CSS. Delete each alias once
+   `grep "var(--<name>"` finds nothing; all of them go in the final phase. */
+:root {
+  --blue-deep: var(--color-blue-deep);
+  --blue-primary: var(--color-blue-primary);
+  --blue-bright: var(--color-blue-bright);
+  --white: var(--color-white);
+  --cream: var(--color-cream);
+  --gray-50: var(--color-gray-50);
+  --gray-100: var(--color-gray-100);
+  --gray-200: var(--color-gray-200);
+  --gray-300: var(--color-gray-300);
+  --gray-700: var(--color-gray-700);
+  --gray-900: var(--color-gray-900);
+
+  --chat-canvas: var(--color-chat-canvas);
+  --chat-surface: var(--color-chat-surface);
+  --chat-panel: var(--color-chat-panel);
+  --chat-ink: var(--color-chat-ink);
+  --chat-ink-soft: var(--color-chat-ink-soft);
+  --chat-muted: var(--color-chat-muted);
+  --chat-faint: var(--color-chat-faint);
+  --chat-border: var(--color-chat-border);
+  --chat-border-soft: var(--color-chat-border-soft);
+  --chat-blue: var(--color-chat-blue);
+  --chat-blue-strong: var(--color-chat-blue-strong);
+  --chat-light-blue: var(--color-chat-light-blue);
+  --chat-tab-active: var(--color-chat-tab-active);
+  --chat-danger: var(--color-chat-danger);
+  --chat-danger-soft: var(--color-chat-danger-soft);
+
+  --tint-blue-bg: var(--color-tint-blue-bg);
+  --tint-blue-fg: var(--color-tint-blue-fg);
+  --tint-violet-bg: var(--color-tint-violet-bg);
+  --tint-violet-fg: var(--color-tint-violet-fg);
+  --tint-green-bg: var(--color-tint-green-bg);
+  --tint-green-fg: var(--color-tint-green-fg);
+  --tint-orange-bg: var(--color-tint-orange-bg);
+  --tint-orange-fg: var(--color-tint-orange-fg);
+
+  --chat-radius-sm: var(--radius-chat-sm);
+  --chat-radius: var(--radius-chat);
+  --chat-radius-lg: var(--radius-chat-lg);
+  --chat-radius-pill: var(--radius-chat-pill);
+
+  --chat-shadow-soft: var(--shadow-chat-soft);
+  --chat-shadow-card: var(--shadow-chat-card);
+}
+
+/* Same reset as before, but layered so it no longer beats margin/padding
+   utilities. Intentionally `*` only (pseudo-elements were never reset). */
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 }
 
 body {

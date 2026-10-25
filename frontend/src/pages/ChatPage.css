@@ -1,54 +1,5 @@
-/* Biến màu khai báo ở đây và được ChatSidebar.css / ChatTopbar.css /
-   ChatWorkspace.css / ChatSourcesPanel.css kế thừa qua .chat-dashboard, nên file
-   này phải luôn được import cùng trang chat.
-
-   Scope là .chat-dashboard chứ không phải :root: styles/index.css phục vụ landing
-   + auth với một palette khác (--cream, --gray-*, --blue-primary). Đẩy màu chat
-   lên global sẽ tạo nguồn sự thật thứ hai cho "màu xanh". */
+/* Token màu / bo góc / bóng của chat nằm ở @theme trong styles/index.css (nguồn duy nhất). */
 .chat-dashboard {
-  /* surfaces */
-  --chat-canvas: #f9fbff;
-  --chat-surface: #fff;
-  --chat-panel: #f7f9fd;
-  /* text */
-  --chat-ink: #122257;
-  --chat-ink-soft: #20335f;
-  --chat-muted: #7180a4;
-  --chat-faint: #8592ab;
-  /* lines */
-  --chat-border: #e5eaf4;
-  --chat-border-soft: #edf1f8;
-  /* brand */
-  --chat-blue: #1449ea;
-  --chat-blue-strong: #0d3cdf;
-  --chat-light-blue: #eff4ff;
-  --chat-tab-active: #eef3ff;
-  --chat-gradient: linear-gradient(130deg, #0d3cdf, #1654f5);
-  /* state */
-  --chat-danger: #b43f4d;
-  --chat-danger-soft: #fff6f7;
-  /* radius */
-  --chat-radius-sm: 8px;
-  --chat-radius: 12px;
-  --chat-radius-lg: 16px;
-  --chat-radius-pill: 999px;
-  /* elevation */
-  --chat-shadow-soft: 0 2px 6px rgb(25 48 108 / 5%);
-  --chat-shadow-card: 0 10px 28px rgb(29 54 114 / 13%);
-  /* layout */
-  --chat-sidebar-width: 300px;
-  --chat-sources-width: 300px;
-  --chat-center-max: 820px;
-  /* tints cho thẻ gợi ý */
-  --tint-blue-bg: #eef3ff;
-  --tint-blue-fg: #1449ea;
-  --tint-violet-bg: #f1ecff;
-  --tint-violet-fg: #6d43d6;
-  --tint-green-bg: #e8f7ef;
-  --tint-green-fg: #157a4e;
-  --tint-orange-bg: #fff1e4;
-  --tint-orange-fg: #b3600f;
-
   display: grid;
   grid-template-columns: var(--chat-sidebar-width) minmax(0, 1fr) var(--chat-sources-width);
   /* height chứ không phải min-height: các cột con cần một chiều cao xác định để
