@@ -12,6 +12,18 @@ import { useI18n } from '../i18n/useI18n'
 import { deleteConversation, getConversations } from '../services/chat'
 import './ChatPage.css'
 
+// `chat-dashboard` stays as a marker: ChatPage.css (rules ChatWorkspace still needs)
+// is scoped by it. The grid height is definite (h-dvh, not min-h) so the child
+// columns can scroll internally instead of stretching the page.
+// Below 1100px the sources column is dropped entirely (CitationList inline in each
+// answer shows the same data at every width), so collapsed/open no longer matter.
+const DASHBOARD_BASE =
+  'chat-dashboard grid h-dvh grid-rows-[auto_minmax(0,1fr)] overflow-hidden bg-chat-canvas text-[14px] text-chat-ink transition-[grid-template-columns] duration-[0.18s] ease-[ease] motion-reduce:transition-none lte-1220:[--chat-sidebar-width:260px] lte-1220:[--chat-sources-width:260px] lte-1100:grid-cols-[var(--chat-sidebar-width)_minmax(0,1fr)] lte-760:grid-cols-[minmax(0,1fr)] lte-760:text-[13px]'
+// The sources panel stays mounted when collapsed and shrinks to a 44px rail that only
+// holds the re-open button, so the affordance never disappears.
+const DASHBOARD_SOURCES_OPEN = 'grid-cols-[var(--chat-sidebar-width)_minmax(0,1fr)_var(--chat-sources-width)]'
+const DASHBOARD_SOURCES_COLLAPSED = 'grid-cols-[var(--chat-sidebar-width)_minmax(0,1fr)_44px]'
+
 function sortConversations(conversations) {
   return [...conversations].sort(
     (left, right) =>
@@ -153,7 +165,9 @@ export default function ChatPage() {
   }
 
   return (
-    <div className={`chat-dashboard ${isSourcesOpen ? '' : 'sources-collapsed'}`}>
+    <div
+      className={`${DASHBOARD_BASE} ${isSourcesOpen ? DASHBOARD_SOURCES_OPEN : DASHBOARD_SOURCES_COLLAPSED}`}
+    >
       <ChatSidebar
         conversations={conversations}
         activeConversation={activeConversation}
@@ -192,7 +206,7 @@ export default function ChatPage() {
       {isSidebarOpen ? (
         <button
           type="button"
-          className="chat-backdrop"
+          className="fixed inset-0 z-3 hidden border-0 bg-chat-backdrop lte-760:block"
           aria-label={t('chat.sidebar.closeAria')}
           onClick={() => setIsSidebarOpen(false)}
         />

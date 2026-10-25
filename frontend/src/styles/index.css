@@ -115,6 +115,38 @@
   --gradient-feature-icon: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
   --gradient-step-icon: radial-gradient(circle at 35% 30%, #ffffff 0%, #eef5ff 56%, #dcebff 100%);
 
+  /* chat shell (sidebar, topbar, sources panel) */
+  --color-chat-brand-sub: #7e89a7;
+  --color-chat-search-icon: #8290af;
+  --color-chat-search-focus: #a8c1fb;
+  --color-chat-placeholder: #9aa6be;
+  --color-chat-kbd: #8793ae;
+  --color-chat-heading-muted: #6c7b9d;
+  --color-chat-icon-btn: #7c8aa9;
+  --color-chat-icon-btn-hover: #e8eefb;
+  --color-chat-item: #536285;
+  --color-chat-item-active-bg: #e6eeff;
+  --color-chat-delete: #9a6670;
+  --color-chat-dot-border: #c8d1e3;
+  --color-chat-dot-active: #1355ee;
+  --color-chat-time: #90a0bf;
+  --color-chat-state: #8491ad;
+  --color-chat-retry-border: #d7e1f4;
+  --color-chat-halo-icon: #7c9ae8;
+  --color-chat-sparkle: #a9c1f5;
+  --color-chat-logout: #be3344;
+  --color-chat-close-bg: #f2f5fb;
+  --color-chat-lang-hover: #e7edfa;
+  --color-chat-border-hover: #c8d6f5;
+  --color-chat-backdrop: rgb(13 25 60 / 28%);
+  --shadow-chat-new-chat: 0 6px 14px rgb(24 70 224 / 22%);
+  --shadow-chat-new-chat-hover: 0 8px 18px rgb(24 70 224 / 30%);
+  --shadow-chat-drawer: 12px 0 35px rgb(16 35 83 / 12%);
+  --shadow-chat-search-focus: 0 0 0 3px rgb(20 73 234 / 10%);
+  --shadow-chat-lang-active: 0 3px 8px rgb(20 73 234 / 28%);
+  --shadow-chat-dot-ring: 0 0 0 3px #d7e5ff;
+  --gradient-chat-halo: radial-gradient(circle, #e2ebff 0%, #eef3ff 55%, rgb(238 243 255 / 0%) 72%);
+
   /* chat layout + gradient (no utility namespace; used via var()) */
   --chat-gradient: linear-gradient(130deg, #0d3cdf, #1654f5);
   --chat-sidebar-width: 300px;
