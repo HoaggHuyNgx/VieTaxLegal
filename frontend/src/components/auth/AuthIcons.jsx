@@ -1,3 +1,5 @@
+import { FIELD_ERROR } from './auth-styles'
+
 export function EyeIcon({ hidden = false }) {
   return hidden ? (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -47,7 +49,7 @@ export function GoogleIcon() {
 
 export function FieldError({ error, id }) {
   return error ? (
-    <p className="field-error" id={id}>
+    <p className={FIELD_ERROR} id={id}>
       {error}
     </p>
   ) : null

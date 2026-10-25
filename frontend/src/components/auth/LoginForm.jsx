@@ -1,5 +1,16 @@
 import { useI18n } from '../../i18n/useI18n'
 import { EyeIcon, FieldError } from './AuthIcons'
+import {
+  CHECKBOX_INPUT,
+  CHECKBOX_LABEL,
+  FIELD_GROUP,
+  FORGOT_LINK,
+  INPUT,
+  INPUT_PADDING,
+  INPUT_PADDING_PASSWORD,
+  LABEL,
+  TOGGLE_PASSWORD,
+} from './auth-styles'
 
 export default function LoginForm({
   formData,
@@ -13,10 +24,13 @@ export default function LoginForm({
 
   return (
     <div id="login-panel" role="tabpanel" aria-labelledby="login-tab">
-      <div className="form-group">
-        <label htmlFor="login-identifier">{t('auth.fields.identifier')}</label>
+      <div className={FIELD_GROUP}>
+        <label className={LABEL} htmlFor="login-identifier">
+          {t('auth.fields.identifier')}
+        </label>
         <input
           id="login-identifier"
+          className={`${INPUT} ${INPUT_PADDING}`}
           name="loginIdentifier"
           type="text"
           autoComplete="username"
@@ -28,11 +42,14 @@ export default function LoginForm({
         />
         <FieldError error={errors.loginIdentifier} id="login-identifier-error" />
       </div>
-      <div className="form-group">
-        <label htmlFor="login-password">{t('auth.fields.password')}</label>
-        <div className="password-input">
+      <div className={FIELD_GROUP}>
+        <label className={LABEL} htmlFor="login-password">
+          {t('auth.fields.password')}
+        </label>
+        <div className="relative">
           <input
             id="login-password"
+            className={`${INPUT} ${INPUT_PADDING_PASSWORD}`}
             name="loginPassword"
             type={showPassword ? 'text' : 'password'}
             autoComplete="current-password"
@@ -44,7 +61,7 @@ export default function LoginForm({
           />
           <button
             type="button"
-            className="toggle-password"
+            className={TOGGLE_PASSWORD}
             onClick={onTogglePassword}
             aria-label={showPassword ? t('auth.fields.hidePasswordAria') : t('auth.fields.showPasswordAria')}
           >
@@ -53,12 +70,18 @@ export default function LoginForm({
         </div>
         <FieldError error={errors.loginPassword} id="login-password-error" />
       </div>
-      <div className="form-row">
-        <label className="checkbox-label">
-          <input type="checkbox" name="rememberMe" checked={formData.rememberMe} onChange={onChange} />
+      <div className="mb-5 flex items-center justify-between gap-4 text-[0.875rem] lte-640:flex-col lte-640:items-start lte-640:gap-3">
+        <label className={CHECKBOX_LABEL}>
+          <input
+            className={CHECKBOX_INPUT}
+            type="checkbox"
+            name="rememberMe"
+            checked={formData.rememberMe}
+            onChange={onChange}
+          />
           {t('auth.fields.rememberMe')}
         </label>
-        <button type="button" className="forgot-link" onClick={onForgotPassword}>
+        <button type="button" className={FORGOT_LINK} onClick={onForgotPassword}>
           {t('auth.fields.forgotPassword')}
         </button>
       </div>

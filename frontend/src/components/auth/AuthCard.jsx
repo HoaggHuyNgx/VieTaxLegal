@@ -4,10 +4,19 @@ import { useAuth } from '../../context/useAuth'
 import { translateApiError } from '../../i18n/errors'
 import { useI18n } from '../../i18n/useI18n'
 import { ApiError } from '../../services/api'
-import './AuthCard.css'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
 import { GoogleIcon } from './AuthIcons'
+import {
+  DIVIDER,
+  FEEDBACK,
+  FEEDBACK_TONE,
+  GOOGLE_BUTTON,
+  PRIMARY_BUTTON,
+  TAB_ACTIVE,
+  TAB_BASE,
+  TAB_IDLE,
+} from './auth-styles'
 
 const initialFormData = {
   loginIdentifier: '',
@@ -147,15 +156,22 @@ export default function AuthCard() {
   }
 
   return (
-    <section className="auth-card" aria-label={t('auth.cardAria')}>
-      <div className="tabs" role="tablist" aria-label={t('auth.tablistAria')}>
+    <section
+      className="w-full rounded-[1.25rem] bg-white p-8 text-gray-900 shadow-auth-card lte-640:rounded-2xl lte-640:p-6"
+      aria-label={t('auth.cardAria')}
+    >
+      <div
+        className="mb-6 flex gap-2 border-b-2 border-gray-200"
+        role="tablist"
+        aria-label={t('auth.tablistAria')}
+      >
         <button
           id="login-tab"
           type="button"
           role="tab"
           aria-selected={!isRegistering}
           aria-controls="login-panel"
-          className={`tab ${!isRegistering ? 'active' : ''}`}
+          className={`${TAB_BASE} ${!isRegistering ? TAB_ACTIVE : TAB_IDLE}`}
           onClick={() => changeTab('login')}
         >
           {t('auth.tabLogin')}
@@ -166,15 +182,19 @@ export default function AuthCard() {
           role="tab"
           aria-selected={isRegistering}
           aria-controls="register-panel"
-          className={`tab ${isRegistering ? 'active' : ''}`}
+          className={`${TAB_BASE} ${isRegistering ? TAB_ACTIVE : TAB_IDLE}`}
           onClick={() => changeTab('register')}
         >
           {t('auth.tabRegister')}
         </button>
       </div>
 
-      <h3>{isRegistering ? t('auth.registerHeading') : t('auth.loginHeading')}</h3>
-      <p className="auth-subtitle">{isRegistering ? t('auth.registerSubtitle') : t('auth.loginSubtitle')}</p>
+      <h3 className="mb-2 text-[1.35rem] leading-[1.3] font-bold text-gray-900 lte-640:text-[1.2rem]">
+        {isRegistering ? t('auth.registerHeading') : t('auth.loginHeading')}
+      </h3>
+      <p className="mb-6 text-[0.9rem] text-gray-700">
+        {isRegistering ? t('auth.registerSubtitle') : t('auth.loginSubtitle')}
+      </p>
 
       <form onSubmit={handleSubmit} noValidate>
         {isRegistering ? (
@@ -192,26 +212,26 @@ export default function AuthCard() {
 
         {feedback && (
           <p
-            className={`auth-feedback ${feedback.type}`}
+            className={`${FEEDBACK} ${FEEDBACK_TONE[feedback.type]}`}
             role={feedback.type === 'error' ? 'alert' : 'status'}
           >
             {feedbackMessage}
           </p>
         )}
 
-        <button type="submit" className="primary-btn" disabled={isSubmitting}>
+        <button type="submit" className={PRIMARY_BUTTON} disabled={isSubmitting}>
           {isSubmitting
             ? t('auth.submitting')
             : isRegistering
               ? t('auth.submitRegister')
               : t('auth.submitLogin')}
         </button>
-        <div className="divider">
-          <span>{t('auth.divider')}</span>
+        <div className={DIVIDER}>
+          <span className="px-4">{t('auth.divider')}</span>
         </div>
         <button
           type="button"
-          className="google-btn"
+          className={GOOGLE_BUTTON}
           onClick={() => setFeedback({ type: 'info', key: 'auth.googleNotice' })}
         >
           <GoogleIcon />

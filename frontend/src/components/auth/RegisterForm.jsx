@@ -1,5 +1,19 @@
 import { useI18n } from '../../i18n/useI18n'
 import { EyeIcon, FieldError } from './AuthIcons'
+import {
+  CHECKBOX_INPUT,
+  CHECKBOX_LABEL,
+  FIELD_GROUP,
+  INPUT,
+  INPUT_PADDING,
+  INPUT_PADDING_PASSWORD,
+  LABEL,
+  OPTIONAL_MARK,
+  REQUIRED_MARK,
+  TERMS_LABEL,
+  TERMS_LINK,
+  TOGGLE_PASSWORD,
+} from './auth-styles'
 
 export default function RegisterForm({
   formData,
@@ -13,13 +27,14 @@ export default function RegisterForm({
   const { t } = useI18n()
 
   return (
-    <div id="register-panel" className="register-fields" role="tabpanel" aria-labelledby="register-tab">
-      <div className="form-group">
-        <label htmlFor="register-email">
-          {t('auth.fields.email')} <span className="required-mark">*</span>
+    <div id="register-panel" role="tabpanel" aria-labelledby="register-tab">
+      <div className={FIELD_GROUP}>
+        <label className={LABEL} htmlFor="register-email">
+          {t('auth.fields.email')} <span className={REQUIRED_MARK}>*</span>
         </label>
         <input
           id="register-email"
+          className={`${INPUT} ${INPUT_PADDING}`}
           name="email"
           type="email"
           autoComplete="email"
@@ -31,12 +46,13 @@ export default function RegisterForm({
         />
         <FieldError error={errors.email} id="register-email-error" />
       </div>
-      <div className="form-group">
-        <label htmlFor="username">
-          {t('auth.fields.username')} <span className="required-mark">*</span>
+      <div className={FIELD_GROUP}>
+        <label className={LABEL} htmlFor="username">
+          {t('auth.fields.username')} <span className={REQUIRED_MARK}>*</span>
         </label>
         <input
           id="username"
+          className={`${INPUT} ${INPUT_PADDING}`}
           name="username"
           type="text"
           autoComplete="username"
@@ -48,12 +64,13 @@ export default function RegisterForm({
         />
         <FieldError error={errors.username} id="username-error" />
       </div>
-      <div className="form-group">
-        <label htmlFor="full-name">
-          {t('auth.fields.fullName')} <span className="required-mark">*</span>
+      <div className={FIELD_GROUP}>
+        <label className={LABEL} htmlFor="full-name">
+          {t('auth.fields.fullName')} <span className={REQUIRED_MARK}>*</span>
         </label>
         <input
           id="full-name"
+          className={`${INPUT} ${INPUT_PADDING}`}
           name="fullName"
           type="text"
           autoComplete="name"
@@ -65,12 +82,13 @@ export default function RegisterForm({
         />
         <FieldError error={errors.fullName} id="full-name-error" />
       </div>
-      <div className="form-group">
-        <label htmlFor="phone">
-          {t('auth.fields.phone')} <span className="optional-mark">{t('auth.fields.phoneOptional')}</span>
+      <div className={FIELD_GROUP}>
+        <label className={LABEL} htmlFor="phone">
+          {t('auth.fields.phone')} <span className={OPTIONAL_MARK}>{t('auth.fields.phoneOptional')}</span>
         </label>
         <input
           id="phone"
+          className={`${INPUT} ${INPUT_PADDING}`}
           name="phone"
           type="tel"
           inputMode="tel"
@@ -83,13 +101,14 @@ export default function RegisterForm({
         />
         <FieldError error={errors.phone} id="phone-error" />
       </div>
-      <div className="form-group">
-        <label htmlFor="register-password">
-          {t('auth.fields.password')} <span className="required-mark">*</span>
+      <div className={FIELD_GROUP}>
+        <label className={LABEL} htmlFor="register-password">
+          {t('auth.fields.password')} <span className={REQUIRED_MARK}>*</span>
         </label>
-        <div className="password-input">
+        <div className="relative">
           <input
             id="register-password"
+            className={`${INPUT} ${INPUT_PADDING_PASSWORD}`}
             name="password"
             type={showPassword ? 'text' : 'password'}
             autoComplete="new-password"
@@ -101,7 +120,7 @@ export default function RegisterForm({
           />
           <button
             type="button"
-            className="toggle-password"
+            className={TOGGLE_PASSWORD}
             onClick={onTogglePassword}
             aria-label={showPassword ? t('auth.fields.hidePasswordAria') : t('auth.fields.showPasswordAria')}
           >
@@ -110,13 +129,14 @@ export default function RegisterForm({
         </div>
         <FieldError error={errors.password} id="register-password-error" />
       </div>
-      <div className="form-group">
-        <label htmlFor="confirm-password">
-          {t('auth.fields.confirmPassword')} <span className="required-mark">*</span>
+      <div className={FIELD_GROUP}>
+        <label className={LABEL} htmlFor="confirm-password">
+          {t('auth.fields.confirmPassword')} <span className={REQUIRED_MARK}>*</span>
         </label>
-        <div className="password-input">
+        <div className="relative">
           <input
             id="confirm-password"
+            className={`${INPUT} ${INPUT_PADDING_PASSWORD}`}
             name="confirmPassword"
             type={showConfirmPassword ? 'text' : 'password'}
             autoComplete="new-password"
@@ -128,7 +148,7 @@ export default function RegisterForm({
           />
           <button
             type="button"
-            className="toggle-password"
+            className={TOGGLE_PASSWORD}
             onClick={onToggleConfirmPassword}
             aria-label={
               showConfirmPassword
@@ -141,8 +161,9 @@ export default function RegisterForm({
         </div>
         <FieldError error={errors.confirmPassword} id="confirm-password-error" />
       </div>
-      <label className="checkbox-label terms-label">
+      <label className={`${CHECKBOX_LABEL} ${TERMS_LABEL}`}>
         <input
+          className={CHECKBOX_INPUT}
           type="checkbox"
           name="acceptTerms"
           checked={formData.acceptTerms}
@@ -152,9 +173,13 @@ export default function RegisterForm({
         />
         <span>
           {t('auth.terms.prefix')}
-          <a href="#terms">{t('auth.terms.termsLink')}</a>
+          <a className={TERMS_LINK} href="#terms">
+            {t('auth.terms.termsLink')}
+          </a>
           {t('auth.terms.middle')}
-          <a href="#privacy">{t('auth.terms.privacyLink')}</a>
+          <a className={TERMS_LINK} href="#privacy">
+            {t('auth.terms.privacyLink')}
+          </a>
           {t('auth.terms.suffix')}
         </span>
       </label>

@@ -38,6 +38,7 @@
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
   --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
   --color-gray-700: #374151;
   --color-gray-900: #111827;
 
@@ -83,6 +84,25 @@
   --color-footer-line: rgba(255, 255, 255, 0.28);
   --color-footer-sep: rgba(255, 255, 255, 0.65);
   --color-footer-contact: rgba(255, 255, 255, 0.92);
+
+  /* auth card */
+  --color-auth-danger: #d94b4b;
+  --color-auth-error: #c63c3c;
+  --color-auth-muted: #5d6b85;
+  --color-auth-placeholder: #8b95a7;
+  --color-auth-focus-ring: rgba(37, 99, 235, 0.35);
+  --color-auth-loading-bg: #f8faff;
+  --color-auth-loading-fg: #1e3a8a;
+  --color-feedback-error-bg: #fff1f1;
+  --color-feedback-error-fg: #b52d2d;
+  --color-feedback-success-bg: #ecfdf3;
+  --color-feedback-success-fg: #147a4d;
+  --color-feedback-info-bg: #eaf3ff;
+  --color-feedback-info-fg: #174ea6;
+  --shadow-auth-card: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --shadow-auth-focus: 0 0 0 3px rgba(30, 64, 175, 0.12);
+  --shadow-auth-primary-hover: 0 4px 12px rgba(30, 64, 175, 0.3);
+  --shadow-auth-google-hover: 0 2px 8px rgba(0, 0, 0, 0.08);
 
   /* landing: shadows + gradients */
   --shadow-feature-icon: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -188,14 +208,4 @@ html {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.auth-loading {
-  display: grid;
-  min-height: 100dvh;
-  place-items: center;
-  padding: 2rem;
-  background: #f8faff;
-  color: #1e3a8a;
-  font-weight: 600;
 }
