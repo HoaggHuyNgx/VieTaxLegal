@@ -3,6 +3,7 @@ import logging
 
 from qdrant_client import AsyncQdrantClient, models
 
+from app.core.config import get_settings
 from app.services.chat_retriever import NullRetriever, get_retriever
 from app.services.rag.chunking import ChunkDraft
 from app.services.rag.embeddings import FakeEmbedder, embedding_text
@@ -132,4 +133,15 @@ def test_hits_to_result_handles_empty_and_sparse_payloads():
 
 
 def test_factory_returns_null_retriever_when_rag_disabled():
+    assert isinstance(get_retriever(), NullRetriever)
+
+
+def test_misconfigured_rag_degrades_to_no_sources_instead_of_failing_chat(monkeypatch):
+    monkeypatch.setattr(get_settings(), "rag_enabled", True)
+
+    def broken():
+        raise RuntimeError("OPENAI_API_KEY is required")
+
+    monkeypatch.setattr("app.services.rag.qdrant_retriever.get_qdrant_retriever", broken)
+
     assert isinstance(get_retriever(), NullRetriever)

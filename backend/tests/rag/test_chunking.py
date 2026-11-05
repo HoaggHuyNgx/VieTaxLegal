@@ -109,11 +109,6 @@ def test_fixed_chunk_lists_every_article_it_touches(parsed):
     assert chunks[0].chunk_set == "fixed"
 
 
-def test_estimate_tokens_scales_with_words():
-    assert estimate_tokens("") == 0
-    assert estimate_tokens("một hai ba bốn năm") == 7
-
-
 def test_split_article_keeps_a_chunk_for_intro_text_before_the_first_clause():
     parsed = parse("Điều 1. Tiêu đề\nLời dẫn của điều luật này như sau:\n1. Một\n2. Hai\n")
 

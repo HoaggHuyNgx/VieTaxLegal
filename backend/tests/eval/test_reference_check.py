@@ -1,3 +1,5 @@
+import unicodedata
+
 from rag_eval.reference_check import check_references, normalize_doc_number
 
 
@@ -36,3 +38,9 @@ def test_lettered_article_is_read_as_its_number():
 
     assert report.articles == [7]
     assert not report.hallucinated
+
+
+def test_reference_check_is_case_insensitive_and_unicode_form_independent():
+    report = check_references(unicodedata.normalize("NFD", "theo điều 77 của luật"), set(), {5})
+
+    assert report.unsupported_articles == [77]

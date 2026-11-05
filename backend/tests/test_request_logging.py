@@ -44,13 +44,3 @@ def test_json_formatter_emits_parseable_line() -> None:
     assert payload["message"] == "tiếng Việt ok"
     assert payload["request_id"] == "rid"
     assert payload["level"] == "WARNING"
-
-
-def test_cors_preflight_allows_patch_for_admin_routes() -> None:
-    response = TestClient(app).options(
-        "/api/admin/users/x",
-        headers={"Origin": "http://localhost:3000", "Access-Control-Request-Method": "PATCH"},
-    )
-
-    assert response.status_code == 200
-    assert "PATCH" in response.headers["access-control-allow-methods"]

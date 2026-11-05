@@ -49,17 +49,6 @@ def test_ensure_collection_twice_is_noop(qdrant_memory: QdrantClient):
     assert ensure_collection(qdrant_memory, "legal_test", 4) is False
 
 
-def test_ensure_collection_wrong_dimensions_raises_clear_error(qdrant_memory: QdrantClient):
-    ensure_collection(qdrant_memory, "legal_test", 4)
-    with pytest.raises(CollectionMismatchError, match="has 4 dims, expected 8 dims"):
-        ensure_collection(qdrant_memory, "legal_test", 8)
-
-
-def test_ensure_collection_rejects_non_positive_dimensions(qdrant_memory: QdrantClient):
-    with pytest.raises(ValueError):
-        ensure_collection(qdrant_memory, "legal_test", 0)
-
-
 def test_collection_supports_filtered_dense_search(qdrant_memory: QdrantClient):
     ensure_collection(qdrant_memory, "legal_test", 2)
     qdrant_memory.upsert(
@@ -106,20 +95,42 @@ def test_client_factories_use_settings_without_leaking_key():
     assert get_async_client(settings) is not None
 
 
-def test_ensure_collection_rejects_wrong_distance(qdrant_memory: QdrantClient):
-    qdrant_memory.create_collection(
-        "legal_test",
-        vectors_config={DENSE_VECTOR: models.VectorParams(size=4, distance=models.Distance.DOT)},
-        sparse_vectors_config={SPARSE_VECTOR: models.SparseVectorParams()},
-    )
-    with pytest.raises(CollectionMismatchError, match="cosine"):
-        ensure_collection(qdrant_memory, "legal_test", 4)
+def _existing_collection(client: QdrantClient, kind: str) -> None:
+    if kind == "4-dims":
+        ensure_collection(client, "legal_test", 4)
+    elif kind == "dot-distance":
+        client.create_collection(
+            "legal_test",
+            vectors_config={
+                DENSE_VECTOR: models.VectorParams(size=4, distance=models.Distance.DOT)
+            },
+            sparse_vectors_config={SPARSE_VECTOR: models.SparseVectorParams()},
+        )
+    elif kind == "no-sparse":
+        client.create_collection(
+            "legal_test",
+            vectors_config={
+                DENSE_VECTOR: models.VectorParams(size=4, distance=models.Distance.COSINE)
+            },
+        )
 
 
-def test_ensure_collection_rejects_missing_sparse_vector(qdrant_memory: QdrantClient):
-    qdrant_memory.create_collection(
-        "legal_test",
-        vectors_config={DENSE_VECTOR: models.VectorParams(size=4, distance=models.Distance.COSINE)},
-    )
-    with pytest.raises(CollectionMismatchError, match="sparse"):
-        ensure_collection(qdrant_memory, "legal_test", 4)
+@pytest.mark.parametrize(
+    ("existing", "dims", "error", "match"),
+    [
+        pytest.param(
+            "4-dims", 8, CollectionMismatchError, "has 4 dims, expected 8 dims", id="dims"
+        ),
+        pytest.param(None, 0, ValueError, None, id="non-positive-dims"),
+        pytest.param("dot-distance", 4, CollectionMismatchError, "cosine", id="distance"),
+        pytest.param("no-sparse", 4, CollectionMismatchError, "sparse", id="missing-sparse"),
+    ],
+)
+def test_ensure_collection_rejects_mismatched_or_invalid_config(
+    qdrant_memory: QdrantClient, existing, dims, error, match
+):
+    if existing:
+        _existing_collection(qdrant_memory, existing)
+
+    with pytest.raises(error, match=match):
+        ensure_collection(qdrant_memory, "legal_test", dims)

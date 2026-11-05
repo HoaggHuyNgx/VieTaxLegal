@@ -34,6 +34,10 @@ def _chunks(doc: CorpusDoc, text: str | None = None):
     return article_chunks(doc, parse(text or EXCERPT.read_text(encoding="utf-8")))
 
 
+def _by_doc(doc: CorpusDoc, _chunk_set: str):
+    return _chunks(doc)
+
+
 def _run(client, doc, text=None) -> IngestStats:
     stats = IngestStats()
     ingest_document(
@@ -125,3 +129,26 @@ def test_embedding_text_uses_full_or_short_heading_prefix():
     assert full.startswith("Luật Quản lý thuế 108/2025/QH15 > Chương II")
     assert short.startswith("Điều 10. Đăng ký thuế\n")
     assert len(short) < len(full)
+
+
+def test_full_ingest_purges_documents_removed_from_the_manifest(client):
+    both = [_doc(slug="kept"), _doc(slug="removed")]
+    ingest_corpus(client, COLLECTION, FakeEmbedder(), both, "article", 8, chunks_for=_by_doc)
+    assert client.count(COLLECTION, exact=True).count == 8
+
+    ingest_corpus(
+        client, COLLECTION, FakeEmbedder(), both[:1], "article", 8,
+        chunks_for=_by_doc, purge_unknown=True,
+    )  # fmt: skip
+
+    slugs = {p.payload["doc_slug"] for p in client.scroll(COLLECTION, limit=20)[0]}
+    assert slugs == {"kept"}
+
+
+def test_partial_ingest_without_purge_keeps_other_documents(client):
+    docs = [_doc(slug="a"), _doc(slug="b")]
+    ingest_corpus(client, COLLECTION, FakeEmbedder(), docs, "article", 8, chunks_for=_by_doc)
+
+    ingest_corpus(client, COLLECTION, FakeEmbedder(), docs[:1], "article", 8, chunks_for=_by_doc)
+
+    assert client.count(COLLECTION, exact=True).count == 8

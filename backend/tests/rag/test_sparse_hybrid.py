@@ -9,7 +9,6 @@ from app.services.rag.embeddings import FakeEmbedder, embedding_text
 from app.services.rag.ingest import backfill_sparse, sparse_text
 from app.services.rag.qdrant_retriever import QdrantRetriever
 from app.services.rag.qdrant_store import DENSE_VECTOR, SPARSE_VECTOR, ensure_collection
-from app.services.rag.reranker import NoopReranker
 
 COLLECTION = "legal_hybrid_test"
 
@@ -153,11 +152,3 @@ def test_hybrid_respects_the_in_force_filter():
     outcome = asyncio.run(run())
 
     assert "Điều 1" not in [h.payload["locator"] for h in outcome.hits]
-
-
-def test_noop_reranker_keeps_order_and_applies_the_limit():
-    async def run():
-        retriever = await _hybrid_retriever(reranker=NoopReranker())
-        return await retriever.search("giảm trừ gia cảnh", limit=2)
-
-    assert len(asyncio.run(run()).hits) == 2

@@ -9,7 +9,12 @@ from app.models.chat import Message
 from app.models.user import User
 from app.schemas.chat import SendMessageRequest
 from app.services.chat import prepare_chat_stream, stream_chat_events
-from app.services.chat_citations import citation_snapshot, marker_ids, select_cited
+from app.services.chat_citations import (
+    citation_snapshot,
+    marker_ids,
+    select_cited,
+    strip_markers,
+)
 from app.services.chat_prompt import CITATION_RULES, SYSTEM_PROMPT, prompt_with_context
 from app.services.chat_retriever import Citation, RetrievalResult, RetrievedContext
 
@@ -130,3 +135,10 @@ def test_answer_without_markers_stores_no_citations(
     database_session.expire_all()
     stored = database_session.get(Message, message_id)
     assert stored is not None and stored.citations is None
+
+
+def test_replayed_assistant_text_loses_its_numbered_markers():
+    assert strip_markers("Theo luật [1], mức phạt là 8% [2][3]. Kết thúc [12].") == (
+        "Theo luật, mức phạt là 8%. Kết thúc."
+    )
+    assert strip_markers("Không có nguồn") == "Không có nguồn"
