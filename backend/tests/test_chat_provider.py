@@ -1,255 +1,224 @@
 import asyncio
-from collections.abc import AsyncIterator
-from types import SimpleNamespace
+from collections.abc import AsyncIterator, Iterator
+from typing import Any
 
 import pytest
+from langchain_anthropic import ChatAnthropic
+from langchain_core.callbacks import AsyncCallbackManagerForLLMRun, CallbackManagerForLLMRun
+from langchain_core.language_models.chat_models import BaseChatModel
+from langchain_core.messages import (
+    AIMessage,
+    AIMessageChunk,
+    BaseMessage,
+    HumanMessage,
+    SystemMessage,
+)
+from langchain_core.messages.ai import UsageMetadata
+from langchain_core.outputs import ChatGeneration, ChatGenerationChunk, ChatResult
+from langchain_openai import ChatOpenAI
 from pydantic import SecretStr
 
 from app.core.config import get_settings
 from app.services import chat_provider
 from app.services.chat_provider import (
-    AnthropicProvider,
-    OpenAIProvider,
+    LangChainProvider,
     ProviderConfigurationError,
     ProviderError,
     ProviderMessage,
     UnavailableProvider,
+    build_chat_model,
     get_model_provider,
 )
 
 
-class FakeOpenAIStream:
-    def __init__(self, events: list[SimpleNamespace]) -> None:
-        self.events = events
+class FakeChatModel(BaseChatModel):
+    """Streams scripted chunks; `fail` raises like an upstream outage."""
 
-    async def __aiter__(self) -> AsyncIterator[SimpleNamespace]:
-        for event in self.events:
-            yield event
+    chunks: list[AIMessageChunk]
+    fail: bool = False
+    seen: list[list[BaseMessage]] = []
 
+    @property
+    def _llm_type(self) -> str:
+        return "fake"
 
-class FakeOpenAIResponses:
-    def __init__(self) -> None:
-        self.request: dict[str, object] | None = None
+    def _generate(
+        self,
+        messages: list[BaseMessage],
+        stop: list[str] | None = None,
+        run_manager: CallbackManagerForLLMRun | None = None,
+        **kwargs: Any,
+    ) -> ChatResult:
+        return ChatResult(generations=[ChatGeneration(message=AIMessage(content=""))])
 
-    async def create(self, **kwargs: object) -> FakeOpenAIStream:
-        self.request = kwargs
-        usage = SimpleNamespace(input_tokens=21, output_tokens=8)
-        response = SimpleNamespace(usage=usage)
-        return FakeOpenAIStream(
-            [
-                SimpleNamespace(type="response.created"),
-                SimpleNamespace(type="response.output_text.delta", delta="Xin "),
-                SimpleNamespace(type="response.output_text.delta", delta="chào"),
-                SimpleNamespace(type="response.completed", response=response),
-            ]
-        )
-
-
-class FakeOpenAIClient:
-    def __init__(self) -> None:
-        self.responses = FakeOpenAIResponses()
-        self.closed = False
-
-    async def close(self) -> None:
-        self.closed = True
-
-
-class FakeAnthropicTextStream:
-    def __init__(self, chunks: list[str]) -> None:
-        self.chunks = chunks
-
-    async def __aiter__(self) -> AsyncIterator[str]:
+    async def _astream(
+        self,
+        messages: list[BaseMessage],
+        stop: list[str] | None = None,
+        run_manager: AsyncCallbackManagerForLLMRun | None = None,
+        **kwargs: Any,
+    ) -> AsyncIterator[ChatGenerationChunk]:
+        self.seen.append(messages)
         for chunk in self.chunks:
-            yield chunk
+            yield ChatGenerationChunk(message=chunk)
+        if self.fail:
+            raise RuntimeError("upstream 529 overloaded")
+
+    def _stream(self, *args: Any, **kwargs: Any) -> Iterator[ChatGenerationChunk]:
+        raise NotImplementedError
 
 
-class FakeAnthropicStream:
-    def __init__(self, chunks: list[str], usage: SimpleNamespace) -> None:
-        self.text_stream = FakeAnthropicTextStream(chunks)
-        self.usage = usage
-
-    async def __aenter__(self) -> "FakeAnthropicStream":
-        return self
-
-    async def __aexit__(self, *_: object) -> None:
-        return None
-
-    async def get_final_message(self) -> SimpleNamespace:
-        return SimpleNamespace(usage=self.usage)
+def _usage(input_tokens: int, output_tokens: int) -> UsageMetadata:
+    return {
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "total_tokens": input_tokens + output_tokens,
+    }
 
 
-class FakeAnthropicMessages:
-    def __init__(self, chunks: list[str], usage: SimpleNamespace) -> None:
-        self.chunks = chunks
-        self.usage = usage
-        self.request: dict[str, object] | None = None
+def _provider(monkeypatch, model: FakeChatModel, name: str = "anthropic") -> LangChainProvider:
+    built: list[tuple[str, str, str, int]] = []
 
-    def stream(self, **kwargs: object) -> FakeAnthropicStream:
-        # Not awaited: the SDK returns an async context manager directly.
-        self.request = kwargs
-        return FakeAnthropicStream(self.chunks, self.usage)
+    def fake_build(provider: str, api_key: str, model_id: str, max_tokens: int) -> FakeChatModel:
+        built.append((provider, api_key, model_id, max_tokens))
+        return model
 
-
-class FakeAnthropicClient:
-    def __init__(self, chunks: list[str], usage: SimpleNamespace | None = None) -> None:
-        self.messages = FakeAnthropicMessages(chunks, usage or SimpleNamespace())
-        self.closed = False
-
-    async def close(self) -> None:
-        self.closed = True
+    monkeypatch.setattr(chat_provider, "build_chat_model", fake_build)
+    provider = LangChainProvider(name, SecretStr("sk-test"), "model-test")
+    provider.built = built  # type: ignore[attr-defined]
+    return provider
 
 
-def test_anthropic_provider_translates_message_stream(monkeypatch) -> None:
-    usage = SimpleNamespace(input_tokens=34, output_tokens=12)
-    # The empty chunk must not become a delta event.
-    client = FakeAnthropicClient(["Chào ", "", "bạn"], usage)
-    monkeypatch.setattr(chat_provider, "AsyncAnthropic", lambda **_: client)
-    provider = AnthropicProvider(SecretStr("sk-ant-test"), "claude-test")
+async def _collect(provider: LangChainProvider, messages=(), max_tokens: int = 100):
+    return [event async for event in provider.stream(messages, "System prompt", max_tokens)]
 
-    async def collect_events():
-        return [
-            event
-            async for event in provider.stream(
-                [ProviderMessage(role="user", content="Câu hỏi")],
-                "System prompt",
-                1500,
-            )
-        ]
 
-    events = asyncio.run(collect_events())
+def test_provider_translates_stream_sums_usage_and_skips_empty_chunks(monkeypatch) -> None:
+    # Anthropic reports input tokens at message start and output tokens in the final delta.
+    model = FakeChatModel(
+        chunks=[
+            AIMessageChunk(content="Chào ", usage_metadata=_usage(34, 1)),
+            AIMessageChunk(content=""),
+            AIMessageChunk(content="bạn"),
+            AIMessageChunk(content="", usage_metadata=_usage(0, 11)),
+        ],
+        seen=[],
+    )
+    provider = _provider(monkeypatch, model)
+
+    events = asyncio.run(
+        _collect(provider, [ProviderMessage(role="user", content="Câu hỏi")], max_tokens=1500)
+    )
 
     assert [(event.kind, event.text) for event in events] == [
         ("delta", "Chào "),
         ("delta", "bạn"),
         ("done", ""),
     ]
-    assert events[-1].input_tokens == 34
-    assert events[-1].output_tokens == 12
-    assert client.messages.request == {
-        "model": "claude-test",
-        "max_tokens": 1500,
-        "system": "System prompt",
-        "messages": [{"role": "user", "content": "Câu hỏi"}],
-    }
-    assert client.closed is True
+    assert (events[-1].input_tokens, events[-1].output_tokens) == (34, 12)
+    assert provider.built == [("anthropic", "sk-test", "model-test", 1500)]  # type: ignore[attr-defined]
 
 
-def test_anthropic_provider_rejects_missing_key() -> None:
-    provider = AnthropicProvider(None, "claude-test")
+def test_provider_sends_system_prompt_then_history_in_order(monkeypatch) -> None:
+    model = FakeChatModel(chunks=[AIMessageChunk(content="ok")], seen=[])
+    provider = _provider(monkeypatch, model)
 
-    async def consume_stream() -> None:
-        async for _ in provider.stream([], "System prompt", 100):
-            pass
+    asyncio.run(
+        _collect(
+            provider,
+            [
+                ProviderMessage(role="user", content="Câu 1"),
+                ProviderMessage(role="assistant", content="Trả lời 1"),
+                ProviderMessage(role="user", content="Câu 2"),
+            ],
+        )
+    )
 
-    with pytest.raises(ProviderConfigurationError):
-        asyncio.run(consume_stream())
-
-
-def test_anthropic_provider_rejects_placeholder_key() -> None:
-    """The .env.example placeholder must never reach the provider as a real key."""
-    provider = AnthropicProvider(SecretStr("replace-with-your-anthropic-api-key"), "claude-test")
-
-    async def consume_stream() -> None:
-        async for _ in provider.stream([], "System prompt", 100):
-            pass
-
-    with pytest.raises(ProviderConfigurationError):
-        asyncio.run(consume_stream())
-
-
-def test_anthropic_provider_wraps_upstream_failure(monkeypatch) -> None:
-    """Upstream detail stays internal: callers only ever see ProviderError."""
-
-    class ExplodingClient(FakeAnthropicClient):
-        def __init__(self) -> None:
-            super().__init__([])
-
-        def _explode(self, **_: object) -> None:
-            raise RuntimeError("upstream 529 overloaded")
-
-    client = ExplodingClient()
-    client.messages.stream = client._explode  # type: ignore[method-assign]
-    monkeypatch.setattr(chat_provider, "AsyncAnthropic", lambda **_: client)
-    provider = AnthropicProvider(SecretStr("sk-ant-test"), "claude-test")
-
-    async def consume_stream() -> None:
-        async for _ in provider.stream([], "System prompt", 100):
-            pass
-
-    with pytest.raises(ProviderError):
-        asyncio.run(consume_stream())
-    assert client.closed is True
-
-
-def test_openai_provider_translates_responses_stream(monkeypatch) -> None:
-    client = FakeOpenAIClient()
-    monkeypatch.setattr(chat_provider, "AsyncOpenAI", lambda **_: client)
-    provider = OpenAIProvider(SecretStr("sk-test"), "gpt-test")
-
-    async def collect_events():
-        return [
-            event
-            async for event in provider.stream(
-                [ProviderMessage(role="user", content="Câu hỏi")],
-                "System prompt",
-                1500,
-            )
-        ]
-
-    events = asyncio.run(collect_events())
-
-    assert [(event.kind, event.text) for event in events] == [
-        ("delta", "Xin "),
-        ("delta", "chào"),
-        ("done", ""),
+    sent = model.seen[0]
+    assert [type(message) for message in sent] == [
+        SystemMessage,
+        HumanMessage,
+        AIMessage,
+        HumanMessage,
     ]
-    assert events[-1].input_tokens == 21
-    assert events[-1].output_tokens == 8
-    assert client.responses.request == {
-        "model": "gpt-test",
-        "instructions": "System prompt",
-        "input": [{"role": "user", "content": "Câu hỏi"}],
-        "max_output_tokens": 1500,
-        "stream": True,
-    }
-    assert client.closed is True
+    assert [message.content for message in sent] == [
+        "System prompt",
+        "Câu 1",
+        "Trả lời 1",
+        "Câu 2",
+    ]
 
 
-def test_openai_provider_rejects_missing_key() -> None:
-    provider = OpenAIProvider(None, "gpt-test")
+def test_provider_reports_no_usage_when_upstream_sends_none(monkeypatch) -> None:
+    provider = _provider(monkeypatch, FakeChatModel(chunks=[AIMessageChunk(content="x")], seen=[]))
 
-    async def consume_stream() -> None:
-        async for _ in provider.stream([], "System prompt", 100):
-            pass
+    events = asyncio.run(_collect(provider))
+
+    assert (events[-1].input_tokens, events[-1].output_tokens) == (None, None)
+
+
+@pytest.mark.parametrize("key", [None, SecretStr(""), SecretStr("replace-with-your-api-key")])
+def test_provider_rejects_missing_or_placeholder_key(key) -> None:
+    provider = LangChainProvider("openai", key, "gpt-test")
 
     with pytest.raises(ProviderConfigurationError):
-        asyncio.run(consume_stream())
+        asyncio.run(_collect(provider))
 
 
-def test_provider_factory_selects_openai(monkeypatch) -> None:
+def test_provider_wraps_upstream_failure(monkeypatch) -> None:
+    """Upstream detail stays internal: callers only ever see ProviderError."""
+    model = FakeChatModel(chunks=[AIMessageChunk(content="partial")], fail=True, seen=[])
+    provider = _provider(monkeypatch, model)
+
+    with pytest.raises(ProviderError) as raised:
+        asyncio.run(_collect(provider))
+
+    assert "529" not in str(raised.value)
+
+
+def test_build_chat_model_openai_uses_responses_api_and_token_cap() -> None:
+    model = build_chat_model("openai", "sk-test", "gpt-test", 1500)
+
+    assert isinstance(model, ChatOpenAI)
+    assert model.use_responses_api is True
+    assert model.stream_usage is True
+    payload = model._get_request_payload([HumanMessage(content="hi")])
+    assert payload["model"] == "gpt-test"
+    assert payload["max_output_tokens"] == 1500
+    assert model.request_timeout == chat_provider.PROVIDER_TIMEOUT_SECONDS
+
+
+def test_build_chat_model_anthropic_sets_token_cap_and_timeout() -> None:
+    model = build_chat_model("anthropic", "sk-ant-test", "claude-test", 900)
+
+    assert isinstance(model, ChatAnthropic)
+    assert model.model == "claude-test"
+    assert model.max_tokens == 900
+    assert model.default_request_timeout == chat_provider.PROVIDER_TIMEOUT_SECONDS
+
+
+def test_build_chat_model_rejects_unknown_provider() -> None:
+    with pytest.raises(ProviderConfigurationError):
+        build_chat_model("mistral", "key", "model", 100)
+
+
+@pytest.mark.parametrize(
+    ("configured", "expected_name", "key_setting"),
+    [("openai", "openai", "openai_api_key"), ("Anthropic", "anthropic", "anthropic_api_key")],
+)
+def test_provider_factory_selects_langchain_provider(
+    monkeypatch, configured, expected_name, key_setting
+) -> None:
     settings = get_settings()
-    monkeypatch.setattr(settings, "chat_provider", "openai")
-    monkeypatch.setattr(settings, "chat_model", "gpt-test")
-    monkeypatch.setattr(settings, "openai_api_key", SecretStr("sk-test"))
+    monkeypatch.setattr(settings, "chat_provider", configured)
+    monkeypatch.setattr(settings, "chat_model", "model-test")
+    monkeypatch.setattr(settings, key_setting, SecretStr("sk-test"))
 
     provider = get_model_provider()
 
-    assert isinstance(provider, OpenAIProvider)
-    assert provider.name == "openai"
-    assert provider.model == "gpt-test"
-
-
-def test_provider_factory_selects_anthropic(monkeypatch) -> None:
-    settings = get_settings()
-    monkeypatch.setattr(settings, "chat_provider", "Anthropic")
-    monkeypatch.setattr(settings, "chat_model", "claude-test")
-    monkeypatch.setattr(settings, "anthropic_api_key", SecretStr("sk-ant-test"))
-
-    provider = get_model_provider()
-
-    assert isinstance(provider, AnthropicProvider)
-    assert provider.name == "anthropic"
-    assert provider.model == "claude-test"
+    assert isinstance(provider, LangChainProvider)
+    assert provider.name == expected_name
+    assert provider.model == "model-test"
 
 
 def test_provider_factory_falls_back_to_unavailable(monkeypatch) -> None:
@@ -261,9 +230,5 @@ def test_provider_factory_falls_back_to_unavailable(monkeypatch) -> None:
     provider = get_model_provider()
     assert isinstance(provider, UnavailableProvider)
 
-    async def consume_stream() -> None:
-        async for _ in provider.stream([], "System prompt", 100):
-            pass
-
     with pytest.raises(ProviderConfigurationError):
-        asyncio.run(consume_stream())
+        asyncio.run(_collect(provider))  # type: ignore[arg-type]

@@ -7,10 +7,14 @@ inside the provider so ingest and query can never diverge.
 import hashlib
 import math
 import unicodedata
+from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Protocol
 
-from openai import AsyncOpenAI, OpenAI
+import tiktoken
+from langchain_core.embeddings import Embeddings
+from langchain_openai import OpenAIEmbeddings
+from pydantic import SecretStr
 
 from app.core.config import Settings, get_settings
 from app.services.rag.chunking import ChunkDraft
@@ -77,34 +81,69 @@ class FakeEmbedder:
 QUERY_TIMEOUT_SECONDS = 15.0
 
 
-class OpenAIEmbedder:
-    name = "openai"
+class LangChainEmbedder:
+    """Adapter from a LangChain `Embeddings` to `EmbeddingProvider` (adds dims and token usage)."""
+
     short_prefix = False
 
-    def __init__(self, api_key: str, model: str, dimensions: int | None = None) -> None:
-        dims = dimensions or KNOWN_DIMENSIONS.get(model)
-        if dims is None:
-            raise EmbeddingConfigError(f"Set EMBEDDING_DIMENSIONS for unknown model '{model}'.")
-        self.model, self.dims = model, dims
-        self._custom_dimensions = dimensions
-        self._sync = OpenAI(api_key=api_key, max_retries=5)  # SDK backs off on 429/5xx
-        # Query-time embedding sits in front of the first chat token: fail fast, and let the
-        # retriever degrade to "no sources" instead of keeping the user waiting for minutes.
-        self._async = AsyncOpenAI(api_key=api_key, max_retries=1, timeout=QUERY_TIMEOUT_SECONDS)
-
-    def _kwargs(self) -> dict:
-        extra = {"dimensions": self._custom_dimensions} if self._custom_dimensions else {}
-        return {"model": self.model, **extra}
+    def __init__(
+        self,
+        name: str,
+        model: str,
+        dims: int,
+        documents: Embeddings,
+        queries: Embeddings,
+        count_tokens: Callable[[list[str]], int],
+    ) -> None:
+        self.name, self.model, self.dims = name, model, dims
+        self._documents, self._queries, self._count_tokens = documents, queries, count_tokens
 
     def embed_documents(self, texts: list[str]) -> EmbeddingBatch:
-        response = self._sync.embeddings.create(input=texts, **self._kwargs())
-        return EmbeddingBatch(
-            [item.embedding for item in response.data], response.usage.total_tokens
-        )
+        return EmbeddingBatch(self._documents.embed_documents(texts), self._count_tokens(texts))
 
     async def aembed_query(self, text: str) -> list[float]:
-        response = await self._async.embeddings.create(input=[text], **self._kwargs())
-        return response.data[0].embedding
+        return await self._queries.aembed_query(text)
+
+
+def _openai_token_counter(model: str) -> Callable[[list[str]], int]:
+    # OpenAIEmbeddings does not return usage, so count locally (cost reporting in ingest).
+    # The encoding is resolved on first use: tiktoken downloads it, which must never happen on the
+    # chat query path (only ingest counts tokens).
+    def count(texts: list[str]) -> int:
+        try:
+            encoding = tiktoken.encoding_for_model(model)
+        except KeyError:
+            encoding = tiktoken.get_encoding("cl100k_base")
+        return sum(len(encoding.encode(text)) for text in texts)
+
+    return count
+
+
+def openai_embedder(api_key: str, model: str, dimensions: int | None = None) -> LangChainEmbedder:
+    dims = dimensions or KNOWN_DIMENSIONS.get(model)
+    if dims is None:
+        raise EmbeddingConfigError(f"Set EMBEDDING_DIMENSIONS for unknown model '{model}'.")
+
+    def build(max_retries: int, timeout: float | None) -> OpenAIEmbeddings:
+        return OpenAIEmbeddings(
+            model=model,
+            api_key=SecretStr(api_key),
+            dimensions=dimensions,
+            max_retries=max_retries,
+            timeout=timeout,
+            check_embedding_ctx_length=False,  # send plain strings, like the raw OpenAI call
+        )
+
+    # Ingest backs off on 429/5xx. Query-time embedding sits in front of the first chat token:
+    # fail fast, and let the retriever degrade to "no sources" instead of making the user wait.
+    return LangChainEmbedder(
+        "openai",
+        model,
+        dims,
+        documents=build(max_retries=5, timeout=None),
+        queries=build(max_retries=1, timeout=QUERY_TIMEOUT_SECONDS),
+        count_tokens=_openai_token_counter(model),
+    )
 
 
 def get_embedder(settings: Settings | None = None) -> EmbeddingProvider:
@@ -117,7 +156,7 @@ def get_embedder(settings: Settings | None = None) -> EmbeddingProvider:
         return BkaiEmbedder(settings.embedding_model, settings.embedding_batch_size)
     if settings.openai_api_key is None:
         raise EmbeddingConfigError("OPENAI_API_KEY is required for EMBEDDING_PROVIDER=openai.")
-    return OpenAIEmbedder(
+    return openai_embedder(
         settings.openai_api_key.get_secret_value(),
         settings.embedding_model,
         settings.embedding_dimensions,

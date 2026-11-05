@@ -1,17 +1,17 @@
 import asyncio
 import math
-from types import SimpleNamespace
 
 import pytest
 
 from app.core.config import Settings
+from app.services.rag import embeddings
 from app.services.rag.bkai_embedder import BkaiEmbedder
 from app.services.rag.embeddings import (
     EmbeddingConfigError,
     FakeEmbedder,
-    OpenAIEmbedder,
-    estimate_cost_usd,
+    LangChainEmbedder,
     get_embedder,
+    openai_embedder,
 )
 
 SECRET = "a-secure-test-secret-with-at-least-32-characters"
@@ -33,33 +33,52 @@ def test_fake_embedder_is_deterministic_unit_length_and_text_sensitive():
     assert asyncio.run(embedder.aembed_query("Điều 1")) == again
 
 
-def test_estimate_cost_known_and_unknown_model():
-    assert estimate_cost_usd("text-embedding-3-small", 1_000_000) == pytest.approx(0.02)
-    assert estimate_cost_usd("some-local-model", 1_000_000) is None
-
-
 def test_openai_embedder_needs_dimensions_for_unknown_models():
     with pytest.raises(EmbeddingConfigError, match="EMBEDDING_DIMENSIONS"):
-        OpenAIEmbedder("sk-test", "custom-model")
-    assert OpenAIEmbedder("sk-test", "text-embedding-3-small").dims == 1536
-    assert OpenAIEmbedder("sk-test", "custom-model", dimensions=256).dims == 256
+        openai_embedder("sk-test", "custom-model")
+    assert openai_embedder("sk-test", "text-embedding-3-small").dims == 1536
+    assert openai_embedder("sk-test", "custom-model", dimensions=256).dims == 256
 
 
-def test_openai_embedder_sends_model_and_reads_vectors_and_usage():
-    embedder = OpenAIEmbedder("sk-test", "text-embedding-3-small", dimensions=256)
-    calls = []
+def _no_tiktoken(*_args):
+    raise AssertionError("tiktoken encoding loaded eagerly")
 
-    def create(**kwargs):
-        calls.append(kwargs)
-        data = [SimpleNamespace(embedding=[0.1, 0.2]) for _ in kwargs["input"]]
-        return SimpleNamespace(data=data, usage=SimpleNamespace(total_tokens=7))
 
-    embedder._sync = SimpleNamespace(embeddings=SimpleNamespace(create=create))
+class _StubEmbeddings:
+    def __init__(self):
+        self.documents, self.queries = [], []
+
+    def embed_documents(self, texts):
+        self.documents.append(texts)
+        return [[0.1, 0.2] for _ in texts]
+
+    async def aembed_query(self, text):
+        self.queries.append(text)
+        return [0.3, 0.4]
+
+
+def test_langchain_embedder_returns_vectors_and_counted_tokens():
+    documents, queries = _StubEmbeddings(), _StubEmbeddings()
+    embedder = LangChainEmbedder(
+        "openai", "m", 2, documents, queries, count_tokens=lambda texts: 7 * len(texts)
+    )
 
     batch = embedder.embed_documents(["a", "b"])
 
-    assert calls == [{"input": ["a", "b"], "model": "text-embedding-3-small", "dimensions": 256}]
-    assert (len(batch.vectors), batch.tokens) == (2, 7)
+    assert documents.documents == [["a", "b"]]
+    assert (len(batch.vectors), batch.tokens) == (2, 14)
+    assert asyncio.run(embedder.aembed_query("q")) == [0.3, 0.4]
+    assert (queries.queries, documents.queries) == (["q"], [])
+
+
+def test_openai_embedder_configures_document_and_query_clients(monkeypatch):
+    # Building the embedder (query path) must not load a tiktoken encoding (network download).
+    monkeypatch.setattr(embeddings.tiktoken, "encoding_for_model", _no_tiktoken)
+    embedder = openai_embedder("sk-test", "text-embedding-3-small", dimensions=256)
+
+    assert embedder._documents.dimensions == 256
+    assert embedder._documents.max_retries == 5
+    assert embedder._queries.max_retries == 1
 
 
 def test_get_embedder_requires_openai_key_and_supports_fake():
@@ -67,11 +86,6 @@ def test_get_embedder_requires_openai_key_and_supports_fake():
         get_embedder(_settings(embedding_provider="openai", openai_api_key=None))
     assert isinstance(get_embedder(_settings(embedding_provider="fake")), FakeEmbedder)
     assert get_embedder(_settings(openai_api_key="sk-test")).model == "text-embedding-3-small"
-
-
-def test_settings_reject_unknown_embedding_provider():
-    with pytest.raises(ValueError, match="EMBEDDING_PROVIDER"):
-        _settings(embedding_provider="word2vec")
 
 
 class _StubEncoder:

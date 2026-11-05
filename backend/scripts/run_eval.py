@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.config import get_settings  # noqa: E402
-from app.services.chat_provider import OpenAIProvider  # noqa: E402
+from app.services.chat_provider import LangChainProvider  # noqa: E402
 from rag_eval.dataset import load_questions  # noqa: E402
 from rag_eval.generation_tier import run_generation_tier  # noqa: E402
 from rag_eval.runner import (  # noqa: E402
@@ -50,7 +50,7 @@ async def main() -> int:
     if config.tier == "retrieval":
         summary, rows = await run_retrieval_tier(config, retriever, chosen)
     else:
-        provider = OpenAIProvider(settings.openai_api_key, settings.chat_model)
+        provider = LangChainProvider("openai", settings.openai_api_key, settings.chat_model)
         summary, rows = await run_generation_tier(
             config,
             retriever,

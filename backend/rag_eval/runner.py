@@ -8,7 +8,7 @@ from datetime import date
 from pathlib import Path
 
 from app.core.config import Settings
-from app.services.chat_provider import OpenAIProvider
+from app.services.chat_provider import LangChainProvider
 from app.services.rag.corpus_manifest import CORPUS_DIR
 from app.services.rag.embeddings import get_embedder
 from app.services.rag.qdrant_retriever import QdrantRetriever
@@ -64,7 +64,9 @@ def build_retriever(config: EvalConfig, settings: Settings) -> tuple[QdrantRetri
         config.min_similarity,
         config.require_in_force,
         config.mode,
-        reranker=LlmReranker(OpenAIProvider(settings.openai_api_key, settings.chat_model))
+        reranker=LlmReranker(
+            LangChainProvider("openai", settings.openai_api_key, settings.chat_model)
+        )
         if config.rerank == "llm"
         else None,
     )
