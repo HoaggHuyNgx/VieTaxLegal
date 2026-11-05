@@ -17,7 +17,8 @@ trước khi bật (xem [backend/README.md](backend/README.md)).
 | Cookie phiên HTTP-only và mật khẩu Argon2       | Hoàn thành      |
 | Chat streaming bằng SSE                         | Hoàn thành      |
 | Lưu, mở và xóa lịch sử hội thoại                | Hoàn thành      |
-| Anthropic và OpenAI provider                    | Hoàn thành      |
+| Anthropic và OpenAI provider (qua LangChain)    | Hoàn thành      |
+| Refresh token xoay vòng, vai trò admin, chặn dò mật khẩu | Hoàn thành |
 | Rate limit theo phút và theo ngày               | Hoàn thành      |
 | Giao diện song ngữ Việt–Anh                     | Hoàn thành      |
 | Kho văn bản pháp luật (21 văn bản) và parser     | Hoàn thành*     |
@@ -55,7 +56,7 @@ PostgreSQL được quản lý (ví dụ Supabase) mà không cần đổi code.
 - Backend: Python 3.12+, FastAPI, Uvicorn, Pydantic.
 - Database: PostgreSQL 15, SQLAlchemy 2.0, Alembic, Psycopg.
 - Xác thực: Argon2 (`pwdlib`), JWT (`PyJWT`) và cookie HTTP-only.
-- AI: Anthropic Messages API hoặc OpenAI Responses API.
+- AI: LangChain (`langchain-anthropic` Messages API hoặc `langchain-openai` Responses API) cho chat và embedding OpenAI; truy xuất Qdrant, hybrid và trích dẫn vẫn tự viết.
 - RAG: Qdrant (Docker), embedding OpenAI `text-embedding-3-small` (BKAI chạy local là tùy chọn),
   truy xuất dense, sparse (BM25 tự cài) và hybrid (RRF).
 - Streaming: Server-Sent Events (SSE).

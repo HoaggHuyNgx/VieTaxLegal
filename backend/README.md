@@ -159,7 +159,7 @@ Migration hiện tại:
 | `0003_chat`                    | Tạo conversations, messages, chat_usage_events, index và ràng buộc chat. |
 | `0004_message_citations`       | Thêm cột `messages.citations` (JSON, nullable) lưu nguồn trích dẫn.      |
 
-Kết quả `alembic current` phải chứa `0004_message_citations (head)`. Database sẽ có các bảng `users`,
+Kết quả `alembic current` phải chứa `0005_roles_and_refresh_tokens (head)`. Database sẽ có các bảng `users`,
 `conversations`, `messages`, `chat_usage_events` và `alembic_version`.
 
 Phần RLS/REVOKE của migration 0002 và 0003 chỉ chạy khi cả hai role `anon` và `authenticated` tồn
