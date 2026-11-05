@@ -88,3 +88,12 @@ def test_settings_reject_unsupported_jwt_algorithm() -> None:
             jwt_secret="a-secure-test-secret-with-at-least-32-characters",
             jwt_algorithm="none",
         )
+
+
+def test_settings_reject_unknown_embedding_provider() -> None:
+    with pytest.raises(ValidationError, match="EMBEDDING_PROVIDER"):
+        Settings(
+            database_url="sqlite+pysqlite://",
+            jwt_secret="a-secure-test-secret-with-at-least-32-characters",
+            embedding_provider="word2vec",
+        )

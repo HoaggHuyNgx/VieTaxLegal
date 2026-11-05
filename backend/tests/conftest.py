@@ -13,10 +13,17 @@ os.environ.setdefault("JWT_SECRET", "test-secret-not-for-production-0123456789")
 os.environ.setdefault("APP_ENV", "testing")
 os.environ.setdefault("CORS_ORIGINS", "http://localhost:3000")
 
-from app.db.base import Base
-from app.db.session import get_db
-from app.main import app
-from app.services.login_throttle import get_login_throttle, get_register_throttle
+from app.core.config import Settings
+
+# Never read the developer's backend/.env: it holds real API keys and local switches
+# (e.g. RAG_ENABLED=true) that would make tests depend on the machine. Set before anything
+# calls get_settings().
+Settings.model_config["env_file"] = None
+
+from app.db.base import Base  # noqa: E402 (after the env_file override)
+from app.db.session import get_db  # noqa: E402
+from app.main import app  # noqa: E402
+from app.services.login_throttle import get_login_throttle, get_register_throttle  # noqa: E402
 
 
 @pytest.fixture(autouse=True)
