@@ -133,3 +133,6 @@ lerna-debug.log*
 
 # Local UI references
 /giao_dien/
+
+# Supabase CLI (unused; schema is managed by Alembic)
+/supabase/
