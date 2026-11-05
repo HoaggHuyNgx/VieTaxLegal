@@ -14,6 +14,13 @@ def refresh_cookie(client: TestClient) -> str:
     return client.cookies.get("vietaxlegal_refresh")
 
 
+def set_refresh_cookie(client: TestClient, token: str) -> None:
+    # Drop the server-set cookie first: the jar keys cookies by domain, so a second
+    # same-name cookie would sit beside it and httpx2 would keep sending the server's.
+    client.cookies.delete("vietaxlegal_refresh")
+    client.cookies.set("vietaxlegal_refresh", token, path="/api/auth")
+
+
 def test_refresh_rotates_token_and_reissues_access(client: TestClient) -> None:
     create_user(client)
     first = refresh_cookie(client)
@@ -38,7 +45,7 @@ def test_reusing_old_refresh_token_revokes_the_whole_family(
     row.revoked_at = datetime.now(timezone.utc) - timedelta(minutes=1)
     database_session.commit()
 
-    client.cookies.set("vietaxlegal_refresh", stolen, path="/api/auth")
+    set_refresh_cookie(client, stolen)
     assert client.post("/api/auth/refresh").status_code == 401
 
     live = database_session.scalars(
@@ -69,7 +76,7 @@ def test_logout_revokes_refresh_token_server_side(client: TestClient) -> None:
 
     assert client.post("/api/auth/logout").status_code == 204
 
-    client.cookies.set("vietaxlegal_refresh", token, path="/api/auth")
+    set_refresh_cookie(client, token)
     assert client.post("/api/auth/refresh").status_code == 401
 
 
@@ -117,7 +124,7 @@ def test_admin_can_deactivate_user_and_revoke_their_sessions(
     assert response.status_code == 200
     assert response.json()["isActive"] is False
     client.cookies.clear()
-    client.cookies.set("vietaxlegal_refresh", victim_refresh, path="/api/auth")
+    set_refresh_cookie(client, victim_refresh)
     assert client.post("/api/auth/refresh").status_code == 401
 
 
@@ -163,7 +170,7 @@ def test_second_tab_losing_refresh_race_keeps_the_winners_cookies(
     winner = refresh_cookie(client)
 
     # Second tab still presents the token that was rotated a moment ago.
-    client.cookies.set("vietaxlegal_refresh", stale, path="/api/auth")
+    set_refresh_cookie(client, stale)
     response = client.post("/api/auth/refresh")
 
     assert response.status_code == 204
@@ -173,5 +180,15 @@ def test_second_tab_losing_refresh_race_keeps_the_winners_cookies(
         select(RefreshToken).where(RefreshToken.revoked_at.is_(None))
     ).all()
     assert len(live) == 1  # family not revoked; the winner's token still works
-    client.cookies.set("vietaxlegal_refresh", winner, path="/api/auth")
+    set_refresh_cookie(client, winner)
     assert client.post("/api/auth/refresh").status_code == 200
+
+
+def test_cors_preflight_allows_patch_for_admin_routes(client: TestClient) -> None:
+    response = client.options(
+        "/api/admin/users/x",
+        headers={"Origin": "http://localhost:3000", "Access-Control-Request-Method": "PATCH"},
+    )
+
+    assert response.status_code == 200
+    assert "PATCH" in response.headers["access-control-allow-methods"]
