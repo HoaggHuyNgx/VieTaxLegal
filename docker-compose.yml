@@ -27,6 +27,18 @@ services:
       CHAT_MODEL: ${CHAT_MODEL:-claude-sonnet-5}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      # Google sign-in stays off while the id/secret are blank. The browser reaches the API through
+      # nginx on :3000, so the callback must be registered in Google Console with that origin.
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI:-http://localhost:3000/api/auth/google/callback}
+      FRONTEND_URL: http://localhost:3000
+      # Registration codes are sent over SMTP; without SMTP_HOST password registration is off.
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-}
       RAG_ENABLED: ${RAG_ENABLED:-false}
       QDRANT_URL: http://qdrant:6333
     volumes:
