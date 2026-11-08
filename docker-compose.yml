@@ -1,20 +1,7 @@
 # One-command demo: docker compose up --build   ->  http://localhost:3000
 # Secrets come from the shell or a root-level `.env` (never committed); see backend/.env.example.
+# The database is Supabase (no Postgres container): pass its Session pooler URL as DATABASE_URL.
 services:
-  db:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: vietaxlegal
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
-      POSTGRES_DB: vietaxlegal
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U vietaxlegal"]
-      interval: 5s
-      retries: 10
-    restart: unless-stopped
-
   qdrant:
     image: qdrant/qdrant:v1.19.2 # keep in sync with the pinned qdrant-client minor
     volumes:
@@ -26,13 +13,10 @@ services:
   backend:
     build: ./backend
     depends_on:
-      db:
-        condition: service_healthy
-      qdrant:
-        condition: service_started
+      - qdrant
     environment:
       APP_ENV: ${APP_ENV:-development}
-      DATABASE_URL: postgresql+psycopg://vietaxlegal:${POSTGRES_PASSWORD}@db:5432/vietaxlegal
+      DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL (Supabase Session pooler URL)}
       JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET (>=32 random chars)}
       CORS_ORIGINS: http://localhost:3000
       LOG_JSON: "true"
@@ -58,5 +42,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  pgdata:
   qdrant_data:

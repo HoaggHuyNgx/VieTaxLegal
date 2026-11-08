@@ -47,14 +47,14 @@ flowchart LR
 ```
 
 Backend là lớp duy nhất truy cập dữ liệu ứng dụng; frontend không bao giờ kết nối database trực
-tiếp. Môi trường phát triển dùng PostgreSQL 15 cài trên máy. Có thể trỏ `DATABASE_URL` sang một
-PostgreSQL được quản lý (ví dụ Supabase) mà không cần đổi code.
+tiếp. Database là PostgreSQL do Supabase quản lý, backend kết nối qua Session pooler; không cần cài
+PostgreSQL trên máy.
 
 ## Công nghệ
 
 - Frontend: React 18, Vite, React Router DOM, React Markdown.
 - Backend: Python 3.12+, FastAPI, Uvicorn, Pydantic.
-- Database: PostgreSQL 15, SQLAlchemy 2.0, Alembic, Psycopg.
+- Database: PostgreSQL trên Supabase, SQLAlchemy 2.0, Alembic, Psycopg.
 - Xác thực: Argon2 (`pwdlib`), JWT (`PyJWT`) và cookie HTTP-only.
 - AI: LangChain (`langchain-anthropic` Messages API hoặc `langchain-openai` Responses API) cho chat và embedding OpenAI; truy xuất Qdrant, hybrid và trích dẫn vẫn tự viết.
 - RAG: Qdrant (Docker), embedding OpenAI `text-embedding-3-small` (BKAI chạy local là tùy chọn),
@@ -106,7 +106,7 @@ Tài liệu chi tiết theo từng phần nằm trong [backend/README.md](backen
 
 - Node.js 20.19+, 22.13+ hoặc 24+ và npm.
 - Python 3.12 trở lên.
-- PostgreSQL 15 trở lên chạy trên máy (hoặc một PostgreSQL từ xa có URL kết nối).
+- Một project Supabase đang hoạt động (lấy Session pooler URL làm `DATABASE_URL`).
 - API key của Anthropic hoặc OpenAI nếu muốn dùng chat thật.
 
 ## Chạy nhanh trên Windows
@@ -119,8 +119,8 @@ Copy-Item .env.example .env
 notepad .env
 ```
 
-Tạo role và database `vietaxlegal` trong PostgreSQL (xem
-[backend/README.md](backend/README.md#1-tạo-database-postgresql)), rồi điền `DATABASE_URL`, tạo
+Lấy Session pooler URL của project Supabase (xem
+[backend/README.md](backend/README.md#1-kết-nối-database-supabase)), điền vào `DATABASE_URL`, tạo
 `JWT_SECRET` có ít nhất 32 ký tự và cấu hình một AI provider. Không đưa database password, JWT
 secret hoặc API key lên GitHub.
 
@@ -157,10 +157,13 @@ Chi tiết về scripts, cấu trúc `src/`, luồng xác thực và SSE client 
 
 ## Chạy bằng Docker
 
-Một lệnh dựng cả Postgres, Qdrant, backend (tự chạy `alembic upgrade head`) và frontend (nginx, proxy `/api`):
+Một lệnh dựng Qdrant, backend và frontend (nginx, proxy `/api`).
+Không có container Postgres: database vẫn là Supabase, truyền qua `DATABASE_URL`.
+Backend **không** tự chạy migration (database là dữ liệu thật); chạy tay khi cần:
+`docker compose run --rm backend alembic upgrade head`.
 
 ```powershell
-$env:POSTGRES_PASSWORD = "doi-mat-khau-nay"
+$env:DATABASE_URL = "postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres"
 $env:JWT_SECRET = "chuoi-ngau-nhien-it-nhat-32-ky-tu"
 $env:ANTHROPIC_API_KEY = "..."   # hoặc OPENAI_API_KEY + CHAT_PROVIDER=openai
 docker compose up --build

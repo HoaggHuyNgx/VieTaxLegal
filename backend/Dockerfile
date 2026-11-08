@@ -22,4 +22,5 @@ HEALTHCHECK --interval=15s --timeout=5s --start-period=20s --retries=5 \
   CMD python -c "import urllib.request as u; u.urlopen('http://127.0.0.1:5000/api/health', timeout=4)"
 
 # corpus/ is mounted at /app/corpus (see docker-compose.yml); it is not baked into the image.
-CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 5000"]
+# No `alembic upgrade head` here: the DB is a shared Supabase instance, so migrations run by hand.
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "5000"]
