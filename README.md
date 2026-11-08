@@ -25,7 +25,6 @@ trước khi bật (xem [backend/README.md](backend/README.md)).
 | Chỉ mục Qdrant, embedding OpenAI, dense/hybrid   | Hoàn thành      |
 | Citation thật: lưu, trả về và hiển thị nguồn     | Hoàn thành      |
 | Bộ đánh giá RAG (câu hỏi, metric, runner, export) | Hoàn thành*     |
-| So sánh embedding BKAI (local) với OpenAI         | Chưa chạy       |
 | Tính thuế, scan hợp đồng và đính kèm tài liệu   | Chưa triển khai |
 
 \* Cần con người hoàn tất: điền hiệu lực văn bản, bổ sung văn bản còn thiếu và duyệt bộ câu hỏi
@@ -57,7 +56,7 @@ PostgreSQL trên máy.
 - Database: PostgreSQL trên Supabase, SQLAlchemy 2.0, Alembic, Psycopg.
 - Xác thực: Argon2 (`pwdlib`), JWT (`PyJWT`) và cookie HTTP-only.
 - AI: LangChain (`langchain-anthropic` Messages API hoặc `langchain-openai` Responses API) cho chat và embedding OpenAI; truy xuất Qdrant, hybrid và trích dẫn vẫn tự viết.
-- RAG: Qdrant (Docker), embedding OpenAI `text-embedding-3-small` (BKAI chạy local là tùy chọn),
+- RAG: Qdrant (Docker), embedding OpenAI `text-embedding-3-small`,
   truy xuất dense, sparse (BM25 tự cài) và hybrid (RRF).
 - Streaming: Server-Sent Events (SSE).
 - Kiểm thử: Pytest, Vitest, Ruff, ESLint và Prettier.
@@ -273,5 +272,5 @@ Số liệu đánh giá nằm ở `backend/rag_eval/results/SUMMARY.md` (sinh b�
 Các số liệu đang đánh dấu `provisional` vì bộ câu hỏi chưa được con người duyệt; chỉ trích dẫn số
 liệu trong luận văn sau khi duyệt xong. Cách chạy từng bước xem [backend/README.md](backend/README.md).
 
-Còn lại: điền hiệu lực văn bản, bổ sung văn bản bị cắt/thiếu, duyệt bộ câu hỏi, chạy so sánh
-embedding BKAI, rồi tinh chỉnh ngưỡng điểm và cân nhắc rerank dựa trên số liệu đã duyệt.
+Còn lại: điền hiệu lực văn bản, bổ sung văn bản bị cắt/thiếu, duyệt bộ câu hỏi, rồi tinh chỉnh
+ngưỡng điểm và cân nhắc rerank dựa trên số liệu đã duyệt.

@@ -85,7 +85,7 @@ Các biến còn lại đều có giá trị mặc định, chỉ đặt khi mu�
 | `RAG_ENABLED`                | `false`                 | Bật truy xuất RAG vào chat (cần Qdrant đã ingest).           |
 | `RAG_RETRIEVAL_MODE`         | `hybrid`                | `dense`, `sparse` hoặc `hybrid` (xem phần AI và RAG).        |
 | `RAG_REQUIRE_IN_FORCE`       | `true`                  | Chỉ trả văn bản `status = in_force`; `false` chỉ để dev.     |
-| `EMBEDDING_PROVIDER`         | `openai`                | `openai`, `bkai` (extra `local-embed`) hoặc `fake` (test).   |
+| `EMBEDDING_PROVIDER`         | `openai`                | `openai` hoặc `fake` (test).                                 |
 | `EMBEDDING_MODEL`            | `text-embedding-3-small` | Model nhúng; tên collection Qdrant suy ra từ model này.     |
 | `EMBEDDING_DIMENSIONS`       | trống                   | Chỉ OpenAI: rút ngắn vector; trống = mặc định của model.     |
 | `EMBEDDING_BATCH_SIZE`       | `64`                    | Số chunk mỗi lần gọi nhúng (`1–512`).                        |
@@ -398,8 +398,7 @@ bịa, từ chối câu ngoài phạm vi, độ trễ và token).
 ### Quyền riêng tư
 
 Câu hỏi của người dùng được gửi tới OpenAI để nhúng truy vấn (khi `EMBEDDING_PROVIDER=openai`) và
-để sinh câu trả lời. Dữ liệu chỉ mục là văn bản pháp luật công khai. Dùng `EMBEDDING_PROVIDER=bkai`
-(extra `.[local-embed]`) để nhúng truy vấn ngay trên máy; câu hỏi vẫn tới model chat khi trả lời.
+để sinh câu trả lời. Dữ liệu chỉ mục là văn bản pháp luật công khai.
 
 ## Kiểm thử
 
