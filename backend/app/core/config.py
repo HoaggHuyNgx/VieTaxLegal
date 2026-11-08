@@ -40,6 +40,11 @@ class Settings(BaseSettings):
     # Rewrites the question into several search queries before retrieval. Blank model = off.
     rag_query_planner_provider: str = "openai"
     rag_query_planner_model: str = ""
+    # Reorders the fused candidates with this model. Blank model = off.
+    rag_rerank_provider: str = "openai"
+    rag_rerank_model: str = ""
+    # No sources when the question's best dense cosine is below this (0 = off).
+    rag_min_top_score: float = 0.0
     # Model that writes eval questions. Blank = CHAT_MODEL (set a different one to limit bias).
     eval_generator_model: str = ""
     embedding_provider: str = "openai"

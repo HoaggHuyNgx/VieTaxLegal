@@ -36,6 +36,7 @@ class LlmReranker:
         self, provider: ModelProvider, max_chars: int = 600, max_output_tokens: int = 3000
     ) -> None:
         self._provider, self._max_chars, self._max_tokens = provider, max_chars, max_output_tokens
+        self.fallbacks = 0  # calls that kept the original order; eval reports it
 
     async def rerank(self, query: str, hits: "list[Hit]", limit: int) -> "list[Hit]":
         listing = "\n\n".join(
@@ -56,6 +57,7 @@ class LlmReranker:
             order = [int(n) for n in json.loads(match.group(0))] if match else []
         except (ProviderError, ValueError):
             order = []  # fall back to the original order
+        self.fallbacks += not order
         ranked = [hits[n - 1] for n in dict.fromkeys(order) if 1 <= n <= len(hits)]
         rest = [hit for hit in hits if hit not in ranked]  # unranked candidates keep their order
         return (ranked + rest)[:limit]

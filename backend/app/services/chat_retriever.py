@@ -31,6 +31,8 @@ class RetrievedContext:
 class RetrievalResult:
     contexts: Sequence[RetrievedContext] = ()
     citations: Sequence[Citation] = ()
+    # True when the corpus was really searched, so empty means "nothing relevant".
+    searched: bool = False
 
 
 class Retriever(Protocol):
@@ -56,10 +58,10 @@ def get_retriever() -> Retriever:
     if not get_settings().rag_enabled:
         return NullRetriever()
     from app.services.rag.qdrant_retriever import get_qdrant_retriever
-    from app.services.rag.query_planner import with_query_planner
+    from app.services.rag.query_planner import build_pipeline
 
     try:
-        return with_query_planner(get_qdrant_retriever(), get_settings())
+        return build_pipeline(get_qdrant_retriever(), get_settings())
     except Exception as error:  # e.g. missing OPENAI_API_KEY: chat must still work, without sources
         logger.warning("RAG disabled for this request: %s", type(error).__name__)
         return NullRetriever()

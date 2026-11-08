@@ -17,10 +17,17 @@ dạng [n] (ví dụ [1]) với n là id của thẻ <reference>. Chỉ dùng s�
 không tự tạo số mới. Nếu dữ liệu tham khảo không đủ để trả lời, hãy nói rõ là chưa đủ căn cứ
 trong các nguồn đã cung cấp."""
 
+# Without this, a model given no sources answers from memory with real-looking numbers and
+# document numbers, which is the exact failure the no-source gate exists to prevent.
+NO_SOURCE_RULES = """Hệ thống đã tra cứu kho văn bản nhưng không tìm thấy nguồn phù hợp với câu hỏi.
+Hãy nói rõ là chưa đủ căn cứ trong kho văn bản hiện có để trả lời câu hỏi này.
+Không nêu số hiệu văn bản, điều, khoản, mức phạt, con số hay thời hạn từ trí nhớ.
+Có thể gợi ý người dùng liên hệ cơ quan có thẩm quyền hoặc người có chuyên môn."""
+
 
 def prompt_with_context(result: RetrievalResult) -> str:
     if not result.contexts:
-        return SYSTEM_PROMPT
+        return f"{SYSTEM_PROMPT}\n\n{NO_SOURCE_RULES}" if result.searched else SYSTEM_PROMPT
     blocks = "\n\n".join(
         f'<reference id="{item.citation_id}">\n{item.content}\n</reference>'
         for item in result.contexts

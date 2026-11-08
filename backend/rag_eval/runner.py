@@ -12,7 +12,7 @@ from app.services.rag.corpus_manifest import CORPUS_DIR
 from app.services.rag.embeddings import get_embedder
 from app.services.rag.qdrant_retriever import QdrantRetriever
 from app.services.rag.qdrant_store import collection_name, get_async_client
-from app.services.rag.query_planner import MultiQueryRetriever, QueryPlanner, llm_provider
+from app.services.rag.query_planner import QueryPlanner, RetrievalPipeline, llm_provider
 from app.services.rag.reranker import LlmReranker
 from rag_eval import metrics
 from rag_eval.dataset import Question, scoreable
@@ -38,6 +38,8 @@ class EvalConfig:
     rerank_model: str | None = None  # None = CHAT_MODEL
     query_planner_provider: str = "openai"
     query_planner_model: str | None = None  # None = no query planning
+    min_top_score: float = 0.0  # no-source gate on the best dense cosine
+    question_types: list[str] | None = None  # None = every type
     # custom = this project's pipeline; langchain_baseline = stock LangChain (retrieval tier only)
     pipeline: str = "custom"
     include_pending: bool = False  # provisional run on unreviewed questions
@@ -75,24 +77,26 @@ def build_retriever(config: EvalConfig, settings: Settings) -> tuple[QdrantRetri
         config.min_similarity,
         config.require_in_force,
         config.mode,
-        reranker=LlmReranker(
-            llm_provider(
-                settings, config.rerank_provider, config.rerank_model or settings.chat_model
-            )
-        )
-        if config.rerank == "llm"
-        else None,
     )
+    planner = reranker = None
     if config.query_planner_model:
         planner = QueryPlanner(
             llm_provider(settings, config.query_planner_provider, config.query_planner_model)
         )
-        retriever = MultiQueryRetriever(retriever, planner, config.top_k)
+    if config.rerank == "llm":
+        model = config.rerank_model or settings.chat_model
+        reranker = LlmReranker(llm_provider(settings, config.rerank_provider, model))
+    if planner or reranker or config.min_top_score:
+        retriever = RetrievalPipeline(
+            retriever, config.top_k, planner, reranker, config.min_top_score
+        )
     return retriever, embedder
 
 
 def select_questions(questions: list[Question], config: EvalConfig) -> list[Question]:
     chosen = scoreable(questions, config.include_pending)
+    if config.question_types:
+        chosen = [q for q in chosen if q.type in config.question_types]
     return chosen[: config.limit] if config.limit else chosen
 
 
@@ -194,4 +198,8 @@ async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, que
         summary["plan_fallbacks"] = sum(p["fallback"] for p in plans)
         summary["routed_invalid"] = sum(p["route"] == "invalid" for p in plans)
         summary["mean_queries"] = metrics.mean(len(p["queries"]) for p in plans)
+    if config.min_top_score:
+        empty = [r["type"] for r in rows if not r["top"]]
+        summary["gated_out_of_corpus"] = empty.count("out_of_corpus")
+        summary["gated_in_corpus"] = len(empty) - summary["gated_out_of_corpus"]
     return summary, rows

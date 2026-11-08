@@ -382,6 +382,10 @@ lại, và xóa điểm cũ của văn bản đã sửa. Biến môi trường l
 `sparse` hoặc `hybrid` (dense + sparse hợp nhất bằng RRF, hòa điểm được phá theo thứ hạng dense).
 Đặt `RAG_QUERY_PLANNER_MODEL` để viết lại câu hỏi thành tối đa 3 truy vấn trước khi tìm (luôn giữ câu
 gốc, gộp bằng RRF, lỗi thì chỉ tìm câu gốc); để trống là tắt. Mỗi câu hỏi thêm một lần gọi model.
+`RAG_RERANK_MODEL` xếp lại ứng viên bằng model này (tắt khi để trống, lỗi thì giữ thứ tự cũ).
+`RAG_MIN_TOP_SCORE` trả về "không có nguồn" khi điểm cosine cao nhất của câu gốc thấp hơn ngưỡng
+(0 là tắt); khi đó prompt cấm trả lời từ trí nhớ. `eval_generate.py --multi N` thêm câu hỏi nhiều ý
+ở trạng thái `pending`, không ghi đè câu đã duyệt.
 
 ### Đánh giá
 

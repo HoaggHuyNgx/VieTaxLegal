@@ -1,0 +1,273 @@
+{
+  "meta": {
+    "date": "2026-11-09",
+    "config": {
+      "name": "rag-full-ooc",
+      "tier": "generation",
+      "chunk_set": "article",
+      "top_k": 5,
+      "min_similarity": 0.0,
+      "require_in_force": true,
+      "rag": true,
+      "mode": "hybrid",
+      "rerank": "llm",
+      "rerank_provider": "openai",
+      "rerank_model": "gpt-4.1-mini",
+      "query_planner_provider": "openai",
+      "query_planner_model": "gpt-4.1-mini",
+      "min_top_score": 0.5,
+      "question_types": [
+        "out_of_corpus"
+      ],
+      "pipeline": "custom",
+      "include_pending": false,
+      "depth": 10,
+      "embedding_provider": null,
+      "embedding_model": null,
+      "limit": null,
+      "max_output_tokens": 4000
+    },
+    "config_hash": "1d28d7f42fa3",
+    "git_sha": "7f1f791",
+    "corpus_manifest_sha": "521adf938bcf",
+    "models": {
+      "chat": "openai:gpt-6-luna",
+      "embedding": "openai:text-embedding-3-small",
+      "eval_generator": "(same as chat)",
+      "temperature": "provider default (not settable through the chat provider)"
+    },
+    "dataset": {
+      "total": 94,
+      "approved": 91,
+      "used": 10,
+      "provisional": false
+    }
+  },
+  "summary": {
+    "answered": 10,
+    "provider_errors": 0,
+    "truncated_answers": 0,
+    "citation_precision": null,
+    "citation_recall": null,
+    "answers_without_citation": 0,
+    "hallucinated_reference_rate": 0.0,
+    "ooc_no_citation_rate": 0.7,
+    "ooc_abstain_phrase_rate": 1.0,
+    "retrieval_ms": {
+      "p50": 1444.9414999980945,
+      "p95": 1939.8309999960475
+    },
+    "ttft_ms": {
+      "p50": 1796.8235999869648,
+      "p95": 8464.011700008996
+    },
+    "total_ms": {
+      "p50": 3552.300799987279,
+      "p95": 11276.296700001694
+    },
+    "input_tokens": 13164,
+    "output_tokens": 3777
+  },
+  "questions": [
+    {
+      "id": "q068",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 1708.4304000018165,
+      "ttft_ms": 8464.011700008996,
+      "total_ms": 11276.296700001694,
+      "truncated": false,
+      "input_tokens": 1486,
+      "output_tokens": 818,
+      "answer": "Các nguồn được cung cấp **không có quy định về hồ sơ ly hôn thuận tình**, nên tôi chưa đủ căn cứ để xác nhận danh mục giấy tờ chính thức hoặc hiệu lực hiện hành.\n\nĐể chuẩn bị, hồ sơ **thường** có thể gồm:\n\n- Đơn yêu cầu công nhận thuận tình ly hôn, có chữ ký của cả hai vợ chồng;\n- Bản chính Giấy chứng nhận kết hôn;\n- Bản sao giấy tờ tùy thân của hai bên và giấy tờ về nơi cư trú;\n- Bản sao giấy khai sinh của con chung, nếu có;\n- Tài liệu về tài sản, khoản nợ chung nếu đề nghị Tòa án giải quyết;\n- Thỏa thuận hoặc tài liệu thể hiện thống nhất về việc nuôi con, cấp dưỡng và phân chia tài sản, nếu có.\n\nDanh mục cụ thể có thể tùy vụ việc và yêu cầu của Tòa án tiếp nhận; nên kiểm tra trực tiếp với Tòa án có thẩm quyền trước khi nộp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "abstained": true
+    },
+    {
+      "id": "q069",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 496.8380000209436,
+      "ttft_ms": 1462.9590999975335,
+      "total_ms": 2539.9701000133064,
+      "truncated": false,
+      "input_tokens": 250,
+      "output_tokens": 108,
+      "answer": "Hiện chưa đủ căn cứ trong kho văn bản hiện có để xác định mức phạt đang áp dụng đối với xe máy vượt đèn đỏ. Bạn nên kiểm tra quy định hiện hành hoặc liên hệ cơ quan công an có thẩm quyền để được xác nhận.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "abstained": true
+    },
+    {
+      "id": "q070",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 1939.8309999960475,
+      "ttft_ms": 4415.044699999271,
+      "total_ms": 6364.366199995857,
+      "truncated": false,
+      "input_tokens": 2165,
+      "output_tokens": 523,
+      "answer": "Các nguồn được cung cấp **chưa đủ căn cứ** để xác định điều kiện cấp Giấy chứng nhận quyền sử dụng đất (“sổ đỏ”) cho đất nông nghiệp; những nguồn này chỉ đề cập đến thuế và đăng ký doanh nghiệp. Vì vậy, tôi chưa thể xác minh điều kiện cụ thể hoặc hiệu lực pháp luật hiện hành về việc cấp sổ đỏ.\n\nĐiều kiện cần xem xét sẽ phụ thuộc vào **nguồn gốc đất và tình trạng sử dụng**. Bạn có thể cho biết đất được giao, nhận chuyển nhượng, thừa kế hay sử dụng lâu năm; hiện có giấy tờ gì về đất; đất có tranh chấp không; và đang ở địa phương nào? Có các thông tin đó mới có thể xác định hướng tra cứu phù hợp.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "abstained": true
+    },
+    {
+      "id": "q071",
+      "type": "out_of_corpus",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 1861.200999992434,
+      "ttft_ms": 4939.7636000067,
+      "total_ms": 6386.805399990408,
+      "truncated": false,
+      "input_tokens": 2928,
+      "output_tokens": 450,
+      "answer": "Các nguồn được cung cấp chỉ quy định về hành vi trốn thuế và mức phạt hành chính từ 1 đến 3 lần số tiền thuế trốn; không có quy định về hình phạt tù theo Bộ luật Hình sự. [1][4] Vì vậy, **chưa đủ căn cứ trong các nguồn này để xác định mức tù tối đa hoặc xác minh mức đang có hiệu lực**.\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "abstained": true
+    },
+    {
+      "id": "q072",
+      "type": "out_of_corpus",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 256.90490001579747,
+      "ttft_ms": 1715.5696999980137,
+      "total_ms": 3364.351500000339,
+      "truncated": false,
+      "input_tokens": 249,
+      "output_tokens": 215,
+      "answer": "Hiện tôi **chưa đủ căn cứ trong kho văn bản hiện có để xác định mức thuế nhập khẩu ô tô điện từ Trung Quốc**, và chưa thể xác minh mức thuế đang có hiệu lực.\n\nMức áp dụng có thể phụ thuộc vào phân loại mã HS, loại xe và hồ sơ chứng minh xuất xứ. Để tra cứu chính xác, bạn nên cung cấp thông tin về mẫu xe, cấu hình và chứng từ xuất xứ, hoặc hỏi cơ quan hải quan/đơn vị khai thuê hải quan.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "abstained": true
+    },
+    {
+      "id": "q074",
+      "type": "out_of_corpus",
+      "field": "enterprise",
+      "n_cited": 5,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 1444.9414999980945,
+      "ttft_ms": 5838.443999993615,
+      "total_ms": 9794.745799998054,
+      "truncated": false,
+      "input_tokens": 2031,
+      "output_tokens": 790,
+      "answer": "**Các nguồn được cung cấp chưa đủ để liệt kê đầy đủ nghĩa vụ của doanh nghiệp theo Luật Phá sản**—chúng không nêu hồ sơ, thời hạn hay các bước doanh nghiệp phải thực hiện. Nguồn hiện có chỉ xác nhận việc phá sản doanh nghiệp được thực hiện theo pháp luật về phá sản. [1]\n\nCó thể xác định từ tài liệu rằng, khi Tòa án ra quyết định mở thủ tục phá sản, Cơ quan đăng ký kinh doanh cấp tỉnh cập nhật tình trạng pháp lý của doanh nghiệp; khi có quyết định tuyên bố phá sản, cơ quan này cập nhật tình trạng “đã phá sản”. Đây là việc của cơ quan đăng ký kinh doanh, không phải danh sách đầy đủ nghĩa vụ của doanh nghiệp. [2][3]\n\nCũng cần phân biệt thủ tục phá sản với giải thể: các quy định được cung cấp về việc gửi nghị quyết giải thể và những hành vi bị cấm sau khi có quyết định giải thể là quy định về **giải thể**, không đủ căn cứ để áp dụng thành nghĩa vụ trong thủ tục phá sản. [4][5]\n\nVì vậy, **chưa đủ căn cứ trong các nguồn đã cung cấp để hướng dẫn chính xác doanh nghiệp phải nộp gì, nộp cho ai và trong thời hạn nào theo Luật Phá sản**. Tôi cũng chưa thể xác minh hiệu lực hiện hành của toàn bộ các quy định liên quan từ dữ liệu này.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "abstained": true
+    },
+    {
+      "id": "q075",
+      "type": "out_of_corpus",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 380.20870002219453,
+      "ttft_ms": 1354.8548999824561,
+      "total_ms": 2376.633199979551,
+      "truncated": false,
+      "input_tokens": 244,
+      "output_tokens": 136,
+      "answer": "Hiện chưa đủ căn cứ trong kho văn bản hiện có để xác nhận thời hạn bảo hộ nhãn hiệu. Bạn có thể kiểm tra với cơ quan sở hữu trí tuệ có thẩm quyền hoặc người có chuyên môn để được xác nhận theo quy định hiện hành.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "abstained": true
+    },
+    {
+      "id": "q077",
+      "type": "out_of_corpus",
+      "field": "labor",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 1460.383700003149,
+      "ttft_ms": 1779.3479999818373,
+      "total_ms": 3097.4327999865636,
+      "truncated": false,
+      "input_tokens": 1869,
+      "output_tokens": 195,
+      "answer": "Các nguồn được cung cấp chưa nêu **mức lương tối thiểu vùng áp dụng từ năm 2026**, nên chưa đủ căn cứ để xác định số tiền cụ thể hoặc xác minh hiệu lực hiện hành. Mức tối thiểu được xác lập theo vùng và quy định theo tháng, giờ; Chính phủ quyết định, công bố mức áp dụng.[1]\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "abstained": true
+    },
+    {
+      "id": "q078",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 1713.2769000309054,
+      "ttft_ms": 2260.313800012227,
+      "total_ms": 4343.69660000084,
+      "truncated": false,
+      "input_tokens": 1694,
+      "output_tokens": 321,
+      "answer": "Các nguồn được cung cấp **không có thông tin về hồ sơ xin thị thực Nhật Bản**, nên tôi chưa đủ căn cứ để xác nhận danh mục giấy tờ và chưa thể xác minh yêu cầu hiện hành.\n\nHồ sơ có thể khác nhau tùy nơi nộp, mục đích chuyến đi, loại thị thực và tình trạng của người xin. Bạn nên đối chiếu hướng dẫn chính thức của Đại sứ quán/Tổng Lãnh sự quán Nhật Bản phụ trách nơi bạn cư trú hoặc đơn vị tiếp nhận hồ sơ được chỉ định. Nếu cho biết bạn đang nộp hồ sơ ở quốc gia nào và dự định xin loại thị thực nào, tôi có thể giúp xác định hướng tra cứu phù hợp.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "abstained": true
+    },
+    {
+      "id": "q079",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "hallucinated_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "retrieval_ms": 318.45170000451617,
+      "ttft_ms": 1796.8235999869648,
+      "total_ms": 3552.300799987279,
+      "truncated": false,
+      "input_tokens": 248,
+      "output_tokens": 221,
+      "answer": "Hiện chưa đủ căn cứ trong kho văn bản hiện có để xác nhận thủ tục, hồ sơ, cơ quan tiếp nhận hoặc các trường hợp được miễn áp dụng cho nhà hàng; tôi cũng chưa thể xác minh quy định hiện hành.\n\nĐể được hướng dẫn đúng với địa điểm và mô hình kinh doanh cụ thể, bạn nên liên hệ cơ quan quản lý an toàn thực phẩm tại địa phương hoặc bộ phận tiếp nhận thủ tục hành chính của địa phương. Có thể chuẩn bị thông tin về địa chỉ nhà hàng, loại hình kinh doanh và hoạt động chế biến, phục vụ để cơ quan xác định thủ tục phù hợp.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "abstained": true
+    }
+  ]
+}

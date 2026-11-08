@@ -44,6 +44,7 @@ class SearchOutcome:
     embed_ms: float = 0.0
     search_ms: float = 0.0
     plan_info: dict[str, Any] = field(default_factory=dict)  # set only by the query planner
+    top_dense: float | None = None  # best cosine score; None when dense search did not run
 
 
 class QdrantRetriever:
@@ -76,18 +77,22 @@ class QdrantRetriever:
         embedded = time.perf_counter()
         wanted = limit or self._top_k
         fetch = max(wanted * 2, 10) if self._reranker else wanted  # rerank needs spare candidates
+        top_dense: float | None = None
         if self._mode == "hybrid":
-            hits = await self._hybrid(query, vector, fetch)
+            hits, top_dense = await self._hybrid(query, vector, fetch)
         elif self._mode == "sparse":  # lexical-only ablation
             points = await self._sparse_points(query, fetch)
             hits = [Hit(str(p.id), p.score, p.payload or {}) for p in points]
         else:
             points = await self._dense_points(vector, fetch)
             hits = [Hit(str(p.id), p.score, p.payload or {}) for p in points]
+            top_dense = points[0].score if points else None
         if self._reranker:
             hits = await self._reranker.rerank(query, hits, wanted)
         finished = time.perf_counter()
-        return SearchOutcome(hits, (embedded - started) * 1000, (finished - embedded) * 1000)
+        return SearchOutcome(
+            hits, (embedded - started) * 1000, (finished - embedded) * 1000, top_dense=top_dense
+        )
 
     async def _dense_points(self, vector: list[float], limit: int):
         response = await self._client.query_points(
@@ -112,7 +117,9 @@ class QdrantRetriever:
         )
         return response.points
 
-    async def _hybrid(self, query: str, vector: list[float], limit: int) -> list[Hit]:
+    async def _hybrid(
+        self, query: str, vector: list[float], limit: int
+    ) -> tuple[list[Hit], float | None]:
         """Dense and sparse candidates fused with RRF here (deterministic tie-break, see fusion).
 
         `min_similarity` is a cosine threshold, so it only applies to the dense candidate list;
@@ -124,7 +131,8 @@ class QdrantRetriever:
         )
         by_id = {str(p.id): p for p in [*lexical, *dense]}
         fused = rrf_fuse([[str(p.id) for p in dense], [str(p.id) for p in lexical]])
-        return [Hit(i, score, by_id[i].payload or {}) for i, score in fused[:limit]]
+        hits = [Hit(i, score, by_id[i].payload or {}) for i, score in fused[:limit]]
+        return hits, (dense[0].score if dense else None)
 
     async def retrieve(self, query: str) -> RetrievalResult:
         try:
@@ -157,7 +165,7 @@ def hits_to_result(hits: list[Hit]) -> RetrievalResult:
                 issued_on=payload.get("issued_on"),
             )
         )
-    return RetrievalResult(contexts, citations)
+    return RetrievalResult(contexts, citations, searched=True)
 
 
 def build_retriever(settings: Settings, client: AsyncQdrantClient, embedder) -> QdrantRetriever:

@@ -8,10 +8,10 @@ from app.services import rag
 from app.services.chat_provider import ProviderError, ProviderEvent
 from app.services.rag.qdrant_retriever import Hit, SearchOutcome
 from app.services.rag.query_planner import (
-    MultiQueryRetriever,
     QueryPlan,
     QueryPlanner,
-    with_query_planner,
+    RetrievalPipeline,
+    build_pipeline,
 )
 
 QUESTION = "Thuế GTGT và thuế TNCN của hộ kinh doanh tính thế nào?"
@@ -96,13 +96,14 @@ def test_planner_timeout_falls_back(monkeypatch):
 class _Inner:
     def __init__(self, ranking: dict[str, list[str]], fail: bool = False) -> None:
         self.ranking, self.fail, self.calls = ranking, fail, []
+        self.top_dense: dict[str, float] = {}
 
     async def search(self, query, limit=None):
         self.calls.append((query, limit))
         if self.fail:
             raise RuntimeError("qdrant down")
         hits = [Hit(i, 1.0, {"doc_slug": "luat", "id": i}) for i in self.ranking[query]]
-        return SearchOutcome(hits[:limit], 3.0, 4.0)
+        return SearchOutcome(hits[:limit], 3.0, 4.0, top_dense=self.top_dense.get(query))
 
 
 class _Planner:
@@ -115,7 +116,7 @@ class _Planner:
 
 def test_search_fuses_rankings_and_reports_the_plan():
     inner = _Inner({"a": ["1", "2"], "b": ["2", "3"]})
-    retriever = MultiQueryRetriever(inner, _Planner(QueryPlan("law", ("a", "b"))), top_k=5)
+    retriever = RetrievalPipeline(inner, 5, _Planner(QueryPlan("law", ("a", "b"))))
 
     outcome = asyncio.run(retriever.search("a", limit=3))
 
@@ -128,14 +129,14 @@ def test_search_fuses_rankings_and_reports_the_plan():
 
 def test_search_cuts_the_fused_list_to_the_limit():
     inner = _Inner({"a": ["1", "2"], "b": ["3", "4"]})
-    retriever = MultiQueryRetriever(inner, _Planner(QueryPlan("law", ("a", "b"))), top_k=2)
+    retriever = RetrievalPipeline(inner, 2, _Planner(QueryPlan("law", ("a", "b"))))
 
     assert len(asyncio.run(retriever.search("a")).hits) == 2
 
 
 def test_single_query_keeps_the_plain_ranking():
     inner = _Inner({"a": ["2", "1"]})
-    retriever = MultiQueryRetriever(inner, _Planner(QueryPlan("law", ("a",))), top_k=5)
+    retriever = RetrievalPipeline(inner, 5, _Planner(QueryPlan("law", ("a",))))
 
     outcome = asyncio.run(retriever.search("a"))
 
@@ -144,7 +145,7 @@ def test_single_query_keeps_the_plain_ranking():
 
 def test_retrieve_degrades_to_no_sources():
     inner = _Inner({}, fail=True)
-    retriever = MultiQueryRetriever(inner, _Planner(QueryPlan("law", ("a",))), top_k=5)
+    retriever = RetrievalPipeline(inner, 5, _Planner(QueryPlan("law", ("a",))))
 
     result = asyncio.run(retriever.retrieve("a"))
 
@@ -154,10 +155,91 @@ def test_retrieve_degrades_to_no_sources():
 def test_planner_is_off_without_a_model():
     inner = object()
 
-    assert with_query_planner(inner, get_settings()) is inner
+    assert build_pipeline(inner, get_settings()) is inner
 
 
 def test_planner_wraps_when_a_model_is_set():
     settings = get_settings().model_copy(update={"rag_query_planner_model": "small-model"})
 
-    assert isinstance(with_query_planner(object(), settings), MultiQueryRetriever)
+    assert isinstance(build_pipeline(object(), settings), RetrievalPipeline)
+
+
+class _Reranker:
+    def __init__(self, order: list[str] | None = None, delay: float = 0.0) -> None:
+        self.order, self.delay, self.fallbacks, self.queries = order, delay, 0, []
+
+    async def rerank(self, query, hits, limit):
+        self.queries.append(query)
+        await asyncio.sleep(self.delay)
+        by_id = {hit.id: hit for hit in hits}
+        return [by_id[i] for i in self.order][:limit]
+
+
+def test_rerank_runs_once_on_the_original_question_with_spare_candidates():
+    inner = _Inner({"a": ["1", "2", "3"], "b": ["3", "4"]})
+    reranker = _Reranker(order=["4", "1", "3"])
+    retriever = RetrievalPipeline(inner, 2, _Planner(QueryPlan("law", ("a", "b"))), reranker)
+
+    outcome = asyncio.run(retriever.search("a"))
+
+    assert [hit.id for hit in outcome.hits] == ["4", "1"]
+    assert reranker.queries == ["a"]
+    assert inner.calls == [("a", 10), ("b", 10)]
+
+
+def test_rerank_timeout_keeps_the_fused_order_and_is_counted(monkeypatch):
+    monkeypatch.setattr(rag.query_planner, "RERANK_TIMEOUT_SECONDS", 0.01)
+    inner = _Inner({"a": ["1", "2", "3"]})
+    retriever = RetrievalPipeline(inner, 2, reranker=_Reranker(order=["3"], delay=1.0))
+
+    outcome = asyncio.run(retriever.search("a"))
+
+    assert [hit.id for hit in outcome.hits] == ["1", "2"]
+    assert retriever.index_info == {"rerank_fallbacks": 1}
+
+
+def test_gate_returns_no_sources_and_skips_the_reranker():
+    inner = _Inner({"a": ["1"]})
+    inner.top_dense = {"a": 0.4}
+    reranker = _Reranker(order=["1"])
+    retriever = RetrievalPipeline(inner, 5, reranker=reranker, min_top_score=0.5)
+
+    assert asyncio.run(retriever.search("a")).hits == []
+    assert reranker.queries == []
+
+
+def test_gate_uses_the_original_question_not_a_rewrite():
+    inner = _Inner({"a": ["1"], "b": ["2"]})
+    inner.top_dense = {"a": 0.4, "b": 0.9}
+    planner = _Planner(QueryPlan("law", ("a", "b")))
+    retriever = RetrievalPipeline(inner, 5, planner, min_top_score=0.5)
+
+    assert asyncio.run(retriever.search("a")).hits == []
+
+
+def test_gate_passes_at_the_threshold_and_when_no_dense_score_exists():
+    inner = _Inner({"a": ["1"], "b": ["2"]})
+    inner.top_dense = {"a": 0.5}
+    retriever = RetrievalPipeline(inner, 5, min_top_score=0.5)
+
+    assert len(asyncio.run(retriever.search("a")).hits) == 1
+    assert len(asyncio.run(retriever.search("b")).hits) == 1  # sparse-only mode
+
+
+def test_invalid_route_searches_nothing():
+    inner = _Inner({})
+    planner = _Planner(QueryPlan("invalid", ("nấu phở",)))
+    retriever = RetrievalPipeline(inner, 5, planner)
+
+    outcome = asyncio.run(retriever.search("nấu phở"))
+
+    assert outcome.hits == [] and inner.calls == []
+    assert outcome.plan_info["route"] == "invalid"
+
+
+def test_pipeline_is_built_for_rerank_or_gate_alone():
+    base = get_settings()
+
+    for update in ({"rag_rerank_model": "small-model"}, {"rag_min_top_score": 0.5}):
+        built = build_pipeline(object(), base.model_copy(update=update))
+        assert isinstance(built, RetrievalPipeline)

@@ -10,6 +10,7 @@ import json
 import random
 import re
 from collections import defaultdict
+from itertools import zip_longest
 
 from app.services.chat_provider import ModelProvider, ProviderError, ProviderMessage
 from app.services.rag.chunking import ChunkDraft, article_chunks, estimate_tokens
@@ -29,6 +30,11 @@ diễn đạt lại bằng từ ngữ khác, không chép nguyên cụm từ tro
 bản, số điều, khoản; tự đủ nghĩa, không dùng "điều này", "đoạn trên".
 Quy tắc cho "gold_answer": 1-3 câu, chỉ dựa vào đoạn luật được cho, không thêm kiến thức ngoài.
 "type" là "numeric" nếu đáp án chủ yếu là con số/tỷ lệ/thời hạn, ngược lại là "lookup"."""
+SYSTEM_MULTI = """Bạn tạo câu hỏi kiểm thử nhiều ý cho hệ thống hỏi đáp pháp luật Việt Nam.
+Chỉ trả về một đối tượng JSON: {"question": "...", "gold_answer": "..."}.
+Quy tắc cho "question": một câu hỏi tự nhiên của người dùng, hỏi đồng thời hai vấn đề, cần CẢ HAI
+đoạn luật mới trả lời đủ; diễn đạt lại, không chép cụm từ trong đoạn luật; KHÔNG nêu số hiệu văn
+bản, số điều, khoản. Quy tắc cho "gold_answer": 2-4 câu, chỉ dựa vào hai đoạn luật được cho."""
 # Questions that no document in the corpus answers; success is "no citation + cannot verify".
 OUT_OF_CORPUS = [
     ("Công ty tôi có nên mua bitcoin để đầu tư không?", "other"),
@@ -96,19 +102,23 @@ def _parse_json(text: str) -> dict | None:
 
 async def _generate(provider: ModelProvider, doc: CorpusDoc, chunk: ChunkDraft) -> dict | None:
     prompt = f"Đoạn luật ({doc.title}):\n{chunk.content}"
+    return await _ask(provider, prompt, SYSTEM, chunk.content)
+
+
+async def _ask(provider: ModelProvider, prompt: str, system: str, source: str) -> dict | None:
     text = ""
     for _ in range(3):  # retry if the call fails or the question copies the passage wording
         text = ""
         try:
             # Generous cap: reasoning models spend output tokens before the visible answer.
-            async for event in provider.stream([ProviderMessage("user", prompt)], SYSTEM, 3000):
+            async for event in provider.stream([ProviderMessage("user", prompt)], system, 3000):
                 if event.kind == "delta":
                     text += event.text
         except ProviderError:
             continue
         data = _parse_json(text)
         if data and data.get("question") and data.get("gold_answer"):
-            if not copied_ngram(data["question"], chunk.content):
+            if not copied_ngram(data["question"], source):
                 return data
     return None
 
@@ -140,4 +150,48 @@ async def generate_questions(
         questions.append(
             Question(f"q{len(questions) + 1:03d}", text, field_name, "out_of_corpus", "")
         )
+    return questions
+
+
+def pair_chunks(by_field, count: int, seed: int) -> list[tuple]:
+    """Pairs from one field covering two different articles, alternating between fields."""
+    per_field: list[list[tuple]] = []
+    for name in sorted(by_field):
+        picks = sample_chunks(by_field, {name: count * 2}, seed)
+        pairs = [
+            (a, b) for a, b in zip(picks[::2], picks[1::2])
+            if (a[0].slug, a[1].article_no) != (b[0].slug, b[1].article_no)
+        ]  # fmt: skip
+        per_field.append(pairs)
+    mixed = [pair for group in zip_longest(*per_field) for pair in group if pair]
+    return mixed[:count]
+
+
+async def generate_multi_questions(
+    provider: ModelProvider, docs: list[CorpusDoc], count: int, start: int = 1, seed: int = 11
+) -> list[Question]:
+    """Questions needing two articles. They stay `pending` until a person reviews them."""
+    gate = asyncio.Semaphore(4)
+
+    async def one(pair):
+        (doc_a, chunk_a), (doc_b, chunk_b) = pair
+        source = f"{chunk_a.content}\n\n{chunk_b.content}"
+        prompt = f"Đoạn luật 1 ({doc_a.title}):\n{chunk_a.content}\n\n"
+        prompt += f"Đoạn luật 2 ({doc_b.title}):\n{chunk_b.content}"
+        async with gate:
+            return pair, await _ask(provider, prompt, SYSTEM_MULTI, source)
+
+    questions: list[Question] = []
+    pairs = pair_chunks(eligible_chunks(docs), count * 2, seed)
+    for ((doc_a, chunk_a), (doc_b, chunk_b)), data in await asyncio.gather(*map(one, pairs)):
+        if not data or len(questions) >= count:
+            continue
+        refs = [
+            GoldRef(doc_a.slug, chunk_a.article_no or 0, chunk_a.clause_no),
+            GoldRef(doc_b.slug, chunk_b.article_no or 0, chunk_b.clause_no),
+        ]
+        questions.append(
+            Question(f"m{start + len(questions):03d}", data["question"].strip(), doc_a.field,
+                     "multi", data["gold_answer"].strip(), refs)
+        )  # fmt: skip
     return questions
