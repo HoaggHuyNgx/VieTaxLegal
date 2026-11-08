@@ -1,5 +1,7 @@
 import { useI18n } from '../../i18n/useI18n'
 import { EyeIcon, FieldError } from './AuthIcons'
+import EmailVerificationField from './EmailVerificationField'
+import PasswordChecklist from './PasswordChecklist'
 import {
   CHECKBOX_INPUT,
   CHECKBOX_LABEL,
@@ -23,6 +25,7 @@ export default function RegisterForm({
   onTogglePassword,
   showConfirmPassword,
   onToggleConfirmPassword,
+  verification,
 }) {
   const { t } = useI18n()
 
@@ -41,11 +44,18 @@ export default function RegisterForm({
           placeholder={t('auth.fields.emailPlaceholder')}
           value={formData.email}
           onChange={onChange}
+          readOnly={verification.status === 'verified'}
           aria-invalid={Boolean(errors.email)}
           aria-describedby={errors.email ? 'register-email-error' : undefined}
         />
         <FieldError error={errors.email} id="register-email-error" />
       </div>
+      <EmailVerificationField
+        email={formData.email}
+        code={formData.emailCode}
+        onCodeChange={onChange}
+        {...verification}
+      />
       <div className={FIELD_GROUP}>
         <label className={LABEL} htmlFor="username">
           {t('auth.fields.username')} <span className={REQUIRED_MARK}>*</span>
@@ -128,6 +138,7 @@ export default function RegisterForm({
           </button>
         </div>
         <FieldError error={errors.password} id="register-password-error" />
+        <PasswordChecklist password={formData.password} email={formData.email} username={formData.username} />
       </div>
       <div className={FIELD_GROUP}>
         <label className={LABEL} htmlFor="confirm-password">

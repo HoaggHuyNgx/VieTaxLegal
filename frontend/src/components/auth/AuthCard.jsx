@@ -1,28 +1,23 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../context/useAuth'
 import { translateApiError } from '../../i18n/errors'
 import { useI18n } from '../../i18n/useI18n'
 import { ApiError } from '../../services/api'
+import AuthTabs from './AuthTabs'
+import GoogleSignInButton from './GoogleSignInButton'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
-import { GoogleIcon } from './AuthIcons'
-import {
-  DIVIDER,
-  FEEDBACK,
-  FEEDBACK_TONE,
-  GOOGLE_BUTTON,
-  PRIMARY_BUTTON,
-  TAB_ACTIVE,
-  TAB_BASE,
-  TAB_IDLE,
-} from './auth-styles'
+import { EMAIL_PATTERN, mapBackendErrors, validateLogin, validateRegistration } from './auth-validation'
+import { DIVIDER, FEEDBACK, FEEDBACK_TONE, PRIMARY_BUTTON } from './auth-styles'
+import { useEmailVerification } from './useEmailVerification'
 
 const initialFormData = {
   loginIdentifier: '',
   loginPassword: '',
   rememberMe: false,
   email: '',
+  emailCode: '',
   username: '',
   fullName: '',
   phone: '',
@@ -41,8 +36,22 @@ export default function AuthCard() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [feedback, setFeedback] = useState(null)
+  // The Google callback sends the browser back to `/?authError=CODE` when it is refused.
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [feedback, setFeedback] = useState(() => {
+    const code = searchParams.get('authError')
+    return code ? { type: 'error', error: { code } } : null
+  })
+  const emailVerification = useEmailVerification()
   const isRegistering = activeTab === 'register'
+  const normalizedEmail = formData.email.trim().toLowerCase()
+
+  useEffect(() => {
+    if (!searchParams.has('authError')) return
+    const next = new URLSearchParams(searchParams)
+    next.delete('authError')
+    setSearchParams(next, { replace: true })
+  }, [searchParams, setSearchParams])
 
   const changeTab = (tab) => {
     setActiveTab(tab)
@@ -52,52 +61,28 @@ export default function AuthCard() {
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target
-    setFormData((current) => ({ ...current, [name]: type === 'checkbox' ? checked : value }))
+    // The code input only takes digits; a code belongs to one address, so editing the
+    // email discards any code requested for the old one.
+    const nextValue = name === 'emailCode' ? value.replace(/\D/g, '') : value
+    if (name === 'email' && emailVerification.status === 'sent') emailVerification.reset()
+    setFormData((current) => ({ ...current, [name]: type === 'checkbox' ? checked : nextValue }))
     setErrors((current) => ({ ...current, [name]: '' }))
     setFeedback(null)
   }
 
-  // These mirror the backend constraints in schemas/auth.py. The backend stays
-  // the source of truth; these only save a round-trip.
-  const validateLogin = () => {
-    const nextErrors = {}
-    if (!formData.loginIdentifier.trim()) nextErrors.loginIdentifier = 'auth.validation.identifierRequired'
-    if (!formData.loginPassword) nextErrors.loginPassword = 'auth.validation.passwordRequired'
-    return nextErrors
+  const handleSendCode = () => {
+    if (!EMAIL_PATTERN.test(normalizedEmail)) {
+      setErrors((current) => ({ ...current, email: 'auth.validation.emailInvalid' }))
+      return
+    }
+    emailVerification.sendCode(normalizedEmail)
   }
-
-  const validateRegistration = () => {
-    const nextErrors = {}
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phonePattern = /^(0|\+84)[0-9]{8,10}$/
-
-    if (!emailPattern.test(formData.email.trim())) nextErrors.email = 'auth.validation.emailInvalid'
-    if (!/^[a-z0-9_]{3,30}$/.test(formData.username.trim().toLowerCase()))
-      nextErrors.username = 'auth.validation.usernameInvalid'
-    if (formData.fullName.trim().length < 2) nextErrors.fullName = 'auth.validation.fullNameRequired'
-    if (formData.phone && !phonePattern.test(formData.phone.replace(/[.\s-]/g, '')))
-      nextErrors.phone = 'auth.validation.phoneInvalid'
-    if (formData.password.length < 8) nextErrors.password = 'auth.validation.passwordTooShort'
-    if (formData.confirmPassword !== formData.password)
-      nextErrors.confirmPassword = 'auth.validation.confirmMismatch'
-    if (!formData.acceptTerms) nextErrors.acceptTerms = 'auth.validation.termsRequired'
-    return nextErrors
-  }
-
-  const mapBackendErrors = (fields) => ({
-    loginIdentifier: fields.identifier,
-    loginPassword: fields.password,
-    email: fields.email,
-    username: fields.username,
-    fullName: fields.fullName || fields.full_name,
-    phone: fields.phone,
-    password: fields.password,
-    acceptTerms: fields.acceptTerms || fields.accept_terms,
-  })
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const nextErrors = isRegistering ? validateRegistration() : validateLogin()
+    const nextErrors = isRegistering
+      ? validateRegistration(formData, emailVerification.status === 'verified')
+      : validateLogin(formData)
 
     if (Object.keys(nextErrors).length) {
       setErrors(nextErrors)
@@ -118,6 +103,7 @@ export default function AuthCard() {
           phone: formData.phone || undefined,
           password: formData.password,
           acceptTerms: formData.acceptTerms,
+          emailProof: emailVerification.proof,
         })
       } else {
         await login({
@@ -128,8 +114,7 @@ export default function AuthCard() {
       }
       navigate('/chat')
     } catch (error) {
-      const backendErrors = error instanceof ApiError ? mapBackendErrors(error.fields) : {}
-      setErrors(Object.fromEntries(Object.entries(backendErrors).filter(([, message]) => message)))
+      setErrors(error instanceof ApiError ? mapBackendErrors(error.fields) : {})
       setFeedback({ type: 'error', error })
     } finally {
       setIsSubmitting(false)
@@ -160,34 +145,7 @@ export default function AuthCard() {
       className="w-full rounded-[1.25rem] bg-white p-8 text-gray-900 shadow-auth-card lte-640:rounded-2xl lte-640:p-6"
       aria-label={t('auth.cardAria')}
     >
-      <div
-        className="mb-6 flex gap-2 border-b-2 border-gray-200"
-        role="tablist"
-        aria-label={t('auth.tablistAria')}
-      >
-        <button
-          id="login-tab"
-          type="button"
-          role="tab"
-          aria-selected={!isRegistering}
-          aria-controls="login-panel"
-          className={`${TAB_BASE} ${!isRegistering ? TAB_ACTIVE : TAB_IDLE}`}
-          onClick={() => changeTab('login')}
-        >
-          {t('auth.tabLogin')}
-        </button>
-        <button
-          id="register-tab"
-          type="button"
-          role="tab"
-          aria-selected={isRegistering}
-          aria-controls="register-panel"
-          className={`${TAB_BASE} ${isRegistering ? TAB_ACTIVE : TAB_IDLE}`}
-          onClick={() => changeTab('register')}
-        >
-          {t('auth.tabRegister')}
-        </button>
-      </div>
+      <AuthTabs isRegistering={isRegistering} onChange={changeTab} />
 
       <h3 className="mb-2 text-[1.35rem] leading-[1.3] font-bold text-gray-900 lte-640:text-[1.2rem]">
         {isRegistering ? t('auth.registerHeading') : t('auth.loginHeading')}
@@ -202,6 +160,14 @@ export default function AuthCard() {
             {...formProps}
             showConfirmPassword={showConfirmPassword}
             onToggleConfirmPassword={() => setShowConfirmPassword((value) => !value)}
+            verification={{
+              status: emailVerification.status,
+              cooldown: emailVerification.cooldown,
+              isBusy: emailVerification.isBusy,
+              errorText: emailVerification.error ? translateApiError(t, emailVerification.error) : '',
+              onSend: handleSendCode,
+              onVerify: () => emailVerification.verifyCode(normalizedEmail, formData.emailCode),
+            }}
           />
         ) : (
           <LoginForm
@@ -229,14 +195,7 @@ export default function AuthCard() {
         <div className={DIVIDER}>
           <span className="px-4">{t('auth.divider')}</span>
         </div>
-        <button
-          type="button"
-          className={GOOGLE_BUTTON}
-          onClick={() => setFeedback({ type: 'info', key: 'auth.googleNotice' })}
-        >
-          <GoogleIcon />
-          {isRegistering ? t('auth.googleRegister') : t('auth.googleLogin')}
-        </button>
+        <GoogleSignInButton isRegistering={isRegistering} />
       </form>
     </section>
   )

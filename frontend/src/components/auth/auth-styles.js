@@ -42,5 +42,7 @@ const BUTTON_BASE = `flex min-h-[2.95rem] w-full cursor-pointer items-center jus
 export const PRIMARY_BUTTON = `${BUTTON_BASE} border border-blue-primary bg-blue-primary px-5 py-[0.8rem] text-white hover:not-disabled:border-blue-bright hover:not-disabled:bg-blue-bright hover:not-disabled:shadow-auth-primary-hover hover:not-disabled:[transform:translateY(-1px)] disabled:cursor-wait disabled:opacity-[0.72]`
 export const GOOGLE_BUTTON = `${BUTTON_BASE} gap-[0.7rem] border border-gray-300 bg-white px-5 py-[0.8rem] text-gray-700 hover:border-gray-400 hover:bg-gray-50 hover:shadow-auth-google-hover`
 
+export const SECONDARY_BUTTON = `cursor-pointer rounded-xl border border-blue-primary bg-white px-4 py-[0.6rem] [font-family:inherit] text-[0.85rem] font-semibold whitespace-nowrap text-blue-primary transition-[background] duration-200 ease-[ease] hover:not-disabled:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60 ${FOCUS_RING}`
+
 export const DIVIDER =
   'my-5 flex items-center text-[0.85rem] text-gray-700 before:h-px before:flex-1 before:bg-gray-300 after:h-px after:flex-1 after:bg-gray-300'

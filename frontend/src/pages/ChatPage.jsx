@@ -185,6 +185,8 @@ export default function ChatPage() {
         profileName={profileName}
         email={user?.email}
         onLogout={handleLogout}
+        onOpenSettings={() => navigate('/settings')}
+        onOpenAdmin={user?.role === 'admin' ? () => navigate('/admin') : undefined}
       />
       <ChatTopbar onOpenSidebar={() => setIsSidebarOpen(true)} />
       <ChatWorkspace

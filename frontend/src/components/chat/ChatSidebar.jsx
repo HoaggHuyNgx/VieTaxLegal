@@ -71,6 +71,8 @@ export default function ChatSidebar({
   profileName,
   email,
   onLogout,
+  onOpenAdmin,
+  onOpenSettings,
 }) {
   const { t, localeTag } = useI18n()
   const searchInputRef = useRef(null)
@@ -262,6 +264,24 @@ export default function ChatSidebar({
             <p className="mx-[6px] mt-[3px] mb-2 overflow-hidden text-[10px] text-ellipsis whitespace-nowrap text-chat-muted">
               {email}
             </p>
+            <button
+              type="button"
+              role="menuitem"
+              className="block w-full rounded-[6px] border-0 bg-transparent px-[6px] py-2 text-left hover:bg-chat-panel"
+              onClick={onOpenSettings}
+            >
+              {t('chat.page.settingsPage')}
+            </button>
+            {onOpenAdmin ? (
+              <button
+                type="button"
+                role="menuitem"
+                className="block w-full rounded-[6px] border-0 bg-transparent px-[6px] py-2 text-left hover:bg-chat-panel"
+                onClick={onOpenAdmin}
+              >
+                {t('chat.page.adminPage')}
+              </button>
+            ) : null}
             <button
               type="button"
               role="menuitem"
