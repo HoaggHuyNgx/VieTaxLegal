@@ -1,0 +1,9 @@
+{
+  "require_in_force": true,
+  "top_k": 5,
+  "min_similarity": 0.0,
+  "name": "langchain-baseline",
+  "tier": "retrieval",
+  "chunk_set": "langchain_1200_200",
+  "pipeline": "langchain_baseline"
+}

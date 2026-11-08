@@ -35,6 +35,11 @@ corpus = [
   "pymupdf>=1.24",
 ]
 
+# Stock LangChain baseline for the eval comparison (rag_eval/langchain_baseline.py); not needed by the app.
+eval-baseline = [
+  "langchain-text-splitters>=1.0",
+]
+
 # Local BKAI embedding model (CPU torch, large download); experiment 4 only.
 local-embed = [
   "sentence-transformers>=3",

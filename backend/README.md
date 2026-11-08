@@ -390,6 +390,12 @@ lại, và xóa điểm cũ của văn bản đã sửa. Biến môi trường l
 .\.venv\Scripts\python.exe scripts\export_results.py         # rag_eval/results/SUMMARY.md + CSV
 ```
 
+Cấu hình `langchain-baseline.json` chạy pipeline RAG kiểu giáo trình (LangChain
+`RecursiveCharacterTextSplitter` 1200/200 ký tự, embedding thô, chỉ dense, lưu trong bộ nhớ) để so với
+pipeline tự viết ở tầng `retrieval`, trên cùng bộ câu hỏi và cùng cách chấm theo Điều. Cần cài thêm
+`pip install -c constraints.txt -e ".[eval-baseline]"` (app và CI không cần) và tốn một lần nhúng
+toàn bộ kho văn bản qua OpenAI (dưới 0,1 USD); không cần Qdrant.
+
 Chỉ câu hỏi `approved` được chấm; `--provisional` chấm cả câu chưa duyệt để chỉnh tham số và kết
 quả được đánh dấu `provisional`, không dùng làm số liệu trong luận văn. Tầng `retrieval` chỉ tốn
 một lần nhúng truy vấn; tầng `generation` gọi model chat (đo citation precision/recall, tham chiếu

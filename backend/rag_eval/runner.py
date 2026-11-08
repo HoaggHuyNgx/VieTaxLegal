@@ -16,6 +16,7 @@ from app.services.rag.qdrant_store import collection_name, get_async_client
 from app.services.rag.reranker import LlmReranker
 from rag_eval import metrics
 from rag_eval.dataset import Question, scoreable
+from rag_eval.langchain_baseline import build_baseline
 
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
 RECALL_KS = (1, 3, 5)
@@ -33,6 +34,8 @@ class EvalConfig:
     rag: bool = True  # False = no-RAG baseline (generation tier only)
     mode: str = "dense"  # dense | hybrid
     rerank: str | None = None  # None | "llm" (experiment 2 trial)
+    # custom = this project's pipeline; langchain_baseline = stock LangChain (retrieval tier only)
+    pipeline: str = "custom"
     include_pending: bool = False  # provisional run on unreviewed questions
     depth: int = 10  # retrieved chunks scored by the retrieval tier
     embedding_provider: str | None = None
@@ -50,6 +53,10 @@ class EvalConfig:
 
 
 def build_retriever(config: EvalConfig, settings: Settings) -> tuple[QdrantRetriever, object]:
+    if config.pipeline == "langchain_baseline":
+        if config.tier != "retrieval":
+            raise ValueError("The langchain_baseline pipeline supports the retrieval tier only.")
+        return build_baseline(settings, config.top_k, config.require_in_force), None
     updates = {}
     if config.embedding_provider:
         updates["embedding_provider"] = config.embedding_provider
@@ -132,6 +139,8 @@ def threshold_sweep(in_corpus_top1: list[float], ooc_top1: list[float]) -> list[
 
 
 async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, questions):
+    if prepare := getattr(retriever, "prepare", None):  # baseline builds its index up front
+        await prepare()
     rows, ranks, embed_ms, search_ms = [], [], [], []
     in_top1, ooc_top1 = [], []
     for q in questions:
@@ -164,5 +173,6 @@ async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, que
         "search_ms": metrics.latency_summary(search_ms),
         # Cosine thresholds only make sense for dense scores (RRF/BM25 scores are on other scales).
         "threshold_sweep": threshold_sweep(in_top1, ooc_top1) if config.mode == "dense" else None,
+        **getattr(retriever, "index_info", {}),
     }
     return summary, rows
