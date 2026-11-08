@@ -192,6 +192,11 @@ Health thành công:
 
 | Method | Endpoint             | Mô tả                               |
 | ------ | -------------------- | ----------------------------------- |
+| `POST` | `/api/auth/email-code` | Gửi mã xác minh về email (cần SMTP). |
+| `POST` | `/api/auth/email-code/verify` | Xác minh mã, trả `proof` dùng khi đăng ký. |
+| `GET`  | `/api/auth/google/login` | Chuyển hướng sang Google để đăng nhập. |
+| `GET`  | `/api/auth/google/link` | Chuyển hướng sang Google để liên kết tài khoản (cần đăng nhập). |
+| `GET`  | `/api/auth/google/callback` | Google gọi lại; tạo phiên rồi quay về frontend. |
 | `POST` | `/api/auth/register` | Tạo tài khoản và đặt cookie phiên.  |
 | `POST` | `/api/auth/login`    | Đăng nhập bằng email hoặc username. |
 | `POST` | `/api/auth/logout`   | Xóa cookie phiên.                   |

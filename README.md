@@ -201,6 +201,11 @@ Cấu hình tập trung ở `app/core/logging.py`. `LOG_LEVEL` (mặc định `I
 | Method   | Endpoint                       | Mô tả                                        |
 | -------- | ------------------------------ | -------------------------------------------- |
 | `GET`    | `/api/health`                  | Kiểm tra API và database; `503` nếu DB chết. |
+| `POST`   | `/api/auth/email-code`         | Gửi mã xác minh về email (cần SMTP).         |
+| `POST`   | `/api/auth/email-code/verify`  | Xác minh mã, trả `proof` dùng khi đăng ký.   |
+| `GET`    | `/api/auth/google/login`       | Chuyển hướng sang Google để đăng nhập.       |
+| `GET`    | `/api/auth/google/link`        | Chuyển hướng sang Google để liên kết tài khoản (cần đăng nhập). |
+| `GET`    | `/api/auth/google/callback`    | Google gọi lại; tạo phiên rồi quay về frontend. |
 | `POST`   | `/api/auth/register`           | Đăng ký và tạo phiên.                        |
 | `POST`   | `/api/auth/login`              | Đăng nhập bằng email hoặc username.          |
 | `POST`   | `/api/auth/refresh`            | Đổi refresh token (xoay vòng), cấp access mới. |
@@ -208,6 +213,7 @@ Cấu hình tập trung ở `app/core/logging.py`. `LOG_LEVEL` (mặc định `I
 | `GET`    | `/api/auth/me`                 | Lấy người dùng hiện tại.                     |
 | `GET`    | `/api/admin/users`             | (admin) Danh sách người dùng.                |
 | `PATCH`  | `/api/admin/users/{id}`        | (admin) Đổi `role` / khoá `isActive`.        |
+| `GET`    | `/api/chat/usage`              | Số lượt chat đã dùng và còn lại hôm nay.     |
 | `GET`    | `/api/chat/conversations`      | Danh sách hội thoại.                         |
 | `GET`    | `/api/chat/conversations/{id}` | Nội dung một hội thoại.                      |
 | `DELETE` | `/api/chat/conversations/{id}` | Xóa hội thoại.                               |
