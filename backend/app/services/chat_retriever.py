@@ -56,9 +56,10 @@ def get_retriever() -> Retriever:
     if not get_settings().rag_enabled:
         return NullRetriever()
     from app.services.rag.qdrant_retriever import get_qdrant_retriever
+    from app.services.rag.query_planner import with_query_planner
 
     try:
-        return get_qdrant_retriever()
+        return with_query_planner(get_qdrant_retriever(), get_settings())
     except Exception as error:  # e.g. missing OPENAI_API_KEY: chat must still work, without sources
         logger.warning("RAG disabled for this request: %s", type(error).__name__)
         return NullRetriever()

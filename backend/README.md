@@ -380,6 +380,8 @@ pip install -e ".[corpus]"                                   # chỉ cần để
 lại, và xóa điểm cũ của văn bản đã sửa. Biến môi trường liên quan nằm trong `.env.example`
 (`RAG_*`, `QDRANT_*`, `EMBEDDING_*`, `EVAL_GENERATOR_MODEL`). `RAG_RETRIEVAL_MODE` nhận `dense`,
 `sparse` hoặc `hybrid` (dense + sparse hợp nhất bằng RRF, hòa điểm được phá theo thứ hạng dense).
+Đặt `RAG_QUERY_PLANNER_MODEL` để viết lại câu hỏi thành tối đa 3 truy vấn trước khi tìm (luôn giữ câu
+gốc, gộp bằng RRF, lỗi thì chỉ tìm câu gốc); để trống là tắt. Mỗi câu hỏi thêm một lần gọi model.
 
 ### Đánh giá
 

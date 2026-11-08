@@ -8,11 +8,11 @@ from datetime import date
 from pathlib import Path
 
 from app.core.config import Settings
-from app.services.chat_provider import LangChainProvider
 from app.services.rag.corpus_manifest import CORPUS_DIR
 from app.services.rag.embeddings import get_embedder
 from app.services.rag.qdrant_retriever import QdrantRetriever
 from app.services.rag.qdrant_store import collection_name, get_async_client
+from app.services.rag.query_planner import MultiQueryRetriever, QueryPlanner, llm_provider
 from app.services.rag.reranker import LlmReranker
 from rag_eval import metrics
 from rag_eval.dataset import Question, scoreable
@@ -34,6 +34,10 @@ class EvalConfig:
     rag: bool = True  # False = no-RAG baseline (generation tier only)
     mode: str = "dense"  # dense | hybrid
     rerank: str | None = None  # None | "llm" (experiment 2 trial)
+    rerank_provider: str = "openai"
+    rerank_model: str | None = None  # None = CHAT_MODEL
+    query_planner_provider: str = "openai"
+    query_planner_model: str | None = None  # None = no query planning
     # custom = this project's pipeline; langchain_baseline = stock LangChain (retrieval tier only)
     pipeline: str = "custom"
     include_pending: bool = False  # provisional run on unreviewed questions
@@ -72,11 +76,18 @@ def build_retriever(config: EvalConfig, settings: Settings) -> tuple[QdrantRetri
         config.require_in_force,
         config.mode,
         reranker=LlmReranker(
-            LangChainProvider("openai", settings.openai_api_key, settings.chat_model)
+            llm_provider(
+                settings, config.rerank_provider, config.rerank_model or settings.chat_model
+            )
         )
         if config.rerank == "llm"
         else None,
     )
+    if config.query_planner_model:
+        planner = QueryPlanner(
+            llm_provider(settings, config.query_planner_provider, config.query_planner_model)
+        )
+        retriever = MultiQueryRetriever(retriever, planner, config.top_k)
     return retriever, embedder
 
 
@@ -141,7 +152,7 @@ def threshold_sweep(in_corpus_top1: list[float], ooc_top1: list[float]) -> list[
 async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, questions):
     if prepare := getattr(retriever, "prepare", None):  # baseline builds its index up front
         await prepare()
-    rows, ranks, embed_ms, search_ms = [], [], [], []
+    rows, ranks, embed_ms, search_ms, plans = [], [], [], [], []
     in_top1, ooc_top1 = [], []
     for q in questions:
         outcome = await retriever.search(q.question, limit=config.depth)
@@ -154,6 +165,9 @@ async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, que
             "top1_score": top1, "gold": sorted(gold_articles(q)),
             "top": [[h.payload.get("doc_slug"), h.payload.get("article_nos")] for h in top5],
         }  # fmt: skip
+        if outcome.plan_info:
+            plans.append(outcome.plan_info)
+            row["plan"] = outcome.plan_info
         if q.type == "out_of_corpus":
             ooc_top1.append(top1)
         else:
@@ -175,4 +189,9 @@ async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, que
         "threshold_sweep": threshold_sweep(in_top1, ooc_top1) if config.mode == "dense" else None,
         **getattr(retriever, "index_info", {}),
     }
+    if plans:  # every question here is a legal one, so any "invalid" is a routing error
+        summary["plan_ms"] = metrics.latency_summary([p["plan_ms"] for p in plans])
+        summary["plan_fallbacks"] = sum(p["fallback"] for p in plans)
+        summary["routed_invalid"] = sum(p["route"] == "invalid" for p in plans)
+        summary["mean_queries"] = metrics.mean(len(p["queries"]) for p in plans)
     return summary, rows

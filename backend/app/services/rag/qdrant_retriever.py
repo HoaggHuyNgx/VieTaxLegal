@@ -43,6 +43,7 @@ class SearchOutcome:
     hits: list[Hit] = field(default_factory=list)
     embed_ms: float = 0.0
     search_ms: float = 0.0
+    plan_info: dict[str, Any] = field(default_factory=dict)  # set only by the query planner
 
 
 class QdrantRetriever:

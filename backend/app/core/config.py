@@ -37,6 +37,9 @@ class Settings(BaseSettings):
     rag_min_similarity: float = 0.0
     # Only return documents a person marked in_force in the manifest. Turn off for dev only.
     rag_require_in_force: bool = True
+    # Rewrites the question into several search queries before retrieval. Blank model = off.
+    rag_query_planner_provider: str = "openai"
+    rag_query_planner_model: str = ""
     # Model that writes eval questions. Blank = CHAT_MODEL (set a different one to limit bias).
     eval_generator_model: str = ""
     embedding_provider: str = "openai"
