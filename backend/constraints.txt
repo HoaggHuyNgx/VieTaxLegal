@@ -83,3 +83,6 @@ watchfiles==1.2.0
 websockets==16.1
 xxhash==4.0.2
 zstandard==0.25.0
+beautifulsoup4==4.15.0
+pyarrow==26.0.1
+soupsieve==4.0.1

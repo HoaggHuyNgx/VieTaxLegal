@@ -45,10 +45,14 @@ class CorpusDoc:
     # False keeps the file in the manifest but out of the index (e.g. unusable OCR text).
     ingest: bool = True
     notes: str = field(default="", compare=False)
+    # Some articles are no longer in force; the source does not say which ones.
+    partially_expired: bool = False
+    # Text location relative to CORPUS_DIR, for documents kept outside texts/.
+    text_file: str | None = None
 
     @property
     def text_path(self) -> Path:
-        return CORPUS_DIR / "texts" / f"{self.slug}.txt"
+        return CORPUS_DIR / (self.text_file or f"texts/{self.slug}.txt")
 
 
 def _build(entry: dict) -> CorpusDoc:
@@ -77,6 +81,8 @@ def _build(entry: dict) -> CorpusDoc:
             truncated=entry.get("truncated"),
             ingest=bool(entry.get("ingest", True)),
             notes=entry.get("notes", ""),
+            partially_expired=bool(entry.get("partially_expired", False)),
+            text_file=entry.get("text_file"),
         )
     except KeyError as missing:
         raise ManifestError(f"{entry.get('slug', '?')}: missing field {missing}") from None

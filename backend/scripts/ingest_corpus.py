@@ -50,6 +50,7 @@ def main() -> int:
     parser.add_argument("--chunk-set", choices=sorted(CHUNKERS), default=None)
     parser.add_argument("--only", help="ingest a single document slug")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--extra-manifest", type=Path, help="add documents from another manifest")
     args = parser.parse_args()
 
     settings = get_settings()
@@ -57,6 +58,8 @@ def main() -> int:
     if chunk_set not in CHUNKERS:
         parser.error(f"unknown chunk set '{chunk_set}'")
     manifest = load_manifest()
+    if args.extra_manifest:
+        manifest += load_manifest(args.extra_manifest)
     docs = [d for d in manifest if not args.only or d.slug == args.only]
     if not any(d.ingest for d in docs):
         parser.error("no documents selected")

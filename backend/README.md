@@ -387,6 +387,11 @@ gốc, gộp bằng RRF, lỗi thì chỉ tìm câu gốc); để trống là t�
 (0 là tắt); khi đó prompt cấm trả lời từ trí nhớ. `eval_generate.py --multi N` thêm câu hỏi nhiều ý
 ở trạng thái `pending`, không ghi đè câu đã duyệt.
 
+`scripts/import_vbpl.py` (extra `corpus`) nhập văn bản lọc từ dataset vbpl vào `corpus/vbpl/` (không nằm
+trong git). Nạp vào collection riêng bằng `ingest_corpus.py --chunk-set vbpl --extra-manifest
+corpus/vbpl/manifest.json`; đặt `RAG_CHUNK_SET=vbpl` để dùng. Hiệu lực của các văn bản này lấy từ bản
+chụp cổng vbpl, chưa có người kiểm tra.
+
 ### Đánh giá
 
 ```powershell

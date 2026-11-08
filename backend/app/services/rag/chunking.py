@@ -50,6 +50,7 @@ class ChunkDraft:
     content_sha256: str
     char_start: int
     char_end: int
+    partially_expired: bool = False
 
     @property
     def id(self) -> str:
@@ -76,7 +77,7 @@ def _draft(doc: CorpusDoc, chunk_set: str, ordinal: int, text: str, start: int, 
         effective_from=doc.effective_from, effective_to=doc.effective_to,
         source_url=doc.source_url, chunk_set=chunk_set, ordinal=ordinal, point=None,
         content=content, content_sha256=hashlib.sha256(content.encode("utf-8")).hexdigest(),
-        char_start=start, char_end=end, **kw,
+        char_start=start, char_end=end, partially_expired=doc.partially_expired, **kw,
     )  # fmt: skip
 
 

@@ -33,6 +33,8 @@ dev = [
 # Offline corpus tooling (PDF text extraction); not needed by the app or CI tests.
 corpus = [
   "pymupdf>=1.24",
+  "pyarrow>=26",
+  "beautifulsoup4>=4.15",
 ]
 
 # Stock LangChain baseline for the eval comparison (rag_eval/langchain_baseline.py); not needed by the app.

@@ -21,6 +21,8 @@ from app.services.rag.qdrant_store import DENSE_VECTOR, SPARSE_VECTOR, ensure_co
 
 CHUNKERS: dict[str, Callable[[CorpusDoc, ParsedDocument], list[ChunkDraft]]] = {
     "article": article_chunks,
+    # Same chunker, own collection: current corpus plus the imported vbpl documents.
+    "vbpl": article_chunks,
     "article_s256": small_article_chunks,
     "fixed": fixed_chunks,
 }
@@ -33,6 +35,7 @@ DOC_LEVEL_FIELDS = (
     "doc_type",
     "field",
     "status",
+    "partially_expired",
     "issued_on",
     "effective_from",
     "effective_to",
