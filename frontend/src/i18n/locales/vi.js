@@ -346,6 +346,7 @@ const vi = {
       emptyBody: 'Hãy mô tả tình huống và thông tin cần làm rõ để nhận câu trả lời phù hợp hơn.',
       composerPlaceholder: 'Nhập câu hỏi pháp luật của bạn…',
       composerAria: 'Câu hỏi của bạn',
+      remaining: 'Còn {{remaining}}/{{limit}} lượt hôm nay',
       stop: 'Dừng trả lời',
       sendAria: 'Gửi câu hỏi',
       dismissErrorAria: 'Đóng thông báo lỗi',

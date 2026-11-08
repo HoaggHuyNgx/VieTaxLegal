@@ -6,6 +6,7 @@ import ChatTopbar from '../components/chat/ChatTopbar'
 import ChatWorkspace from '../components/chat/ChatWorkspace'
 import { latestCitations } from '../components/chat/chat-sources'
 import { useChatStream } from '../components/chat/useChatStream'
+import { useChatUsage } from '../components/chat/useChatUsage'
 import { useAuth } from '../context/useAuth'
 import { translateApiError } from '../i18n/errors'
 import { useI18n } from '../i18n/useI18n'
@@ -96,7 +97,14 @@ export default function ChatPage() {
     [updateConversationUrl]
   )
 
+  const { usage, refreshUsage } = useChatUsage()
+
   const refreshConversations = useCallback(() => loadConversations({ quiet: true }), [loadConversations])
+
+  const handleStreamSettled = useCallback(() => {
+    refreshConversations()
+    refreshUsage()
+  }, [refreshConversations, refreshUsage])
 
   const {
     messages,
@@ -111,7 +119,7 @@ export default function ChatPage() {
   } = useChatStream({
     activeConversation,
     onConversationCreated: handleConversationCreated,
-    onStreamSettled: refreshConversations,
+    onStreamSettled: handleStreamSettled,
   })
 
   const startNewChat = useCallback(() => {
@@ -195,6 +203,7 @@ export default function ChatPage() {
         onStop={stopStreaming}
         isStreaming={isStreaming}
         isLoading={isConversationLoading}
+        usage={usage}
         error={errorText(chatError)}
         onClearError={() => setChatError(null)}
       />

@@ -28,6 +28,7 @@ export default function ChatWorkspace({
   onStop,
   isStreaming,
   isLoading,
+  usage,
   error,
   onClearError,
 }) {
@@ -145,6 +146,16 @@ export default function ChatWorkspace({
             <span className="text-[10px] text-chat-limit">
               {message.length}/{MAX_MESSAGE_LENGTH}
             </span>
+            {usage ? (
+              <span
+                className={`text-[10px] ${usage.dailyRemaining === 0 ? 'text-chat-error-text' : 'text-chat-limit'}`}
+              >
+                {t('chat.workspace.remaining', {
+                  remaining: usage.dailyRemaining,
+                  limit: usage.dailyLimit,
+                })}
+              </span>
+            ) : null}
             <div className="ml-auto flex items-center gap-[5px]">
               {COMPOSER_TOOLS.map(({ id, labelKey, Icon }) => (
                 // A disabled button fires no pointer events, so the tooltip must

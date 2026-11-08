@@ -94,6 +94,11 @@ export async function readEventStream(stream, onEvent) {
   }
 }
 
+export async function getChatUsage() {
+  const response = await authFetch('/chat/usage', { credentials: 'include' })
+  return parseJsonResponse(response)
+}
+
 export async function getConversations(limit = 50) {
   const response = await authFetch(`/chat/conversations?limit=${limit}`, {
     credentials: 'include',

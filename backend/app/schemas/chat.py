@@ -83,6 +83,14 @@ class ConversationResponse(BaseModel):
     updated_at: datetime = Field(serialization_alias="updatedAt")
 
 
+class ChatUsageResponse(BaseModel):
+    model_config = ConfigDict(populate_by_name=True)
+
+    daily_limit: int = Field(serialization_alias="dailyLimit")
+    daily_used: int = Field(serialization_alias="dailyUsed")
+    daily_remaining: int = Field(serialization_alias="dailyRemaining")
+
+
 class ConversationListResponse(BaseModel):
     items: list[ConversationResponse]
 

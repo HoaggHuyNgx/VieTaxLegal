@@ -342,6 +342,7 @@ const en = {
       emptyBody: 'Describe the situation and what you need clarified so the answer fits your case.',
       composerPlaceholder: 'Type your legal question…',
       composerAria: 'Your question',
+      remaining: '{{remaining}}/{{limit}} messages left today',
       stop: 'Stop',
       sendAria: 'Send question',
       dismissErrorAria: 'Dismiss error',

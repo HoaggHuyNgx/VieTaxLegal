@@ -28,11 +28,22 @@ def expire_stale_pending(database: Session, conversation_id: UUID, now: datetime
     )
 
 
+def _count_statement(user_id: UUID):
+    return select(func.count(ChatUsageEvent.id)).where(ChatUsageEvent.user_id == user_id)
+
+
+def count_daily_messages(database: Session, user_id: UUID, now: datetime) -> int:
+    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    return (
+        database.scalar(_count_statement(user_id).where(ChatUsageEvent.created_at >= start_of_day))
+        or 0
+    )
+
+
 def enforce_rate_limits(database: Session, user_id: UUID, now: datetime) -> None:
     settings = get_settings()
-    count_statement = select(func.count(ChatUsageEvent.id)).where(ChatUsageEvent.user_id == user_id)
     minute_count = database.scalar(
-        count_statement.where(ChatUsageEvent.created_at >= now - timedelta(minutes=1))
+        _count_statement(user_id).where(ChatUsageEvent.created_at >= now - timedelta(minutes=1))
     )
     if (minute_count or 0) >= settings.chat_rate_limit_per_minute:
         raise AppError(
@@ -41,9 +52,7 @@ def enforce_rate_limits(database: Session, user_id: UUID, now: datetime) -> None
             "Bạn gửi câu hỏi quá nhanh. Vui lòng thử lại sau ít phút.",
         )
 
-    start_of_day = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    daily_count = database.scalar(count_statement.where(ChatUsageEvent.created_at >= start_of_day))
-    if (daily_count or 0) >= settings.chat_daily_message_limit:
+    if count_daily_messages(database, user_id, now) >= settings.chat_daily_message_limit:
         raise AppError(
             429,
             "CHAT_DAILY_LIMIT_REACHED",

@@ -92,3 +92,19 @@ describe('ChatWorkspace composer', () => {
     expect(onSend).not.toHaveBeenCalled()
   })
 })
+
+describe('ChatWorkspace daily quota', () => {
+  it('shows the remaining daily messages and flags when none are left', () => {
+    renderWorkspace({ usage: { dailyLimit: 100, dailyUsed: 7, dailyRemaining: 93 } })
+    expect(screen.getByText('Còn 93/100 lượt hôm nay').className).toContain('text-chat-limit')
+    cleanup()
+
+    renderWorkspace({ usage: { dailyLimit: 100, dailyUsed: 100, dailyRemaining: 0 } })
+    expect(screen.getByText('Còn 0/100 lượt hôm nay').className).toContain('text-chat-error-text')
+  })
+
+  it('shows nothing until the usage has loaded', () => {
+    renderWorkspace()
+    expect(screen.queryByText(/lượt hôm nay/)).toBeNull()
+  })
+})

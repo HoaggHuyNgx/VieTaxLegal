@@ -250,6 +250,30 @@ def test_daily_limit(client: TestClient, monkeypatch) -> None:
     assert limited.json()["error"]["code"] == "CHAT_DAILY_LIMIT_REACHED"
 
 
+def test_usage_reports_remaining_daily_messages(client: TestClient, monkeypatch) -> None:
+    from app.core.config import get_settings
+
+    assert client.get("/api/chat/usage").status_code == 401
+
+    register(client)
+    install_provider(FakeProvider())
+    monkeypatch.setattr(get_settings(), "chat_rate_limit_per_minute", 100)
+    monkeypatch.setattr(get_settings(), "chat_daily_message_limit", 2)
+
+    assert client.get("/api/chat/usage").json() == {
+        "dailyLimit": 2,
+        "dailyUsed": 0,
+        "dailyRemaining": 2,
+    }
+    client.post("/api/chat/messages/stream", json={"conversationId": None, "content": "Câu một"})
+    assert client.get("/api/chat/usage").json()["dailyRemaining"] == 1
+
+    # Another account's messages never count against this one.
+    other = TestClient(app)
+    register(other, "two")
+    assert other.get("/api/chat/usage").json()["dailyUsed"] == 0
+
+
 def test_pending_conversation_rejects_send_and_delete(
     client: TestClient, database_session: Session
 ) -> None:

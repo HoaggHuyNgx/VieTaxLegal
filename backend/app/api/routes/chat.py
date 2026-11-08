@@ -9,11 +9,13 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 
 from app.api.deps import get_current_user
+from app.core.config import get_settings
 from app.core.errors import AppError
 from app.db.session import get_db
 from app.models.chat import Conversation, Message
 from app.models.user import User
 from app.schemas.chat import (
+    ChatUsageResponse,
     ConversationDetailResponse,
     ConversationListResponse,
     ConversationResponse,
@@ -25,10 +27,23 @@ from app.services.chat import (
     prepare_chat_stream,
     stream_chat_events,
 )
+from app.services.chat_limits import count_daily_messages
 from app.services.chat_provider import ModelProvider, get_model_provider
 from app.services.chat_retriever import Retriever, get_retriever
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
+
+
+@router.get("/usage", response_model=ChatUsageResponse)
+def get_usage(
+    current_user: Annotated[User, Depends(get_current_user)],
+    database: Annotated[Session, Depends(get_db)],
+) -> ChatUsageResponse:
+    limit = get_settings().chat_daily_message_limit
+    used = count_daily_messages(database, current_user.id, datetime.now(timezone.utc))
+    return ChatUsageResponse(
+        daily_limit=limit, daily_used=used, daily_remaining=max(limit - used, 0)
+    )
 
 
 @router.get("/conversations", response_model=ConversationListResponse)
