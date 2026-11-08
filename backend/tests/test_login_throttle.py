@@ -6,8 +6,9 @@ from fastapi.testclient import TestClient
 from app.core.errors import AppError
 from app.services import login_throttle
 from app.services.login_throttle import LoginThrottle
+from tests.test_auth import email_proof
 
-PASSWORD = "mat-khau-an-toan"
+PASSWORD = "Mat-khau-an-toan-2026!"
 
 
 class FakeClock:
@@ -124,6 +125,7 @@ def register(client: TestClient) -> None:
             "fullName": "Throttle Tester",
             "password": PASSWORD,
             "acceptTerms": True,
+            "emailProof": email_proof("throttle@example.com"),
         },
     )
     assert response.status_code == 201

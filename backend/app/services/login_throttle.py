@@ -75,6 +75,17 @@ def get_register_throttle() -> LoginThrottle:
 
 
 @lru_cache
+def get_email_code_throttle() -> LoginThrottle:
+    """Counts every code request per client address, so the form cannot be used to mail-bomb."""
+    return LoginThrottle(
+        get_settings().register_max_per_hour,
+        3600,
+        error_code="OTP_RATE_LIMITED",
+        error_message="Bạn yêu cầu mã quá nhiều lần. Vui lòng thử lại sau.",
+    )
+
+
+@lru_cache
 def get_login_throttle() -> LoginThrottle:
     settings = get_settings()
     return LoginThrottle(

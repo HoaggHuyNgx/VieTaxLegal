@@ -47,6 +47,17 @@ class Settings(BaseSettings):
     qdrant_api_key: SecretStr | None = None
     login_max_failed_attempts: int = 5
     login_attempt_window_minutes: int = 15
+    # Google sign-in stays off until both the client id and secret are set.
+    google_client_id: str | None = None
+    google_client_secret: SecretStr | None = None
+    google_redirect_uri: str = "http://localhost:5000/api/auth/google/callback"
+    frontend_url: str = "http://localhost:3000"  # where the callback sends the browser back
+    # Outgoing mail for registration codes. Without SMTP_HOST registration by password is off.
+    smtp_host: str | None = None
+    smtp_port: int = 587  # 587 = STARTTLS, 465 = implicit TLS
+    smtp_user: str | None = None
+    smtp_password: SecretStr | None = None
+    smtp_from: str | None = None  # defaults to SMTP_USER
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
@@ -88,6 +99,25 @@ class Settings(BaseSettings):
     def blank_qdrant_api_key_is_none(cls, value: object) -> object:
         # `.env.example` ships `QDRANT_API_KEY=` for the local, unauthenticated server.
         return None if isinstance(value, str) and not value.strip() else value
+
+    @field_validator("google_client_id", "google_client_secret", mode="before")
+    @classmethod
+    def blank_google_credentials_is_none(cls, value: object) -> object:
+        # `.env.example` ships these blank so Google sign-in is off by default.
+        return None if isinstance(value, str) and not value.strip() else value
+
+    @field_validator("smtp_host", "smtp_user", "smtp_password", "smtp_from", mode="before")
+    @classmethod
+    def blank_smtp_settings_is_none(cls, value: object) -> object:
+        return None if isinstance(value, str) and not value.strip() else value
+
+    @property
+    def email_enabled(self) -> bool:
+        return bool(self.smtp_host and (self.smtp_from or self.smtp_user))
+
+    @property
+    def google_enabled(self) -> bool:
+        return bool(self.google_client_id and self.google_client_secret)
 
     @property
     def is_production(self) -> bool:
@@ -136,6 +166,8 @@ class Settings(BaseSettings):
             raise ValueError("EMBEDDING_DIMENSIONS must be positive.")
         if not self.qdrant_url.startswith(("http://", "https://")):
             raise ValueError("QDRANT_URL must start with http:// or https://.")
+        if not self.frontend_url.startswith(("http://", "https://")):
+            raise ValueError("FRONTEND_URL must start with http:// or https://.")
         return self
 
 

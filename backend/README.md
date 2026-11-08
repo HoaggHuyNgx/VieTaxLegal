@@ -22,21 +22,16 @@ app/
 ## Yêu cầu
 
 - Python 3.12 trở lên.
-- PostgreSQL 15 trở lên đang chạy (mặc định `localhost:5432`).
+- Một project Supabase đang hoạt động (PostgreSQL do Supabase quản lý; không cài PostgreSQL trên máy).
 - API key Anthropic hoặc OpenAI để gọi chat thật.
 
-## 1. Tạo database PostgreSQL
+## 1. Kết nối database (Supabase)
 
-Mở `psql` bằng tài khoản quản trị (thường là `postgres`) và tạo role cùng database riêng cho dự án:
-
-```sql
-CREATE ROLE vietaxlegal LOGIN PASSWORD 'doi-mat-khau-nay';
-CREATE DATABASE vietaxlegal OWNER vietaxlegal;
-```
-
-Sau đó:
-
-1. Copy `.env.example` thành `.env`:
+1. Supabase Dashboard → **Connect** → tab **Direct** → **Connection Method: Session pooler**, Type `URI`,
+   copy URL dạng `postgresql://postgres.<project-ref>:[YOUR-PASSWORD]@aws-0-<region>.pooler.supabase.com:5432/postgres`.
+   Không dùng *Direct connection* (chỉ IPv6, máy Windows thường không kết nối được) hay *Transaction pooler*
+   (cổng 6543, không hợp với prepared statement của psycopg3).
+2. Copy `.env.example` thành `.env`:
 
 ```powershell
 cd D:\VieTaxLegal\backend
@@ -44,10 +39,11 @@ Copy-Item .env.example .env
 notepad .env
 ```
 
-2. Điền password của role `vietaxlegal` vào `DATABASE_URL`
-   (`postgresql+psycopg://vietaxlegal:<password>@localhost:5432/vietaxlegal`).
-3. Nếu password chứa `@`, `:`, `/`, `#` hoặc `%`, phải URL-encode password trước khi đặt vào URL.
-4. Tạo JWT secret:
+3. Dán URL vào `DATABASE_URL`, thay `[YOUR-PASSWORD]` (bỏ cả dấu ngoặc) bằng DB password. Quên password thì
+   reset ở **Project Settings → Database**.
+4. Nếu password chứa `@`, `:`, `/`, `#` hoặc `%`, phải URL-encode password trước khi đặt vào URL
+   (hoặc đặt password chỉ gồm chữ và số).
+5. Tạo JWT secret:
 
 ```powershell
 py -c "import secrets; print(secrets.token_urlsafe(48))"
@@ -158,9 +154,12 @@ Migration hiện tại:
 | `0002_lock_down_public_tables` | Chỉ trên Supabase: bật RLS và khóa users/alembic_version khỏi Data API.  |
 | `0003_chat`                    | Tạo conversations, messages, chat_usage_events, index và ràng buộc chat. |
 | `0004_message_citations`       | Thêm cột `messages.citations` (JSON, nullable) lưu nguồn trích dẫn.      |
+| `0005_roles_refresh_tokens`    | Thêm `users.role` (user/admin) và bảng `refresh_tokens`.                 |
+| `0006_oauth_identities`        | Thêm bảng `oauth_identities` (Google); `users.password_hash` cho phép null. |
+| `0007_email_otps`              | Thêm bảng `email_otps` (mã xác minh email trước khi đăng ký).             |
 
-Kết quả `alembic current` phải chứa `0005_roles_and_refresh_tokens (head)`. Database sẽ có các bảng `users`,
-`conversations`, `messages`, `chat_usage_events` và `alembic_version`.
+Kết quả `alembic current` phải chứa `0007_email_otps (head)`. Database sẽ có các bảng `users`,
+`conversations`, `messages`, `chat_usage_events`, `refresh_tokens`, `oauth_identities`, `email_otps` và `alembic_version`.
 
 Phần RLS/REVOKE của migration 0002 và 0003 chỉ chạy khi cả hai role `anon` và `authenticated` tồn
 tại (tức là trên Supabase). Trên PostgreSQL thường, các bước đó được bỏ qua.
@@ -206,7 +205,7 @@ Payload đăng ký:
   "username": "huy_legal",
   "fullName": "Hoàng Huy",
   "phone": "0901234567",
-  "password": "mat-khau-an-toan",
+  "password": "Mat-khau-an-toan-2026!",
   "acceptTerms": true
 }
 ```
@@ -216,7 +215,7 @@ Payload đăng nhập:
 ```json
 {
   "identifier": "huy@example.com",
-  "password": "mat-khau-an-toan",
+  "password": "Mat-khau-an-toan-2026!",
   "rememberMe": false
 }
 ```
@@ -438,14 +437,14 @@ Sau đó chạy lại Uvicorn. Không đổi sang cổng khác nếu frontend v�
 
 ### Database authentication failed
 
-- Kiểm tra password của role `vietaxlegal` trong PostgreSQL.
+- Kiểm tra DB password của project Supabase (reset được ở Project Settings → Database).
 - URL-encode ký tự đặc biệt trong password.
-- Nếu dùng Supabase: copy lại Session pooler URL từ Dashboard và giữ `sslmode=require`.
+- Copy lại Session pooler URL từ Dashboard; `sslmode=require` được thêm tự động.
 
 ### Health trả database error
 
-Kiểm tra `DATABASE_URL`, dịch vụ PostgreSQL đã chạy chưa (Windows: service `postgresql-x64-15`) và
-kết nối mạng. Chạy:
+Kiểm tra `DATABASE_URL`, kết nối mạng và project Supabase có đang bị pause không (free tier tự pause sau
+7 ngày không hoạt động; vào Dashboard bấm **Restore project**). Chạy:
 
 ```powershell
 .\.venv\Scripts\python.exe -m alembic current

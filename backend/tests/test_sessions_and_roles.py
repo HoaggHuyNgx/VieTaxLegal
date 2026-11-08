@@ -7,7 +7,7 @@ from app.models.refresh_token import RefreshToken
 from app.models.user import ROLE_ADMIN, User
 from tests.test_auth import create_user, register_payload
 
-PASSWORD = "mat-khau-an-toan"
+PASSWORD = "Mat-khau-an-toan-2026!"
 
 
 def refresh_cookie(client: TestClient) -> str:

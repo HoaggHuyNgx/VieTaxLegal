@@ -3,6 +3,12 @@ from sqlalchemy import select
 from sqlalchemy.exc import OperationalError
 
 from app.models.user import User
+from app.services.email_otp import create_email_proof
+
+
+def email_proof(email: str) -> str:
+    """What /auth/email-code/verify hands out; tests mint it directly."""
+    return create_email_proof(email.lower())
 
 
 def register_payload(**overrides: object) -> dict[str, object]:
@@ -11,10 +17,11 @@ def register_payload(**overrides: object) -> dict[str, object]:
         "username": "huy_legal",
         "fullName": "Hoàng Huy",
         "phone": "0901 234 567",
-        "password": "mat-khau-an-toan",
+        "password": "Mat-khau-an-toan-2026!",
         "acceptTerms": True,
     }
     payload.update(overrides)
+    payload.setdefault("emailProof", email_proof(str(payload["email"])))
     return payload
 
 
@@ -61,6 +68,8 @@ def test_register_creates_normalized_user_and_session(client: TestClient) -> Non
         "fullName": "Hoàng Huy",
         "phone": "0901234567",
         "role": "user",
+        "hasPassword": True,
+        "googleLinked": False,
     }
     cookie = response.headers["set-cookie"].lower()
     assert "httponly" in cookie
@@ -106,7 +115,11 @@ def test_login_accepts_email_and_username(client: TestClient) -> None:
 
     email_login = client.post(
         "/api/auth/login",
-        json={"identifier": "HUY@EXAMPLE.COM", "password": "mat-khau-an-toan", "rememberMe": False},
+        json={
+            "identifier": "HUY@EXAMPLE.COM",
+            "password": "Mat-khau-an-toan-2026!",
+            "rememberMe": False,
+        },
     )
     assert email_login.status_code == 200
     assert email_login.json()["email"] == "huy@example.com"
@@ -114,7 +127,7 @@ def test_login_accepts_email_and_username(client: TestClient) -> None:
     client.cookies.clear()
     username_login = client.post(
         "/api/auth/login",
-        json={"identifier": "HUY_LEGAL", "password": "mat-khau-an-toan", "rememberMe": False},
+        json={"identifier": "HUY_LEGAL", "password": "Mat-khau-an-toan-2026!", "rememberMe": False},
     )
     assert username_login.status_code == 200
     assert username_login.json()["username"] == "huy_legal"
@@ -143,7 +156,7 @@ def test_login_rejects_inactive_user(client: TestClient, database_session) -> No
 
     response = client.post(
         "/api/auth/login",
-        json={"identifier": "huy_legal", "password": "mat-khau-an-toan", "rememberMe": False},
+        json={"identifier": "huy_legal", "password": "Mat-khau-an-toan-2026!", "rememberMe": False},
     )
 
     assert response.status_code == 401
@@ -184,7 +197,7 @@ def test_remember_me_sets_persistent_cookie(client: TestClient) -> None:
 
     response = client.post(
         "/api/auth/login",
-        json={"identifier": "huy_legal", "password": "mat-khau-an-toan", "rememberMe": True},
+        json={"identifier": "huy_legal", "password": "Mat-khau-an-toan-2026!", "rememberMe": True},
     )
 
     assert response.status_code == 200

@@ -8,6 +8,7 @@ from app.core.errors import AppError
 from app.core.security import hash_password, verify_dummy_password, verify_password
 from app.models.user import User
 from app.schemas.auth import LoginRequest, RegisterRequest
+from app.services.email_otp import require_proof
 from app.services.login_throttle import get_login_throttle
 
 
@@ -29,6 +30,7 @@ def get_registration_conflict(database: Session, payload: RegisterRequest) -> Ap
 
 
 def register_user(database: Session, payload: RegisterRequest) -> User:
+    require_proof(payload.email_proof, str(payload.email))
     conflict = get_registration_conflict(database, payload)
     if conflict:
         raise conflict
@@ -65,7 +67,8 @@ def authenticate_user(database: Session, payload: LoginRequest) -> User:
             or_(User.email == payload.identifier, User.username == payload.identifier)
         )
     )
-    if not user or not user.is_active:
+    # Google-only accounts have no password hash and must not be reachable through this path.
+    if not user or not user.is_active or not user.password_hash:
         verify_dummy_password(payload.password)
         raise AppError(401, "INVALID_CREDENTIALS", "Email/tên tài khoản hoặc mật khẩu không đúng.")
 

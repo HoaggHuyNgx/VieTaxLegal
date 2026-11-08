@@ -23,17 +23,21 @@ Settings.model_config["env_file"] = None
 from app.db.base import Base  # noqa: E402 (after the env_file override)
 from app.db.session import get_db  # noqa: E402
 from app.main import app  # noqa: E402
-from app.services.login_throttle import get_login_throttle, get_register_throttle  # noqa: E402
+from app.services.login_throttle import (  # noqa: E402
+    get_email_code_throttle,
+    get_login_throttle,
+    get_register_throttle,
+)
 
 
 @pytest.fixture(autouse=True)
 def fresh_login_throttle() -> Generator[None, None, None]:
     """The throttle is process-wide state; start every test with an empty one."""
-    get_login_throttle.cache_clear()
-    get_register_throttle.cache_clear()
+    for throttle in (get_login_throttle, get_register_throttle, get_email_code_throttle):
+        throttle.cache_clear()
     yield
-    get_login_throttle.cache_clear()
-    get_register_throttle.cache_clear()
+    for throttle in (get_login_throttle, get_register_throttle, get_email_code_throttle):
+        throttle.cache_clear()
 
 
 @pytest.fixture

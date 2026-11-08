@@ -22,7 +22,8 @@ class User(Base):
     role: Mapped[str] = mapped_column(
         String(20), nullable=False, default=ROLE_USER, server_default=ROLE_USER
     )
-    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    # Null for accounts created through Google sign-in: they cannot use password login.
+    password_hash: Mapped[str | None] = mapped_column(String(255), nullable=True)
     terms_accepted_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     is_active: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=True, server_default="true"
@@ -36,3 +37,14 @@ class User(Base):
     conversations: Mapped[list["Conversation"]] = relationship(  # noqa: F821
         back_populates="user", cascade="all, delete-orphan"
     )
+    oauth_identities: Mapped[list["OAuthIdentity"]] = relationship(  # noqa: F821
+        cascade="all, delete-orphan", passive_deletes=True
+    )
+
+    @property
+    def has_password(self) -> bool:
+        return self.password_hash is not None
+
+    @property
+    def google_linked(self) -> bool:
+        return any(identity.provider == "google" for identity in self.oauth_identities)

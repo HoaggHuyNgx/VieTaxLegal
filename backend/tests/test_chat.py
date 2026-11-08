@@ -21,6 +21,7 @@ from app.services.chat_provider import (
     ProviderMessage,
     get_model_provider,
 )
+from tests.test_auth import email_proof
 
 
 class FakeProvider:
@@ -55,8 +56,9 @@ def register(client: TestClient, suffix: str = "one") -> dict[str, object]:
             "email": f"chat-{suffix}@example.com",
             "username": f"chat_{suffix}",
             "fullName": "Chat Tester",
-            "password": "mat-khau-an-toan",
+            "password": "Mat-khau-an-toan-2026!",
             "acceptTerms": True,
+            "emailProof": email_proof(f"chat-{suffix}@example.com"),
         },
     )
     assert response.status_code == 201
