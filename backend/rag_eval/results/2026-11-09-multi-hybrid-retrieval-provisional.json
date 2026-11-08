@@ -1,0 +1,615 @@
+{
+  "meta": {
+    "date": "2026-11-09",
+    "config": {
+      "name": "multi-hybrid",
+      "tier": "retrieval",
+      "chunk_set": "article",
+      "top_k": 5,
+      "min_similarity": 0.0,
+      "require_in_force": true,
+      "rag": true,
+      "mode": "hybrid",
+      "rerank": null,
+      "rerank_provider": "openai",
+      "rerank_model": null,
+      "query_planner_provider": "openai",
+      "query_planner_model": null,
+      "min_top_score": 0.0,
+      "question_types": [
+        "multi"
+      ],
+      "pipeline": "custom",
+      "include_pending": true,
+      "depth": 10,
+      "embedding_provider": null,
+      "embedding_model": null,
+      "limit": null,
+      "max_output_tokens": null
+    },
+    "config_hash": "74a04ca4204b",
+    "git_sha": "7744ad5",
+    "corpus_manifest_sha": "521adf938bcf",
+    "models": {
+      "chat": "openai:gpt-6-luna",
+      "embedding": "openai:text-embedding-3-small",
+      "eval_generator": "(same as chat)",
+      "temperature": "provider default (not settable through the chat provider)"
+    },
+    "dataset": {
+      "total": 105,
+      "approved": 91,
+      "used": 11,
+      "provisional": true
+    }
+  },
+  "summary": {
+    "in_corpus_questions": 11,
+    "out_of_corpus_questions": 0,
+    "recall@1": 0.45454545454545453,
+    "recall@3": 0.8181818181818182,
+    "recall@5": 1.0,
+    "mrr": 0.6772727272727272,
+    "embed_ms": {
+      "p50": 221.6371000104118,
+      "p95": 1148.8564999890514
+    },
+    "search_ms": {
+      "p50": 14.800599979935214,
+      "p95": 28.029500012053177
+    },
+    "threshold_sweep": null
+  },
+  "questions": [
+    {
+      "id": "m001",
+      "type": "multi",
+      "field": "enterprise",
+      "question": "Nếu doanh nghiệp dự định ngừng kinh doanh một thời gian, dữ liệu đăng ký của doanh nghiệp được chia sẻ với cơ quan thuế như thế nào, và doanh nghiệp cần báo trước bao lâu, đồng thời phải giải quyết những nghĩa vụ nào trong thời gian ngừng?",
+      "top1_score": 0.03128054740957967,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          206
+        ],
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          9
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            60
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            206
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            66
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            64
+          ]
+        ],
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          [
+            11
+          ]
+        ]
+      ],
+      "rank": 2
+    },
+    {
+      "id": "m002",
+      "type": "multi",
+      "field": "labor",
+      "question": "Một doanh nghiệp được tự tìm người làm hoặc nhờ đơn vị trung gian tuyển dụng không, và người xin việc có phải chịu khoản phí nào cho việc đó không? Nếu có tố cáo về việc tuân thủ quy định bảo hiểm xã hội thì cơ quan nào xử lý, và ai xử lý nếu hành vi bị tố cáo xảy ra trước năm 1995?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          11
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          131
+        ]
+      ],
+      "top": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            131
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            37
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            132
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            35
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            34
+          ]
+        ]
+      ],
+      "rank": 1
+    },
+    {
+      "id": "m003",
+      "type": "multi",
+      "field": "tax",
+      "question": "Những loại vật tư, chế phẩm nào thuộc nhóm được nêu liên quan đến sản xuất nông nghiệp, và khi tổng hợp nghĩa vụ thuế cho năm hoặc lúc kết thúc hợp đồng khai thác dầu khí thì cần tính những khoản nào?",
+      "top1_score": 0.032266458495966696,
+      "gold": [
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          19
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          13
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            13
+          ]
+        ],
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            5
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            19
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            5
+          ]
+        ]
+      ],
+      "rank": 1
+    },
+    {
+      "id": "m004",
+      "type": "multi",
+      "field": "enterprise",
+      "question": "Nếu một thành viên không nộp đủ số vốn đã hứa góp, công ty phải điều chỉnh thông tin vốn và tỷ lệ sở hữu khi nào, và thành viên đó chịu trách nhiệm ra sao đối với các khoản phát sinh trước khi điều chỉnh? Ngoài ra, sau khi quyết định giải thể được thông qua, doanh nghiệp phải nộp hồ sơ trong bao lâu và hồ sơ gồm những gì?",
+      "top1_score": 0.029386529386529386,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          47
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          64
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            75
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            178
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            210
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            45
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            47
+          ]
+        ]
+      ],
+      "rank": 5
+    },
+    {
+      "id": "m005",
+      "type": "multi",
+      "field": "tax",
+      "question": "Một hộ tự trồng lúa rồi bán thóc chỉ qua làm sạch, phơi khô đơn giản có phải tính thuế giá trị gia tăng không? Còn doanh nghiệp chuyển giao công nghệ và cung cấp sản phẩm, dịch vụ phần mềm thì được xử lý thuế ra sao?",
+      "top1_score": 0.031544957774465976,
+      "gold": [
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          5
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          5
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            19
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            5
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            5
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            5
+          ]
+        ]
+      ],
+      "rank": 2
+    },
+    {
+      "id": "m006",
+      "type": "multi",
+      "field": "enterprise",
+      "question": "Khi thành lập mới một công ty cổ phần, bao nhiêu người cần tham gia với tư cách cổ đông sáng lập và họ phải đăng ký mua tối thiểu bao nhiêu cổ phần phổ thông? Trong ba năm đầu, một cổ đông sáng lập muốn bán loại cổ phần này cho người ngoài nhóm sáng lập thì cần điều kiện gì, và nếu cơ quan cấp xã không chấp nhận tên hộ kinh doanh dự kiến thì người đăng ký có thể làm gì?",
+      "top1_score": 0.03252247488101534,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          120
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          86
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            120
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            124
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            22
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            113
+          ]
+        ]
+      ],
+      "rank": 1
+    },
+    {
+      "id": "m007",
+      "type": "multi",
+      "field": "enterprise",
+      "question": "Nếu công ty muốn kéo dài việc ngừng hoạt động qua mốc đã đăng ký, cần làm thủ tục và tuân thủ giới hạn thời gian nào; còn ở công ty cổ phần, loại cổ phần nào phải có và việc đổi giữa cổ phần thường với cổ phần ưu đãi được phép theo hướng nào?",
+      "top1_score": 0.031009615384615385,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          114
+        ],
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          11
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            133
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            113
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            112
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            114
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            113
+          ]
+        ]
+      ],
+      "rank": 4
+    },
+    {
+      "id": "m008",
+      "type": "multi",
+      "field": "labor",
+      "question": "Khi tuyển dụng và thực hiện quan hệ lao động, doanh nghiệp có được giữ giấy tờ gốc của nhân viên hoặc yêu cầu họ đặt tiền, tài sản làm bảo đảm không; đồng thời, người nghỉ ốm phải gửi hồ sơ hưởng chế độ trong bao lâu sau khi đi làm lại và doanh nghiệp có bao lâu để chuyển hồ sơ đến cơ quan bảo hiểm?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          17
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          48
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            36
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            48
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            34
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            19
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            38
+          ]
+        ]
+      ],
+      "rank": 2
+    },
+    {
+      "id": "m009",
+      "type": "multi",
+      "field": "tax",
+      "question": "Một công ty không có hệ thống tự động phát hành hóa đơn bán hàng trong ca đêm theo lịch làm việc; hóa đơn phải được lập muộn nhất khi nào? Đồng thời, nếu công ty đặt ngoài các địa bàn bị loại trừ và có thu nhập từ ngành nghề thuộc diện ưu đãi được nêu trong quy định, thu nhập đó chịu thuế suất bao nhiêu và trong thời gian nào?",
+      "top1_score": 0.03252247488101534,
+      "gold": [
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          9
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          19
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            9
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            6
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            16
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            13
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            23
+          ]
+        ]
+      ],
+      "rank": 1
+    },
+    {
+      "id": "m010",
+      "type": "multi",
+      "field": "enterprise",
+      "question": "Thông thường, để một nghị quyết của đại hội cổ đông được thông qua thì cần mức đồng thuận như thế nào, và chủ hộ kinh doanh có thể nộp hồ sơ đăng ký bằng những cách nào?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          148
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          94
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            148
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            148
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            149
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            148
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            58
+          ]
+        ]
+      ],
+      "rank": 1
+    },
+    {
+      "id": "m011",
+      "type": "multi",
+      "field": "enterprise",
+      "question": "Khi nhận được phán quyết của tòa về việc bắt đầu giải quyết phá sản hoặc xác định doanh nghiệp đã phá sản, cơ quan đăng ký phải cập nhật hồ sơ của doanh nghiệp và các đơn vị trực thuộc như thế nào, trong thời hạn nào? Ngoài ra, người điều hành cuộc họp cổ đông có thể lùi cuộc họp đến mức nào và trong những tình huống nào?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          146
+        ],
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          14
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            72
+          ]
+        ],
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          [
+            14
+          ]
+        ],
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          [
+            14
+          ]
+        ],
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          [
+            14
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            209
+          ]
+        ]
+      ],
+      "rank": 2
+    }
+  ]
+}
