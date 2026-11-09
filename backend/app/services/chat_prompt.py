@@ -15,7 +15,10 @@ pháp lý từ người có chuyên môn."""
 CITATION_RULES = """Cách trích dẫn: sau mỗi nhận định dựa vào dữ liệu tham khảo, ghi số nguồn
 dạng [n] (ví dụ [1]) với n là id của thẻ <reference>. Chỉ dùng số của các nguồn được cung cấp,
 không tự tạo số mới. Nếu dữ liệu tham khảo không đủ để trả lời, hãy nói rõ là chưa đủ căn cứ
-trong các nguồn đã cung cấp."""
+trong các nguồn đã cung cấp.
+Không nêu số hiệu văn bản, điều, khoản, mức phạt, thuế suất, con số, thời hạn, thành phần hồ sơ
+hay thủ tục không có trong dữ liệu tham khảo, kể cả khi bạn tin là đúng.
+Nếu các nguồn không liên quan đến câu hỏi, hãy nói rõ là chưa đủ căn cứ và không ghi [n]."""
 
 # Without this, a model given no sources answers from memory with real-looking numbers and
 # document numbers, which is the exact failure the no-source gate exists to prevent.

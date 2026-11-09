@@ -1,0 +1,5002 @@
+{
+  "meta": {
+    "date": "2026-11-09",
+    "config": {
+      "name": "hybrid-vbpl-full-052",
+      "tier": "retrieval",
+      "chunk_set": "vbpl",
+      "top_k": 5,
+      "min_similarity": 0.0,
+      "require_in_force": true,
+      "rag": true,
+      "mode": "hybrid",
+      "rerank": "llm",
+      "rerank_provider": "openai",
+      "rerank_model": "gpt-4.1-mini",
+      "query_planner_provider": "openai",
+      "query_planner_model": "gpt-4.1-mini",
+      "min_top_score": 0.52,
+      "question_types": null,
+      "pipeline": "custom",
+      "include_pending": false,
+      "depth": 10,
+      "embedding_provider": null,
+      "embedding_model": null,
+      "limit": null,
+      "max_output_tokens": null
+    },
+    "config_hash": "c3e72c3a1eda",
+    "git_sha": "a98a87c",
+    "corpus_manifest_sha": "521adf938bcf",
+    "models": {
+      "chat": "openai:gpt-6-luna",
+      "embedding": "openai:text-embedding-3-small",
+      "eval_generator": "(same as chat)",
+      "temperature": "provider default (not settable through the chat provider)"
+    },
+    "dataset": {
+      "total": 105,
+      "approved": 91,
+      "used": 91,
+      "provisional": false
+    }
+  },
+  "summary": {
+    "in_corpus_questions": 81,
+    "out_of_corpus_questions": 10,
+    "recall@1": 0.7530864197530864,
+    "recall@3": 0.8641975308641975,
+    "recall@5": 0.9135802469135802,
+    "mrr": 0.8180188124632569,
+    "embed_ms": {
+      "p50": 263.8161999930162,
+      "p95": 478.38230000343174
+    },
+    "search_ms": {
+      "p50": 1511.8918999796733,
+      "p95": 2139.223799982574
+    },
+    "threshold_sweep": null,
+    "rerank_fallbacks": 0,
+    "plan_ms": {
+      "p50": 1471.0434000007808,
+      "p95": 1986.9456999877002
+    },
+    "plan_fallbacks": 0,
+    "routed_invalid": 0,
+    "mean_queries": 2.3736263736263736,
+    "gated_out_of_corpus": 2,
+    "gated_in_corpus": 0
+  },
+  "questions": [
+    {
+      "id": "q001",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Doanh nghiệp tôi muốn biết cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế, thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế?",
+      "top1_score": 0.03252247488101534,
+      "gold": [
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          18
+        ]
+      ],
+      "top": [
+        [
+          "vbpl-151086",
+          [
+            34
+          ]
+        ],
+        [
+          "vbpl-c640e240-6005-11f1-bfbb-e599dc202167",
+          [
+            6
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            49
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            61
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            61
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 2343.941500002984,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp tôi muốn biết cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế, thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế?",
+          "Cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế?",
+          "Cơ quan nào quy định việc thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế?"
+        ],
+        "fallback": false
+      },
+      "rank": 6
+    },
+    {
+      "id": "q002",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Doanh nghiệp tôi nhập khẩu máy móc, vật tư phục vụ nghiên cứu và khai thác dầu khí, hoặc nhập máy bay, tàu thuyền để làm tài sản cố định hay thuê từ nước ngoài. Những trường hợp nào thuộc diện không chịu thuế giá trị gia tăng?",
+      "top1_score": 0.048651507139079855,
+      "gold": [
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          5
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            5
+          ]
+        ],
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            5
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            4
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            5
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1772.7325000159908,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp tôi nhập khẩu máy móc, vật tư phục vụ nghiên cứu và khai thác dầu khí, hoặc nhập máy bay, tàu thuyền để làm tài sản cố định hay thuê từ nước ngoài. Những trường hợp nào thuộc diện không chịu thuế giá trị gia tăng?",
+          "Doanh nghiệp nhập khẩu máy móc, vật tư phục vụ nghiên cứu và khai thác dầu khí những trường hợp nào không chịu thuế giá trị gia tăng?",
+          "Những trường hợp nhập khẩu máy bay, tàu thuyền làm tài sản cố định hay thuê từ nước ngoài không chịu thuế giá trị gia tăng là gì?"
+        ],
+        "fallback": false
+      },
+      "rank": 2
+    },
+    {
+      "id": "q003",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Nếu bất động sản được chuyển nhượng, để lại thừa kế hoặc tặng cho trong gia đình thì những quan hệ thân nhân nào thuộc diện được quy định?",
+      "top1_score": 0.043427458617332035,
+      "gold": [
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          4
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            4
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            18
+          ]
+        ],
+        [
+          "vbpl-151086",
+          [
+            53
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            67
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            67
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1730.458699981682,
+        "route": "law",
+        "queries": [
+          "Nếu bất động sản được chuyển nhượng, để lại thừa kế hoặc tặng cho trong gia đình thì những quan hệ thân nhân nào thuộc diện được quy định?",
+          "Quan hệ thân nhân nào được quy định trong việc chuyển nhượng bất động sản trong gia đình?",
+          "Quan hệ thân nhân nào được quy định khi để lại thừa kế bất động sản trong gia đình?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q004",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Công ty tôi sắp triển khai một dự án mới trong khu công nghệ cao. Thu nhập từ dự án này được áp dụng mức thuế thu nhập doanh nghiệp nào và trong bao lâu?",
+      "top1_score": 0.04620592054390803,
+      "gold": [
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          13
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          [
+            13
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            19
+          ]
+        ],
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          [
+            13
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            19
+          ]
+        ],
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          [
+            14
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1597.7002999861725,
+        "route": "law",
+        "queries": [
+          "Công ty tôi sắp triển khai một dự án mới trong khu công nghệ cao. Thu nhập từ dự án này được áp dụng mức thuế thu nhập doanh nghiệp nào và trong bao lâu?",
+          "Thuế thu nhập doanh nghiệp áp dụng cho dự án trong khu công nghệ cao là bao nhiêu?",
+          "Thời gian áp dụng mức thuế thu nhập doanh nghiệp ưu đãi cho dự án trong khu công nghệ cao là bao lâu?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q005",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Doanh nghiệp tôi kinh doanh các dịch vụ liên quan đến việc an táng. Những loại dịch vụ nào được xem là dịch vụ tang lễ, và đơn vị cung cấp cần đáp ứng điều kiện gì?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          4
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            5
+          ]
+        ],
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            5
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            64
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            15
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1516.9371999800205,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp tôi kinh doanh các dịch vụ liên quan đến việc an táng. Những loại dịch vụ nào được xem là dịch vụ tang lễ, và đơn vị cung cấp cần đáp ứng điều kiện gì?",
+          "Dịch vụ nào được xem là dịch vụ tang lễ theo quy định pháp luật Việt Nam?",
+          "Đơn vị cung cấp dịch vụ tang lễ cần đáp ứng những điều kiện gì theo quy định pháp luật?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q006",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Doanh nghiệp hoạt động ngoài các địa bàn được quy định riêng, nếu có thu nhập từ ngành nghề thuộc nhóm được ưu đãi thì áp dụng mức thuế suất thuế thu nhập doanh nghiệp nào và trong bao lâu?",
+      "top1_score": 0.04839549075403121,
+      "gold": [
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          19
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            19
+          ]
+        ],
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          [
+            13
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            19
+          ]
+        ],
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          [
+            13
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            19
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1589.1590999963228,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp hoạt động ngoài các địa bàn được quy định riêng, nếu có thu nhập từ ngành nghề thuộc nhóm được ưu đãi thì áp dụng mức thuế suất thuế thu nhập doanh nghiệp nào và trong bao lâu?",
+          "Doanh nghiệp hoạt động ngoài các địa bàn được quy định riêng có thu nhập từ ngành nghề thuộc nhóm được ưu đãi thì áp dụng mức thuế suất thuế thu nhập doanh nghiệp như thế nào?",
+          "Thời gian áp dụng mức thuế suất thuế thu nhập doanh nghiệp ưu đãi đối với doanh nghiệp hoạt động ngoài các địa bàn được quy định riêng là bao lâu?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q007",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi cử nhân sự sang tham gia quản lý, điều hành hoặc kiểm soát một tổ chức tín dụng thuộc diện đặc biệt. Để chứng minh các khoản chi cho người này, cần lưu những giấy tờ nào?",
+      "top1_score": 0.03252247488101534,
+      "gold": [
+        [
+          "thong-tu-20-2026-tt-btc",
+          3
+        ]
+      ],
+      "top": [
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          [
+            9
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "vbpl-178536",
+          [
+            14
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1500.3612999862526,
+        "route": "law",
+        "queries": [
+          "Công ty tôi cử nhân sự sang tham gia quản lý, điều hành hoặc kiểm soát một tổ chức tín dụng thuộc diện đặc biệt. Để chứng minh các khoản chi cho người này, cần lưu những giấy tờ nào?",
+          "Các loại giấy tờ cần lưu để chứng minh các khoản chi cho nhân sự công ty cử sang tham gia quản lý, điều hành hoặc kiểm soát một tổ chức tín dụng thuộc diện đặc biệt."
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q008",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Khi doanh nghiệp đã kê khai thuế bằng một loại tiền tệ thì có được nộp thuế bằng loại tiền khác không?",
+      "top1_score": 0.030834914611005692,
+      "gold": [
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          14
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            14
+          ]
+        ],
+        [
+          "vbpl-151086",
+          [
+            4
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            14
+          ]
+        ],
+        [
+          "vbpl-151369",
+          [
+            7
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            21
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1406.3369999930728,
+        "route": "law",
+        "queries": [
+          "Khi doanh nghiệp đã kê khai thuế bằng một loại tiền tệ thì có được nộp thuế bằng loại tiền khác không?"
+        ],
+        "fallback": false
+      },
+      "rank": null
+    },
+    {
+      "id": "q009",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Doanh nghiệp tôi nhập khẩu hàng để hỗ trợ khắc phục hậu quả bão lũ. Lô hàng này có thuộc diện không phải chịu thuế GTGT không?",
+      "top1_score": 0.014705882352941176,
+      "gold": [
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          5
+        ]
+      ],
+      "top": [
+        [
+          "vbpl-180017",
+          [
+            3
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            68
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            5
+          ]
+        ],
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            5
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            4
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1334.03240001644,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp tôi nhập khẩu hàng để hỗ trợ khắc phục hậu quả bão lũ. Lô hàng này có thuộc diện không phải chịu thuế GTGT không?",
+          "Doanh nghiệp nhập khẩu hàng hóa để hỗ trợ khắc phục hậu quả bão lũ có thuộc diện không phải chịu thuế GTGT không?"
+        ],
+        "fallback": false
+      },
+      "rank": 4
+    },
+    {
+      "id": "q010",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Tôi là cá nhân có quyền khai thác một con tàu và có thu nhập từ việc cung cấp vật tư, dịch vụ phục vụ trực tiếp cho hoạt động đánh bắt ở vùng biển xa. Khoản thu nhập này có thuộc diện được miễn thuế thu nhập cá nhân không?",
+      "top1_score": 0.03225806451612903,
+      "gold": [
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          4
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            33
+          ]
+        ],
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            4
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            32
+          ]
+        ],
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            4
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1345.4893000016455,
+        "route": "law",
+        "queries": [
+          "Tôi là cá nhân có quyền khai thác một con tàu và có thu nhập từ việc cung cấp vật tư, dịch vụ phục vụ trực tiếp cho hoạt động đánh bắt ở vùng biển xa. Khoản thu nhập này có thuộc diện được miễn thuế thu nhập cá nhân không?",
+          "Cá nhân có quyền khai thác tàu và có thu nhập từ việc cung cấp vật tư, dịch vụ phục vụ hoạt động đánh bắt ở vùng biển xa có được miễn thuế thu nhập cá nhân không?"
+        ],
+        "fallback": false
+      },
+      "rank": 2
+    },
+    {
+      "id": "q011",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi xây chung cư để bán. Khi tính giá đất được trừ cho mỗi mét vuông căn hộ, cần lấy giá đất được trừ chia cho diện tích sàn nào?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          8
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            8
+          ]
+        ],
+        [
+          "vbpl-172729",
+          [
+            6
+          ]
+        ],
+        [
+          "vbpl-172729",
+          [
+            6
+          ]
+        ],
+        [
+          "vbpl-172729",
+          [
+            6
+          ]
+        ],
+        [
+          "vbpl-172729",
+          [
+            5
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1567.4721999967005,
+        "route": "law",
+        "queries": [
+          "Công ty tôi xây chung cư để bán. Khi tính giá đất được trừ cho mỗi mét vuông căn hộ, cần lấy giá đất được trừ chia cho diện tích sàn nào?",
+          "Khi tính giá đất trừ cho mỗi mét vuông căn hộ trong dự án xây chung cư để bán, giá đất được trừ được chia cho diện tích sàn nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q012",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Cơ quan nhà nước lấy kinh phí ở đâu để tra cứu, cung cấp và sử dụng dữ liệu hóa đơn điện tử?",
+      "top1_score": 0.032266458495966696,
+      "gold": [
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          42
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            42
+          ]
+        ],
+        [
+          "vbpl-146457",
+          [
+            54
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            38
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            21
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            39
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1263.3143999846652,
+        "route": "law",
+        "queries": [
+          "Cơ quan nhà nước lấy kinh phí ở đâu để tra cứu, cung cấp và sử dụng dữ liệu hóa đơn điện tử?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q013",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi lập hoặc dùng quỹ dự phòng không đúng quy định. Những nhóm dự phòng nào được nhắc đến trong quy định này?",
+      "top1_score": 0.04814747488101534,
+      "gold": [
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          10
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            10
+          ]
+        ],
+        [
+          "vbpl-156260",
+          [
+            8
+          ]
+        ],
+        [
+          "vbpl-156258",
+          [
+            8
+          ]
+        ],
+        [
+          "vbpl-172719",
+          [
+            19
+          ]
+        ],
+        [
+          "vbpl-174937",
+          [
+            30
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1557.2862999979407,
+        "route": "law",
+        "queries": [
+          "Công ty tôi lập hoặc dùng quỹ dự phòng không đúng quy định. Những nhóm dự phòng nào được nhắc đến trong quy định này?",
+          "Những nhóm quỹ dự phòng nào được quy định trong pháp luật về quản lý tài chính của công ty?",
+          "Quy định về việc lập và sử dụng quỹ dự phòng của công ty bao gồm những nhóm dự phòng nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q014",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi bị thiệt hại tài sản, hàng hóa do bão và có một phần không được bồi hoàn. Để tính phần thiệt hại này vào chi phí khi xác định thu nhập chịu thuế, cần lưu những giấy tờ nào?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "thong-tu-20-2026-tt-btc",
+          3
+        ]
+      ],
+      "top": [
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1416.8700999871362,
+        "route": "law",
+        "queries": [
+          "Công ty tôi bị thiệt hại tài sản, hàng hóa do bão và có một phần không được bồi hoàn. Để tính phần thiệt hại này vào chi phí khi xác định thu nhập chịu thuế, cần lưu những giấy tờ nào?",
+          "Giấy tờ, chứng từ cần lưu giữ để ghi nhận thiệt hại tài sản, hàng hóa do thiên tai khi tính vào chi phí được trừ khi xác định thu nhập chịu thuế của doanh nghiệp là gì?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q015",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Cơ sở tôi bán nhiều mặt hàng chịu thuế GTGT theo các tỷ lệ khác nhau. Nếu không tách được doanh thu của từng nhóm hàng trong kỳ thì phải tính thuế thế nào?",
+      "top1_score": 0.013888888888888888,
+      "gold": [
+        [
+          "thong-tu-69-2025-tt-btc",
+          5
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            9
+          ]
+        ],
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            9
+          ]
+        ],
+        [
+          "thong-tu-69-2025-tt-btc",
+          [
+            5
+          ]
+        ],
+        [
+          "thong-tu-69-2025-tt-btc",
+          [
+            9
+          ]
+        ],
+        [
+          "vbpl-187022",
+          [
+            5
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1922.549600014463,
+        "route": "law",
+        "queries": [
+          "Cơ sở tôi bán nhiều mặt hàng chịu thuế GTGT theo các tỷ lệ khác nhau. Nếu không tách được doanh thu của từng nhóm hàng trong kỳ thì phải tính thuế thế nào?",
+          "Trường hợp không tách được doanh thu của từng nhóm hàng chịu thuế GTGT theo các tỷ lệ khác nhau thì phải tính thuế GTGT như thế nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 3
+    },
+    {
+      "id": "q016",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Tôi đang chuẩn bị triển khai hóa đơn điện tử cho doanh nghiệp. Chính phủ sẽ quy định những vấn đề nào liên quan đến hóa đơn điện tử?",
+      "top1_score": 0.0315136476426799,
+      "gold": [
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          26
+        ]
+      ],
+      "top": [
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            26
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            26
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            26
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            4
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            12
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1346.696200023871,
+        "route": "law",
+        "queries": [
+          "Tôi đang chuẩn bị triển khai hóa đơn điện tử cho doanh nghiệp. Chính phủ sẽ quy định những vấn đề nào liên quan đến hóa đơn điện tử?",
+          "Chính phủ quy định những vấn đề nào liên quan đến hóa đơn điện tử?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q017",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi kinh doanh hàng hóa thuộc diện không phải chịu thuế GTGT. Thuế GTGT đầu vào có được khấu trừ hoặc đề nghị hoàn không, và trường hợp áp dụng thuế suất 0% có khác không?",
+      "top1_score": 0.04740957966764418,
+      "gold": [
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          5
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            5
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            5
+          ]
+        ],
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            9
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            9
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1580.0335000094492,
+        "route": "law",
+        "queries": [
+          "Công ty tôi kinh doanh hàng hóa thuộc diện không phải chịu thuế GTGT. Thuế GTGT đầu vào có được khấu trừ hoặc đề nghị hoàn không, và trường hợp áp dụng thuế suất 0% có khác không?",
+          "Công ty kinh doanh hàng hóa không thuộc diện chịu thuế GTGT có được khấu trừ hoặc đề nghị hoàn thuế GTGT đầu vào không?",
+          "Trường hợp hàng hóa áp dụng thuế suất thuế GTGT 0% có khác gì so với hàng hóa không chịu thuế GTGT về việc khấu trừ hoặc hoàn thuế GTGT đầu vào không?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q018",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Thu nhập tính thuế của tôi là 25 triệu đồng mỗi tháng thì nằm ở khoảng nào trong cách tính thuế lũy tiến?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          9
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            9
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            46
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            46
+          ]
+        ],
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            8
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            50
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1471.0434000007808,
+        "route": "law",
+        "queries": [
+          "Thu nhập tính thuế của tôi là 25 triệu đồng mỗi tháng thì nằm ở khoảng nào trong cách tính thuế lũy tiến?",
+          "Thu nhập tính thuế là 25 triệu đồng mỗi tháng thì thuộc mức thuế suất nào trong cách tính thuế thu nhập cá nhân theo phương pháp lũy tiến từng phần?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q019",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Cửa hàng tôi bán nhiều mặt hàng chịu các mức thuế khác nhau, còn một đơn vị khác thuộc diện dùng hóa đơn bán hàng. Khi áp dụng chính sách giảm thuế, mỗi bên cần thể hiện thông tin gì trên hóa đơn?",
+      "top1_score": 0.04793840039741679,
+      "gold": [
+        [
+          "nghi-dinh-174-2025-nd-cp",
+          1
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-174-2025-nd-cp",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-172694",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-174940",
+          [
+            1
+          ]
+        ],
+        [
+          "nghi-dinh-174-2025-nd-cp",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-172694",
+          [
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1430.2554000169039,
+        "route": "law",
+        "queries": [
+          "Cửa hàng tôi bán nhiều mặt hàng chịu các mức thuế khác nhau, còn một đơn vị khác thuộc diện dùng hóa đơn bán hàng. Khi áp dụng chính sách giảm thuế, mỗi bên cần thể hiện thông tin gì trên hóa đơn?",
+          "Cửa hàng bán nhiều mặt hàng chịu các mức thuế khác nhau cần thể hiện thông tin gì trên hóa đơn khi áp dụng chính sách giảm thuế?",
+          "Đơn vị thuộc diện dùng hóa đơn bán hàng cần thể hiện những thông tin nào trên hóa đơn khi áp dụng chính sách giảm thuế?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q020",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Công ty tôi mua ô tô tối đa 9 chỗ làm tài sản cố định, giá chưa VAT là 2 tỷ đồng. Nếu xe không phục vụ vận tải, du lịch, khách sạn và cũng không dùng làm mẫu hoặc lái thử để kinh doanh ô tô, phần thuế VAT đầu vào nào được khấu trừ?",
+      "top1_score": 0.048915917503966164,
+      "gold": [
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          24
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            24
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            10
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            10
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            23
+          ]
+        ],
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            14
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 2006.3929999887478,
+        "route": "law",
+        "queries": [
+          "Công ty tôi mua ô tô tối đa 9 chỗ làm tài sản cố định, giá chưa VAT là 2 tỷ đồng. Nếu xe không phục vụ vận tải, du lịch, khách sạn và cũng không dùng làm mẫu hoặc lái thử để kinh doanh ô tô, phần thuế VAT đầu vào nào được khấu trừ?",
+          "Điều kiện khấu trừ thuế VAT đầu vào đối với ô tô mua làm tài sản cố định không phục vụ vận tải, du lịch, khách sạn, không dùng làm mẫu hoặc lái thử để kinh doanh ô tô.",
+          "Phần thuế VAT đầu vào được khấu trừ khi công ty mua ô tô tối đa 9 chỗ làm tài sản cố định với giá chưa VAT 2 tỷ đồng và không thuộc mục đích kinh doanh vận tải, du lịch, khách sạn hoặc kinh doanh ô tô."
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q021",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi đang nợ một doanh nghiệp bị cưỡng chế thuế, đồng thời được doanh nghiệp đó giao giữ một số tài sản. Khi nào cơ quan thuế có thể yêu cầu tôi nộp tiền hoặc giao tài sản để thi hành quyết định cưỡng chế?",
+      "top1_score": 0.04419887740783263,
+      "gold": [
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          70
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            70
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            70
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            70
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            70
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            70
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1693.4747000050265,
+        "route": "law",
+        "queries": [
+          "Công ty tôi đang nợ một doanh nghiệp bị cưỡng chế thuế, đồng thời được doanh nghiệp đó giao giữ một số tài sản. Khi nào cơ quan thuế có thể yêu cầu tôi nộp tiền hoặc giao tài sản để thi hành quyết định cưỡng chế?",
+          "Khi nào cơ quan thuế có thể yêu cầu bên thứ ba nộp tiền để thi hành quyết định cưỡng chế thuế đối với doanh nghiệp bị cưỡng chế thuế?",
+          "Khi nào cơ quan thuế có thể yêu cầu bên thứ ba giao tài sản đang giữ để thi hành quyết định cưỡng chế thuế đối với doanh nghiệp bị cưỡng chế thuế?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q022",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Tôi nhận được một món quà có giá trị khá lớn. Phần nào được tính là thu nhập chịu thuế và căn cứ vào giá nào để xác định giá trị món quà?",
+      "top1_score": 0.044362602571557795,
+      "gold": [
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          61
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            61
+          ]
+        ],
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            18
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            61
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            61
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            61
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1569.8091000085697,
+        "route": "law",
+        "queries": [
+          "Tôi nhận được một món quà có giá trị khá lớn. Phần nào được tính là thu nhập chịu thuế và căn cứ vào giá nào để xác định giá trị món quà?",
+          "Phần giá trị món quà được nhận nào được tính là thu nhập chịu thuế thu nhập cá nhân?",
+          "Căn cứ pháp luật nào để xác định giá trị món quà làm cơ sở tính thuế thu nhập cá nhân?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q023",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Tôi cần biết trong ngành hải quan, đơn vị nào phụ trách lập dữ liệu chứng từ điện tử và thông tin về chứng từ đã phát hành, bị báo mất hoặc không còn dùng được; còn đơn vị nào giám sát việc tạo, phát hành, sử dụng và hủy chứng từ tại địa bàn?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          30
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            30
+          ]
+        ],
+        [
+          "vbpl-7f17bc50-7f71-11f1-9d22-c786138342bf",
+          [
+            14
+          ]
+        ],
+        [
+          "vbpl-e2b458f0-8038-11f1-beae-a7a99fabf027",
+          [
+            9
+          ]
+        ],
+        [
+          "vbpl-175462",
+          [
+            2
+          ]
+        ],
+        [
+          "vbpl-146457",
+          [
+            43
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1530.5013000033796,
+        "route": "law",
+        "queries": [
+          "Tôi cần biết trong ngành hải quan, đơn vị nào phụ trách lập dữ liệu chứng từ điện tử và thông tin về chứng từ đã phát hành, bị báo mất hoặc không còn dùng được; còn đơn vị nào giám sát việc tạo, phát hành, sử dụng và hủy chứng từ tại địa bàn?",
+          "Đơn vị nào trong ngành hải quan phụ trách lập dữ liệu chứng từ điện tử và thông tin về chứng từ đã phát hành, bị báo mất hoặc không còn dùng được?",
+          "Đơn vị nào trong ngành hải quan giám sát việc tạo, phát hành, sử dụng và hủy chứng từ tại địa bàn?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q024",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi ở Việt Nam ký hợp đồng mua dịch vụ của một doanh nghiệp nước ngoài. Trong trường hợp phải nộp thuế thay, bên nào được xác định là người nộp thuế?",
+      "top1_score": 0.03252247488101534,
+      "gold": [
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          2
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            2
+          ]
+        ],
+        [
+          "vbpl-151086",
+          [
+            81
+          ]
+        ],
+        [
+          "vbpl-151086",
+          [
+            81
+          ]
+        ],
+        [
+          "vbpl-151086",
+          [
+            81
+          ]
+        ],
+        [
+          "vbpl-151086",
+          [
+            81
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1796.0796999977902,
+        "route": "law",
+        "queries": [
+          "Công ty tôi ở Việt Nam ký hợp đồng mua dịch vụ của một doanh nghiệp nước ngoài. Trong trường hợp phải nộp thuế thay, bên nào được xác định là người nộp thuế?",
+          "Trong hợp đồng mua dịch vụ của doanh nghiệp Việt Nam với doanh nghiệp nước ngoài, người nộp thuế thay được xác định như thế nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q025",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi khai sai tờ khai xuất nhập khẩu làm thiếu thuế phải nộp. Ngoài việc nộp phần thuế còn thiếu và tiền chậm nộp, những trường hợp nào vẫn có thể bị xử phạt hành chính?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          45
+        ]
+      ],
+      "top": [
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            45
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            44
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            44
+          ]
+        ],
+        [
+          "vbpl-1fb56670-688f-11f1-a040-9b421432560c",
+          [
+            5
+          ]
+        ],
+        [
+          "vbpl-1fb56670-688f-11f1-a040-9b421432560c",
+          [
+            10
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1544.0905000141356,
+        "route": "law",
+        "queries": [
+          "Công ty tôi khai sai tờ khai xuất nhập khẩu làm thiếu thuế phải nộp. Ngoài việc nộp phần thuế còn thiếu và tiền chậm nộp, những trường hợp nào vẫn có thể bị xử phạt hành chính?",
+          "Trường hợp nào bị xử phạt hành chính khi công ty khai sai tờ khai xuất nhập khẩu làm thiếu thuế phải nộp ngoài việc nộp phần thuế còn thiếu và tiền chậm nộp?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q026",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Tôi bán phần vốn góp trong một công ty, bán chứng khoán hoặc chuyển nhượng vốn theo hình thức khác thì khoản thu nào được xếp vào thu nhập chịu thuế thu nhập cá nhân?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          3
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            10
+          ]
+        ],
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            3
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            53
+          ]
+        ],
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            13
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            53
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1467.1344000089448,
+        "route": "law",
+        "queries": [
+          "Tôi bán phần vốn góp trong một công ty, bán chứng khoán hoặc chuyển nhượng vốn theo hình thức khác thì khoản thu nào được xếp vào thu nhập chịu thuế thu nhập cá nhân?",
+          "Khoản thu nào từ việc bán phần vốn góp trong công ty được xếp vào thu nhập chịu thuế thu nhập cá nhân?",
+          "Khoản thu nào từ việc bán chứng khoán hoặc chuyển nhượng vốn theo hình thức khác được xếp vào thu nhập chịu thuế thu nhập cá nhân?"
+        ],
+        "fallback": false
+      },
+      "rank": 2
+    },
+    {
+      "id": "q027",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi là doanh nghiệp Việt Nam, có hoạt động kinh doanh ở nước ngoài và đã nộp thuế thu nhập tại nước sở tại. Khi tính thuế ở Việt Nam, khoản thuế đã nộp ở nước ngoài được xử lý thế nào?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          3
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          [
+            3
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            12
+          ]
+        ],
+        [
+          "vbpl-61973760-8038-11f1-928b-d7c51d7d74f2",
+          [
+            51
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            34
+          ]
+        ],
+        [
+          "vbpl-151086",
+          [
+            62
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1874.8457999899983,
+        "route": "law",
+        "queries": [
+          "Công ty tôi là doanh nghiệp Việt Nam, có hoạt động kinh doanh ở nước ngoài và đã nộp thuế thu nhập tại nước sở tại. Khi tính thuế ở Việt Nam, khoản thuế đã nộp ở nước ngoài được xử lý thế nào?",
+          "Doanh nghiệp Việt Nam kinh doanh ở nước ngoài và đã nộp thuế thu nhập tại nước sở tại, cách xử lý khoản thuế đã nộp ở nước ngoài khi tính thuế thu nhập tại Việt Nam như thế nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q028",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Doanh nghiệp tôi đã xuất hóa đơn và kê khai thuế GTGT theo mức chưa được giảm. Sau khi điều chỉnh hóa đơn, bên bán và bên mua cần kê khai thế nào?",
+      "top1_score": 0.04765107388058208,
+      "gold": [
+        [
+          "nghi-dinh-174-2025-nd-cp",
+          1
+        ]
+      ],
+      "top": [
+        [
+          "vbpl-174940",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-172694",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-154793",
+          [
+            1
+          ]
+        ],
+        [
+          "nghi-dinh-174-2025-nd-cp",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-172694",
+          [
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1815.5530999938492,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp tôi đã xuất hóa đơn và kê khai thuế GTGT theo mức chưa được giảm. Sau khi điều chỉnh hóa đơn, bên bán và bên mua cần kê khai thế nào?",
+          "Doanh nghiệp đã xuất hóa đơn và kê khai thuế GTGT theo mức chưa giảm, sau khi điều chỉnh hóa đơn bên bán cần kê khai thế nào?",
+          "Sau khi điều chỉnh hóa đơn, bên mua cần kê khai thuế GTGT như thế nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 4
+    },
+    {
+      "id": "q029",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Tôi là cá nhân cư trú kinh doanh. Tỷ lệ thuế tính trên doanh thu chịu thuế được xác định theo căn cứ nào?",
+      "top1_score": 0.014492753623188406,
+      "gold": [
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          45
+        ]
+      ],
+      "top": [
+        [
+          "vbpl-fbf2f200-6002-11f1-babf-6bf011c15003",
+          [
+            4
+          ]
+        ],
+        [
+          "vbpl-fbf2f200-6002-11f1-babf-6bf011c15003",
+          [
+            3
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            45
+          ]
+        ],
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            7
+          ]
+        ],
+        [
+          "vbpl-fbf2f200-6002-11f1-babf-6bf011c15003",
+          [
+            4
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1459.6692000050098,
+        "route": "law",
+        "queries": [
+          "Tôi là cá nhân cư trú kinh doanh. Tỷ lệ thuế tính trên doanh thu chịu thuế được xác định theo căn cứ nào?",
+          "Căn cứ xác định tỷ lệ thuế tính trên doanh thu chịu thuế của cá nhân cư trú kinh doanh là gì?"
+        ],
+        "fallback": false
+      },
+      "rank": 3
+    },
+    {
+      "id": "q030",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Công ty tôi bị phạt lỗi giao thông, vi phạm đăng ký kinh doanh và kế toán, đồng thời bị phạt thuế và tính tiền chậm nộp thuế. Những khoản này có thuộc nhóm tiền phạt do vi phạm hành chính không?",
+      "top1_score": 0.04457454507857733,
+      "gold": [
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          10
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            10
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            14
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            14
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            5
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            15
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1828.79359999788,
+        "route": "law",
+        "queries": [
+          "Công ty tôi bị phạt lỗi giao thông, vi phạm đăng ký kinh doanh và kế toán, đồng thời bị phạt thuế và tính tiền chậm nộp thuế. Những khoản này có thuộc nhóm tiền phạt do vi phạm hành chính không?",
+          "Các khoản tiền phạt do vi phạm giao thông, vi phạm đăng ký kinh doanh và vi phạm kế toán của công ty có thuộc nhóm tiền phạt do vi phạm hành chính không?",
+          "Các khoản phạt thuế và tiền chậm nộp thuế của công ty có được coi là tiền phạt do vi phạm hành chính không?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q031",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Khi quyết toán thuế thu nhập doanh nghiệp, tôi cần lưu hồ sơ khoản chi được trừ dưới những hình thức nào?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "thong-tu-20-2026-tt-btc",
+          3
+        ]
+      ],
+      "top": [
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ],
+        [
+          "thong-tu-20-2026-tt-btc",
+          [
+            3
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1486.7340000055265,
+        "route": "law",
+        "queries": [
+          "Khi quyết toán thuế thu nhập doanh nghiệp, tôi cần lưu hồ sơ khoản chi được trừ dưới những hình thức nào?",
+          "Hồ sơ khoản chi được trừ khi quyết toán thuế thu nhập doanh nghiệp cần lưu dưới những hình thức nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q032",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Một cá nhân ở nước ngoài kinh doanh qua nền tảng số tại Việt Nam thì ai có trách nhiệm kê khai và nộp thuế, các khoản thu khác?",
+      "top1_score": 0.04891591750396616,
+      "gold": [
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          12
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            40
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            40
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            40
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            40
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            41
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1642.2965000092518,
+        "route": "law",
+        "queries": [
+          "Một cá nhân ở nước ngoài kinh doanh qua nền tảng số tại Việt Nam thì ai có trách nhiệm kê khai và nộp thuế, các khoản thu khác?",
+          "Ai có trách nhiệm kê khai và nộp thuế đối với cá nhân ở nước ngoài kinh doanh qua nền tảng số tại Việt Nam?",
+          "Người kinh doanh qua nền tảng số ở nước ngoài phải nộp những khoản thuế và khoản thu nào khi hoạt động tại Việt Nam?"
+        ],
+        "fallback": false
+      },
+      "rank": 6
+    },
+    {
+      "id": "q033",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Doanh nghiệp tính thuế theo phương pháp trực tiếp, bán hàng hóa thuộc diện được giảm thuế và xuất hóa đơn bán hàng thì cần thể hiện số tiền, mức giảm và nội dung ghi chú như thế nào?",
+      "top1_score": 0.04839549075403121,
+      "gold": [
+        [
+          "nghi-dinh-174-2025-nd-cp",
+          1
+        ]
+      ],
+      "top": [
+        [
+          "vbpl-172694",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-174940",
+          [
+            1
+          ]
+        ],
+        [
+          "nghi-dinh-174-2025-nd-cp",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-174940",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-172694",
+          [
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1497.5741999805905,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp tính thuế theo phương pháp trực tiếp, bán hàng hóa thuộc diện được giảm thuế và xuất hóa đơn bán hàng thì cần thể hiện số tiền, mức giảm và nội dung ghi chú như thế nào?",
+          "Doanh nghiệp tính thuế theo phương pháp trực tiếp, bán hàng hóa thuộc diện được giảm thuế thì trên hóa đơn bán hàng cần thể hiện số tiền giảm thuế như thế nào?",
+          "Doanh nghiệp cần ghi chú nội dung giảm thuế trên hóa đơn bán hàng như thế nào khi bán hàng hóa được giảm thuế theo phương pháp trực tiếp?"
+        ],
+        "fallback": false
+      },
+      "rank": 3
+    },
+    {
+      "id": "q034",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Chi nhánh công ty nước ngoài tại Việt Nam phải giữ hồ sơ về chủ sở hữu của công ty mẹ trong bao lâu và tính từ thời điểm nào?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          63
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            63
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            19
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            11
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            29
+          ]
+        ],
+        [
+          "vbpl-148286",
+          [
+            15
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1388.2207999995444,
+        "route": "law",
+        "queries": [
+          "Chi nhánh công ty nước ngoài tại Việt Nam phải giữ hồ sơ về chủ sở hữu của công ty mẹ trong bao lâu và tính từ thời điểm nào?",
+          "Chi nhánh công ty nước ngoài tại Việt Nam phải giữ hồ sơ về chủ sở hữu của công ty mẹ trong bao lâu?",
+          "Thời điểm bắt đầu tính thời hạn giữ hồ sơ về chủ sở hữu của công ty mẹ đối với chi nhánh công ty nước ngoài tại Việt Nam là khi nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q035",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Tôi quản lý xưởng và muốn nhận một bạn 16 tuổi vào làm công việc bảo dưỡng máy móc. Việc này có được phép không?",
+      "top1_score": 0.031746031746031744,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          147
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            147
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            143
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            145
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            146
+          ]
+        ],
+        [
+          "vbpl-174937",
+          [
+            3
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1616.2526000116486,
+        "route": "law",
+        "queries": [
+          "Tôi quản lý xưởng và muốn nhận một bạn 16 tuổi vào làm công việc bảo dưỡng máy móc. Việc này có được phép không?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q036",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Tôi đang tìm hiểu các mô hình chăm sóc, giáo dục trẻ mầm non. Nhóm trẻ riêng, lớp mẫu giáo riêng và cơ sở kết hợp cả hai được nhận trẻ trong những độ tuổi nào?",
+      "top1_score": 0.04727963886909005,
+      "gold": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          77
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            77
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            83
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            136
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            80
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            81
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1697.5725999800488,
+        "route": "law",
+        "queries": [
+          "Tôi đang tìm hiểu các mô hình chăm sóc, giáo dục trẻ mầm non. Nhóm trẻ riêng, lớp mẫu giáo riêng và cơ sở kết hợp cả hai được nhận trẻ trong những độ tuổi nào?",
+          "Quy định về độ tuổi nhận trẻ của nhóm trẻ riêng",
+          "Quy định về độ tuổi nhận trẻ của lớp mẫu giáo riêng và cơ sở kết hợp cả hai"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q037",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Khi xác định mức tiền lương bình quân để tính lương hưu hoặc khoản trợ cấp nhận một lần, doanh nghiệp cần căn cứ vào đâu?",
+      "top1_score": 0.046649531024531024,
+      "gold": [
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          15
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            15
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            72
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            15
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            15
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            15
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1504.3984999938402,
+        "route": "law",
+        "queries": [
+          "Khi xác định mức tiền lương bình quân để tính lương hưu hoặc khoản trợ cấp nhận một lần, doanh nghiệp cần căn cứ vào đâu?",
+          "Khi xác định mức tiền lương bình quân để tính lương hưu, doanh nghiệp cần căn cứ vào quy định nào?",
+          "Tiêu chí để xác định mức tiền lương bình quân để tính khoản trợ cấp nhận một lần trong doanh nghiệp là gì?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q038",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Công ty tôi có thể sắp xếp cho nhân viên đã vượt độ tuổi lao động làm ít giờ mỗi ngày hoặc làm bán thời gian không?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          148
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            148
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            32
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            149
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            169
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            3
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1425.9713999927044,
+        "route": "law",
+        "queries": [
+          "Công ty tôi có thể sắp xếp cho nhân viên đã vượt độ tuổi lao động làm ít giờ mỗi ngày hoặc làm bán thời gian không?",
+          "Công ty có được sắp xếp cho nhân viên đã vượt độ tuổi lao động làm ít giờ mỗi ngày không?",
+          "Công ty có được cho nhân viên đã vượt độ tuổi lao động làm việc theo hình thức bán thời gian không?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q039",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Tôi là chủ doanh nghiệp, muốn tìm hiểu Nhà nước hỗ trợ và tạo điều kiện thế nào để doanh nghiệp, người lao động tham gia chương trình hưu trí bổ sung?",
+      "top1_score": 0.047169957774465976,
+      "gold": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          127
+        ]
+      ],
+      "top": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            127
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            124
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            125
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            126
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            6
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1656.0967000259552,
+        "route": "law",
+        "queries": [
+          "Tôi là chủ doanh nghiệp, muốn tìm hiểu Nhà nước hỗ trợ và tạo điều kiện thế nào để doanh nghiệp, người lao động tham gia chương trình hưu trí bổ sung?",
+          "Nhà nước hỗ trợ và tạo điều kiện thế nào để doanh nghiệp tham gia chương trình hưu trí bổ sung?",
+          "Nhà nước hỗ trợ và tạo điều kiện thế nào để người lao động tham gia chương trình hưu trí bổ sung?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q040",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Công ty của tôi không còn đóng BHXH cho người lao động từ trước ngày 1/7/2024. Những tình trạng nào của công ty được xem là thuộc diện áp dụng quy định này?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          26
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            26
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            27
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            30
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            112
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            3
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1869.104800018249,
+        "route": "law",
+        "queries": [
+          "Công ty của tôi không còn đóng BHXH cho người lao động từ trước ngày 1/7/2024. Những tình trạng nào của công ty được xem là thuộc diện áp dụng quy định này?",
+          "Những tình trạng của công ty được xem là thuộc diện không còn đóng BHXH cho người lao động từ trước ngày 1/7/2024 theo quy định hiện hành."
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q041",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Doanh nghiệp của tôi không phải cá nhân và đang ngừng hoạt động. Hợp đồng lao động với nhân viên được tính là kết thúc từ thời điểm nào?",
+      "top1_score": 0.01282051282051282,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          45
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            45
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            34
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            48
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            36
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            20
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1124.3404999841005,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp của tôi không phải cá nhân và đang ngừng hoạt động. Hợp đồng lao động với nhân viên được tính là kết thúc từ thời điểm nào?",
+          "Thời điểm kết thúc hợp đồng lao động khi doanh nghiệp không phải cá nhân và đang ngừng hoạt động là khi nào"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q042",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Ngoài các trường hợp bắt buộc phải đối thoại, doanh nghiệp có thể tổ chức đối thoại thêm khi nào và cần căn cứ vào đâu?",
+      "top1_score": 0.043873209233152216,
+      "gold": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          37
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            37
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            37
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            37
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            37
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            37
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1515.647899999749,
+        "route": "law",
+        "queries": [
+          "Ngoài các trường hợp bắt buộc phải đối thoại, doanh nghiệp có thể tổ chức đối thoại thêm khi nào và cần căn cứ vào đâu?",
+          "Ngoài các trường hợp bắt buộc phải tổ chức đối thoại, doanh nghiệp có thể tổ chức đối thoại thêm trong những trường hợp nào?",
+          "Doanh nghiệp tổ chức đối thoại thêm cần căn cứ vào những quy định pháp luật nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q043",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Nhân viên trong công ty muốn lập một tổ chức riêng thì tổ chức đó được hoạt động hợp pháp từ thời điểm nào, và việc tổ chức hoạt động cần đáp ứng những yêu cầu chung nào?",
+      "top1_score": 0.028665028665028666,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          172
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            172
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            174
+          ]
+        ],
+        [
+          "vbpl-163515",
+          [
+            133
+          ]
+        ],
+        [
+          "vbpl-163515",
+          [
+            64
+          ]
+        ],
+        [
+          "vbpl-159227",
+          [
+            7
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 2010.849300015252,
+        "route": "law",
+        "queries": [
+          "Nhân viên trong công ty muốn lập một tổ chức riêng thì tổ chức đó được hoạt động hợp pháp từ thời điểm nào, và việc tổ chức hoạt động cần đáp ứng những yêu cầu chung nào?",
+          "Khi nào tổ chức do nhân viên trong công ty lập được hoạt động hợp pháp?",
+          "Những yêu cầu chung nào cần đáp ứng để tổ chức do nhân viên lập hoạt động hợp pháp?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q044",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Công ty tôi tổ chức làm thêm vượt quá 200 giờ nhưng không quá 300 giờ trong năm. Chậm nhất bao lâu sau khi bắt đầu thực hiện mức làm thêm này phải gửi thông báo?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          62
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            62
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            61
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            60
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            107
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            108
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1986.9456999877002,
+        "route": "law",
+        "queries": [
+          "Công ty tôi tổ chức làm thêm vượt quá 200 giờ nhưng không quá 300 giờ trong năm. Chậm nhất bao lâu sau khi bắt đầu thực hiện mức làm thêm này phải gửi thông báo?",
+          "Công ty phải gửi thông báo chậm nhất bao lâu sau khi bắt đầu thực hiện chế độ làm thêm từ 200 giờ đến không quá 300 giờ trong năm?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q045",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền?",
+      "top1_score": 0.01282051282051282,
+      "gold": [
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          8
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            27
+          ]
+        ],
+        [
+          "vbpl-181847",
+          [
+            7
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            8
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            18
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            29
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1712.2722000058275,
+        "route": "law",
+        "queries": [
+          "Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền?",
+          "Quy định về xác nhận quá trình đóng bảo hiểm xã hội của nhân viên khi công ty còn nợ tiền bảo hiểm xã hội.",
+          "Công ty xử lý như thế nào khi thu hồi được khoản nợ tiền bảo hiểm xã hội từ nhân viên nghỉ việc?"
+        ],
+        "fallback": false
+      },
+      "rank": 3
+    },
+    {
+      "id": "q046",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Doanh nghiệp tôi cần phối hợp với những bên nào để tổ chức cuộc họp người lao động, và phải tổ chức bao lâu một lần?",
+      "top1_score": 0.026875901875901876,
+      "gold": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          47
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            37
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            63
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            68
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            170
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            70
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1445.1902999717277,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp tôi cần phối hợp với những bên nào để tổ chức cuộc họp người lao động, và phải tổ chức bao lâu một lần?",
+          "Doanh nghiệp cần phối hợp với những bên nào để tổ chức cuộc họp người lao động?",
+          "Tần suất tổ chức cuộc họp người lao động trong doanh nghiệp là bao lâu một lần?"
+        ],
+        "fallback": false
+      },
+      "rank": null
+    },
+    {
+      "id": "q047",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Vợ tôi mất sau khi sinh con, còn tôi vẫn đi làm và không nghỉ để chăm con. Trong thời gian nghỉ thai sản còn lại của vợ, tôi có được nhận khoản hỗ trợ nào ngoài tiền lương không, và khoản đó được tính từ khi nào?",
+      "top1_score": 0.030776515151515152,
+      "gold": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          53
+        ]
+      ],
+      "top": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            53
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            53
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            139
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            53
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            53
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1517.9912000021432,
+        "route": "law",
+        "queries": [
+          "Vợ tôi mất sau khi sinh con, còn tôi vẫn đi làm và không nghỉ để chăm con. Trong thời gian nghỉ thai sản còn lại của vợ, tôi có được nhận khoản hỗ trợ nào ngoài tiền lương không, và khoản đó được tính từ khi nào?",
+          "Chồng có được nhận khoản hỗ trợ nào ngoài tiền lương trong thời gian nghỉ thai sản còn lại của vợ khi vợ mất sau khi sinh con không?",
+          "Khoản hỗ trợ ngoài tiền lương đó được tính từ thời điểm nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q048",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Mẹ tôi đang tạm ngưng nhận lương hưu thì khi mất, người đứng ra lo hậu sự cho bà có được nhận khoản hỗ trợ mai táng không?",
+      "top1_score": 0.031754032258064516,
+      "gold": [
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          21
+        ]
+      ],
+      "top": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            85
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            109
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            23
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            110
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            21
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1225.2294000063557,
+        "route": "law",
+        "queries": [
+          "Mẹ tôi đang tạm ngưng nhận lương hưu thì khi mất, người đứng ra lo hậu sự cho bà có được nhận khoản hỗ trợ mai táng không?",
+          "Người đứng ra lo hậu sự có được nhận khoản hỗ trợ mai táng khi người hưởng lương hưu đang tạm ngưng nhận lương hưu thì mất không?"
+        ],
+        "fallback": false
+      },
+      "rank": 5
+    },
+    {
+      "id": "q049",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Tôi thuê nhân viên làm ít giờ hơn lịch làm việc thông thường. Khi ký hợp đồng, cần thống nhất việc này ra sao và họ có được hưởng quyền lợi như nhân viên làm đủ thời gian không?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          32
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            32
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            13
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            20
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            109
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            105
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1355.7168999977876,
+        "route": "law",
+        "queries": [
+          "Tôi thuê nhân viên làm ít giờ hơn lịch làm việc thông thường. Khi ký hợp đồng, cần thống nhất việc này ra sao và họ có được hưởng quyền lợi như nhân viên làm đủ thời gian không?",
+          "Quy định về việc ký hợp đồng lao động với người lao động làm việc theo giờ ít hơn lịch làm việc thông thường",
+          "Quyền lợi của người lao động làm việc theo giờ không đủ thời gian làm việc thông thường so với người lao động làm việc đủ thời gian"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q050",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Trong tháng, tôi thuộc nhóm lao động hưởng lương phải tham gia BHXH nhưng không được trả lương ít nhất 14 ngày làm việc. Tháng đó tôi có phải đóng BHXH không, và công ty với tôi có thể thỏa thuận tiếp tục đóng không?",
+      "top1_score": 0.047619047619047616,
+      "gold": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          33
+        ]
+      ],
+      "top": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            33
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            11
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            9
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            33
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            168
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1742.1354000107385,
+        "route": "law",
+        "queries": [
+          "Trong tháng, tôi thuộc nhóm lao động hưởng lương phải tham gia BHXH nhưng không được trả lương ít nhất 14 ngày làm việc. Tháng đó tôi có phải đóng BHXH không, và công ty với tôi có thể thỏa thuận tiếp tục đóng không?",
+          "Người lao động thuộc nhóm hưởng lương phải tham gia BHXH nhưng không được trả lương ít nhất 14 ngày làm việc trong tháng có phải đóng BHXH không?",
+          "Công ty và người lao động có thể thỏa thuận tiếp tục đóng BHXH khi người lao động không được trả lương ít nhất 14 ngày làm việc trong tháng không?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q051",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không?",
+      "top1_score": 0.030621785881252923,
+      "gold": [
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          8
+        ]
+      ],
+      "top": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            73
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            16
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            15
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            15
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            15
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1332.0619000005536,
+        "route": "law",
+        "queries": [
+          "Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không?",
+          "Công ty có phải nộp bù phần bảo hiểm xã hội cho nhân viên khi điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội áp dụng cho cả những tháng trước đó không?"
+        ],
+        "fallback": false
+      },
+      "rank": null
+    },
+    {
+      "id": "q052",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Công ty tôi muốn tham gia chương trình hưu trí bổ sung cho nhân viên. Công ty có thể tự quyết định mức đóng không, và tiền đóng được quản lý, đầu tư, chi trả như thế nào?",
+      "top1_score": 0.04569460390355913,
+      "gold": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          125
+        ]
+      ],
+      "top": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            125
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            126
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            124
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            3
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            127
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1333.6304999829736,
+        "route": "law",
+        "queries": [
+          "Công ty tôi muốn tham gia chương trình hưu trí bổ sung cho nhân viên. Công ty có thể tự quyết định mức đóng không, và tiền đóng được quản lý, đầu tư, chi trả như thế nào?",
+          "Doanh nghiệp có quyền tự quyết định mức đóng vào chương trình hưu trí bổ sung cho nhân viên hay không?",
+          "Quy định về việc quản lý, đầu tư và chi trả tiền đóng vào chương trình hưu trí bổ sung cho nhân viên như thế nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q053",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Tôi đang nuôi con 8 tháng, mỗi ngày được nghỉ bao lâu trong giờ làm và thời gian nghỉ đó có bị trừ lương không?",
+      "top1_score": 0.04787506400409626,
+      "gold": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          80
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            80
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            58
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            137
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            109
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            56
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1677.964400005294,
+        "route": "law",
+        "queries": [
+          "Tôi đang nuôi con 8 tháng, mỗi ngày được nghỉ bao lâu trong giờ làm và thời gian nghỉ đó có bị trừ lương không?",
+          "Người lao động đang nuôi con dưới một tuổi được nghỉ trong giờ làm việc bao lâu mỗi ngày theo quy định pháp luật?",
+          "Thời gian nghỉ trong giờ làm việc dành cho người nuôi con dưới một tuổi có bị trừ lương hay không theo quy định pháp luật?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q054",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Tôi ký hợp đồng thuê mặt bằng để chuẩn bị mở công ty, nhưng hồ sơ đăng ký doanh nghiệp không được chấp thuận. Ai phải thực hiện các nghĩa vụ trong hợp đồng thuê?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          18
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            18
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            59
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            4
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            43
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            43
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1359.059000009438,
+        "route": "law",
+        "queries": [
+          "Tôi ký hợp đồng thuê mặt bằng để chuẩn bị mở công ty, nhưng hồ sơ đăng ký doanh nghiệp không được chấp thuận. Ai phải thực hiện các nghĩa vụ trong hợp đồng thuê?",
+          "Trường hợp ký hợp đồng thuê mặt bằng để mở công ty nhưng hồ sơ đăng ký doanh nghiệp không được chấp thuận, bên nào phải thực hiện các nghĩa vụ trong hợp đồng thuê?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q055",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Tôi là cổ đông của một công ty. Tôi có thể đứng tên góp vốn thay cho người khác không?",
+      "top1_score": 0.013513513513513514,
+      "gold": [
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          1
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          [
+            1
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            115
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            111
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            119
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            4
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1366.105900000548,
+        "route": "law",
+        "queries": [
+          "Tôi là cổ đông của một công ty. Tôi có thể đứng tên góp vốn thay cho người khác không?",
+          "Cổ đông có được quyền đứng tên góp vốn thay cho người khác trong công ty không?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q056",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Khi công ty giao dịch với bên khác hoặc tham gia vụ việc tại trọng tài, tòa án, ai có thể thay mặt công ty thực hiện quyền và nghĩa vụ?",
+      "top1_score": 0.016129032258064516,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          12
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            12
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            12
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            12
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            12
+          ]
+        ],
+        [
+          "vbpl-cc6d35b0-688e-11f1-aa58-3bd4afd32897",
+          [
+            3
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1765.3401000134181,
+        "route": "law",
+        "queries": [
+          "Khi công ty giao dịch với bên khác hoặc tham gia vụ việc tại trọng tài, tòa án, ai có thể thay mặt công ty thực hiện quyền và nghĩa vụ?",
+          "Ai có thẩm quyền thay mặt công ty thực hiện quyền và nghĩa vụ khi công ty giao dịch với bên khác?",
+          "Ai có thẩm quyền thay mặt công ty tham gia vụ việc tại trọng tài, tòa án?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q057",
+      "type": "numeric",
+      "field": "enterprise",
+      "question": "Công ty tôi vừa chính thức mở chi nhánh ở nước ngoài. Trong bao lâu phải báo cho cơ quan nào, cần gửi kèm giấy tờ gì và cơ quan đó cập nhật thông tin trong thời hạn nào?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          30
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            30
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            30
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            45
+          ]
+        ],
+        [
+          "vbpl-155200",
+          [
+            20
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            78
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1707.9999999841675,
+        "route": "law",
+        "queries": [
+          "Công ty tôi vừa chính thức mở chi nhánh ở nước ngoài. Trong bao lâu phải báo cho cơ quan nào, cần gửi kèm giấy tờ gì và cơ quan đó cập nhật thông tin trong thời hạn nào?",
+          "Công ty mở chi nhánh ở nước ngoài phải báo cho cơ quan quản lý nào và trong thời hạn bao lâu?",
+          "Công ty mở chi nhánh ở nước ngoài cần gửi kèm giấy tờ gì khi báo cáo và cơ quan tiếp nhận cập nhật thông tin trong thời hạn bao lâu?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q058",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Nhóm cổ đông của tôi đạt tỷ lệ sở hữu cần thiết theo luật. Chúng tôi được xem những hồ sơ nào của công ty, và có được xem tài liệu chứa bí mật thương mại hoặc bí mật kinh doanh không?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          115
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            115
+          ]
+        ],
+        [
+          "vbpl-146442",
+          [
+            58
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            170
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            171
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            115
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1396.2090999993961,
+        "route": "law",
+        "queries": [
+          "Nhóm cổ đông của tôi đạt tỷ lệ sở hữu cần thiết theo luật. Chúng tôi được xem những hồ sơ nào của công ty, và có được xem tài liệu chứa bí mật thương mại hoặc bí mật kinh doanh không?",
+          "Nhóm cổ đông có tỷ lệ sở hữu theo quy định pháp luật được xem những hồ sơ nào của công ty?",
+          "Nhóm cổ đông có được quyền xem tài liệu chứa bí mật thương mại hoặc bí mật kinh doanh của công ty không?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q059",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Tôi đăng ký vốn công ty cao hơn số tiền thực góp, đồng thời định giá tài sản đưa vào góp vốn cao hơn giá trị thực thì có vi phạm điều cấm nào không?",
+      "top1_score": 0.014925373134328358,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          16
+        ]
+      ],
+      "top": [
+        [
+          "luat-sua-doi-doanh-nghiep-76-2025-qh15",
+          [
+            1
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            36
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            75
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            47
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            34
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1505.7404999970458,
+        "route": "law",
+        "queries": [
+          "Tôi đăng ký vốn công ty cao hơn số tiền thực góp, đồng thời định giá tài sản đưa vào góp vốn cao hơn giá trị thực thì có vi phạm điều cấm nào không?",
+          "Việc đăng ký vốn công ty cao hơn số tiền thực góp có vi phạm điều cấm trong pháp luật doanh nghiệp không?",
+          "Việc định giá tài sản góp vốn cao hơn giá trị thực có bị coi là vi phạm điều cấm trong luật góp vốn không?"
+        ],
+        "fallback": false
+      },
+      "rank": 7
+    },
+    {
+      "id": "q060",
+      "type": "numeric",
+      "field": "enterprise",
+      "question": "Công ty tôi xin ý kiến Hội đồng thành viên qua văn bản. Cần bao nhiêu thành viên đồng ý để nghị quyết được thông qua, và có thể ký trên nhiều bản giống nhau không?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          98
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            98
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            61
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            61
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            61
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            61
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1294.882799993502,
+        "route": "law",
+        "queries": [
+          "Công ty tôi xin ý kiến Hội đồng thành viên qua văn bản. Cần bao nhiêu thành viên đồng ý để nghị quyết được thông qua, và có thể ký trên nhiều bản giống nhau không?",
+          "Cần bao nhiêu thành viên Hội đồng thành viên đồng ý để nghị quyết được thông qua khi xin ý kiến qua văn bản?",
+          "Có được ký nghị quyết Hội đồng thành viên trên nhiều bản giống nhau không?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q061",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Công ty cổ phần sửa đổi điều lệ thì ai phải ký vào bản điều lệ đã sửa đổi?",
+      "top1_score": 0.03131881575727918,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          24
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            24
+          ]
+        ],
+        [
+          "vbpl-6ad0bc90-62ea-11f1-8d8f-7326969477ba",
+          [
+            42
+          ]
+        ],
+        [
+          "vbpl-6ad0bc90-62ea-11f1-8d8f-7326969477ba",
+          [
+            41
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            24
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            44
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1211.727999994764,
+        "route": "law",
+        "queries": [
+          "Công ty cổ phần sửa đổi điều lệ thì ai phải ký vào bản điều lệ đã sửa đổi?",
+          "Ai phải ký vào bản điều lệ đã sửa đổi của công ty cổ phần?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q062",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Công ty TNHH một thành viên muốn chuyển sang mô hình có từ hai thành viên bằng cách tiếp nhận vốn của người mới. Ngoài hồ sơ chuyển đổi thông thường, cần nộp thêm những giấy tờ nào để chứng minh việc này?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          26
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            26
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            45
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            45
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            45
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            26
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1437.1426000143401,
+        "route": "law",
+        "queries": [
+          "Công ty TNHH một thành viên muốn chuyển sang mô hình có từ hai thành viên bằng cách tiếp nhận vốn của người mới. Ngoài hồ sơ chuyển đổi thông thường, cần nộp thêm những giấy tờ nào để chứng minh việc này?",
+          "Hồ sơ cần nộp khi công ty TNHH một thành viên chuyển sang công ty TNHH hai thành viên trở lên là gì?",
+          "Các giấy tờ chứng minh việc tiếp nhận vốn của thành viên mới trong hồ sơ chuyển đổi loại hình công ty TNHH một thành viên sang công ty TNHH nhiều thành viên là gì?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q063",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Tôi đã nộp hồ sơ đăng ký doanh nghiệp ở cấp tỉnh. Cơ quan nào xem xét hồ sơ và tôi cần vào đâu để biết kết quả xử lý?",
+      "top1_score": 0.047712258380229994,
+      "gold": [
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          9
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            31
+          ]
+        ],
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          [
+            9
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            21
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            21
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            21
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 2032.6796000008471,
+        "route": "law",
+        "queries": [
+          "Tôi đã nộp hồ sơ đăng ký doanh nghiệp ở cấp tỉnh. Cơ quan nào xem xét hồ sơ và tôi cần vào đâu để biết kết quả xử lý?",
+          "Cơ quan nào có thẩm quyền xem xét hồ sơ đăng ký doanh nghiệp đã nộp ở cấp tỉnh?",
+          "Nơi nào để tra cứu kết quả xử lý hồ sơ đăng ký doanh nghiệp đã nộp tại cấp tỉnh?"
+        ],
+        "fallback": false
+      },
+      "rank": 2
+    },
+    {
+      "id": "q064",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Tôi là thành viên công ty TNHH nhưng làm mất giấy xác nhận phần vốn góp. Tôi cần làm gì để được cấp lại?",
+      "top1_score": 0.03225806451612903,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          47
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            47
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            62
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            3
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            44
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            178
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1394.9477999994997,
+        "route": "law",
+        "queries": [
+          "Tôi là thành viên công ty TNHH nhưng làm mất giấy xác nhận phần vốn góp. Tôi cần làm gì để được cấp lại?",
+          "Trình tự, thủ tục cấp lại giấy xác nhận phần vốn góp cho thành viên công ty TNHH khi bị mất là gì?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q065",
+      "type": "numeric",
+      "field": "enterprise",
+      "question": "Tôi vừa thành lập công ty TNHH một thành viên. Tôi có bao lâu để hoàn tất việc góp tài sản đã đăng ký, và những khoảng thời gian nào không tính vào hạn đó?",
+      "top1_score": 0.04918032786885246,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          75
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            75
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            77
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            74
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            47
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            86
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1445.3612999932375,
+        "route": "law",
+        "queries": [
+          "Tôi vừa thành lập công ty TNHH một thành viên. Tôi có bao lâu để hoàn tất việc góp tài sản đã đăng ký, và những khoảng thời gian nào không tính vào hạn đó?",
+          "Thời gian để chủ sở hữu công ty TNHH một thành viên hoàn tất việc góp tài sản đã đăng ký là bao lâu?",
+          "Những khoảng thời gian nào không được tính vào thời hạn góp tài sản của chủ sở hữu công ty TNHH một thành viên?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q066",
+      "type": "lookup",
+      "field": "enterprise",
+      "question": "Công ty tôi đã thông báo tạm ngừng đến một ngày nhất định nhưng muốn hoạt động lại sớm, đồng thời mở lại chi nhánh và địa điểm kinh doanh. Cơ quan đăng ký sẽ cập nhật tình trạng của các đơn vị này như thế nào?",
+      "top1_score": 0.046543778801843315,
+      "gold": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          60
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            60
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            60
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            60
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            60
+          ]
+        ],
+        [
+          "nghi-dinh-296-2026-nd-cp",
+          [
+            11
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1570.9704000037163,
+        "route": "law",
+        "queries": [
+          "Công ty tôi đã thông báo tạm ngừng đến một ngày nhất định nhưng muốn hoạt động lại sớm, đồng thời mở lại chi nhánh và địa điểm kinh doanh. Cơ quan đăng ký sẽ cập nhật tình trạng của các đơn vị này như thế nào?",
+          "Quy trình cập nhật tình trạng hoạt động của công ty khi công ty muốn hoạt động trở lại trước ngày đã thông báo tạm ngừng.",
+          "Thủ tục mở lại chi nhánh và địa điểm kinh doanh của công ty và việc cơ quan đăng ký cập nhật tình trạng của các đơn vị này."
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "q068",
+      "type": "out_of_corpus",
+      "field": "other",
+      "question": "Thủ tục ly hôn thuận tình cần những giấy tờ gì?",
+      "top1_score": 0.032266458495966696,
+      "gold": [],
+      "top": [
+        [
+          "vbpl-151086",
+          [
+            61
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            67
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            4
+          ]
+        ],
+        [
+          "vbpl-151086",
+          [
+            53
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            4
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1340.5399000039324,
+        "route": "law",
+        "queries": [
+          "Thủ tục ly hôn thuận tình cần những giấy tờ gì?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "q069",
+      "type": "out_of_corpus",
+      "field": "other",
+      "question": "Mức phạt khi vượt đèn đỏ đối với xe máy là bao nhiêu?",
+      "top1_score": 0.0,
+      "gold": [],
+      "top": [],
+      "plan": {
+        "plan_ms": 1446.8636000237893,
+        "route": "law",
+        "queries": [
+          "Mức phạt khi vượt đèn đỏ đối với xe máy là bao nhiêu?",
+          "Mức phạt vi phạm hành chính khi điều khiển xe máy vượt đèn đỏ là bao nhiêu?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "q070",
+      "type": "out_of_corpus",
+      "field": "other",
+      "question": "Điều kiện để được cấp sổ đỏ cho đất nông nghiệp là gì?",
+      "top1_score": 0.02661064425770308,
+      "gold": [],
+      "top": [
+        [
+          "vbpl-172729",
+          [
+            12
+          ]
+        ],
+        [
+          "vbpl-172729",
+          [
+            18
+          ]
+        ],
+        [
+          "vbpl-172729",
+          [
+            8
+          ]
+        ],
+        [
+          "vbpl-172729",
+          [
+            51
+          ]
+        ],
+        [
+          "vbpl-f989a690-80e5-11f1-abb8-b75cd8c90162",
+          [
+            74
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1789.1548000043258,
+        "route": "law",
+        "queries": [
+          "Điều kiện để được cấp sổ đỏ cho đất nông nghiệp là gì?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "q071",
+      "type": "out_of_corpus",
+      "field": "tax",
+      "question": "Tội trốn thuế bị phạt tù tối đa bao nhiêu năm?",
+      "top1_score": 0.03278688524590164,
+      "gold": [],
+      "top": [
+        [
+          "vbpl-1fb56670-688f-11f1-a040-9b421432560c",
+          [
+            15
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            45
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            44
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            44
+          ]
+        ],
+        [
+          "luat-quan-ly-thue-108-2025-qh15",
+          [
+            44
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1415.274800005136,
+        "route": "law",
+        "queries": [
+          "Tội trốn thuế bị phạt tù tối đa bao nhiêu năm?",
+          "Tội trốn thuế bị xử phạt tù tối đa bao nhiêu năm?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "q072",
+      "type": "out_of_corpus",
+      "field": "tax",
+      "question": "Thuế nhập khẩu ô tô điện từ Trung Quốc hiện nay là bao nhiêu?",
+      "top1_score": 0.031054405392392875,
+      "gold": [],
+      "top": [
+        [
+          "vbpl-160629",
+          [
+            8
+          ]
+        ],
+        [
+          "vbpl-159440",
+          [
+            5
+          ]
+        ],
+        [
+          "vbpl-159433",
+          [
+            5
+          ]
+        ],
+        [
+          "vbpl-159438",
+          [
+            4
+          ]
+        ],
+        [
+          "vbpl-158714",
+          [
+            3
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1408.9698000170756,
+        "route": "law",
+        "queries": [
+          "Thuế nhập khẩu ô tô điện từ Trung Quốc hiện nay là bao nhiêu?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "q074",
+      "type": "out_of_corpus",
+      "field": "enterprise",
+      "question": "Doanh nghiệp phải làm gì khi phá sản theo Luật Phá sản?",
+      "top1_score": 0.03278688524590164,
+      "gold": [],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            214
+          ]
+        ],
+        [
+          "vbpl-cc6d35b0-688e-11f1-aa58-3bd4afd32897",
+          [
+            7
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            72
+          ]
+        ],
+        [
+          "nghi-dinh-252-2026-nd-cp",
+          [
+            72
+          ]
+        ],
+        [
+          "vbpl-163515",
+          [
+            116
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1248.8315999798942,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp phải làm gì khi phá sản theo Luật Phá sản?",
+          "Doanh nghiệp phải thực hiện những nghĩa vụ gì khi tuyên bố phá sản theo quy định của Luật Phá sản?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "q075",
+      "type": "out_of_corpus",
+      "field": "enterprise",
+      "question": "Thời hạn bảo hộ nhãn hiệu là bao lâu?",
+      "top1_score": 0.027222222222222224,
+      "gold": [],
+      "top": [
+        [
+          "vbpl-151082",
+          [
+            7
+          ]
+        ],
+        [
+          "vbpl-151082",
+          [
+            6
+          ]
+        ],
+        [
+          "vbpl-163442",
+          [
+            9
+          ]
+        ],
+        [
+          "vbpl-163439",
+          [
+            15
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            86
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1193.041299993638,
+        "route": "law",
+        "queries": [
+          "Thời hạn bảo hộ nhãn hiệu là bao lâu?",
+          "Thời hạn bảo hộ nhãn hiệu theo quy định pháp luật Việt Nam là bao lâu?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "q077",
+      "type": "out_of_corpus",
+      "field": "labor",
+      "question": "Mức lương tối thiểu vùng áp dụng từ năm 2026 là bao nhiêu?",
+      "top1_score": 0.029116045245077504,
+      "gold": [],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            91
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            49
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            50
+          ]
+        ],
+        [
+          "vbpl-0793b480-6faa-11f1-a61a-ebc9f6b1d56e",
+          [
+            3
+          ]
+        ],
+        [
+          "vbpl-f751bac0-5e71-11f1-9a00-4fc779ae0e98",
+          [
+            1
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1260.4203000082634,
+        "route": "law",
+        "queries": [
+          "Mức lương tối thiểu vùng áp dụng từ năm 2026 là bao nhiêu?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "q078",
+      "type": "out_of_corpus",
+      "field": "other",
+      "question": "Thủ tục xin thị thực du lịch Nhật Bản cần những giấy tờ gì?",
+      "top1_score": 0.0,
+      "gold": [],
+      "top": [],
+      "plan": {
+        "plan_ms": 1209.96279999963,
+        "route": "law",
+        "queries": [
+          "Thủ tục xin thị thực du lịch Nhật Bản cần những giấy tờ gì?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "q079",
+      "type": "out_of_corpus",
+      "field": "other",
+      "question": "Nhà hàng cần xin giấy chứng nhận an toàn thực phẩm như thế nào?",
+      "top1_score": 0.04918032786885246,
+      "gold": [],
+      "top": [
+        [
+          "vbpl-151075",
+          [
+            2
+          ]
+        ],
+        [
+          "vbpl-151075",
+          [
+            1
+          ]
+        ],
+        [
+          "vbpl-151075",
+          [
+            3
+          ]
+        ],
+        [
+          "vbpl-151075",
+          [
+            4
+          ]
+        ],
+        [
+          "vbpl-166076",
+          [
+            2
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1443.6148999957368,
+        "route": "law",
+        "queries": [
+          "Nhà hàng cần xin giấy chứng nhận an toàn thực phẩm như thế nào?",
+          "Nhà hàng cần chuẩn bị hồ sơ gì để xin giấy chứng nhận an toàn thực phẩm?",
+          "Thủ tục xin cấp giấy chứng nhận an toàn thực phẩm đối với nhà hàng được quy định như thế nào?"
+        ],
+        "fallback": false
+      }
+    },
+    {
+      "id": "h01",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Mình kinh doanh nhỏ lẻ, doanh thu cả năm tối đa bao nhiêu thì không phải đóng thuế thu nhập cá nhân?",
+      "top1_score": 0.031746031746031744,
+      "gold": [
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          7
+        ]
+      ],
+      "top": [
+        [
+          "vbpl-fbf2f200-6002-11f1-babf-6bf011c15003",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            7
+          ]
+        ],
+        [
+          "vbpl-fbf2f200-6002-11f1-babf-6bf011c15003",
+          [
+            4
+          ]
+        ],
+        [
+          "vbpl-fbf2f200-6002-11f1-babf-6bf011c15003",
+          [
+            4
+          ]
+        ],
+        [
+          "vbpl-fbf2f200-6002-11f1-babf-6bf011c15003",
+          [
+            10
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1444.7403000085615,
+        "route": "law",
+        "queries": [
+          "Mình kinh doanh nhỏ lẻ, doanh thu cả năm tối đa bao nhiêu thì không phải đóng thuế thu nhập cá nhân?",
+          "Mức doanh thu tối đa trong một năm của hộ kinh doanh nhỏ lẻ để không phải đóng thuế thu nhập cá nhân là bao nhiêu?"
+        ],
+        "fallback": false
+      },
+      "rank": 2
+    },
+    {
+      "id": "h02",
+      "type": "lookup",
+      "field": "tax",
+      "question": "Khi bán hàng, hóa đơn điện tử phải được xuất vào thời điểm nào?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          9
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            9
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            9
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            9
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            9
+          ]
+        ],
+        [
+          "nghi-dinh-254-2026-nd-cp",
+          [
+            15
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1155.4155999911018,
+        "route": "law",
+        "queries": [
+          "Khi bán hàng, hóa đơn điện tử phải được xuất vào thời điểm nào?",
+          "Thời điểm phải xuất hóa đơn điện tử khi bán hàng là khi nào?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h03",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Một năm người lao động làm công việc bình thường được nghỉ phép hưởng nguyên lương mấy ngày?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          113
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            113
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            66
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            65
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            55
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            89
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1962.7314999816008,
+        "route": "law",
+        "queries": [
+          "Một năm người lao động làm công việc bình thường được nghỉ phép hưởng nguyên lương mấy ngày?",
+          "Người lao động làm công việc bình thường được nghỉ phép hưởng nguyên lương bao nhiêu ngày trong một năm?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h04",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Theo luật, một tuần công ty được yêu cầu nhân viên làm tối đa bao nhiêu giờ trong khung giờ bình thường?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          105
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            105
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            107
+          ]
+        ],
+        [
+          "nghi-dinh-145-2020-nd-cp",
+          [
+            60
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            146
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            106
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1243.5282999940682,
+        "route": "law",
+        "queries": [
+          "Theo luật, một tuần công ty được yêu cầu nhân viên làm tối đa bao nhiêu giờ trong khung giờ bình thường?",
+          "Theo luật, một tuần công ty được yêu cầu nhân viên làm việc tối đa bao nhiêu giờ trong khung giờ làm việc bình thường?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h05",
+      "type": "lookup",
+      "field": "labor",
+      "question": "Nhân viên làm trên một năm rồi nghỉ việc thì được trả khoản tiền gì thêm và tính theo cách nào?",
+      "top1_score": 0.014084507042253521,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          46
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            47
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            41
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            26
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            10
+          ]
+        ],
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            113
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1479.3192999786697,
+        "route": "law",
+        "queries": [
+          "Nhân viên làm trên một năm rồi nghỉ việc thì được trả khoản tiền gì thêm và tính theo cách nào?",
+          "Nhân viên làm việc trên một năm nghỉ việc được hưởng các khoản tiền gì thêm?",
+          "Cách tính các khoản tiền phải trả cho nhân viên khi nghỉ việc sau một năm làm việc?"
+        ],
+        "fallback": false
+      },
+      "rank": null
+    },
+    {
+      "id": "h06",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Khi nào lao động nam đủ điều kiện về tuổi để nghỉ hưu bình thường?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          169
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            169
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            64
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            141
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            41
+          ]
+        ],
+        [
+          "nghi-dinh-158-2025-nd-cp",
+          [
+            41
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1598.0160999752115,
+        "route": "law",
+        "queries": [
+          "Khi nào lao động nam đủ điều kiện về tuổi để nghỉ hưu bình thường?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h07",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Doanh nghiệp và người lao động mỗi tháng phải trích bao nhiêu phần trăm lương để đóng bảo hiểm xã hội bắt buộc?",
+      "top1_score": 0.04666516279419505,
+      "gold": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          32
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          33
+        ]
+      ],
+      "top": [
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            33
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            34
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            32
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            33
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            33
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1499.9018000089563,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp và người lao động mỗi tháng phải trích bao nhiêu phần trăm lương để đóng bảo hiểm xã hội bắt buộc?",
+          "Doanh nghiệp phải trích bao nhiêu phần trăm lương để đóng bảo hiểm xã hội bắt buộc hàng tháng?",
+          "Người lao động phải trích bao nhiêu phần trăm lương để đóng bảo hiểm xã hội bắt buộc hàng tháng?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h08",
+      "type": "numeric",
+      "field": "enterprise",
+      "question": "Muốn thành lập công ty cổ phần thì tối thiểu phải có bao nhiêu cổ đông?",
+      "top1_score": 0.016129032258064516,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          111
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            111
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            120
+          ]
+        ],
+        [
+          "vbpl-163515",
+          [
+            66
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            22
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1457.7841999998782,
+        "route": "law",
+        "queries": [
+          "Muốn thành lập công ty cổ phần thì tối thiểu phải có bao nhiêu cổ đông?",
+          "Điều kiện tối thiểu về số lượng cổ đông để thành lập công ty cổ phần tại Việt Nam là bao nhiêu?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h09",
+      "type": "numeric",
+      "field": "enterprise",
+      "question": "Công ty dọn trụ sở sang địa chỉ khác thì có bao nhiêu ngày để báo với cơ quan đăng ký kinh doanh?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          31
+        ]
+      ],
+      "top": [
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            40
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            56
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            43
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            31
+          ]
+        ],
+        [
+          "nghi-dinh-168-2025-nd-cp",
+          [
+            52
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1466.1739000002854,
+        "route": "law",
+        "queries": [
+          "Công ty dọn trụ sở sang địa chỉ khác thì có bao nhiêu ngày để báo với cơ quan đăng ký kinh doanh?",
+          "Thời hạn công ty phải báo với cơ quan đăng ký kinh doanh khi dọn trụ sở sang địa chỉ khác là bao nhiêu ngày?"
+        ],
+        "fallback": false
+      },
+      "rank": 4
+    },
+    {
+      "id": "h10",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Mức thuế suất thuế thu nhập doanh nghiệp áp dụng chung cho đa số doanh nghiệp là bao nhiêu?",
+      "top1_score": 0.03177805800756621,
+      "gold": [
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          10
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          11
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-tndn-67-2025-qh15",
+          [
+            10
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            11
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            11
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            11
+          ]
+        ],
+        [
+          "nghi-dinh-320-2025-nd-cp",
+          [
+            11
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1457.5178000086453,
+        "route": "law",
+        "queries": [
+          "Mức thuế suất thuế thu nhập doanh nghiệp áp dụng chung cho đa số doanh nghiệp là bao nhiêu?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h11",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào?",
+      "top1_score": 0.012658227848101266,
+      "gold": [
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          9
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          9
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            9
+          ]
+        ],
+        [
+          "luat-thue-gtgt-48-2024-qh15",
+          [
+            9
+          ]
+        ],
+        [
+          "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+          [
+            9
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            19
+          ]
+        ],
+        [
+          "nghi-dinh-181-2025-nd-cp",
+          [
+            17
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1338.632700004382,
+        "route": "law",
+        "queries": [
+          "Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào?",
+          "Mức thuế giá trị gia tăng áp dụng đối với bán hàng hóa dịch vụ thông thường là bao nhiêu?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h12",
+      "type": "numeric",
+      "field": "enterprise",
+      "question": "Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn?",
+      "top1_score": 0.015873015873015872,
+      "gold": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          46
+        ]
+      ],
+      "top": [
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            46
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            47
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            47
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            47
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            4
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1270.8457999979146,
+        "route": "law",
+        "queries": [
+          "Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn?",
+          "Công ty trách nhiệm hữu hạn có nhiều thành viên được phép có tối đa bao nhiêu người góp vốn?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h13",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Lao động nữ sinh con thứ hai được nghỉ thai sản bao lâu?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          139
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            139
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            53
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            53
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            53
+          ]
+        ],
+        [
+          "luat-bhxh-41-2024-qh15",
+          [
+            53
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1252.1488000056706,
+        "route": "law",
+        "queries": [
+          "Lao động nữ sinh con thứ hai được nghỉ thai sản bao lâu?",
+          "Lao động nữ sinh con thứ hai được nghỉ thai sản bao lâu theo quy định pháp luật?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h14",
+      "type": "numeric",
+      "field": "labor",
+      "question": "Doanh nghiệp được cho nhân viên thử việc tối đa bao nhiêu ngày với vị trí quản lý doanh nghiệp?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          25
+        ]
+      ],
+      "top": [
+        [
+          "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+          [
+            25
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            4
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            190
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            102
+          ]
+        ],
+        [
+          "luat-doanh-nghiep-59-2020-qh14",
+          [
+            99
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1441.4875000074971,
+        "route": "law",
+        "queries": [
+          "Doanh nghiệp được cho nhân viên thử việc tối đa bao nhiêu ngày với vị trí quản lý doanh nghiệp?",
+          "Doanh nghiệp được cho nhân viên thử việc tối đa bao nhiêu ngày với vị trí quản lý doanh nghiệp"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    },
+    {
+      "id": "h15",
+      "type": "numeric",
+      "field": "tax",
+      "question": "Giảm trừ gia cảnh cho bản thân người nộp thuế hiện nay là bao nhiêu tiền mỗi tháng?",
+      "top1_score": 0.03278688524590164,
+      "gold": [
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          10
+        ]
+      ],
+      "top": [
+        [
+          "luat-thue-tncn-109-2025-qh15",
+          [
+            10
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            47
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            48
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            47
+          ]
+        ],
+        [
+          "nghi-dinh-253-2026-nd-cp",
+          [
+            47
+          ]
+        ]
+      ],
+      "plan": {
+        "plan_ms": 1408.8548000145238,
+        "route": "law",
+        "queries": [
+          "Giảm trừ gia cảnh cho bản thân người nộp thuế hiện nay là bao nhiêu tiền mỗi tháng?",
+          "Mức giảm trừ gia cảnh cho bản thân người nộp thuế hiện nay là bao nhiêu tiền mỗi tháng?"
+        ],
+        "fallback": false
+      },
+      "rank": 1
+    }
+  ]
+}

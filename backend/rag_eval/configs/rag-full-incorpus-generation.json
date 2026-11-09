@@ -1,0 +1,17 @@
+{
+  "require_in_force": true,
+  "top_k": 5,
+  "min_similarity": 0.0,
+  "name": "rag-full-incorpus",
+  "tier": "generation",
+  "chunk_set": "article",
+  "mode": "hybrid",
+  "query_planner_provider": "openai",
+  "query_planner_model": "gpt-4.1-mini",
+  "rerank": "llm",
+  "rerank_provider": "openai",
+  "rerank_model": "gpt-4.1-mini",
+  "min_top_score": 0.5,
+  "question_types": ["lookup", "numeric"],
+  "max_output_tokens": 4000
+}

@@ -16,3 +16,11 @@ def test_sources_never_get_the_no_source_rules():
     prompt = prompt_with_context(RetrievalResult(contexts=[context], searched=True))
 
     assert NO_SOURCE_RULES not in prompt and '<reference id="1">' in prompt
+
+
+def test_sources_present_still_forbid_details_missing_from_them():
+    context = RetrievedContext(content="Nội dung", citation_id="1")
+
+    prompt = prompt_with_context(RetrievalResult(contexts=[context], searched=True))
+
+    assert "không có trong dữ liệu tham khảo" in prompt
