@@ -168,7 +168,7 @@ $env:ANTHROPIC_API_KEY = "..."   # hoặc OPENAI_API_KEY + CHAT_PROVIDER=openai
 docker compose up --build
 ```
 
-Mở `http://localhost:3000`. Có thể đặt các biến trên vào file `.env` ở thư mục gốc (đã gitignore). `RAG_ENABLED=true` để bật RAG; `backend/corpus/` được mount read-only, index Qdrant dựng lại bằng `scripts/ingest_corpus.py`.
+Mở `http://localhost:3000`. Có thể đặt các biến trên vào file `.env` ở thư mục gốc (đã gitignore). `RAG_ENABLED=true` để bật RAG; `backend/corpus/` được mount read-only, index Qdrant dựng lại bằng `scripts/corpus_ingest.py`.
 Nếu đang chạy container Qdrant riêng (`scripts/start-qdrant.ps1`) thì dừng nó trước, vì cùng cổng 6333.
 
 ## Xác thực & phân quyền
@@ -176,7 +176,7 @@ Nếu đang chạy container Qdrant riêng (`scripts/start-qdrant.ps1`) thì d�
 - **Access token**: JWT sống ngắn (`ACCESS_TOKEN_MINUTES`, mặc định 15) trong cookie httponly `vietaxlegal_session`.
 - **Refresh token**: chuỗi ngẫu nhiên, chỉ lưu hash SHA-256 trong bảng `refresh_tokens`, cookie httponly `vietaxlegal_refresh` giới hạn path `/api/auth`. Mỗi lần dùng sẽ bị thu hồi và cấp token mới (rotation); dùng lại token cũ coi là bị lộ và thu hồi cả phiên. Sống 24 giờ, hoặc 30 ngày nếu chọn "ghi nhớ".
 - **Logout** thu hồi phiên phía server; khoá user (`isActive=false`) thu hồi mọi phiên của user đó.
-- **RBAC**: cột `users.role` (`user` | `admin`), dependency `require_role(...)` trả `403 FORBIDDEN`. Admin đầu tiên tạo bằng `python scripts/create_admin.py email@...` (không có đường HTTP để tự nâng quyền).
+- **RBAC**: cột `users.role` (`user` | `admin`), dependency `require_role(...)` trả `403 FORBIDDEN`. Admin đầu tiên tạo bằng `python scripts/admin_create.py email@...` (không có đường HTTP để tự nâng quyền).
 - **Rate limit**: đăng nhập sai 5 lần/15 phút theo `ip|identifier`; đăng ký `REGISTER_MAX_PER_HOUR` (10) lần/giờ theo IP; chat 10 tin/phút và 100 tin/ngày theo user. Bộ đếm đăng nhập/đăng ký nằm trong bộ nhớ process (kiểm tra và đếm nguyên tử dưới một lock, loại key ít dùng nhất khi đầy), nên chỉ đúng với một worker; cần nhiều worker thì chuyển sang Postgres/Redis. Sau nginx, IP lấy từ `X-Forwarded-For` do nginx ghi đè.
 - Frontend tự gọi `/auth/refresh` một lần khi gặp `401` rồi gửi lại request (`authFetch` trong `services/api.js`).
 
@@ -268,7 +268,7 @@ Văn bản pháp luật (corpus/, nguồn gốc trong git)
   → model trả lời, ghi [n]; chỉ nguồn được trích mới được lưu và hiển thị
 ```
 
-Số liệu đánh giá nằm ở `backend/rag_eval/results/SUMMARY.md` (sinh bằng `scripts/export_results.py`).
+Số liệu đánh giá nằm ở `backend/rag_eval/results/SUMMARY.md` (sinh bằng `scripts/eval_export_results.py`).
 Các số liệu đang đánh dấu `provisional` vì bộ câu hỏi chưa được con người duyệt; chỉ trích dẫn số
 liệu trong luận văn sau khi duyệt xong. Cách chạy từng bước xem [backend/README.md](backend/README.md).
 

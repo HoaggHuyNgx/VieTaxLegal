@@ -1,7 +1,7 @@
 """Run an evaluation config and write rag_eval/results/<date>-<name>.json.
 
 From backend/:
-  .venv/Scripts/python.exe scripts/run_eval.py rag_eval/configs/dense-article.json [--provisional]
+  .venv/Scripts/python.exe scripts/eval_run.py rag_eval/configs/retrieval/dense-article.json
 Retrieval tier needs only the query embedding (cheap). Generation tier calls the chat model.
 --provisional also scores unreviewed (pending) questions: for tuning only, flagged in the result.
 """

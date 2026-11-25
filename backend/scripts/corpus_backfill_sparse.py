@@ -1,6 +1,6 @@
 """Add sparse (lexical) vectors to an already ingested collection; no embedding cost.
 
-From backend/: .venv/Scripts/python.exe scripts/backfill_sparse.py --chunk-set article
+From backend/: .venv/Scripts/python.exe scripts/corpus_backfill_sparse.py --chunk-set article
 Run once per collection before using RAG_RETRIEVAL_MODE=hybrid. Safe to re-run.
 """
 

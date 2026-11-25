@@ -2,7 +2,7 @@
 
 Needs the `corpus` extra and two parquet files from the dataset's `metadata` and `content` configs.
 From backend/:
-  .venv/Scripts/python.exe scripts/import_vbpl.py --metadata meta.parquet --content content.parquet
+  .venv/Scripts/python.exe scripts/corpus_import_vbpl.py --metadata m.parquet --content c.parquet
 
 Status comes from the portal snapshot, which can lag reality, so it is recorded in `notes` as not
 verified by a person. Documents that fail the structure checks are skipped, never cut by length.

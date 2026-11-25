@@ -1,7 +1,7 @@
 """Score the stored answers of a generation result against gold_answer, in place.
 
 From backend/:
-  .venv/Scripts/python.exe scripts/judge_answers.py rag_eval/results/<file>.json --model <id>
+  .venv/Scripts/python.exe scripts/eval_judge_answers.py rag_eval/results/<file>.json --model <id>
 Calls only the judge model, so existing runs can be compared without generating answers again.
 Use a judge model other than the one that wrote the answers.
 """

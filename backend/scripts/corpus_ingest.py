@@ -1,8 +1,8 @@
 """Embed the corpus and write it to Qdrant (idempotent; safe to re-run).
 
 From backend/:
-  .venv/Scripts/python.exe scripts/ingest_corpus.py --chunk-set article --dry-run
-  .venv/Scripts/python.exe scripts/ingest_corpus.py --chunk-set article [--only <slug>]
+  .venv/Scripts/python.exe scripts/corpus_ingest.py --chunk-set article --dry-run
+  .venv/Scripts/python.exe scripts/corpus_ingest.py --chunk-set article [--only <slug>]
 
 Provider and model come from .env (EMBEDDING_PROVIDER / EMBEDDING_MODEL). --dry-run embeds
 nothing and calls no API: it prints chunk counts and the estimated tokens and cost.

@@ -5,7 +5,7 @@ import pytest
 from app.services.rag.ingest.chunking import article_chunks
 from app.services.rag.ingest.corpus_manifest import CORPUS_DIR, load_manifest
 from app.services.rag.ingest.legal_parser import parse
-from scripts.import_vbpl import (
+from scripts.corpus_import_vbpl import (
     has_oversized_chunk,
     html_to_text,
     is_candidate,

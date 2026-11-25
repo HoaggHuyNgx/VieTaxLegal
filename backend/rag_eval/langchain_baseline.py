@@ -8,7 +8,7 @@ gap in the numbers comes from what differs on purpose:
   - raw chunk text is embedded (no heading path) and search is dense only (no sparse, no RRF);
   - repealed articles stay in the text, as a generic loader ignoring `excluded_articles` would.
 Documents are still filtered by `status` when `require_in_force` is set, so the question set stays
-comparable. Nothing here is imported by the app; it only runs through `scripts/run_eval.py`.
+comparable. Nothing here is imported by the app; it only runs through `scripts/eval_run.py`.
 """
 
 import time

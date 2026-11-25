@@ -1,6 +1,6 @@
 """Merge rag_eval/results/*.json into SUMMARY.md and CSV tables for the thesis.
 
-From backend/: .venv/Scripts/python.exe scripts/export_results.py
+From backend/: .venv/Scripts/python.exe scripts/eval_export_results.py
 Provisional rows (unreviewed gold) are labelled; do not quote them in the thesis.
 """
 

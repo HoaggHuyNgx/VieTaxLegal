@@ -1,6 +1,6 @@
 """Promote an existing user to admin (there is deliberately no HTTP path to the first admin).
 
-From backend/: .venv/Scripts/python.exe scripts/create_admin.py you@example.com
+From backend/: .venv/Scripts/python.exe scripts/admin_create.py you@example.com
 """
 
 import argparse

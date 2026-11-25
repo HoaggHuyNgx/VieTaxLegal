@@ -140,7 +140,7 @@ py -m venv .venv
 nhau (CI cũng dùng file này). Sau khi nâng package có chủ đích, tạo lại file bằng
 `.\.venv\Scripts\python.exe -m pip freeze --exclude-editable`.
 
-Công cụ xử lý kho văn bản (`scripts/extract_corpus_text.py`, `scripts/corpus_report.py`) cần thêm
+Công cụ xử lý kho văn bản (`scripts/corpus_extract_text.py`, `scripts/corpus_report.py`) cần thêm
 `pymupdf` để đọc PDF: `.\.venv\Scripts\python.exe -m pip install -e ".[corpus]"`. App và CI không cần gói này.
 
 Không cần kích hoạt virtualenv nếu luôn gọi Python bằng đường dẫn
@@ -376,14 +376,14 @@ Chạy từ thư mục `backend` (Qdrant: `scripts/start-qdrant.ps1`, cần Dock
 
 ```powershell
 pip install -e ".[corpus]"                                   # chỉ cần để đọc PDF
-.\.venv\Scripts\python.exe scripts\extract_corpus_text.py    # raw/ → texts/
-.\.venv\Scripts\python.exe scripts\corpus_report.py          # kiểm tra parser, thoát 1 nếu có lỗi
-.\.venv\Scripts\python.exe scripts\ingest_corpus.py --chunk-set article --dry-run
-.\.venv\Scripts\python.exe scripts\ingest_corpus.py --chunk-set article
-.\.venv\Scripts\python.exe scripts\backfill_sparse.py --chunk-set article   # chỉ khi cần dựng lại sparse
+.\.venv\Scripts\python.exe scripts\corpus_extract_text.py                         # raw/ → texts/
+.\.venv\Scripts\python.exe scripts\corpus_report.py                               # kiểm tra parser, thoát 1 nếu có lỗi
+.\.venv\Scripts\python.exe scripts\corpus_ingest.py --chunk-set article --dry-run
+.\.venv\Scripts\python.exe scripts\corpus_ingest.py --chunk-set article
+.\.venv\Scripts\python.exe scripts\corpus_backfill_sparse.py --chunk-set article  # chỉ khi cần dựng lại sparse
 ```
 
-`ingest_corpus.py` chạy lại được nhiều lần: chỉ nhúng chunk mới, cập nhật `status` mà không nhúng
+`corpus_ingest.py` chạy lại được nhiều lần: chỉ nhúng chunk mới, cập nhật `status` mà không nhúng
 lại, và xóa điểm cũ của văn bản đã sửa. Biến môi trường liên quan nằm trong `.env.example`
 (`RAG_*`, `QDRANT_*`, `EMBEDDING_*`, `EVAL_GENERATOR_MODEL`). `RAG_RETRIEVAL_MODE` nhận `dense`,
 `sparse` hoặc `hybrid` (dense + sparse hợp nhất bằng RRF, hòa điểm được phá theo thứ hạng dense).
@@ -394,19 +394,22 @@ gốc, gộp bằng RRF, lỗi thì chỉ tìm câu gốc); để trống là t�
 (0 là tắt); khi đó prompt cấm trả lời từ trí nhớ. `eval_generate.py --multi N` thêm câu hỏi nhiều ý
 ở trạng thái `pending`, không ghi đè câu đã duyệt.
 
-`scripts/import_vbpl.py` (extra `corpus`) nhập văn bản lọc từ dataset vbpl vào `corpus/vbpl/` (không nằm
-trong git). Nạp vào collection riêng bằng `ingest_corpus.py --chunk-set vbpl --extra-manifest
+`scripts/corpus_import_vbpl.py` (extra `corpus`) nhập văn bản lọc từ dataset vbpl vào `corpus/vbpl/` (không nằm
+trong git). Nạp vào collection riêng bằng `corpus_ingest.py --chunk-set vbpl --extra-manifest
 corpus/vbpl/manifest.json`; đặt `RAG_CHUNK_SET=vbpl` để dùng. Hiệu lực của các văn bản này lấy từ bản
 chụp cổng vbpl, chưa có người kiểm tra.
 
 ### Đánh giá
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\eval_generate.py          # sinh câu hỏi (trạng thái pending)
-.\.venv\Scripts\python.exe scripts\eval_review.py            # con người duyệt: a/r/e/s/q
-.\.venv\Scripts\python.exe scripts\run_eval.py rag_eval/configs/hybrid-article.json
-.\.venv\Scripts\python.exe scripts\export_results.py         # rag_eval/results/SUMMARY.md + CSV
+.\.venv\Scripts\python.exe scripts\eval_generate.py        # sinh câu hỏi (trạng thái pending)
+.\.venv\Scripts\python.exe scripts\eval_review.py          # con người duyệt: a/r/e/s/q
+.\.venv\Scripts\python.exe scripts\eval_run.py rag_eval/configs/retrieval/hybrid-article.json
+.\.venv\Scripts\python.exe scripts\eval_export_results.py  # rag_eval/results/SUMMARY.md + CSV
 ```
+
+File cấu hình nằm trong `rag_eval/configs/`, chia theo trường `tier`: `retrieval/` (đo truy xuất)
+và `generation/` (đo câu trả lời). Kết quả ghi vào `rag_eval/results/`.
 
 Cấu hình `langchain-baseline.json` chạy pipeline RAG kiểu giáo trình (LangChain
 `RecursiveCharacterTextSplitter` 1200/200 ký tự, embedding thô, chỉ dense, lưu trong bộ nhớ) để so với

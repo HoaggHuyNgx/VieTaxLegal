@@ -1,6 +1,6 @@
 """Extract every manifest document from corpus/raw/ into corpus/texts/<slug>.txt.
 
-Usage (from backend/): .venv/Scripts/python.exe scripts/extract_corpus_text.py
+Usage (from backend/): .venv/Scripts/python.exe scripts/corpus_extract_text.py
 """
 
 import sys
