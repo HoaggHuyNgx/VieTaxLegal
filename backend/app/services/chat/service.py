@@ -1,3 +1,13 @@
+"""Chat orchestration: one question in, one streamed answer out.
+
+Two phases, so errors still get a proper HTTP status:
+1. `prepare_chat_stream` (sync, before any response header): rate limit, ownership check, then
+   save the user message and an empty assistant message in state `pending`.
+2. `stream_chat_events` (async, inside the SSE response): retrieve sources, stream the model's
+   text as `delta` events, keep only the sources the answer cited, save, then send `done`.
+SSE event order: `meta` -> `delta`* -> `done` | `error`.
+"""
+
 import asyncio
 import json
 import logging

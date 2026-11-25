@@ -1,3 +1,9 @@
+"""HTTP endpoints for chat (thin layer; the logic lives in `services/chat/`).
+
+GET /usage, GET /conversations, GET and DELETE /conversations/{id}, and POST /messages/stream,
+which returns a Server-Sent Events stream. Every query filters by the current user.
+"""
+
 from collections.abc import AsyncIterator
 from datetime import datetime, timezone
 from typing import Annotated

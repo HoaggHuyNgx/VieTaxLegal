@@ -1,3 +1,10 @@
+"""System prompts: the base legal-assistant rules plus citation or no-source rules.
+
+`prompt_with_context` builds the final system prompt from a `RetrievalResult`: no search -> base
+prompt; searched but nothing found -> forbid answering from memory; sources found -> numbered
+`<reference>` blocks the model must cite as `[n]`.
+"""
+
 from app.services.chat.retriever import RetrievalResult
 
 # The no-fabrication rules (document numbers, articles, dates, quotes) and the

@@ -1,3 +1,10 @@
+"""The single seam between chat and RAG.
+
+Chat only knows the `Retriever` protocol and its result types (`Citation`, `RetrievedContext`,
+`RetrievalResult`). `get_retriever()` returns `NullRetriever` (no sources) when RAG is off or
+fails to start, otherwise the Qdrant retriever wrapped by the optional planner/rerank/gate steps.
+"""
+
 import logging
 from collections.abc import Sequence
 from dataclasses import dataclass

@@ -1,3 +1,11 @@
+"""LLM access for chat: one `ModelProvider` interface over Anthropic and OpenAI via LangChain.
+
+`stream()` turns the model's chunks into `ProviderEvent`s: `delta` (text) and a final event with
+token usage. `get_model_provider()` picks the provider from `CHAT_PROVIDER`; an unknown name gives
+`UnavailableProvider`. A missing API key or unknown provider raises `ProviderConfigurationError`
+when streaming starts, which the chat reports as `CHAT_NOT_CONFIGURED` instead of crashing.
+"""
+
 from collections.abc import AsyncIterator, Sequence
 from dataclasses import dataclass
 from typing import Literal, Protocol

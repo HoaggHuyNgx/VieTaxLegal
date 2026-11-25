@@ -8,7 +8,7 @@ import { getConversation, streamChatMessage } from '../../services/chat'
  * new answer, and every terminal state in between.
  *
  * The SSE payloads are read against the exact contract in
- * `backend/app/services/chat.py` — `meta{conversation,userMessage,assistantMessage}`,
+ * `backend/app/services/chat/service.py` — `meta{conversation,userMessage,assistantMessage}`,
  * `delta{messageId,text}`, `done{message,usage}`, `error{messageId,error}`. A
  * shape that does not match is a backend bug and must surface, not be absorbed.
  *

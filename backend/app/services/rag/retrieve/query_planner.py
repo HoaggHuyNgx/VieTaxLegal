@@ -14,10 +14,20 @@ import time
 from dataclasses import dataclass
 
 from app.core.config import Settings
-from app.services.chat.provider import LangChainProvider, ProviderError, ProviderMessage
+from app.services.chat.provider import (
+    LangChainProvider,
+    ModelProvider,
+    ProviderError,
+    ProviderMessage,
+)
 from app.services.chat.retriever import RetrievalResult
 from app.services.rag.retrieve.fusion import rrf_fuse
-from app.services.rag.retrieve.qdrant_retriever import Hit, SearchOutcome, hits_to_result
+from app.services.rag.retrieve.qdrant_retriever import (
+    Hit,
+    QdrantRetriever,
+    SearchOutcome,
+    hits_to_result,
+)
 from app.services.rag.retrieve.reranker import LlmReranker
 
 logger = logging.getLogger(__name__)
@@ -71,7 +81,7 @@ def _rewrites(question: str, raw: object) -> list[str]:
 
 
 class QueryPlanner:
-    def __init__(self, provider) -> None:
+    def __init__(self, provider: ModelProvider) -> None:
         self._provider = provider
 
     async def _complete(self, question: str) -> str:
@@ -96,9 +106,19 @@ class QueryPlanner:
 class RetrievalPipeline:
     """Plan, search every query in parallel, gate, fuse with RRF, then rerank once."""
 
-    def __init__(self, inner, top_k: int, planner=None, reranker=None, min_top_score: float = 0.0):
-        self._inner, self._top_k, self._planner = inner, top_k, planner
-        self._reranker, self._min_top_score = reranker, min_top_score
+    def __init__(
+        self,
+        inner: QdrantRetriever,
+        top_k: int,
+        planner: QueryPlanner | None = None,
+        reranker: LlmReranker | None = None,
+        min_top_score: float = 0.0,
+    ) -> None:
+        self._inner = inner  # the plain dense/sparse/hybrid retriever being wrapped
+        self._top_k = top_k
+        self._planner = planner
+        self._reranker = reranker
+        self._min_top_score = min_top_score  # no-source gate; 0 = off
         self._rerank_timeouts = 0
 
     @property
@@ -178,7 +198,9 @@ def llm_provider(settings: Settings, name: str, model: str) -> LangChainProvider
     return LangChainProvider(name, key, model)
 
 
-def build_pipeline(retriever, settings: Settings):
+def build_pipeline(
+    retriever: QdrantRetriever, settings: Settings
+) -> QdrantRetriever | RetrievalPipeline:
     """Wrap `retriever` with the steps configured in `settings`; none configured = unchanged."""
     planner = reranker = None
     if settings.rag_query_planner_model:
