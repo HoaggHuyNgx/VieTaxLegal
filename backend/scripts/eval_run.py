@@ -22,6 +22,7 @@ from rag_eval.runner import (  # noqa: E402
     RESULTS_DIR,
     EvalConfig,
     build_retriever,
+    result_filename,
     run_metadata,
     run_retrieval_tier,
     select_questions,
@@ -34,11 +35,13 @@ async def main() -> int:
     parser.add_argument("config", type=Path)
     parser.add_argument("--provisional", action="store_true")
     parser.add_argument("--tier", choices=("retrieval", "generation"))
+    parser.add_argument("--split", choices=("dev", "test"), help="tune on dev, report test")
     args = parser.parse_args()
 
     config = EvalConfig.load(args.config)
     config.include_pending = config.include_pending or args.provisional
     config.tier = args.tier or config.tier
+    config.split = args.split or config.split
     settings = get_settings()
     questions = load_questions()
     chosen = select_questions(questions, config)
@@ -64,8 +67,8 @@ async def main() -> int:
         "questions": rows,
     }
     RESULTS_DIR.mkdir(exist_ok=True)
-    suffix = "-provisional" if result["meta"]["dataset"]["provisional"] else ""
-    path = RESULTS_DIR / f"{result['meta']['date']}-{config.name}-{config.tier}{suffix}.json"
+    provisional = result["meta"]["dataset"]["provisional"]
+    path = RESULTS_DIR / result_filename(config, result["meta"]["date"], provisional)
     path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     print(f"\nwrote {path}")

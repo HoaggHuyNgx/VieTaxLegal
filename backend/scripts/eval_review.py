@@ -2,7 +2,8 @@
 
 From backend/: .venv/Scripts/python.exe scripts/eval_review.py [--limit 20]
 Keys: a approve | r reject | e edit the question text, then approve | s skip | q save and quit.
-Progress is saved after every decision, so you can stop any time.
+Progress is saved after every decision, so you can stop any time. Each approved question gets its
+fixed dev/test split when saved (see rag_eval/dataset.py).
 """
 
 import argparse
@@ -12,7 +13,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.services.rag.ingest.corpus_manifest import load_manifest  # noqa: E402
-from rag_eval.dataset import load_questions, save_questions  # noqa: E402
+from rag_eval.dataset import assign_splits, load_questions, save_questions  # noqa: E402
 from rag_eval.review import apply_key, gold_text  # noqa: E402
 
 
@@ -41,7 +42,9 @@ def main() -> int:
         note = input("reason: ") if key == "r" else ""
         new_text = input("new question: ") if key == "e" else ""
         if apply_key(question, key, note, new_text):
+            assign_splits(questions)
             save_questions(questions)
+    assign_splits(questions)
     save_questions(questions)
     return 0
 

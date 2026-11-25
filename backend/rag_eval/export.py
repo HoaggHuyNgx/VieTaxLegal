@@ -31,8 +31,9 @@ def _ms(summary: dict | None) -> str:
 
 def _label(result: dict) -> str:
     meta = result["meta"]
+    split = meta["config"].get("split")  # older result files predate splits
     suffix = " (provisional)" if meta["dataset"]["provisional"] else ""
-    return f"{meta['config']['name']}{suffix}"
+    return f"{meta['config']['name']}{f' [{split}]' if split else ''}{suffix}"
 
 
 def retrieval_rows(results: list[dict]) -> list[list[str]]:

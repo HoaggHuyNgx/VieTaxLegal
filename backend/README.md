@@ -422,6 +422,18 @@ quả được đánh dấu `provisional`, không dùng làm số liệu trong l
 một lần nhúng truy vấn; tầng `generation` gọi model chat (đo citation precision/recall, tham chiếu
 bịa, từ chối câu ngoài phạm vi, độ trễ và token).
 
+Mỗi câu `approved` có trường `split` cố định (`dev` hoặc `test`), chia cân bằng theo lĩnh vực × loại
+câu hỏi và không bao giờ bị đổi khi thêm câu mới; `eval_review.py` tự gán khi lưu. Chọn tham số
+(ngưỡng `min_top_score`, RRF…) bằng `--split dev`, chỉ lấy số liệu cho luận văn từ `--split test`:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\eval_run.py rag_eval/configs/retrieval/hybrid-vbpl-full-052.json --split dev
+.\.venv\Scripts\python.exe scripts\eval_run.py rag_eval/configs/retrieval/hybrid-vbpl-full-052.json --split test
+```
+
+Tên file kết quả có thêm hậu tố `-dev`/`-test`; bảng trong `SUMMARY.md` ghi `[dev]`/`[test]`. Không
+truyền `--split` thì chấm toàn bộ như trước.
+
 ### Quyền riêng tư
 
 Câu hỏi của người dùng được gửi tới OpenAI để nhúng truy vấn (khi `EMBEDDING_PROVIDER=openai`) và

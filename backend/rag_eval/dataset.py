@@ -1,6 +1,12 @@
-"""Evaluation question set: JSONL rows with a review status. Only `approved` rows are scored."""
+"""Evaluation question set: JSONL rows with a review status. Only `approved` rows are scored.
 
+Approved rows carry a fixed `split`: tune settings (thresholds, RRF) on `dev`, and quote only `test`
+numbers in the thesis, so a reported score is never measured on the questions used to pick it.
+"""
+
+import hashlib
 import json
+from collections import Counter
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
@@ -8,6 +14,7 @@ DATA_DIR = Path(__file__).resolve().parent / "data"
 QUESTIONS_PATH = DATA_DIR / "questions.jsonl"
 TYPES = ("lookup", "numeric", "multi", "out_of_corpus")
 STATUSES = ("pending", "approved", "rejected")
+SPLITS = ("", "dev", "test")  # "" = not assigned yet
 
 
 @dataclass
@@ -28,6 +35,7 @@ class Question:
     source: str = "llm"  # llm | human
     status: str = "pending"
     reviewer_note: str = ""
+    split: str = ""
 
     def to_json(self) -> str:
         return json.dumps(asdict(self), ensure_ascii=False)
@@ -41,6 +49,8 @@ class Question:
         question = cls(**known, gold_refs=refs)
         if question.type not in TYPES or question.status not in STATUSES:
             raise ValueError(f"{question.id}: invalid type/status")
+        if question.split not in SPLITS:
+            raise ValueError(f"{question.id}: invalid split")
         if question.type != "out_of_corpus" and not question.gold_refs:
             raise ValueError(f"{question.id}: in-corpus question needs gold_refs")
         return question
@@ -63,3 +73,20 @@ def scoreable(questions: list[Question], include_pending: bool = False) -> list[
     """Approved questions; `include_pending` is for provisional tuning runs only."""
     allowed = {"approved", "pending"} if include_pending else {"approved"}
     return [q for q in questions if q.status in allowed]
+
+
+def assign_splits(questions: list[Question]) -> None:
+    """Give every approved question without a split one, balanced per (field, type).
+
+    Splits already assigned never move, so adding questions later cannot reshuffle the test set.
+    Within a stratum, new questions go (in id-hash order, so the result is reproducible) to
+    whichever side currently has fewer, dev on a tie.
+    """
+    counts: Counter[tuple[str, str, str]] = Counter(
+        (q.field, q.type, q.split) for q in questions if q.split
+    )
+    todo = [q for q in questions if q.status == "approved" and not q.split]
+    for q in sorted(todo, key=lambda q: hashlib.sha256(q.id.encode()).hexdigest()):
+        dev, test = counts[(q.field, q.type, "dev")], counts[(q.field, q.type, "test")]
+        q.split = "dev" if dev <= test else "test"
+        counts[(q.field, q.type, q.split)] += 1

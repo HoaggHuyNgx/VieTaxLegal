@@ -43,6 +43,7 @@ class EvalConfig:
     # custom = this project's pipeline; langchain_baseline = stock LangChain (retrieval tier only)
     pipeline: str = "custom"
     include_pending: bool = False  # provisional run on unreviewed questions
+    split: str | None = None  # dev (tuning) | test (reported numbers) | None = every question
     depth: int = 10  # retrieved chunks scored by the retrieval tier
     embedding_provider: str | None = None
     embedding_model: str | None = None
@@ -95,9 +96,17 @@ def build_retriever(config: EvalConfig, settings: Settings) -> tuple[QdrantRetri
 
 def select_questions(questions: list[Question], config: EvalConfig) -> list[Question]:
     chosen = scoreable(questions, config.include_pending)
+    if config.split:
+        chosen = [q for q in chosen if q.split == config.split]
     if config.question_types:
         chosen = [q for q in chosen if q.type in config.question_types]
     return chosen[: config.limit] if config.limit else chosen
+
+
+def result_filename(config: EvalConfig, day: str, provisional: bool) -> str:
+    split = f"-{config.split}" if config.split else ""
+    suffix = "-provisional" if provisional else ""
+    return f"{day}-{config.name}-{config.tier}{split}{suffix}.json"
 
 
 def gold_articles(question: Question) -> set[tuple[str, int]]:

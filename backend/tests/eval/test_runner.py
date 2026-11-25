@@ -11,7 +11,13 @@ from app.services.rag.ingest.chunking import ChunkDraft
 from app.services.rag.retrieve.qdrant_retriever import QdrantRetriever
 from rag_eval.dataset import GoldRef, Question
 from rag_eval.generation_tier import run_generation_tier
-from rag_eval.runner import EvalConfig, run_retrieval_tier, threshold_sweep
+from rag_eval.runner import (
+    EvalConfig,
+    result_filename,
+    run_retrieval_tier,
+    select_questions,
+    threshold_sweep,
+)
 
 COLLECTION = "legal_eval_test"
 
@@ -147,3 +153,23 @@ def test_no_rag_baseline_has_no_sources_so_any_reference_is_unsupported():
     assert rows[0]["n_cited"] == 0 and rows[0]["hallucinated_reference"] is True
     assert summary["citation_recall"] == 0.0
     assert summary["hallucinated_reference_rate"] == 1.0
+
+
+def test_a_split_config_scores_only_that_split_and_names_its_result_file():
+    questions = [
+        Question(
+            "d", "q?", "tax", "lookup", "a", [GoldRef("x", 1)], status="approved", split="dev"
+        ),
+        Question(
+            "t", "q?", "tax", "lookup", "a", [GoldRef("x", 1)], status="approved", split="test"
+        ),
+    ]
+    config = EvalConfig("hybrid", split="test")
+
+    assert [q.id for q in select_questions(questions, config)] == ["t"]
+    assert result_filename(config, "2026-11-26", provisional=False) == (
+        "2026-11-26-hybrid-retrieval-test.json"
+    )
+    assert result_filename(EvalConfig("hybrid"), "2026-11-26", provisional=True) == (
+        "2026-11-26-hybrid-retrieval-provisional.json"
+    )
