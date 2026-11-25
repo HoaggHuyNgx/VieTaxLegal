@@ -152,3 +152,15 @@ def test_hybrid_respects_the_in_force_filter():
     outcome = asyncio.run(run())
 
     assert "Điều 1" not in [h.payload["locator"] for h in outcome.hits]
+
+
+def test_rrf_k_is_configurable_and_defaults_to_60():
+    async def run(**kwargs):
+        retriever = await _hybrid_retriever(**kwargs)
+        return await retriever.search("khấu đầu vào")
+
+    default, small_k = asyncio.run(run()), asyncio.run(run(rrf_k=20))
+
+    # A fused score is at most 2 / (k + 1): ranked first in both lists.
+    assert default.hits[0].score <= 2 / 61
+    assert small_k.hits[0].score > 2 / 61

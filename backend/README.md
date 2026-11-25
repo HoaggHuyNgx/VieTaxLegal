@@ -434,6 +434,18 @@ câu hỏi và không bao giờ bị đổi khi thêm câu mới; `eval_review.p
 Tên file kết quả có thêm hậu tố `-dev`/`-test`; bảng trong `SUMMARY.md` ghi `[dev]`/`[test]`. Không
 truyền `--split` thì chấm toàn bộ như trước.
 
+Chỉ số truy xuất là **Hit@k**: tỉ lệ câu hỏi có ít nhất một Điều gold trong top k (file kết quả cũ
+gọi là `recall@k`, cùng một con số). Gần như mọi câu chỉ có một Điều gold nên Hit@k ≈ Recall@k.
+So sánh hai cấu hình trên cùng bộ câu hỏi (khoảng tin cậy bootstrap 95% của chênh lệch, kiểm định
+McNemar cho Hit@k, danh sách câu đổi thứ hạng):
+
+```powershell
+.\.venv\Scripts\python.exe scripts\eval_compare.py rag_eval/results/A.json rag_eval/results/B.json
+```
+
+Chênh lệch chỉ được coi là thật khi khoảng tin cậy không chứa 0. Kiểm tra độ nhạy của hằng số RRF
+bằng `retrieval/hybrid-article-rrfk{20,40,100}.json` (k=60 là `hybrid-article`); mặc định vẫn là 60.
+
 ### Quyền riêng tư
 
 Câu hỏi của người dùng được gửi tới OpenAI để nhúng truy vấn (khi `EMBEDDING_PROVIDER=openai`) và

@@ -24,7 +24,7 @@ from app.services.rag.index.qdrant_store import (
     collection_name,
     get_async_client,
 )
-from app.services.rag.retrieve.fusion import rrf_fuse
+from app.services.rag.retrieve.fusion import RRF_K, rrf_fuse
 from app.services.rag.retrieve.reranker import Reranker
 
 logger = logging.getLogger(__name__)
@@ -58,11 +58,13 @@ class QdrantRetriever:
         require_in_force: bool = True,
         mode: str = "dense",
         reranker: Reranker | None = None,
+        rrf_k: int = RRF_K,  # only the eval varies it (sensitivity check)
     ) -> None:
         self._client, self._embedder, self._collection = client, embedder, collection
         self._mode, self._reranker = mode, reranker
         self._top_k, self._min_similarity = top_k, min_similarity
         self._require_in_force = require_in_force
+        self._rrf_k = rrf_k
 
     def _filter(self) -> models.Filter | None:
         if not self._require_in_force:
@@ -130,7 +132,7 @@ class QdrantRetriever:
             self._dense_points(vector, depth), self._sparse_points(query, depth)
         )
         by_id = {str(p.id): p for p in [*lexical, *dense]}
-        fused = rrf_fuse([[str(p.id) for p in dense], [str(p.id) for p in lexical]])
+        fused = rrf_fuse([[str(p.id) for p in dense], [str(p.id) for p in lexical]], k=self._rrf_k)
         hits = [Hit(i, score, by_id[i].payload or {}) for i, score in fused[:limit]]
         return hits, (dense[0].score if dense else None)
 

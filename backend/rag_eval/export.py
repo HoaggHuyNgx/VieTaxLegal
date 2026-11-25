@@ -36,14 +36,19 @@ def _label(result: dict) -> str:
     return f"{meta['config']['name']}{f' [{split}]' if split else ''}{suffix}"
 
 
+def _hit(summary: dict, k: int) -> float | None:
+    # Result files written before the rename call the same number recall@k.
+    return summary.get(f"hit@{k}", summary.get(f"recall@{k}"))
+
+
 def retrieval_rows(results: list[dict]) -> list[list[str]]:
     rows = []
     for result in (r for r in results if r["meta"]["config"]["tier"] == "retrieval"):
         cfg, s = result["meta"]["config"], result["summary"]
         rows.append([
             _label(result), cfg["chunk_set"], cfg.get("mode", "dense"), cfg.get("rerank") or "-",
-            str(s["in_corpus_questions"]), _fmt(s["recall@1"]), _fmt(s["recall@3"]),
-            _fmt(s["recall@5"]), _fmt(s["mrr"]), _ms(s["embed_ms"]), _ms(s["search_ms"]),
+            str(s["in_corpus_questions"]), _fmt(_hit(s, 1)), _fmt(_hit(s, 3)),
+            _fmt(_hit(s, 5)), _fmt(s["mrr"]), _ms(s["embed_ms"]), _ms(s["search_ms"]),
         ])  # fmt: skip
     return rows
 
@@ -61,7 +66,7 @@ def generation_rows(results: list[dict]) -> list[list[str]]:
     return rows
 
 
-RETRIEVAL_HEADER = ["config", "chunks", "mode", "rerank", "n", "R@1", "R@3", "R@5", "MRR",
+RETRIEVAL_HEADER = ["config", "chunks", "mode", "rerank", "n", "Hit@1", "Hit@3", "Hit@5", "MRR",
                     "embed ms p50/p95", "search ms p50/p95"]  # fmt: skip
 GENERATION_HEADER = ["config", "answered", "cit. precision", "cit. recall", "hallucinated ref",
                      "OOC no-cite", "OOC abstain", "TTFT ms p50/p95", "total ms p50/p95",

@@ -1,5 +1,7 @@
 import asyncio
 from collections.abc import AsyncIterator, Sequence
+from dataclasses import asdict
+from pathlib import Path
 
 import pytest
 from qdrant_client import AsyncQdrantClient, models
@@ -88,7 +90,7 @@ def test_retrieval_tier_scores_rank_recall_and_mrr():
     assert summary["in_corpus_questions"] == 2 and summary["out_of_corpus_questions"] == 1
     assert rows[0]["rank"] == 1
     assert rows[1]["rank"] in (2, 3)
-    assert summary["recall@1"] == 0.5 and summary["recall@5"] == 1.0
+    assert summary["hit@1"] == 0.5 and summary["hit@5"] == 1.0
     assert 0.5 < summary["mrr"] <= 1.0
     assert summary["embed_ms"]["p50"] is not None
     assert len(summary["threshold_sweep"]) > 5
@@ -173,3 +175,14 @@ def test_a_split_config_scores_only_that_split_and_names_its_result_file():
     assert result_filename(EvalConfig("hybrid"), "2026-11-26", provisional=True) == (
         "2026-11-26-hybrid-retrieval-provisional.json"
     )
+
+
+def test_rrf_sensitivity_configs_differ_from_hybrid_article_only_in_rrf_k():
+    configs = Path(__file__).resolve().parents[2] / "rag_eval" / "configs" / "retrieval"
+    base = asdict(EvalConfig.load(configs / "hybrid-article.json"))
+    assert base["rrf_k"] == 60
+
+    for k in (20, 40, 100):
+        variant = asdict(EvalConfig.load(configs / f"hybrid-article-rrfk{k}.json"))
+        assert variant["rrf_k"] == k
+        assert {**variant, "name": base["name"], "rrf_k": 60} == base

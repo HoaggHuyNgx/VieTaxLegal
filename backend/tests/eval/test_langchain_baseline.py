@@ -106,7 +106,7 @@ def test_runner_scores_the_baseline_like_any_other_retriever(parsed):
 
     summary, rows = asyncio.run(run_retrieval_tier(config, retriever, [question]))
 
-    assert summary["recall@1"] == 1.0 and summary["mrr"] == 1.0
+    assert summary["hit@1"] == 1.0 and summary["mrr"] == 1.0
     assert summary["chunks"] == 4
     assert rows[0]["rank"] == 1
 

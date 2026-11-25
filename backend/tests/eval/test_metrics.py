@@ -3,11 +3,11 @@ import pytest
 from rag_eval.metrics import (
     citation_precision_recall,
     first_hit_rank,
+    hit_at_k,
     latency_summary,
     mean,
     mrr,
     percentile,
-    recall_at_k,
 )
 
 GOLD = {("luat-a", 5)}
@@ -25,17 +25,17 @@ def test_document_must_match_not_only_the_article_number():
     assert first_hit_rank([{("luat-b", 5)}], GOLD) is None
 
 
-def test_recall_at_k_and_mrr_hand_computed():
+def test_hit_at_k_and_mrr_hand_computed():
     ranks = [1, 3, None, 5]
 
-    assert recall_at_k(ranks, 1) == 0.25
-    assert recall_at_k(ranks, 3) == 0.5
-    assert recall_at_k(ranks, 5) == 0.75
+    assert hit_at_k(ranks, 1) == 0.25
+    assert hit_at_k(ranks, 3) == 0.5
+    assert hit_at_k(ranks, 5) == 0.75
     assert mrr(ranks) == pytest.approx((1 + 1 / 3 + 0 + 1 / 5) / 4)
 
 
 def test_empty_inputs_give_zero_not_errors():
-    assert recall_at_k([], 5) == 0.0
+    assert hit_at_k([], 5) == 0.0
     assert mrr([]) == 0.0
 
 

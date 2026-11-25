@@ -11,6 +11,7 @@ from app.core.config import Settings
 from app.services.rag.index.embeddings import get_embedder
 from app.services.rag.index.qdrant_store import collection_name, get_async_client
 from app.services.rag.ingest.corpus_manifest import CORPUS_DIR
+from app.services.rag.retrieve.fusion import RRF_K
 from app.services.rag.retrieve.qdrant_retriever import QdrantRetriever
 from app.services.rag.retrieve.query_planner import QueryPlanner, RetrievalPipeline, llm_provider
 from app.services.rag.retrieve.reranker import LlmReranker
@@ -19,7 +20,7 @@ from rag_eval.dataset import Question, scoreable
 from rag_eval.langchain_baseline import build_baseline
 
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
-RECALL_KS = (1, 3, 5)
+HIT_KS = (1, 3, 5)
 SWEEP = (0.0, 0.2, 0.3, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7)
 
 
@@ -33,6 +34,7 @@ class EvalConfig:
     require_in_force: bool = True
     rag: bool = True  # False = no-RAG baseline (generation tier only)
     mode: str = "dense"  # dense | hybrid
+    rrf_k: int = RRF_K  # hybrid fusion constant; varied only for the sensitivity check
     rerank: str | None = None  # None | "llm" (experiment 2 trial)
     rerank_provider: str = "openai"
     rerank_model: str | None = None  # None = CHAT_MODEL
@@ -78,6 +80,7 @@ def build_retriever(config: EvalConfig, settings: Settings) -> tuple[QdrantRetri
         config.min_similarity,
         config.require_in_force,
         config.mode,
+        rrf_k=config.rrf_k,
     )
     planner = reranker = None
     if config.query_planner_model:
@@ -194,7 +197,7 @@ async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, que
     summary = {
         "in_corpus_questions": len(ranks),
         "out_of_corpus_questions": len(ooc_top1),
-        **{f"recall@{k}": metrics.recall_at_k(ranks, k) for k in RECALL_KS},
+        **{f"hit@{k}": metrics.hit_at_k(ranks, k) for k in HIT_KS},
         "mrr": metrics.mrr(ranks),
         "embed_ms": metrics.latency_summary(embed_ms),
         "search_ms": metrics.latency_summary(search_ms),

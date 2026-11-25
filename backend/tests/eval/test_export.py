@@ -1,4 +1,5 @@
 from rag_eval.export import (
+    RETRIEVAL_HEADER,
     csv_text,
     error_analysis,
     markdown_table,
@@ -14,7 +15,7 @@ def _result(**overrides) -> dict:
             "dataset": {"provisional": True},
         },
         "summary": {
-            "in_corpus_questions": 4, "recall@1": 0.5, "recall@3": 0.75, "recall@5": 1.0,
+            "in_corpus_questions": 4, "hit@1": 0.5, "hit@3": 0.75, "hit@5": 1.0,
             "mrr": 0.7, "embed_ms": {"p50": 200.0, "p95": 300.0},
             "search_ms": {"p50": 7.0, "p95": 9.0},
         },
@@ -76,3 +77,17 @@ def test_error_analysis_lists_only_in_corpus_misses_sorted_by_top_score():
 
     assert [m["id"] for m in misses] == ["m2", "m1"]
     assert misses[0]["reason"] == "wrong_document"
+
+
+def test_older_result_files_that_still_say_recall_render_the_same_hit_columns():
+    old = _result()
+    old["summary"] = {
+        **{k: v for k, v in old["summary"].items() if not k.startswith("hit@")},
+        "recall@1": 0.5, "recall@3": 0.75, "recall@5": 1.0,
+    }  # fmt: skip
+
+    assert retrieval_rows([old])[0][5:9] == retrieval_rows([_result()])[0][5:9]
+
+
+def test_retrieval_header_names_the_metric_hit_at_k():
+    assert RETRIEVAL_HEADER[5:8] == ["Hit@1", "Hit@3", "Hit@5"]

@@ -17,7 +17,12 @@ def first_hit_rank(retrieved: Sequence[Iterable[ArticleKey]], gold: set[ArticleK
     return None
 
 
-def recall_at_k(ranks: Sequence[int | None], k: int) -> float:
+def hit_at_k(ranks: Sequence[int | None], k: int) -> float:
+    """Share of questions with at least one gold article in the top k (Hit@k, a.k.a. Success@k).
+
+    Not Recall@k, which would divide the gold articles found by all gold articles of a question.
+    The two coincide for single-gold questions, which is nearly the whole set.
+    """
     return sum(1 for r in ranks if r is not None and r <= k) / len(ranks) if ranks else 0.0
 
 
