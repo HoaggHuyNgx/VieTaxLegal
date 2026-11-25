@@ -20,7 +20,10 @@ app/
     │   ├── service.py    # orchestration, rate limit và SSE
     │   ├── provider.py   # Anthropic/OpenAI providers
     │   └── retriever.py  # Retriever interface; mặc định NullRetriever
-    └── rag/              # nạp, lập chỉ mục và truy xuất văn bản pháp luật
+    └── rag/              # pipeline RAG, mỗi thư mục là một bước
+        ├── ingest/       # 1. trích xuất, tách Điều/Khoản, chia chunk, nạp
+        ├── index/        # 2. embedding, vector sparse, lưu vào Qdrant
+        └── retrieve/     # 3. lập kế hoạch truy vấn, hybrid search, RRF, rerank
 ```
 
 ## Yêu cầu

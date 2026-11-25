@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from app.services.rag.text_extraction import UnsupportedFormatError, clean_text, extract_text
+from app.services.rag.ingest.text_extraction import UnsupportedFormatError, clean_text, extract_text
 
 W = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"'
 

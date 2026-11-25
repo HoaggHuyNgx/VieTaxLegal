@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from app.services.rag.legal_parser import parse
+from app.services.rag.ingest.legal_parser import parse
 
 FIXTURE = Path(__file__).parent / "fixtures" / "luat-quan-ly-thue-excerpt.txt"
 

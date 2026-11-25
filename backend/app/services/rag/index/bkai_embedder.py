@@ -11,7 +11,7 @@ import unicodedata
 from collections.abc import Callable
 from typing import Any
 
-from app.services.rag.embeddings import EmbeddingBatch
+from app.services.rag.index.embeddings import EmbeddingBatch
 
 DEFAULT_DIMS = 768
 

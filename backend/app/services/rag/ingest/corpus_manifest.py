@@ -9,7 +9,7 @@ import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
-CORPUS_DIR = Path(__file__).resolve().parents[3] / "corpus"
+CORPUS_DIR = Path(__file__).resolve().parents[4] / "corpus"
 VALID_STATUSES = frozenset({"in_force", "expired", "superseded"})
 
 

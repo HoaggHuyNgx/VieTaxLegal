@@ -1,7 +1,7 @@
 """Human review of generated questions: show the gold law text, record approve/reject/edit."""
 
-from app.services.rag.corpus_manifest import CorpusDoc
-from app.services.rag.legal_parser import parse
+from app.services.rag.ingest.corpus_manifest import CorpusDoc
+from app.services.rag.ingest.legal_parser import parse
 from rag_eval.dataset import Question
 
 

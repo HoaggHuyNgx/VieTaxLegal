@@ -16,9 +16,9 @@ from dataclasses import dataclass
 from app.core.config import Settings
 from app.services.chat.provider import LangChainProvider, ProviderError, ProviderMessage
 from app.services.chat.retriever import RetrievalResult
-from app.services.rag.fusion import rrf_fuse
-from app.services.rag.qdrant_retriever import Hit, SearchOutcome, hits_to_result
-from app.services.rag.reranker import LlmReranker
+from app.services.rag.retrieve.fusion import rrf_fuse
+from app.services.rag.retrieve.qdrant_retriever import Hit, SearchOutcome, hits_to_result
+from app.services.rag.retrieve.reranker import LlmReranker
 
 logger = logging.getLogger(__name__)
 MAX_REWRITES = 2

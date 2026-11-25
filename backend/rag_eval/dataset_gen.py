@@ -13,9 +13,9 @@ from collections import defaultdict
 from itertools import zip_longest
 
 from app.services.chat.provider import ModelProvider, ProviderError, ProviderMessage
-from app.services.rag.chunking import ChunkDraft, article_chunks, estimate_tokens
-from app.services.rag.corpus_manifest import CorpusDoc
-from app.services.rag.legal_parser import parse
+from app.services.rag.ingest.chunking import ChunkDraft, article_chunks, estimate_tokens
+from app.services.rag.ingest.corpus_manifest import CorpusDoc
+from app.services.rag.ingest.legal_parser import parse
 from rag_eval.dataset import GoldRef, Question
 
 FIELD_QUOTAS = {"tax": 34, "labor": 20, "enterprise": 16}

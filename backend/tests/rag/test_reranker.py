@@ -1,8 +1,8 @@
 import asyncio
 
 from app.services.chat.provider import ProviderError, ProviderEvent
-from app.services.rag.qdrant_retriever import Hit
-from app.services.rag.reranker import LlmReranker, NoopReranker
+from app.services.rag.retrieve.qdrant_retriever import Hit
+from app.services.rag.retrieve.reranker import LlmReranker, NoopReranker
 
 HITS = [
     Hit(str(n), 1.0, {"heading_path": f"Điều {n}", "content": f"nội dung {n}"}) for n in (1, 2, 3)

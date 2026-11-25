@@ -16,15 +16,15 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.config import get_settings  # noqa: E402
-from app.services.rag.chunking import estimate_tokens  # noqa: E402
-from app.services.rag.corpus_manifest import load_manifest  # noqa: E402
-from app.services.rag.embeddings import (  # noqa: E402
+from app.services.rag.index.embeddings import (  # noqa: E402
     embedding_text,
     estimate_cost_usd,
     get_embedder,
 )
-from app.services.rag.ingest import CHUNKERS, build_chunks, ingest_corpus  # noqa: E402
-from app.services.rag.qdrant_store import collection_name, get_sync_client  # noqa: E402
+from app.services.rag.index.qdrant_store import collection_name, get_sync_client  # noqa: E402
+from app.services.rag.ingest.chunking import estimate_tokens  # noqa: E402
+from app.services.rag.ingest.corpus_manifest import load_manifest  # noqa: E402
+from app.services.rag.ingest.ingest import CHUNKERS, build_chunks, ingest_corpus  # noqa: E402
 
 BKAI_LIMIT = 256
 

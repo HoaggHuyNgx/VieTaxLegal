@@ -2,9 +2,9 @@ import json
 
 import pytest
 
-from app.services.rag.chunking import article_chunks
-from app.services.rag.corpus_manifest import CORPUS_DIR, load_manifest
-from app.services.rag.legal_parser import parse
+from app.services.rag.ingest.chunking import article_chunks
+from app.services.rag.ingest.corpus_manifest import CORPUS_DIR, load_manifest
+from app.services.rag.ingest.legal_parser import parse
 from scripts.import_vbpl import (
     has_oversized_chunk,
     html_to_text,
@@ -82,7 +82,7 @@ def test_manifest_entry_loads_and_flags_partial_expiry(tmp_path):
 
 def test_the_partial_expiry_flag_reaches_the_chunk_payload():
     entry = manifest_entry(_row(tinh_trang_hieu_luc="Hết hiệu lực một phần"), "vbpl-1", "x")
-    from app.services.rag.corpus_manifest import _build
+    from app.services.rag.ingest.corpus_manifest import _build
 
     text = "Điều 1. Phạm vi\nThông tư này quy định về thuế.\n"
 
@@ -100,7 +100,7 @@ def test_structure_issue_reports_documents_without_articles():
 
 def test_oversized_chunk_is_detected_with_the_given_counter():
     entry = manifest_entry(_row(), "vbpl-1", "x")
-    from app.services.rag.corpus_manifest import _build
+    from app.services.rag.ingest.corpus_manifest import _build
 
     chunks = article_chunks(_build(entry), parse("Điều 1. Phạm vi\nNội dung của điều này.\n"))
 

@@ -1,7 +1,7 @@
-from app.services.rag.chunking import estimate_tokens
-from app.services.rag.chunking_small import CHUNK_SET, small_article_chunks, split_span
-from app.services.rag.corpus_manifest import CorpusDoc
-from app.services.rag.legal_parser import parse
+from app.services.rag.ingest.chunking import estimate_tokens
+from app.services.rag.ingest.chunking_small import CHUNK_SET, small_article_chunks, split_span
+from app.services.rag.ingest.corpus_manifest import CorpusDoc
+from app.services.rag.ingest.legal_parser import parse
 
 
 def _doc() -> CorpusDoc:

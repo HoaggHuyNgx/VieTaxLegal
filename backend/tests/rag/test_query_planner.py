@@ -4,10 +4,10 @@ import json
 import pytest
 
 from app.core.config import get_settings
-from app.services import rag
 from app.services.chat.provider import ProviderError, ProviderEvent
-from app.services.rag.qdrant_retriever import Hit, SearchOutcome
-from app.services.rag.query_planner import (
+from app.services.rag.retrieve import query_planner
+from app.services.rag.retrieve.qdrant_retriever import Hit, SearchOutcome
+from app.services.rag.retrieve.query_planner import (
     QueryPlan,
     QueryPlanner,
     RetrievalPipeline,
@@ -86,7 +86,7 @@ def test_planner_failure_falls_back_to_the_original_question(provider):
 
 
 def test_planner_timeout_falls_back(monkeypatch):
-    monkeypatch.setattr(rag.query_planner, "PLANNER_TIMEOUT_SECONDS", 0.01)
+    monkeypatch.setattr(query_planner, "PLANNER_TIMEOUT_SECONDS", 0.01)
 
     plan = asyncio.run(QueryPlanner(_Provider(_reply(), delay=1.0)).plan(QUESTION))
 
@@ -188,7 +188,7 @@ def test_rerank_runs_once_on_the_original_question_with_spare_candidates():
 
 
 def test_rerank_timeout_keeps_the_fused_order_and_is_counted(monkeypatch):
-    monkeypatch.setattr(rag.query_planner, "RERANK_TIMEOUT_SECONDS", 0.01)
+    monkeypatch.setattr(query_planner, "RERANK_TIMEOUT_SECONDS", 0.01)
     inner = _Inner({"a": ["1", "2", "3"]})
     retriever = RetrievalPipeline(inner, 2, reranker=_Reranker(order=["3"], delay=1.0))
 

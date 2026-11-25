@@ -17,7 +17,7 @@ from langchain_openai import OpenAIEmbeddings
 from pydantic import SecretStr
 
 from app.core.config import Settings, get_settings
-from app.services.rag.chunking import ChunkDraft
+from app.services.rag.ingest.chunking import ChunkDraft
 
 # USD per 1M input tokens. Verify against the provider's pricing page before quoting in the thesis.
 PRICE_PER_MILLION_TOKENS = {"text-embedding-3-small": 0.02, "text-embedding-3-large": 0.13}
@@ -151,7 +151,7 @@ def get_embedder(settings: Settings | None = None) -> EmbeddingProvider:
     if settings.embedding_provider == "fake":
         return FakeEmbedder(settings.embedding_dimensions or 16)
     if settings.embedding_provider == "bkai":
-        from app.services.rag.bkai_embedder import BkaiEmbedder  # heavy optional dependencies
+        from app.services.rag.index.bkai_embedder import BkaiEmbedder  # heavy optional dependencies
 
         return BkaiEmbedder(settings.embedding_model, settings.embedding_batch_size)
     if settings.openai_api_key is None:

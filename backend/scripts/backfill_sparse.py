@@ -11,8 +11,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.config import get_settings  # noqa: E402
-from app.services.rag.ingest import CHUNKERS, backfill_sparse  # noqa: E402
-from app.services.rag.qdrant_store import collection_name, get_sync_client  # noqa: E402
+from app.services.rag.index.qdrant_store import collection_name, get_sync_client  # noqa: E402
+from app.services.rag.ingest.ingest import CHUNKERS, backfill_sparse  # noqa: E402
 
 
 def main() -> int:

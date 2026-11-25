@@ -2,9 +2,9 @@ from pathlib import Path
 
 import pytest
 
-from app.services.rag.chunking import article_chunks, estimate_tokens, fixed_chunks
-from app.services.rag.corpus_manifest import CorpusDoc
-from app.services.rag.legal_parser import parse
+from app.services.rag.ingest.chunking import article_chunks, estimate_tokens, fixed_chunks
+from app.services.rag.ingest.corpus_manifest import CorpusDoc
+from app.services.rag.ingest.legal_parser import parse
 
 FIXTURE = Path(__file__).parent / "fixtures" / "luat-quan-ly-thue-excerpt.txt"
 

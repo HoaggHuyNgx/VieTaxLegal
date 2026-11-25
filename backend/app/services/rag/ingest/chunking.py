@@ -9,9 +9,9 @@ import math
 import re
 from dataclasses import asdict, dataclass
 
-from app.services.rag.corpus_manifest import CorpusDoc
-from app.services.rag.legal_parser import Article, ParsedDocument
-from app.services.rag.qdrant_store import point_id
+from app.services.rag.index.qdrant_store import point_id
+from app.services.rag.ingest.corpus_manifest import CorpusDoc
+from app.services.rag.ingest.legal_parser import Article, ParsedDocument
 
 # Vietnamese syllables are whitespace-separated words, ~1.4 BPE tokens each (estimate, not exact).
 TOKENS_PER_WORD = 1.4

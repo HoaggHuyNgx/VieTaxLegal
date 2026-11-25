@@ -5,10 +5,10 @@ import pytest
 from qdrant_client import AsyncQdrantClient, models
 
 from app.services.chat.provider import ProviderError, ProviderEvent, ProviderMessage
-from app.services.rag.chunking import ChunkDraft
-from app.services.rag.embeddings import FakeEmbedder, embedding_text
-from app.services.rag.qdrant_retriever import QdrantRetriever
-from app.services.rag.qdrant_store import DENSE_VECTOR
+from app.services.rag.index.embeddings import FakeEmbedder, embedding_text
+from app.services.rag.index.qdrant_store import DENSE_VECTOR
+from app.services.rag.ingest.chunking import ChunkDraft
+from app.services.rag.retrieve.qdrant_retriever import QdrantRetriever
 from rag_eval.dataset import GoldRef, Question
 from rag_eval.generation_tier import run_generation_tier
 from rag_eval.runner import EvalConfig, run_retrieval_tier, threshold_sweep

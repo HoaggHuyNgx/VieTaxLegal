@@ -19,9 +19,9 @@ from langchain_core.embeddings import Embeddings
 from langchain_core.vectorstores import InMemoryVectorStore
 
 from app.core.config import Settings
-from app.services.rag.corpus_manifest import CorpusDoc, load_manifest
-from app.services.rag.legal_parser import Article, ParsedDocument, parse
-from app.services.rag.qdrant_retriever import Hit, SearchOutcome
+from app.services.rag.ingest.corpus_manifest import CorpusDoc, load_manifest
+from app.services.rag.ingest.legal_parser import Article, ParsedDocument, parse
+from app.services.rag.retrieve.qdrant_retriever import Hit, SearchOutcome
 
 CHUNK_SIZE = 1200  # characters; the values used in the reference tutorial
 CHUNK_OVERLAP = 200

@@ -5,10 +5,10 @@ from qdrant_client import AsyncQdrantClient, models
 
 from app.core.config import get_settings
 from app.services.chat.retriever import NullRetriever, get_retriever
-from app.services.rag.chunking import ChunkDraft
-from app.services.rag.embeddings import FakeEmbedder, embedding_text
-from app.services.rag.qdrant_retriever import Hit, QdrantRetriever, hits_to_result
-from app.services.rag.qdrant_store import DENSE_VECTOR
+from app.services.rag.index.embeddings import FakeEmbedder, embedding_text
+from app.services.rag.index.qdrant_store import DENSE_VECTOR
+from app.services.rag.ingest.chunking import ChunkDraft
+from app.services.rag.retrieve.qdrant_retriever import Hit, QdrantRetriever, hits_to_result
 
 COLLECTION = "legal_test"
 
@@ -142,6 +142,6 @@ def test_misconfigured_rag_degrades_to_no_sources_instead_of_failing_chat(monkey
     def broken():
         raise RuntimeError("OPENAI_API_KEY is required")
 
-    monkeypatch.setattr("app.services.rag.qdrant_retriever.get_qdrant_retriever", broken)
+    monkeypatch.setattr("app.services.rag.retrieve.qdrant_retriever.get_qdrant_retriever", broken)
 
     assert isinstance(get_retriever(), NullRetriever)

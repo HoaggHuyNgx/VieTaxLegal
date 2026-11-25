@@ -4,12 +4,12 @@ from pathlib import Path
 import pytest
 from qdrant_client import QdrantClient
 
-from app.services.rag.chunking import article_chunks
-from app.services.rag.corpus_manifest import CorpusDoc
-from app.services.rag.embeddings import FakeEmbedder, embedding_text
-from app.services.rag.ingest import IngestStats, ingest_corpus, ingest_document
-from app.services.rag.legal_parser import parse
-from app.services.rag.qdrant_store import ensure_collection
+from app.services.rag.index.embeddings import FakeEmbedder, embedding_text
+from app.services.rag.index.qdrant_store import ensure_collection
+from app.services.rag.ingest.chunking import article_chunks
+from app.services.rag.ingest.corpus_manifest import CorpusDoc
+from app.services.rag.ingest.ingest import IngestStats, ingest_corpus, ingest_document
+from app.services.rag.ingest.legal_parser import parse
 
 EXCERPT = Path(__file__).parent / "fixtures" / "luat-quan-ly-thue-excerpt.txt"
 COLLECTION = "legal_test"

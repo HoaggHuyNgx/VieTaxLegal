@@ -8,15 +8,15 @@ Every piece keeps exact offsets into the parsed text.
 
 import re
 
-from app.services.rag.chunking import (
+from app.services.rag.ingest.chunking import (
     ChunkDraft,
     _draft,
     _heading_path,
     _kept_articles,
     estimate_tokens,
 )
-from app.services.rag.corpus_manifest import CorpusDoc
-from app.services.rag.legal_parser import ParsedDocument
+from app.services.rag.ingest.corpus_manifest import CorpusDoc
+from app.services.rag.ingest.legal_parser import ParsedDocument
 
 SMALL_MAX_TOKENS = 200
 CHUNK_SET = "article_s256"

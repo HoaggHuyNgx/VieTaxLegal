@@ -3,9 +3,9 @@ import json
 
 import pytest
 
-from app.services.rag.chunking import article_chunks
-from app.services.rag.corpus_manifest import ManifestError, load_manifest, verify_raw_file
-from app.services.rag.legal_parser import parse
+from app.services.rag.ingest.chunking import article_chunks
+from app.services.rag.ingest.corpus_manifest import ManifestError, load_manifest, verify_raw_file
+from app.services.rag.ingest.legal_parser import parse
 
 
 def _entry(**overrides) -> dict:
@@ -50,7 +50,7 @@ def test_missing_field_and_duplicate_slug_fail_loudly(tmp_path):
 
 
 def test_verify_raw_file_detects_changed_bytes(tmp_path, monkeypatch):
-    monkeypatch.setattr("app.services.rag.corpus_manifest.CORPUS_DIR", tmp_path)
+    monkeypatch.setattr("app.services.rag.ingest.corpus_manifest.CORPUS_DIR", tmp_path)
     (tmp_path / "raw").mkdir()
     raw = tmp_path / "raw" / "a.docx"
     raw.write_bytes(b"hello")

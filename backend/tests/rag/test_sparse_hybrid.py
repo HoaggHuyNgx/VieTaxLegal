@@ -3,12 +3,12 @@ import unicodedata
 
 from qdrant_client import AsyncQdrantClient, QdrantClient, models
 
-from app.services.rag import sparse
-from app.services.rag.chunking import ChunkDraft
-from app.services.rag.embeddings import FakeEmbedder, embedding_text
-from app.services.rag.ingest import backfill_sparse, sparse_text
-from app.services.rag.qdrant_retriever import QdrantRetriever
-from app.services.rag.qdrant_store import DENSE_VECTOR, SPARSE_VECTOR, ensure_collection
+from app.services.rag.index import sparse
+from app.services.rag.index.embeddings import FakeEmbedder, embedding_text
+from app.services.rag.index.qdrant_store import DENSE_VECTOR, SPARSE_VECTOR, ensure_collection
+from app.services.rag.ingest.chunking import ChunkDraft
+from app.services.rag.ingest.ingest import backfill_sparse, sparse_text
+from app.services.rag.retrieve.qdrant_retriever import QdrantRetriever
 
 COLLECTION = "legal_hybrid_test"
 

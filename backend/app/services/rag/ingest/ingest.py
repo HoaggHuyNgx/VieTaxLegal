@@ -11,13 +11,13 @@ from typing import Any
 
 from qdrant_client import QdrantClient, models
 
-from app.services.rag import sparse
-from app.services.rag.chunking import ChunkDraft, article_chunks, fixed_chunks
-from app.services.rag.chunking_small import small_article_chunks
-from app.services.rag.corpus_manifest import CorpusDoc
-from app.services.rag.embeddings import EmbeddingProvider, embedding_text
-from app.services.rag.legal_parser import ParsedDocument, parse
-from app.services.rag.qdrant_store import DENSE_VECTOR, SPARSE_VECTOR, ensure_collection
+from app.services.rag.index import sparse
+from app.services.rag.index.embeddings import EmbeddingProvider, embedding_text
+from app.services.rag.index.qdrant_store import DENSE_VECTOR, SPARSE_VECTOR, ensure_collection
+from app.services.rag.ingest.chunking import ChunkDraft, article_chunks, fixed_chunks
+from app.services.rag.ingest.chunking_small import small_article_chunks
+from app.services.rag.ingest.corpus_manifest import CorpusDoc
+from app.services.rag.ingest.legal_parser import ParsedDocument, parse
 
 CHUNKERS: dict[str, Callable[[CorpusDoc, ParsedDocument], list[ChunkDraft]]] = {
     "article": article_chunks,

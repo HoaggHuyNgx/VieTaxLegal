@@ -20,11 +20,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.config import get_settings  # noqa: E402
-from app.services.rag.chunking import ChunkDraft, article_chunks  # noqa: E402
-from app.services.rag.corpus_manifest import CORPUS_DIR, _build, load_manifest  # noqa: E402
-from app.services.rag.embeddings import _openai_token_counter, embedding_text  # noqa: E402
-from app.services.rag.legal_parser import ParsedDocument, parse  # noqa: E402
-from app.services.rag.text_extraction import clean_text  # noqa: E402
+from app.services.rag.index.embeddings import _openai_token_counter, embedding_text  # noqa: E402
+from app.services.rag.ingest.chunking import ChunkDraft, article_chunks  # noqa: E402
+from app.services.rag.ingest.corpus_manifest import CORPUS_DIR, _build, load_manifest  # noqa: E402
+from app.services.rag.ingest.legal_parser import ParsedDocument, parse  # noqa: E402
+from app.services.rag.ingest.text_extraction import clean_text  # noqa: E402
 
 DATASET_REVISION = "8977887f17be2defae4c5171d55562e1cde7d695"
 OUTPUT_DIR = CORPUS_DIR / "vbpl"

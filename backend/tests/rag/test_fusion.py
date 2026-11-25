@@ -1,6 +1,6 @@
 import pytest
 
-from app.services.rag.fusion import rrf_fuse
+from app.services.rag.retrieve.fusion import rrf_fuse
 
 
 def test_item_in_both_rankings_beats_items_in_one():

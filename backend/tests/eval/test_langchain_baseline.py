@@ -7,8 +7,8 @@ from langchain_core.embeddings import DeterministicFakeEmbedding
 from langchain_core.vectorstores import InMemoryVectorStore
 
 from app.core.config import get_settings
-from app.services.rag.corpus_manifest import CorpusDoc
-from app.services.rag.legal_parser import parse
+from app.services.rag.ingest.corpus_manifest import CorpusDoc
+from app.services.rag.ingest.legal_parser import parse
 from rag_eval.dataset import GoldRef, Question
 from rag_eval.langchain_baseline import (
     LangChainBaselineRetriever,

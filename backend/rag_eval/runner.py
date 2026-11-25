@@ -8,12 +8,12 @@ from datetime import date
 from pathlib import Path
 
 from app.core.config import Settings
-from app.services.rag.corpus_manifest import CORPUS_DIR
-from app.services.rag.embeddings import get_embedder
-from app.services.rag.qdrant_retriever import QdrantRetriever
-from app.services.rag.qdrant_store import collection_name, get_async_client
-from app.services.rag.query_planner import QueryPlanner, RetrievalPipeline, llm_provider
-from app.services.rag.reranker import LlmReranker
+from app.services.rag.index.embeddings import get_embedder
+from app.services.rag.index.qdrant_store import collection_name, get_async_client
+from app.services.rag.ingest.corpus_manifest import CORPUS_DIR
+from app.services.rag.retrieve.qdrant_retriever import QdrantRetriever
+from app.services.rag.retrieve.query_planner import QueryPlanner, RetrievalPipeline, llm_provider
+from app.services.rag.retrieve.reranker import LlmReranker
 from rag_eval import metrics
 from rag_eval.dataset import Question, scoreable
 from rag_eval.langchain_baseline import build_baseline

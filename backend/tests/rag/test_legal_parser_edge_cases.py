@@ -1,6 +1,6 @@
 """Regressions for failure modes found on the real corpus (footnotes, wrapped titles, trailers)."""
 
-from app.services.rag.legal_parser import parse
+from app.services.rag.ingest.legal_parser import parse
 
 
 def test_footnote_marker_glued_to_clause_number_keeps_the_clause_sequence():

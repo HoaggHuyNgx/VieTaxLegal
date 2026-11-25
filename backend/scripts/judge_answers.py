@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.config import get_settings  # noqa: E402
-from app.services.rag.query_planner import llm_provider  # noqa: E402
+from app.services.rag.retrieve.query_planner import llm_provider  # noqa: E402
 from rag_eval.answer_judge import add_verdicts_to_result, judge_rows  # noqa: E402
 from rag_eval.dataset import load_questions  # noqa: E402
 

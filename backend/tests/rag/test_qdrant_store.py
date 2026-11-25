@@ -2,7 +2,7 @@ import pytest
 from qdrant_client import QdrantClient, models
 
 from app.core.config import Settings
-from app.services.rag.qdrant_store import (
+from app.services.rag.index.qdrant_store import (
     DENSE_VECTOR,
     SPARSE_VECTOR,
     CollectionMismatchError,

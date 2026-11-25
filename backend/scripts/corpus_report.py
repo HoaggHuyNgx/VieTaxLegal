@@ -10,10 +10,18 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app.services.rag.chunking import article_chunks, estimate_tokens, fixed_chunks  # noqa: E402
-from app.services.rag.chunking_small import small_article_chunks  # noqa: E402
-from app.services.rag.corpus_manifest import CorpusDoc, load_manifest, verify_raw_file  # noqa: E402
-from app.services.rag.legal_parser import ParsedDocument, parse  # noqa: E402
+from app.services.rag.ingest.chunking import (  # noqa: E402
+    article_chunks,
+    estimate_tokens,
+    fixed_chunks,
+)
+from app.services.rag.ingest.chunking_small import small_article_chunks  # noqa: E402
+from app.services.rag.ingest.corpus_manifest import (  # noqa: E402
+    CorpusDoc,
+    load_manifest,
+    verify_raw_file,
+)
+from app.services.rag.ingest.legal_parser import ParsedDocument, parse  # noqa: E402
 
 BKAI_TOKEN_LIMIT = 256
 OCR_GARBAGE_PER_MILLE = 0.3  # share of ~ \ { } | characters that signals a bad text layer

@@ -9,7 +9,7 @@ treated as body text, so a wrong citation never silently enters the corpus.
 import re
 from dataclasses import dataclass, field
 
-from app.services.rag.legal_clauses import CLAUSE_RE, POINT_RE, Clause, split_body
+from app.services.rag.ingest.legal_clauses import CLAUSE_RE, POINT_RE, Clause, split_body
 
 ARTICLE_RE = re.compile(r"^Điều\s+(\d+)\s?([a-zđ]?)\s?\.\s+(\S.*)$")
 CHAPTER_RE = re.compile(r"^Chương\s+([IVXLC]+|\d+)\b\.?\s*(.*)$")

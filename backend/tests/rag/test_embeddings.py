@@ -4,9 +4,9 @@ import math
 import pytest
 
 from app.core.config import Settings
-from app.services.rag import embeddings
-from app.services.rag.bkai_embedder import BkaiEmbedder
-from app.services.rag.embeddings import (
+from app.services.rag.index import embeddings
+from app.services.rag.index.bkai_embedder import BkaiEmbedder
+from app.services.rag.index.embeddings import (
     EmbeddingConfigError,
     FakeEmbedder,
     LangChainEmbedder,

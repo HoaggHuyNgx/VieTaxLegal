@@ -16,16 +16,16 @@ from qdrant_client import AsyncQdrantClient, models
 
 from app.core.config import Settings, get_settings
 from app.services.chat.retriever import Citation, RetrievalResult, RetrievedContext
-from app.services.rag import sparse
-from app.services.rag.embeddings import EmbeddingProvider, get_embedder
-from app.services.rag.fusion import rrf_fuse
-from app.services.rag.qdrant_store import (
+from app.services.rag.index import sparse
+from app.services.rag.index.embeddings import EmbeddingProvider, get_embedder
+from app.services.rag.index.qdrant_store import (
     DENSE_VECTOR,
     SPARSE_VECTOR,
     collection_name,
     get_async_client,
 )
-from app.services.rag.reranker import Reranker
+from app.services.rag.retrieve.fusion import rrf_fuse
+from app.services.rag.retrieve.reranker import Reranker
 
 logger = logging.getLogger(__name__)
 EXCERPT_CHARS = 300

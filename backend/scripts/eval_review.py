@@ -11,7 +11,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from app.services.rag.corpus_manifest import load_manifest  # noqa: E402
+from app.services.rag.ingest.corpus_manifest import load_manifest  # noqa: E402
 from rag_eval.dataset import load_questions, save_questions  # noqa: E402
 from rag_eval.review import apply_key, gold_text  # noqa: E402
 

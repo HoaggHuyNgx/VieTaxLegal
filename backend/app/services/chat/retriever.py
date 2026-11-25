@@ -57,8 +57,8 @@ def get_retriever() -> Retriever:
     # The single seam for plugging in RAG; the stream code should not change.
     if not get_settings().rag_enabled:
         return NullRetriever()
-    from app.services.rag.qdrant_retriever import get_qdrant_retriever
-    from app.services.rag.query_planner import build_pipeline
+    from app.services.rag.retrieve.qdrant_retriever import get_qdrant_retriever
+    from app.services.rag.retrieve.query_planner import build_pipeline
 
     try:
         return build_pipeline(get_qdrant_retriever(), get_settings())

@@ -16,9 +16,9 @@ from pathlib import Path
 BACKEND = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BACKEND))
 
-from app.services.rag.chunking import article_chunks  # noqa: E402
-from app.services.rag.corpus_manifest import load_manifest  # noqa: E402
-from app.services.rag.legal_parser import parse  # noqa: E402
+from app.services.rag.ingest.chunking import article_chunks  # noqa: E402
+from app.services.rag.ingest.corpus_manifest import load_manifest  # noqa: E402
+from app.services.rag.ingest.legal_parser import parse  # noqa: E402
 
 REPORTS = BACKEND.parent / "plans" / "reports"
 EFFECT_TITLE = re.compile(r"hiệu lực|điều khoản thi hành|tổ chức thực hiện", re.IGNORECASE)

@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING, Protocol
 from app.services.chat.provider import ModelProvider, ProviderError, ProviderMessage
 
 if TYPE_CHECKING:
-    from app.services.rag.qdrant_retriever import Hit
+    from app.services.rag.retrieve.qdrant_retriever import Hit
 
 _RERANK_SYSTEM = """Bạn xếp hạng độ liên quan của các đoạn luật đối với câu hỏi.
 Chỉ trả về một mảng JSON các số thứ tự đoạn, từ liên quan nhất đến ít liên quan nhất,

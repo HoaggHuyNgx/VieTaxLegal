@@ -9,8 +9,8 @@ from pathlib import Path
 BACKEND = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BACKEND))
 
-from app.services.rag.corpus_manifest import CORPUS_DIR, load_manifest  # noqa: E402
-from app.services.rag.text_extraction import extract_text, join_parts  # noqa: E402
+from app.services.rag.ingest.corpus_manifest import CORPUS_DIR, load_manifest  # noqa: E402
+from app.services.rag.ingest.text_extraction import extract_text, join_parts  # noqa: E402
 
 
 def main() -> int:
