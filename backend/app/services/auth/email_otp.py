@@ -19,7 +19,7 @@ from app.core.config import get_settings
 from app.core.errors import AppError
 from app.models.email_otp import EmailOtp
 from app.models.user import User
-from app.services import mailer
+from app.services.auth import mailer
 
 CODE_TTL = timedelta(minutes=10)
 RESEND_COOLDOWN = timedelta(seconds=60)

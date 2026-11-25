@@ -8,7 +8,7 @@ import asyncio
 import json
 import re
 
-from app.services.chat_provider import ModelProvider, ProviderError, ProviderMessage
+from app.services.chat.provider import ModelProvider, ProviderError, ProviderMessage
 from rag_eval.dataset_gen import _parse_json
 
 VERDICTS = ("correct", "partial", "incorrect", "refused")

@@ -4,7 +4,7 @@ import re
 from dataclasses import dataclass
 
 from app.schemas.chat import CitationResponse
-from app.services.chat_retriever import Citation, RetrievalResult
+from app.services.chat.retriever import Citation, RetrievalResult
 
 _MARKER_RE = re.compile(r"\[(\d{1,3})\]")
 

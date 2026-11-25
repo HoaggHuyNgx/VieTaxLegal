@@ -10,7 +10,7 @@ from sqlalchemy import func, select
 from app.core.config import get_settings
 from app.models.oauth_identity import OAuthIdentity
 from app.models.user import User
-from app.services import google_oauth
+from app.services.auth import google_oauth
 from tests.test_auth import create_user
 
 CLIENT_ID = "test-client-id"

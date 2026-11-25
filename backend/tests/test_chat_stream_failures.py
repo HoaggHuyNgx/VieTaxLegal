@@ -8,9 +8,9 @@ from sqlalchemy.orm import Session
 from app.models.chat import Message
 from app.models.user import User
 from app.schemas.chat import MessageResponse, SendMessageRequest
-from app.services import chat as chat_service
-from app.services.chat import prepare_chat_stream, stream_chat_events
-from app.services.chat_retriever import RetrievalResult
+from app.services.chat import service as chat_service
+from app.services.chat.retriever import RetrievalResult
+from app.services.chat.service import prepare_chat_stream, stream_chat_events
 from tests.test_chat import FakeProvider, parse_sse, register
 
 

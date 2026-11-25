@@ -1,7 +1,7 @@
 import pytest
 
-from app.services.chat_history import FOLLOW_UP_MAX_WORDS, retrieval_query
-from app.services.chat_provider import ProviderMessage
+from app.services.chat.history import FOLLOW_UP_MAX_WORDS, retrieval_query
+from app.services.chat.provider import ProviderMessage
 
 LONG_QUESTION = " ".join(["từ"] * (FOLLOW_UP_MAX_WORDS + 1))
 

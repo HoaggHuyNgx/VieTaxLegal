@@ -4,7 +4,7 @@ from collections.abc import AsyncIterator, Sequence
 import pytest
 from qdrant_client import AsyncQdrantClient, models
 
-from app.services.chat_provider import ProviderError, ProviderEvent, ProviderMessage
+from app.services.chat.provider import ProviderError, ProviderEvent, ProviderMessage
 from app.services.rag.chunking import ChunkDraft
 from app.services.rag.embeddings import FakeEmbedder, embedding_text
 from app.services.rag.qdrant_retriever import QdrantRetriever

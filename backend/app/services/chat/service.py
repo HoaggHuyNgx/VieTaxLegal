@@ -19,18 +19,18 @@ from app.schemas.chat import (
     MessageResponse,
     SendMessageRequest,
 )
-from app.services.chat_citations import (
+from app.services.chat.citations import (
     citation_snapshot,
     select_cited,
 )
-from app.services.chat_history import provider_history, retrieval_query
-from app.services.chat_limits import enforce_rate_limits, expire_stale_pending
-from app.services.chat_prompt import prompt_with_context
-from app.services.chat_provider import (
+from app.services.chat.history import provider_history, retrieval_query
+from app.services.chat.limits import enforce_rate_limits, expire_stale_pending
+from app.services.chat.prompt import prompt_with_context
+from app.services.chat.provider import (
     ModelProvider,
     ProviderConfigurationError,
 )
-from app.services.chat_retriever import Retriever
+from app.services.chat.retriever import Retriever
 
 logger = logging.getLogger(__name__)
 

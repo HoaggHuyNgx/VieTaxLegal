@@ -5,10 +5,10 @@ import re
 import time
 import unicodedata
 
-from app.services.chat_citations import select_cited
-from app.services.chat_prompt import prompt_with_context
-from app.services.chat_provider import ModelProvider, ProviderError, ProviderMessage
-from app.services.chat_retriever import RetrievalResult
+from app.services.chat.citations import select_cited
+from app.services.chat.prompt import prompt_with_context
+from app.services.chat.provider import ModelProvider, ProviderError, ProviderMessage
+from app.services.chat.retriever import RetrievalResult
 from app.services.rag.qdrant_retriever import QdrantRetriever, hits_to_result
 from rag_eval import metrics
 from rag_eval.dataset import Question

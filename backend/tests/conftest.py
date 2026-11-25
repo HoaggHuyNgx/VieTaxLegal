@@ -23,7 +23,7 @@ Settings.model_config["env_file"] = None
 from app.db.base import Base  # noqa: E402 (after the env_file override)
 from app.db.session import get_db  # noqa: E402
 from app.main import app  # noqa: E402
-from app.services.login_throttle import (  # noqa: E402
+from app.services.auth.login_throttle import (  # noqa: E402
     get_email_code_throttle,
     get_login_throttle,
     get_register_throttle,

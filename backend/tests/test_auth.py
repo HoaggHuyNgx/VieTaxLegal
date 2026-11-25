@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import OperationalError
 
 from app.models.user import User
-from app.services.email_otp import create_email_proof
+from app.services.auth.email_otp import create_email_proof
 
 
 def email_proof(email: str) -> str:

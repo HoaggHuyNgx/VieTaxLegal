@@ -15,7 +15,7 @@ from typing import Any
 from qdrant_client import AsyncQdrantClient, models
 
 from app.core.config import Settings, get_settings
-from app.services.chat_retriever import Citation, RetrievalResult, RetrievedContext
+from app.services.chat.retriever import Citation, RetrievalResult, RetrievedContext
 from app.services.rag import sparse
 from app.services.rag.embeddings import EmbeddingProvider, get_embedder
 from app.services.rag.fusion import rrf_fuse

@@ -73,7 +73,7 @@ VieTaxLegal/
 │   │   ├── db/            # SQLAlchemy engine và session
 │   │   ├── models/        # Database models
 │   │   ├── schemas/       # Pydantic request/response schemas
-│   │   └── services/      # Auth, chat, provider và retriever
+│   │   └── services/      # auth/, chat/, rag/ (+ admin.py)
 │   ├── migrations/        # Alembic migrations
 │   ├── tests/             # Backend tests
 │   ├── .env.example

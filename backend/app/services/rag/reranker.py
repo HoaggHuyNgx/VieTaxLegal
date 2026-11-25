@@ -8,7 +8,7 @@ import json
 import re
 from typing import TYPE_CHECKING, Protocol
 
-from app.services.chat_provider import ModelProvider, ProviderError, ProviderMessage
+from app.services.chat.provider import ModelProvider, ProviderError, ProviderMessage
 
 if TYPE_CHECKING:
     from app.services.rag.qdrant_retriever import Hit

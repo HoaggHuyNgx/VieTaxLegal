@@ -11,9 +11,9 @@ from app.core.config import get_settings
 from app.core.errors import AppError
 from app.db.session import get_db
 from app.models.user import User
-from app.services import google_oauth
-from app.services.oauth_accounts import link_google, sign_in_with_google
-from app.services.refresh_tokens import issue_refresh_token
+from app.services.auth import google_oauth
+from app.services.auth.oauth_accounts import link_google, sign_in_with_google
+from app.services.auth.refresh_tokens import issue_refresh_token
 
 router = APIRouter(prefix="/auth/google", tags=["Authentication"])
 

@@ -12,7 +12,7 @@ import re
 from collections import defaultdict
 from itertools import zip_longest
 
-from app.services.chat_provider import ModelProvider, ProviderError, ProviderMessage
+from app.services.chat.provider import ModelProvider, ProviderError, ProviderMessage
 from app.services.rag.chunking import ChunkDraft, article_chunks, estimate_tokens
 from app.services.rag.corpus_manifest import CorpusDoc
 from app.services.rag.legal_parser import parse

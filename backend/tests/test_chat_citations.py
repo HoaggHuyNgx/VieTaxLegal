@@ -8,15 +8,15 @@ from test_chat import FakeProvider, register
 from app.models.chat import Message
 from app.models.user import User
 from app.schemas.chat import SendMessageRequest
-from app.services.chat import prepare_chat_stream, stream_chat_events
-from app.services.chat_citations import (
+from app.services.chat.citations import (
     citation_snapshot,
     marker_ids,
     select_cited,
     strip_markers,
 )
-from app.services.chat_prompt import CITATION_RULES, SYSTEM_PROMPT, prompt_with_context
-from app.services.chat_retriever import Citation, RetrievalResult, RetrievedContext
+from app.services.chat.prompt import CITATION_RULES, SYSTEM_PROMPT, prompt_with_context
+from app.services.chat.retriever import Citation, RetrievalResult, RetrievedContext
+from app.services.chat.service import prepare_chat_stream, stream_chat_events
 
 CITATIONS = [
     Citation(

@@ -7,16 +7,20 @@ lời AI. Dữ liệu được lưu trong PostgreSQL; frontend chỉ giao tiếp
 
 ```text
 app/
-├── api/routes/           # health, auth và chat endpoints
+├── api/routes/           # health, auth, auth_email, auth_google, admin và chat endpoints
 ├── core/                 # settings, JWT, cookie và error handlers
 ├── db/                   # SQLAlchemy engine/session
 ├── models/               # users, conversations, messages, usage events
 ├── schemas/              # Pydantic schemas
 └── services/
-    ├── auth.py           # đăng ký và đăng nhập
-    ├── chat.py           # orchestration, rate limit và SSE
-    ├── chat_provider.py  # Anthropic/OpenAI providers
-    └── chat_retriever.py # Retriever interface; V1 dùng NullRetriever
+    ├── admin.py          # quản lý người dùng
+    ├── auth/             # đăng ký, đăng nhập, refresh token, mã email, Google
+    │   └── service.py    # đăng ký và đăng nhập
+    ├── chat/
+    │   ├── service.py    # orchestration, rate limit và SSE
+    │   ├── provider.py   # Anthropic/OpenAI providers
+    │   └── retriever.py  # Retriever interface; mặc định NullRetriever
+    └── rag/              # nạp, lập chỉ mục và truy xuất văn bản pháp luật
 ```
 
 ## Yêu cầu
@@ -99,7 +103,7 @@ Các biến còn lại đều có giá trị mặc định, chỉ đặt khi mu�
 | `LOGIN_ATTEMPT_WINDOW_MINUTES` | `15`                  | Khung thời gian (phút) dùng để đếm số lần đăng nhập sai.     |
 
 Ngoài `CHAT_HISTORY_MESSAGES`, lịch sử gửi lại model còn bị chặn bởi hằng số
-`MAX_HISTORY_CHARACTERS` (40.000 ký tự) trong `app/services/chat.py`. Hội thoại có nội dung dài
+`MAX_HISTORY_CHARACTERS` (40.000 ký tự) trong `app/services/chat/history.py`. Hội thoại có nội dung dài
 sẽ bị cắt sớm hơn số message đã cấu hình.
 
 Ví dụ Anthropic:

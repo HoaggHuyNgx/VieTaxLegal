@@ -1,6 +1,6 @@
 import asyncio
 
-from app.services.chat_provider import ProviderError, ProviderEvent
+from app.services.chat.provider import ProviderError, ProviderEvent
 from app.services.rag.qdrant_retriever import Hit
 from app.services.rag.reranker import LlmReranker, NoopReranker
 

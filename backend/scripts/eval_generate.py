@@ -12,7 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.config import get_settings  # noqa: E402
-from app.services.chat_provider import LangChainProvider  # noqa: E402
+from app.services.chat.provider import LangChainProvider  # noqa: E402
 from app.services.rag.corpus_manifest import load_manifest  # noqa: E402
 from rag_eval.dataset import QUESTIONS_PATH, load_questions, save_questions  # noqa: E402
 from rag_eval.dataset_gen import generate_multi_questions, generate_questions  # noqa: E402

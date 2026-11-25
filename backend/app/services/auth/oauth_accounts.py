@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from app.core.errors import AppError
 from app.models.oauth_identity import PROVIDER_GOOGLE, OAuthIdentity
 from app.models.user import User
-from app.services.google_oauth import GoogleClaims, google_failed
+from app.services.auth.google_oauth import GoogleClaims, google_failed
 
 USERNAME_TRIES = 10
 

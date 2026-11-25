@@ -14,7 +14,7 @@ from pydantic import (
 )
 from pydantic_core import PydanticCustomError
 
-from app.services.password_policy import MAX_LENGTH, MIN_LENGTH, failed_rules
+from app.services.auth.password_policy import MAX_LENGTH, MIN_LENGTH, failed_rules
 
 Username = Annotated[
     str,

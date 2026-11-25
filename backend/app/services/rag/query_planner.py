@@ -14,8 +14,8 @@ import time
 from dataclasses import dataclass
 
 from app.core.config import Settings
-from app.services.chat_provider import LangChainProvider, ProviderError, ProviderMessage
-from app.services.chat_retriever import RetrievalResult
+from app.services.chat.provider import LangChainProvider, ProviderError, ProviderMessage
+from app.services.chat.retriever import RetrievalResult
 from app.services.rag.fusion import rrf_fuse
 from app.services.rag.qdrant_retriever import Hit, SearchOutcome, hits_to_result
 from app.services.rag.reranker import LlmReranker

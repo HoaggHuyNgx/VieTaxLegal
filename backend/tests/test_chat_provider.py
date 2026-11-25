@@ -19,8 +19,8 @@ from langchain_openai import ChatOpenAI
 from pydantic import SecretStr
 
 from app.core.config import get_settings
-from app.services import chat_provider
-from app.services.chat_provider import (
+from app.services.chat import provider as chat_provider
+from app.services.chat.provider import (
     LangChainProvider,
     ProviderConfigurationError,
     ProviderError,

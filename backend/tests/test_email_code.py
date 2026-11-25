@@ -11,8 +11,8 @@ from app.core.config import get_settings
 from app.core.errors import AppError
 from app.core.security import create_session_token
 from app.models.email_otp import EmailOtp
-from app.services import mailer
-from app.services.email_otp import MAX_ATTEMPTS, create_email_proof
+from app.services.auth import mailer
+from app.services.auth.email_otp import MAX_ATTEMPTS, create_email_proof
 from tests.test_auth import create_user, register_payload
 
 EMAIL = "nguoi.moi@example.com"

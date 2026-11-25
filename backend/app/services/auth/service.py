@@ -8,8 +8,8 @@ from app.core.errors import AppError
 from app.core.security import hash_password, verify_dummy_password, verify_password
 from app.models.user import User
 from app.schemas.auth import LoginRequest, RegisterRequest
-from app.services.email_otp import require_proof
-from app.services.login_throttle import get_login_throttle
+from app.services.auth.email_otp import require_proof
+from app.services.auth.login_throttle import get_login_throttle
 
 
 def get_registration_conflict(database: Session, payload: RegisterRequest) -> AppError | None:

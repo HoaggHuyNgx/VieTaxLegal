@@ -1,4 +1,4 @@
-from app.services.chat_retriever import RetrievalResult
+from app.services.chat.retriever import RetrievalResult
 
 # The no-fabrication rules (document numbers, articles, dates, quotes) and the
 # "cannot verify" fallback are load-bearing for a legal assistant. Keep them when

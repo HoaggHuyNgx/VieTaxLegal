@@ -4,7 +4,7 @@ import logging
 from qdrant_client import AsyncQdrantClient, models
 
 from app.core.config import get_settings
-from app.services.chat_retriever import NullRetriever, get_retriever
+from app.services.chat.retriever import NullRetriever, get_retriever
 from app.services.rag.chunking import ChunkDraft
 from app.services.rag.embeddings import FakeEmbedder, embedding_text
 from app.services.rag.qdrant_retriever import Hit, QdrantRetriever, hits_to_result

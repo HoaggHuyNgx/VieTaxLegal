@@ -1,6 +1,6 @@
 import asyncio
 
-from app.services.chat_provider import ProviderError, ProviderEvent
+from app.services.chat.provider import ProviderError, ProviderEvent
 from rag_eval.answer_judge import gold_numbers_present, judge_rows
 
 

@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.core.errors import AppError
 from app.models.user import ROLES, User
 from app.schemas.admin import AdminUserUpdate
-from app.services.refresh_tokens import revoke_all_for_user
+from app.services.auth.refresh_tokens import revoke_all_for_user
 
 
 def list_users(database: Session, limit: int, offset: int) -> list[User]:

@@ -4,8 +4,8 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.core.errors import AppError
-from app.services import login_throttle
-from app.services.login_throttle import LoginThrottle
+from app.services.auth import login_throttle
+from app.services.auth.login_throttle import LoginThrottle
 from tests.test_auth import email_proof
 
 PASSWORD = "Mat-khau-an-toan-2026!"

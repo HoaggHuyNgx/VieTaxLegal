@@ -5,7 +5,7 @@ from fastapi.testclient import TestClient
 
 from app.core.security import hash_password
 from app.models.user import User
-from app.services.password_policy import failed_rules
+from app.services.auth.password_policy import failed_rules
 from tests.test_auth import register_payload
 
 GOOD = "Mat-khau-an-toan-2026!"

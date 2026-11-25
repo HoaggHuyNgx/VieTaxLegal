@@ -21,15 +21,15 @@ from app.schemas.chat import (
     ConversationResponse,
     SendMessageRequest,
 )
-from app.services.chat import (
+from app.services.chat.limits import count_daily_messages
+from app.services.chat.provider import ModelProvider, get_model_provider
+from app.services.chat.retriever import Retriever, get_retriever
+from app.services.chat.service import (
     expire_stale_pending,
     owned_conversation,
     prepare_chat_stream,
     stream_chat_events,
 )
-from app.services.chat_limits import count_daily_messages
-from app.services.chat_provider import ModelProvider, get_model_provider
-from app.services.chat_retriever import Retriever, get_retriever
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
 

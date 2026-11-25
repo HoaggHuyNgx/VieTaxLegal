@@ -5,7 +5,7 @@ import pytest
 
 from app.core.config import get_settings
 from app.services import rag
-from app.services.chat_provider import ProviderError, ProviderEvent
+from app.services.chat.provider import ProviderError, ProviderEvent
 from app.services.rag.qdrant_retriever import Hit, SearchOutcome
 from app.services.rag.query_planner import (
     QueryPlan,

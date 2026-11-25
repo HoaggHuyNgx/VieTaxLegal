@@ -1,5 +1,5 @@
-from app.services.chat_prompt import NO_SOURCE_RULES, SYSTEM_PROMPT, prompt_with_context
-from app.services.chat_retriever import RetrievalResult, RetrievedContext
+from app.services.chat.prompt import NO_SOURCE_RULES, SYSTEM_PROMPT, prompt_with_context
+from app.services.chat.retriever import RetrievalResult, RetrievedContext
 
 
 def test_searching_and_finding_nothing_forbids_answering_from_memory():

@@ -7,8 +7,8 @@ from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
 from app.models.chat import Message
-from app.services.chat_citations import strip_markers
-from app.services.chat_provider import ProviderMessage
+from app.services.chat.citations import strip_markers
+from app.services.chat.provider import ProviderMessage
 
 MAX_HISTORY_CHARACTERS = 40_000
 # A question this short is usually a follow-up ("còn điều kiện thì sao?") that is meaningless

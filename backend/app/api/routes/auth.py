@@ -10,14 +10,14 @@ from app.core.security import create_session_token
 from app.db.session import get_db
 from app.models.user import User
 from app.schemas.auth import LoginRequest, RegisterRequest, UserResponse
-from app.services.auth import login_user, register_user
-from app.services.login_throttle import get_register_throttle
-from app.services.refresh_tokens import (
+from app.services.auth.login_throttle import get_register_throttle
+from app.services.auth.refresh_tokens import (
     RefreshRaceLost,
     issue_refresh_token,
     revoke_session,
     rotate_refresh_token,
 )
+from app.services.auth.service import login_user, register_user
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 

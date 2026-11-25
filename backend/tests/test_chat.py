@@ -12,15 +12,15 @@ from app.main import app
 from app.models.chat import ChatUsageEvent, Conversation, Message
 from app.models.user import User
 from app.schemas.chat import SendMessageRequest
-from app.services.chat import prepare_chat_stream, stream_chat_events
-from app.services.chat_history import provider_history
-from app.services.chat_provider import (
+from app.services.chat.history import provider_history
+from app.services.chat.provider import (
     ModelProvider,
     ProviderError,
     ProviderEvent,
     ProviderMessage,
     get_model_provider,
 )
+from app.services.chat.service import prepare_chat_stream, stream_chat_events
 from tests.test_auth import email_proof
 
 
@@ -423,7 +423,7 @@ def test_abort_persists_partial_content_and_closing_done_stays_completed(
 
 class NullRetrieverForTest:
     async def retrieve(self, query: str):
-        from app.services.chat_retriever import RetrievalResult
+        from app.services.chat.retriever import RetrievalResult
 
         assert query
         return RetrievalResult()
