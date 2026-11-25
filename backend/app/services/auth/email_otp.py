@@ -12,7 +12,7 @@ from datetime import datetime, timedelta, timezone
 
 import jwt
 from jwt.exceptions import InvalidTokenError
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.orm import Session
 
 from app.core.config import get_settings
@@ -114,11 +114,18 @@ def verify_code(database: Session, email: str, code: str) -> str:
         raise AppError(400, "OTP_INVALID", "Mã xác minh không đúng.")
     if _aware(row.expires_at) <= now:
         raise AppError(400, "OTP_EXPIRED", "Mã xác minh đã hết hạn. Hãy yêu cầu mã mới.")
-    if row.attempts >= MAX_ATTEMPTS:
+    # Spend an attempt before looking at the code. The database applies the cap and the increment
+    # in one statement, so parallel guesses cannot all pass a count each of them read earlier.
+    claimed = database.execute(
+        update(EmailOtp)
+        .where(EmailOtp.id == row.id, EmailOtp.attempts < MAX_ATTEMPTS)
+        .values(attempts=EmailOtp.attempts + 1)
+        .execution_options(synchronize_session=False)
+    )
+    database.commit()
+    if claimed.rowcount == 0:
         raise AppError(429, "OTP_TOO_MANY_ATTEMPTS", "Nhập sai quá nhiều lần. Hãy yêu cầu mã mới.")
     if not hmac.compare_digest(row.code_hash, _hash_code(email, code)):
-        row.attempts += 1
-        database.commit()
         raise AppError(400, "OTP_INVALID", "Mã xác minh không đúng.")
 
     row.consumed_at = now

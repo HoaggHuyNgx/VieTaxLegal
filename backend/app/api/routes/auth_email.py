@@ -7,7 +7,10 @@ from app.api.routes.auth import client_host
 from app.db.session import get_db
 from app.schemas.auth import EmailCodeRequest, EmailCodeVerifyRequest, EmailProofResponse
 from app.services.auth import email_otp
-from app.services.auth.login_throttle import get_email_code_throttle
+from app.services.auth.login_throttle import (
+    get_email_code_throttle,
+    get_email_verify_throttle,
+)
 
 router = APIRouter(prefix="/auth/email-code", tags=["Authentication"])
 
@@ -26,6 +29,8 @@ def send_email_code(
 @router.post("/verify", response_model=EmailProofResponse)
 def verify_email_code(
     payload: EmailCodeVerifyRequest,
+    request: Request,
     database: Annotated[Session, Depends(get_db)],
 ) -> EmailProofResponse:
+    get_email_verify_throttle().acquire(client_host(request))  # every check counts
     return EmailProofResponse(proof=email_otp.verify_code(database, payload.email, payload.code))

@@ -5,13 +5,13 @@ from uuid import uuid4
 import jwt
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 
 from app.core.config import get_settings
 from app.core.errors import AppError
 from app.core.security import create_session_token
 from app.models.email_otp import EmailOtp
-from app.services.auth import mailer
+from app.services.auth import email_otp, mailer
 from app.services.auth.email_otp import MAX_ATTEMPTS, create_email_proof
 from tests.test_auth import create_user, register_payload
 
@@ -237,3 +237,32 @@ def test_a_racing_request_that_committed_first_blocks_this_one(
     assert response.json()["error"]["code"] == "OTP_RATE_LIMITED"
     assert outbox == []
     assert database_session.scalar(select(func.count()).select_from(EmailOtp)) == 1
+
+
+def test_attempt_cap_holds_for_a_request_that_read_the_row_early(
+    client, outbox, database_session
+) -> None:
+    """Parallel guesses must not all pass the cap on a value they read before each other."""
+    request_code(client)
+    right = last_code(outbox)
+    stale = database_session.scalar(select(EmailOtp))
+    assert stale.attempts == 0
+    database_session.execute(
+        update(EmailOtp).values(attempts=MAX_ATTEMPTS).execution_options(synchronize_session=False)
+    )
+
+    with pytest.raises(AppError) as raised:
+        email_otp.verify_code(database_session, EMAIL, right)
+
+    assert raised.value.code == "OTP_TOO_MANY_ATTEMPTS"
+
+
+def test_one_client_cannot_guess_codes_without_limit(client) -> None:
+    allowed = get_settings().register_max_per_hour * MAX_ATTEMPTS
+    for index in range(allowed):
+        assert verify(client, "000000", f"user{index}@example.com").status_code == 400
+
+    response = verify(client, "000000", "one.more@example.com")
+
+    assert response.status_code == 429
+    assert response.json()["error"]["code"] == "OTP_VERIFY_RATE_LIMITED"

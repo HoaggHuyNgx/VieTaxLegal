@@ -173,6 +173,7 @@ const en = {
       OTP_EXPIRED: 'The verification code has expired. Request a new one.',
       OTP_TOO_MANY_ATTEMPTS: 'Too many wrong attempts. Request a new code.',
       OTP_RATE_LIMITED: 'You requested codes too many times. Please try again later.',
+      OTP_VERIFY_RATE_LIMITED: 'Too many code attempts. Please try again later.',
       EMAIL_NOT_VERIFIED: 'You need to verify your email before signing up.',
       EMAIL_SEND_FAILED: 'Could not send the email. Please try again later.',
       EMAIL_NOT_CONFIGURED: 'Email sending is not configured. Please contact the administrator.',

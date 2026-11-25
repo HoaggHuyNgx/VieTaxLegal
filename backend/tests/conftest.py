@@ -25,18 +25,26 @@ from app.db.session import get_db  # noqa: E402
 from app.main import app  # noqa: E402
 from app.services.auth.login_throttle import (  # noqa: E402
     get_email_code_throttle,
+    get_email_verify_throttle,
     get_login_throttle,
     get_register_throttle,
+)
+
+THROTTLES = (
+    get_login_throttle,
+    get_register_throttle,
+    get_email_code_throttle,
+    get_email_verify_throttle,
 )
 
 
 @pytest.fixture(autouse=True)
 def fresh_login_throttle() -> Generator[None, None, None]:
     """The throttle is process-wide state; start every test with an empty one."""
-    for throttle in (get_login_throttle, get_register_throttle, get_email_code_throttle):
+    for throttle in THROTTLES:
         throttle.cache_clear()
     yield
-    for throttle in (get_login_throttle, get_register_throttle, get_email_code_throttle):
+    for throttle in THROTTLES:
         throttle.cache_clear()
 
 

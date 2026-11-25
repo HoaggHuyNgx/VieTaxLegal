@@ -176,6 +176,7 @@ const vi = {
       OTP_EXPIRED: 'Mã xác minh đã hết hạn. Hãy yêu cầu mã mới.',
       OTP_TOO_MANY_ATTEMPTS: 'Bạn nhập sai quá nhiều lần. Hãy yêu cầu mã mới.',
       OTP_RATE_LIMITED: 'Bạn yêu cầu mã quá nhiều lần. Vui lòng thử lại sau.',
+      OTP_VERIFY_RATE_LIMITED: 'Bạn nhập mã quá nhiều lần. Vui lòng thử lại sau.',
       EMAIL_NOT_VERIFIED: 'Bạn cần xác minh email trước khi đăng ký.',
       EMAIL_SEND_FAILED: 'Không thể gửi email. Vui lòng thử lại sau.',
       EMAIL_NOT_CONFIGURED: 'Dịch vụ gửi email chưa được cấu hình. Vui lòng liên hệ quản trị viên.',

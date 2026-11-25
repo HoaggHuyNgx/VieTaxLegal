@@ -86,6 +86,17 @@ def get_email_code_throttle() -> LoginThrottle:
 
 
 @lru_cache
+def get_email_verify_throttle() -> LoginThrottle:
+    """Counts every code check per client address, on top of the per-code attempt cap."""
+    return LoginThrottle(
+        get_settings().register_max_per_hour * 5,  # room for typos behind a shared address
+        3600,
+        error_code="OTP_VERIFY_RATE_LIMITED",
+        error_message="Bạn nhập mã quá nhiều lần. Vui lòng thử lại sau.",
+    )
+
+
+@lru_cache
 def get_login_throttle() -> LoginThrottle:
     settings = get_settings()
     return LoginThrottle(
