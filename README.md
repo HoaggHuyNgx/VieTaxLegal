@@ -28,7 +28,7 @@ trước khi bật (xem [backend/README.md](backend/README.md)).
 | Tính thuế, scan hợp đồng và đính kèm tài liệu   | Chưa triển khai |
 
 \* Cần con người hoàn tất: điền hiệu lực văn bản, bổ sung văn bản còn thiếu và duyệt bộ câu hỏi
-đánh giá. Danh sách việc còn nợ nằm trong `plans/261011-1330-rag-legal-retrieval/debts.md`.
+đánh giá.
 
 Khi RAG tắt hoặc không tìm thấy nguồn, chatbot không hiển thị nguồn hoặc điều luật giả và luôn
 cảnh báo người dùng cần kiểm tra lại hiệu lực văn bản.
