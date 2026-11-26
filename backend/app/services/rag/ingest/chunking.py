@@ -13,7 +13,10 @@ from app.services.rag.index.qdrant_store import point_id
 from app.services.rag.ingest.corpus_manifest import CorpusDoc
 from app.services.rag.ingest.legal_parser import Article, ParsedDocument
 
-# Vietnamese syllables are whitespace-separated words, ~1.4 BPE tokens each (estimate, not exact).
+# Vietnamese syllables are whitespace-separated words, counted here as 1.4 BPE tokens each. That is
+# low: a review measured about 2.2 for text-embedding-3-small, so real chunks are larger than the
+# limits below suggest. Left as is, because changing it re-chunks the corpus and moves every eval
+# number. Quote measured sizes (`corpus_ingest.py` prints them), not these.
 TOKENS_PER_WORD = 1.4
 ARTICLE_MAX_TOKENS = 800
 FIXED_TOKENS = 512

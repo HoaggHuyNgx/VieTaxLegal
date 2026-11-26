@@ -6,6 +6,7 @@ import pytest
 from app.services.rag.ingest.chunking import article_chunks
 from app.services.rag.ingest.corpus_manifest import ManifestError, load_manifest, verify_raw_file
 from app.services.rag.ingest.legal_parser import parse
+from rag_eval.dataset import load_questions
 
 
 def _entry(**overrides) -> dict:
@@ -81,14 +82,32 @@ def test_ingest_defaults_to_true_and_can_be_switched_off(tmp_path):
     assert docs["b"].ingest is False
 
 
-def test_committed_manifest_indexes_the_consolidated_labour_code_not_the_base_text():
+def test_committed_manifest_indexes_consolidated_texts_not_the_ones_they_replace():
+    """Indexing both would let retrieval quote an amended rule in its old wording."""
     docs = {doc.slug: doc for doc in load_manifest()}
 
-    base = docs["bo-luat-lao-dong-45-2019-qh14"]
-    assert base.ingest is False
-    assert base.superseded_by == "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh"
-    assert docs[base.superseded_by].ingest is True
-    assert [doc.slug for doc in docs.values() if not doc.ingest] == [base.slug]
+    replaced = [doc for doc in docs.values() if doc.superseded_by in docs]
+
+    assert {doc.slug: doc.superseded_by for doc in replaced} == {
+        "bo-luat-lao-dong-45-2019-qh14": "bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh",
+        "luat-thue-gtgt-48-2024-qh15": "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+    }
+    assert all(not doc.ingest and docs[doc.superseded_by].ingest for doc in replaced)
+    assert [doc for doc in docs.values() if not doc.ingest] == replaced
+
+
+def test_every_gold_reference_points_at_an_indexed_document():
+    """A gold answer in a document the index skips could never be retrieved."""
+    indexed = {doc.slug for doc in load_manifest() if doc.ingest}
+
+    orphans = {
+        (question.id, ref.doc_slug)
+        for question in load_questions()
+        for ref in question.gold_refs
+        if ref.doc_slug not in indexed
+    }
+
+    assert orphans == set()
 
 
 def test_committed_manifest_has_verified_status_fields_and_no_open_truncation():

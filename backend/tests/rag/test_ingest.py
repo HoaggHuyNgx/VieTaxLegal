@@ -1,3 +1,4 @@
+import importlib.util
 from dataclasses import replace
 from pathlib import Path
 
@@ -152,3 +153,37 @@ def test_partial_ingest_without_purge_keeps_other_documents(client):
     ingest_corpus(client, COLLECTION, FakeEmbedder(), docs[:1], "article", 8, chunks_for=_by_doc)
 
     assert client.count(COLLECTION, exact=True).count == 8
+
+
+def test_a_renamed_heading_is_embedded_again(client):
+    """The point id covers the content only, but both vectors also cover the heading."""
+    doc = _doc()
+    _run(client, doc)
+    chunks = _chunks(doc)
+    renamed = [replace(chunks[0], heading_path=f"{chunks[0].heading_path} (sửa đổi)"), *chunks[1:]]
+    stats = IngestStats()
+
+    ingest_document(client, COLLECTION, FakeEmbedder(), renamed, doc.slug, 2, stats)
+
+    assert (stats.embedded, stats.reused) == (1, 3)
+    [point] = client.retrieve(COLLECTION, ids=[chunks[0].id], with_payload=True, with_vectors=True)
+    assert point.payload["heading_path"] == renamed[0].heading_path
+    expected = FakeEmbedder().embed_documents([embedding_text(renamed[0])]).vectors[0]
+    assert point.vector["dense"] == pytest.approx(expected, abs=1e-6)
+    assert client.count(COLLECTION, exact=True).count == 4
+
+
+def test_full_vbpl_ingest_without_its_manifest_is_refused(monkeypatch):
+    """A full run purges documents it does not know, which would be every imported one."""
+    path = Path(__file__).resolve().parents[2] / "scripts" / "corpus_ingest.py"
+    spec = importlib.util.spec_from_file_location("corpus_ingest_script", path)
+    script = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(script)
+    reached = []
+    monkeypatch.setattr(script, "get_embedder", lambda *_: reached.append("embedder"))
+    monkeypatch.setattr("sys.argv", ["corpus_ingest.py", "--chunk-set", "vbpl"])
+
+    with pytest.raises(SystemExit) as refused:
+        script.main()
+
+    assert refused.value.code == 2 and reached == []

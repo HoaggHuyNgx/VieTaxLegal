@@ -388,8 +388,11 @@ pip install -e ".[corpus]"                                   # chỉ cần để
 .\.venv\Scripts\python.exe scripts\corpus_backfill_sparse.py --chunk-set article  # chỉ khi cần dựng lại sparse
 ```
 
-`corpus_ingest.py` chạy lại được nhiều lần: chỉ nhúng chunk mới, cập nhật `status` mà không nhúng
-lại, và xóa điểm cũ của văn bản đã sửa. Biến môi trường liên quan nằm trong `.env.example`
+`corpus_ingest.py` chạy lại được nhiều lần: chỉ nhúng chunk mới hoặc đổi tiêu đề, cập nhật `status`
+mà không nhúng lại, và xóa điểm cũ của văn bản đã sửa. Văn bản đã có bản hợp nhất trong manifest
+(Bộ luật Lao động 45/2019, Luật Thuế GTGT 48/2024) để `ingest: false`: chỉ bản hợp nhất được nạp,
+và chạy lại lệnh nạp sẽ xóa các điểm cũ của chúng. Giới hạn token trong chunking là ước lượng thấp
+hơn thực tế; số đo thật do lệnh nạp in ra. Biến môi trường liên quan nằm trong `.env.example`
 (`RAG_*`, `QDRANT_*`, `EMBEDDING_*`, `EVAL_GENERATOR_MODEL`). `RAG_RETRIEVAL_MODE` nhận `dense`,
 `sparse` hoặc `hybrid` (dense + sparse hợp nhất bằng RRF, hòa điểm được phá theo thứ hạng dense).
 Đặt `RAG_QUERY_PLANNER_MODEL` để viết lại câu hỏi thành tối đa 3 truy vấn trước khi tìm (luôn giữ câu
@@ -401,7 +404,8 @@ gốc, gộp bằng RRF, lỗi thì chỉ tìm câu gốc); để trống là t�
 
 `scripts/corpus_import_vbpl.py` (extra `corpus`) nhập văn bản lọc từ dataset vbpl vào `corpus/vbpl/` (không nằm
 trong git). Nạp vào collection riêng bằng `corpus_ingest.py --chunk-set vbpl --extra-manifest
-corpus/vbpl/manifest.json`; đặt `RAG_CHUNK_SET=vbpl` để dùng. Hiệu lực của các văn bản này lấy từ bản
+corpus/vbpl/manifest.json` (chạy đủ mà thiếu manifest phụ sẽ bị từ chối, vì sẽ xóa hết văn bản đã
+nhập); đặt `RAG_CHUNK_SET=vbpl` để dùng. Hiệu lực của các văn bản này lấy từ bản
 chụp cổng vbpl, chưa có người kiểm tra.
 
 ### Đánh giá

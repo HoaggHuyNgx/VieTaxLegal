@@ -103,9 +103,13 @@ def _doc_filter(doc_slug: str) -> models.FilterSelector:
     return models.FilterSelector(filter=models.Filter(must=[condition]))
 
 
-def _existing_ids(client: QdrantClient, collection: str, ids: list[str]) -> set[str]:
-    found = client.retrieve(collection, ids=ids, with_payload=False, with_vectors=False)
-    return {str(point.id) for point in found}
+def _up_to_date_ids(client: QdrantClient, collection: str, chunks: list[ChunkDraft]) -> set[str]:
+    """Ids whose vectors still match the chunk. The id covers the content only, but both vectors
+    also cover the heading path, so a point with another heading is embedded again."""
+    ids = [chunk.id for chunk in chunks]
+    found = client.retrieve(collection, ids=ids, with_payload=["heading_path"], with_vectors=False)
+    headings = {str(point.id): (point.payload or {}).get("heading_path") for point in found}
+    return {chunk.id for chunk in chunks if headings.get(chunk.id) == chunk.heading_path}
 
 
 def ingest_document(
@@ -118,7 +122,7 @@ def ingest_document(
     stats: IngestStats,
 ) -> None:
     ids = [chunk.id for chunk in chunks]
-    existing = _existing_ids(client, collection, ids) if ids else set()
+    existing = _up_to_date_ids(client, collection, chunks) if chunks else set()
     missing = [chunk for chunk in chunks if chunk.id not in existing]
 
     for start in range(0, len(missing), batch_size):

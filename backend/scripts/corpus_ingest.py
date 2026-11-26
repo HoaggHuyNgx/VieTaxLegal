@@ -69,6 +69,10 @@ def main() -> int:
         dry_run([d for d in docs if d.ingest], chunk_set, settings.embedding_model, short_prefix)
         return 0
 
+    if chunk_set == "vbpl" and not args.only and not args.extra_manifest:
+        # A full run purges unknown documents: without that manifest, every imported one.
+        parser.error("a full vbpl ingest needs --extra-manifest corpus/vbpl/manifest.json")
+
     provider = get_embedder(settings)
     collection = collection_name(chunk_set, provider.model)
     client = get_sync_client(settings)
@@ -85,6 +89,8 @@ def main() -> int:
         f"tokens={stats.tokens} est_cost={'n/a' if cost is None else f'US${cost:.4f}'} "
         f"elapsed={time.perf_counter() - started:.1f}s"
     )
+    if stats.embedded and stats.tokens:  # measured by the API, unlike the dry-run estimate
+        print(f"real_tokens_per_embedded_chunk={stats.tokens / stats.embedded:.0f}")
     print(f"points_in_collection={client.count(collection, exact=True).count}")
     return 0
 

@@ -51,7 +51,9 @@
       "effective_from": "2025-07-01",
       "effective_to": null,
       "excluded_articles": [],
+      "ingest": false,
       "superseded_by": "luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh",
+      "notes": "Kept as raw source; the index uses the consolidated VBHN 12/2026 instead (same 18 articles; wording differs in 4, 5, 9, 12, 15, 18).",
       "issued_on": "2024-11-26"
     },
     {
