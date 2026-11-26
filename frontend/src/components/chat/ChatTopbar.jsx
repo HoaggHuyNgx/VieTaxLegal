@@ -24,10 +24,7 @@ export default function ChatTopbar({ onOpenSidebar }) {
       </button>
       <div className="lte-760:min-w-0 lte-760:flex-1">
         <h1 className="m-0 text-[21px] font-[750] tracking-[-0.55px] lte-760:overflow-hidden lte-760:text-[17px] lte-760:text-ellipsis lte-760:whitespace-nowrap">
-          {t('chat.page.title')}{' '}
-          <span className="ml-2 inline-block rounded-chat-pill bg-chat-light-blue px-[9px] py-[3px] align-middle text-[10px] font-bold tracking-[0] text-chat-blue">
-            {t('chat.page.titleBeta')}
-          </span>
+          {t('chat.page.title')}
         </h1>
         <p className="mt-1 text-[11px] text-chat-muted lte-760:overflow-hidden lte-760:text-[10px] lte-760:text-ellipsis lte-760:whitespace-nowrap">
           {t('chat.page.subtitle')}

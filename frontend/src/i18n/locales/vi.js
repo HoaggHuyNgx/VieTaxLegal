@@ -383,7 +383,6 @@ const vi = {
       older: 'Cũ hơn',
     },
     page: {
-      titleBeta: 'Beta',
       title: 'Trợ lý AI VieTaxLegal',
       subtitle: 'Tra cứu thông tin pháp luật dành cho doanh nghiệp Việt Nam',
       accountFallback: 'Tài khoản',

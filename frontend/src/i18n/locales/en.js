@@ -378,7 +378,6 @@ const en = {
       older: 'Older',
     },
     page: {
-      titleBeta: 'Beta',
       title: 'VieTaxLegal AI assistant',
       subtitle: 'Legal research for Vietnamese businesses',
       accountFallback: 'Account',
