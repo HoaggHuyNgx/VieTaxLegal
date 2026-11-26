@@ -30,3 +30,26 @@ describe('AssistantMessage sources', () => {
     expect(container.querySelector('.source-meta')).toBeNull()
   })
 })
+
+describe('AssistantMessage markdown', () => {
+  const renderContent = (content) =>
+    render(
+      <I18nProvider>
+        <AssistantMessage message={{ id: 'a', role: 'assistant', status: 'completed', content }} />
+      </I18nProvider>
+    )
+
+  it('renders a table instead of showing its pipes', () => {
+    const { container } = renderContent('| Mức | Thuế suất |\n|---|---|\n| A | B |')
+
+    expect(container.querySelectorAll('table td')).toHaveLength(2)
+  })
+
+  // Vietnamese answers use "~" for "about": two of them must not strike out the text between.
+  it('does not read single tildes as strikethrough', () => {
+    const { container } = renderContent('Khoảng ~5 đến ~10 ngày.')
+
+    expect(container.querySelector('del')).toBeNull()
+    expect(container.textContent).toContain('~5 đến ~10')
+  })
+})

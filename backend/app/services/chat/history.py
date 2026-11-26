@@ -57,13 +57,25 @@ def provider_history(database: Session, conversation_id: UUID) -> list[ProviderM
     return normalized
 
 
-def retrieval_query(history: list[ProviderMessage], question: str) -> str:
+def previous_question(
+    database: Session, conversation_id: UUID, current_message_id: UUID
+) -> str | None:
+    """The user's message before this one, read directly: in `provider_history` a failed reply
+    leaves two user turns that are merged, which would hide it."""
+    return database.scalar(
+        select(Message.content)
+        .where(
+            Message.conversation_id == conversation_id,
+            Message.role == "user",
+            Message.id != current_message_id,
+        )
+        .order_by(Message.created_at.desc(), Message.id.desc())
+        .limit(1)
+    )
+
+
+def retrieval_query(previous: str | None, question: str) -> str:
     """Prefix a short follow-up with the user's previous question so retrieval has a topic."""
-    if len(question.split()) > FOLLOW_UP_MAX_WORDS:
+    if not previous or len(question.split()) > FOLLOW_UP_MAX_WORDS:
         return question
-    # history ends with the current question, so the previous one is the user turn before it.
-    earlier_user_turns = [item.content for item in history[:-1] if item.role == "user"]
-    if not earlier_user_turns:
-        return question
-    previous = earlier_user_turns[-1][-PREVIOUS_QUESTION_MAX_CHARACTERS:]
-    return "\n".join((previous, question))
+    return "\n".join((previous[-PREVIOUS_QUESTION_MAX_CHARACTERS:], question))

@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { useI18n } from '../../i18n/useI18n'
 import { citationMeta, safeExternalUrl } from './chat-sources'
 import { CopyIcon, LogoMark } from './ChatIcons'
+
+// Tables and other GitHub markdown. A single `~` stays literal: answers use it for "about".
+const REMARK_PLUGINS = [[remarkGfm, { singleTilde: false }]]
 
 // Button font/color come from the chat-wide base rules (index.css), so only layout is set here.
 const BUBBLE =
@@ -99,6 +103,7 @@ export default function AssistantMessage({ message }) {
         {content ? (
           <div className="markdown-answer">
             <ReactMarkdown
+              remarkPlugins={REMARK_PLUGINS}
               components={{
                 a: SafeMarkdownLink,
               }}

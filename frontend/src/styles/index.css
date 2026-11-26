@@ -304,6 +304,20 @@ html {
 .markdown-answer pre code {
   padding: 0;
 }
+/* A wide table scrolls inside the bubble instead of stretching it. */
+.markdown-answer table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0 0 11px;
+  border-collapse: collapse;
+}
+.markdown-answer :is(th, td) {
+  border: 1px solid var(--color-chat-border);
+  padding: 5px 9px;
+  text-align: left;
+  vertical-align: top;
+}
 
 /* Keyframes cannot be expressed as utilities; components reference them by name. */
 @keyframes stream-pulse {

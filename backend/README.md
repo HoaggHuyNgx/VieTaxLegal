@@ -283,8 +283,8 @@ chuyển thành `completed`; lỗi thành `failed`; người dùng dừng stream
 dung đã nhận vẫn được lưu.
 
 Mỗi hội thoại chỉ có tối đa một assistant message `pending`. Nếu stream bị ngắt đột ngột (server
-chết) khiến một message kẹt ở `pending` hơn 5 phút, lần gửi tiếp theo hoặc lần xóa hội thoại sẽ tự
-đánh dấu nó là `failed` để hội thoại không bị khóa. Truy cập UUID hội thoại của người khác
+chết) khiến một message kẹt ở `pending` hơn 5 phút, lần mở, gửi tiếp hoặc xóa hội thoại sẽ tự đánh
+dấu nó là `failed` để hội thoại không bị khóa. Truy cập UUID hội thoại của người khác
 trả `404` để không tiết lộ tài nguyên có tồn tại hay không.
 
 ## Định dạng lỗi

@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { suggestedQuestions } from '../../data/chat'
 import { I18nProvider } from '../../i18n/I18nProvider'
@@ -13,7 +13,10 @@ beforeAll(() => {
 
 // Vitest runs without `globals`, so testing-library never registers its own
 // afterEach and renders would otherwise pile up in the same document.
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+  sessionStorage.clear() // the composer restores a draft, which would leak between tests
+})
 
 function renderWorkspace(props) {
   return render(
@@ -79,7 +82,7 @@ describe('ChatWorkspace composer', () => {
     expect(onSend).not.toHaveBeenCalled()
 
     fireEvent.keyDown(textarea, { key: 'Enter' })
-    expect(onSend).toHaveBeenCalledWith('Câu hỏi')
+    expect(onSend).toHaveBeenCalledWith('Câu hỏi', expect.any(Object))
   })
 
   it('does not send on Shift+Enter', () => {
@@ -106,5 +109,114 @@ describe('ChatWorkspace daily quota', () => {
   it('shows nothing until the usage has loaded', () => {
     renderWorkspace()
     expect(screen.queryByText(/lượt hôm nay/)).toBeNull()
+  })
+})
+
+describe('ChatWorkspace draft', () => {
+  const typeAndSend = async (text) => {
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: text } })
+    await act(async () => {
+      fireEvent.keyDown(screen.getByRole('textbox'), { key: 'Enter' })
+    })
+  }
+
+  it('gives the question back when the server did not take it', async () => {
+    renderWorkspace({ onSend: vi.fn().mockResolvedValue(false), draftOwner: 'u1' })
+
+    await typeAndSend('Câu hỏi dài')
+
+    expect(screen.getByRole('textbox').value).toBe('Câu hỏi dài')
+  })
+
+  it('keeps an unaccepted question across a reload, for the same account only', async () => {
+    renderWorkspace({ onSend: () => new Promise(() => {}), draftOwner: 'u1' })
+    await typeAndSend('Câu hỏi đang gửi')
+    cleanup()
+
+    renderWorkspace({ draftOwner: 'u2' })
+    expect(screen.getByRole('textbox').value).toBe('')
+    cleanup()
+    renderWorkspace({ draftOwner: 'u1' })
+    expect(screen.getByRole('textbox').value).toBe('Câu hỏi đang gửi')
+  })
+
+  it('forgets the draft once the server accepted it', async () => {
+    const onSend = vi.fn(async (_text, { onAccepted }) => {
+      onAccepted()
+      return true
+    })
+    renderWorkspace({ onSend, draftOwner: 'u1' })
+    await typeAndSend('Đã gửi')
+    cleanup()
+
+    renderWorkspace({ draftOwner: 'u1' })
+
+    expect(screen.getByRole('textbox').value).toBe('')
+  })
+})
+
+describe('ChatWorkspace scrolling', () => {
+  const messages = (count) =>
+    Array.from({ length: count }, (_, i) => ({ id: `m${i}`, role: 'user', content: `Tin ${i}` }))
+  const workspace = (items) => (
+    <I18nProvider>
+      <ChatWorkspace
+        messages={items}
+        onSend={() => {}}
+        onStop={() => {}}
+        onClearError={() => {}}
+        isStreaming
+      />
+    </I18nProvider>
+  )
+  // A 300px window on 1000px of thread: the bottom is at scrollTop 700.
+  const move = (element, top, height = 1000) => {
+    Object.defineProperty(element, 'scrollHeight', { configurable: true, value: height })
+    Object.defineProperty(element, 'clientHeight', { configurable: true, value: 300 })
+    element.scrollTop = top
+  }
+  const scrollTo = (element, top, height) => {
+    move(element, top, height)
+    fireEvent.scroll(element)
+  }
+  const openAtBottom = () => {
+    const follow = vi.fn()
+    Element.prototype.scrollTo = follow
+    const { container, rerender } = render(workspace(messages(1)))
+    const thread = container.querySelector('.thread-scroll')
+    scrollTo(thread, 700)
+    follow.mockClear()
+    return { follow, thread, update: (count) => rerender(workspace(messages(count))) }
+  }
+
+  it('follows new text only while the reader is at the bottom', () => {
+    const { follow, thread, update } = openAtBottom()
+
+    scrollTo(thread, 100) // reading further up
+    update(2)
+    expect(follow).not.toHaveBeenCalled()
+
+    scrollTo(thread, 680) // back within reach of the bottom
+    update(3)
+    expect(follow).toHaveBeenCalledTimes(1)
+  })
+
+  // Text arrives faster than the browser fires scroll events.
+  it('does not pull the reader back when their scroll has not been reported yet', () => {
+    const { follow, thread, update } = openAtBottom()
+
+    move(thread, 100)
+    update(2)
+
+    expect(follow).not.toHaveBeenCalled()
+  })
+
+  it('keeps following when a long chunk, not the reader, opened the gap', () => {
+    const { follow, thread, update } = openAtBottom()
+
+    scrollTo(thread, 700, 1600) // our own scroll reported after much more text had landed
+    update(2)
+
+    expect(follow).toHaveBeenCalledTimes(1)
   })
 })

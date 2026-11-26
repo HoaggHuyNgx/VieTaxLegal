@@ -7,11 +7,21 @@ export function apiUrl(path) {
 // The access cookie lives ~15 minutes; the refresh cookie renews it silently. One shared
 // in-flight refresh keeps parallel 401s from rotating (and so invalidating) the token twice.
 let refreshInFlight = null
+let onSessionExpired = null
 
+/** Called when the server refuses the refresh token, so the app can drop the signed-in user. */
+export function setSessionExpiredHandler(handler) {
+  onSessionExpired = handler
+}
+
+// 'renewed' | 'expired' (the server refused the token) | 'failed' (network or server trouble).
 function refreshSession() {
   refreshInFlight ??= fetch(apiUrl('/auth/refresh'), { method: 'POST', credentials: 'include' })
-    .then((response) => response.ok)
-    .catch(() => false)
+    .then((response) => {
+      if (response.ok) return 'renewed'
+      return response.status === 401 ? 'expired' : 'failed'
+    })
+    .catch(() => 'failed')
     .finally(() => {
       refreshInFlight = null
     })
@@ -24,7 +34,11 @@ export async function authFetch(path, init) {
   const response = await fetch(apiUrl(path), init)
   const isAuthEndpoint = path.startsWith('/auth/') && path !== '/auth/me'
   if (response.status !== 401 || isAuthEndpoint) return response
-  return (await refreshSession()) ? fetch(apiUrl(path), init) : response
+  const outcome = await refreshSession()
+  if (outcome === 'renewed') return fetch(apiUrl(path), init)
+  // /auth/me is also how a visitor who never signed in is recognised: nothing expired there.
+  if (outcome === 'expired' && path !== '/auth/me') onSessionExpired?.()
+  return response
 }
 
 export class ApiError extends Error {

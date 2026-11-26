@@ -317,3 +317,60 @@ describe('guards', () => {
     expect(result.current.isConversationLoading).toBe(false)
   })
 })
+
+describe('leaving and failing', () => {
+  it('tells the composer when the server accepted the question', async () => {
+    respondWith([
+      { event: 'meta', data: serverMeta() },
+      { event: 'done', data: { message: { id: ASSISTANT_ID, status: 'completed' } } },
+    ])
+    const onAccepted = vi.fn()
+    const { result } = setup()
+    let accepted
+
+    await act(async () => {
+      accepted = await result.current.sendMessage('Câu hỏi', { onAccepted })
+    })
+
+    expect(onAccepted).toHaveBeenCalledTimes(1)
+    expect(accepted).toBe(true)
+  })
+
+  it('reports a question the server never took', async () => {
+    streamChatMessage.mockRejectedValue(new ApiError({ status: 429, code: 'CHAT_RATE_LIMITED' }))
+    const { result } = setup()
+    let accepted
+
+    await act(async () => {
+      accepted = await result.current.sendMessage('Câu hỏi')
+    })
+
+    expect(accepted).toBe(false)
+  })
+
+  it('refreshes usage and history when a stream is abandoned', async () => {
+    streamChatMessage.mockImplementation(() => new Promise(() => {}))
+    const { result, onStreamSettled } = setup()
+    act(() => {
+      result.current.sendMessage('Câu hỏi')
+    })
+
+    act(() => result.current.cancelStream())
+
+    expect(onStreamSettled).toHaveBeenCalledTimes(1)
+  })
+
+  it.each([
+    [404, 1],
+    [422, 1],
+    [500, 0],
+  ])('on a %i while loading, leaves the conversation %i time(s)', async (status, times) => {
+    getConversation.mockRejectedValue(new ApiError({ status, code: 'X' }))
+    const onConversationUnavailable = vi.fn()
+
+    const { result } = setup({ activeConversation: CONVERSATION_ID, onConversationUnavailable })
+
+    await waitFor(() => expect(result.current.chatError).not.toBeNull())
+    expect(onConversationUnavailable).toHaveBeenCalledTimes(times)
+  })
+})

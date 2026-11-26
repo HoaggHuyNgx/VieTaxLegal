@@ -4,6 +4,7 @@ import ChatSidebar from '../components/chat/ChatSidebar'
 import ChatSourcesPanel from '../components/chat/ChatSourcesPanel'
 import ChatTopbar from '../components/chat/ChatTopbar'
 import ChatWorkspace from '../components/chat/ChatWorkspace'
+import { clearDraft } from '../components/chat/chat-draft'
 import { latestCitations } from '../components/chat/chat-sources'
 import { useChatStream } from '../components/chat/useChatStream'
 import { useChatUsage } from '../components/chat/useChatUsage'
@@ -106,6 +107,12 @@ export default function ChatPage() {
     refreshUsage()
   }, [refreshConversations, refreshUsage])
 
+  // The URL named a conversation that cannot be opened: go back to a blank one, keeping the error.
+  const handleConversationUnavailable = useCallback(() => {
+    setActiveConversation(null)
+    updateConversationUrl(null)
+  }, [updateConversationUrl])
+
   const {
     messages,
     isConversationLoading,
@@ -120,6 +127,7 @@ export default function ChatPage() {
     activeConversation,
     onConversationCreated: handleConversationCreated,
     onStreamSettled: handleStreamSettled,
+    onConversationUnavailable: handleConversationUnavailable,
   })
 
   const startNewChat = useCallback(() => {
@@ -164,6 +172,7 @@ export default function ChatPage() {
 
   const handleLogout = async () => {
     cancelStream()
+    clearDraft()
     try {
       await logout()
     } finally {
@@ -206,6 +215,7 @@ export default function ChatPage() {
         usage={usage}
         error={errorText(chatError)}
         onClearError={() => setChatError(null)}
+        draftOwner={user?.id}
       />
       <ChatSourcesPanel
         citations={latestCitations(messages)}

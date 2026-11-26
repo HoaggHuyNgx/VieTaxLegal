@@ -16,7 +16,12 @@ import { getConversation, streamChatMessage } from '../../services/chat'
  * can translate them at render time and switching language re-renders without
  * refetching.
  */
-export function useChatStream({ activeConversation, onConversationCreated, onStreamSettled }) {
+export function useChatStream({
+  activeConversation,
+  onConversationCreated,
+  onStreamSettled,
+  onConversationUnavailable,
+}) {
   const [messages, setMessages] = useState([])
   const [isConversationLoading, setIsConversationLoading] = useState(Boolean(activeConversation))
   const [isStreaming, setIsStreaming] = useState(false)
@@ -28,6 +33,9 @@ export function useChatStream({ activeConversation, onConversationCreated, onStr
   // Set when this hook itself created the conversation: its messages are already
   // on screen from the stream, so re-fetching them would only blank the view.
   const skipDetailLoadRef = useRef(null)
+  // A ref, so a new callback identity does not re-run the history load below.
+  const unavailableRef = useRef(onConversationUnavailable)
+  unavailableRef.current = onConversationUnavailable
 
   useEffect(() => {
     if (!activeConversation) {
@@ -53,6 +61,8 @@ export function useChatStream({ activeConversation, onConversationCreated, onStr
       .catch((error) => {
         if (detailRequestRef.current !== requestId) return
         setChatError({ error, fallbackKey: 'chat.page.conversationLoadFailed' })
+        // Missing, someone else's, or not an id at all: staying would send into it and fail.
+        if (error?.status === 404 || error?.status === 422) unavailableRef.current?.()
       })
       .finally(() => {
         if (detailRequestRef.current === requestId) setIsConversationLoading(false)
@@ -78,7 +88,8 @@ export function useChatStream({ activeConversation, onConversationCreated, onStr
     abortControllerRef.current.abort()
     abortControllerRef.current = null
     setIsStreaming(false)
-  }, [])
+    onStreamSettled() // the question already counted against the quota and the history
+  }, [onStreamSettled])
 
   const resetMessages = useCallback(() => {
     detailRequestRef.current += 1
@@ -91,11 +102,14 @@ export function useChatStream({ activeConversation, onConversationCreated, onStr
     abortControllerRef.current?.abort()
   }, [])
 
+  // Resolves to whether the server took the question (undefined if the user moved on), so the
+  // composer can give the text back; `onAccepted` fires as soon as that is known.
   const sendMessage = useCallback(
-    async (content) => {
+    async (content, { onAccepted } = {}) => {
       // Guard on the ref, not on `isStreaming`: two fast clicks can both read a
       // stale `false` before React re-renders.
-      if (abortControllerRef.current) return
+      if (abortControllerRef.current) return false
+      let accepted = false
 
       const userMessage = createTemporaryMessage('user', content)
       const assistantMessage = createTemporaryMessage('assistant', '')
@@ -110,6 +124,8 @@ export function useChatStream({ activeConversation, onConversationCreated, onStr
       setMessages((current) => [...current, userMessage, assistantMessage])
 
       const handleMeta = (data) => {
+        accepted = true
+        onAccepted?.()
         assistantMessageId = data.assistantMessage.id
         setMessages((current) => {
           const withUserMessage = replaceMessage(current, {
@@ -211,6 +227,7 @@ export function useChatStream({ activeConversation, onConversationCreated, onStr
           onStreamSettled()
         }
       }
+      return accepted
     },
     [activeConversation, onConversationCreated, onStreamSettled]
   )

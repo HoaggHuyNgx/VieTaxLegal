@@ -12,7 +12,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Query, Response, status
 from fastapi.responses import StreamingResponse
 from sqlalchemy import select
-from sqlalchemy.orm import Session, selectinload
+from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
 from app.core.config import get_settings
@@ -77,18 +77,13 @@ def get_conversation(
     current_user: Annotated[User, Depends(get_current_user)],
     database: Annotated[Session, Depends(get_db)],
 ) -> ConversationDetailResponse:
-    conversation = database.scalar(
-        select(Conversation)
-        .options(selectinload(Conversation.messages))
-        .where(
-            Conversation.id == conversation_id,
-            Conversation.user_id == current_user.id,
-        )
-    )
-    if not conversation:
-        # A UUID owned by someone else is indistinguishable from one that does not
-        # exist: same 404, same message. Never 403 — that would confirm existence.
-        raise AppError(404, "CONVERSATION_NOT_FOUND", "Không tìm thấy cuộc hội thoại.")
+    # A UUID owned by someone else is indistinguishable from one that does not exist: same
+    # 404, same message. Never 403, which would confirm existence.
+    conversation = owned_conversation(database, current_user.id, conversation_id)
+    # A reply whose stream died would otherwise show as "answering" until the next send.
+    expire_stale_pending(database, conversation.id, datetime.now(timezone.utc))
+    database.commit()
+    database.refresh(conversation, ["messages"])
     return ConversationDetailResponse.from_conversation(conversation)
 
 

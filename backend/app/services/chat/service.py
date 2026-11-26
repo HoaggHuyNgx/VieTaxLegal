@@ -19,6 +19,7 @@ from uuid import UUID
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
+from starlette.concurrency import run_in_threadpool
 
 from app.core.config import get_settings
 from app.core.errors import AppError
@@ -33,12 +34,13 @@ from app.services.chat.citations import (
     citation_snapshot,
     select_cited,
 )
-from app.services.chat.history import provider_history, retrieval_query
+from app.services.chat.history import previous_question, provider_history, retrieval_query
 from app.services.chat.limits import enforce_rate_limits, expire_stale_pending
 from app.services.chat.prompt import prompt_with_context
 from app.services.chat.provider import (
     ModelProvider,
     ProviderConfigurationError,
+    ProviderMessage,
 )
 from app.services.chat.retriever import Retriever
 
@@ -210,16 +212,31 @@ def _finalize_message(
     return message
 
 
+def _load_context(
+    database: Session, prepared: PreparedChatStream
+) -> tuple[list[ProviderMessage], str | None]:
+    history = provider_history(database, prepared.conversation_id)
+    previous = previous_question(database, prepared.conversation_id, prepared.user_message_id)
+    # Release the read-only transaction/connection before waiting on retrieval or the model.
+    database.rollback()
+    return history, previous
+
+
 def _finalize_quietly(
     database: Session, prepared: PreparedChatStream, status: str, content: str
 ) -> None:
-    """Best-effort terminal write for error paths.
+    """Best-effort terminal write for error paths; only a `pending` reply is touched.
 
-    If the database is also failing, raising here would replace the original error and the
+    A cancel can arrive after the answer was already saved, and must not undo it. If the
+    database is also failing, raising here would replace the original error and the
     client would never get an `error` event. The stale-pending sweep recovers the row later.
     """
     try:
         database.rollback()
+        message = database.get(Message, prepared.assistant_message_id)
+        if message and message.status != "pending":
+            database.rollback()
+            return
         _finalize_message(database, prepared, status, content)
     except Exception:
         database.rollback()
@@ -246,10 +263,10 @@ async def stream_chat_events(
     truncated = False
     try:
         yield _sse("meta", prepared.meta)
-        history = provider_history(database, prepared.conversation_id)
-        # Release the read-only transaction/connection before waiting on retrieval or the model.
-        database.rollback()
-        retrieval = await retriever.retrieve(retrieval_query(history, prepared.query))
+        # Database calls are synchronous (and may wait for a pooled connection), so they run in
+        # a worker thread. The thread finishes even if the request is cancelled meanwhile.
+        history, previous = await run_in_threadpool(_load_context, database, prepared)
+        retrieval = await retriever.retrieve(retrieval_query(previous, prepared.query))
         settings = get_settings()
         async for event in provider.stream(
             history,
@@ -275,7 +292,8 @@ async def stream_chat_events(
         selection = select_cited(retrieval, partial_content)
         if selection.unknown_markers:
             logger.info("Answer cited %d unknown source ids", len(selection.unknown_markers))
-        message = _finalize_message(
+        message = await run_in_threadpool(
+            _finalize_message,
             database,
             prepared,
             "completed",

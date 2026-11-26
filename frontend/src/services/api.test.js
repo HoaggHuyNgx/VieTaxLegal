@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { authFetch } from './api'
+import { authFetch, setSessionExpiredHandler } from './api'
 
 const reply = (status) => new Response(null, { status })
 
@@ -59,5 +59,35 @@ describe('authFetch', () => {
     await Promise.all([authFetch('/a'), authFetch('/b')])
 
     expect(refreshCalls).toBe(1)
+  })
+})
+
+describe('session expiry', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    setSessionExpiredHandler(null)
+  })
+
+  const expiryCalls = async (path, refreshStatus) => {
+    const handler = vi.fn()
+    setSessionExpiredHandler(handler)
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url) => reply(url.endsWith('/auth/refresh') ? refreshStatus : 401))
+    )
+    await authFetch(path)
+    return handler.mock.calls.length
+  }
+
+  it('is reported when the refresh token is refused', async () => {
+    expect(await expiryCalls('/chat/conversations', 401)).toBe(1)
+  })
+
+  it('is not reported when the refresh merely failed on the server', async () => {
+    expect(await expiryCalls('/chat/conversations', 500)).toBe(0)
+  })
+
+  it('is not reported for the first visit of someone who never signed in', async () => {
+    expect(await expiryCalls('/auth/me', 401)).toBe(0)
   })
 })

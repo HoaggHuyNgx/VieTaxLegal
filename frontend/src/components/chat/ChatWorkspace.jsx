@@ -1,12 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useI18n } from '../../i18n/useI18n'
 import AssistantMessage from './AssistantMessage'
+import { discardDraft, readDraft, saveDraft } from './chat-draft'
 import { DocumentIcon, LogoMark, PaperclipIcon, SendIcon, ShieldIcon, SparkleIcon } from './ChatIcons'
 import { formatMessageTime } from './message-time'
 import SuggestionGrid from './SuggestionGrid'
 import ToolTabs from './ToolTabs'
 
 const MAX_MESSAGE_LENGTH = 4000
+const NEAR_BOTTOM_PX = 80
 
 // Sparkles are drawn over the logo; positions are the old absolute offsets.
 const SPARKLE = 'absolute text-chat-sparkle-soft'
@@ -31,23 +33,55 @@ export default function ChatWorkspace({
   usage,
   error,
   onClearError,
+  draftOwner,
 }) {
   const { t, localeTag } = useI18n()
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState(() => readDraft(draftOwner))
   const scrollAreaRef = useRef(null)
+  // Follow new text only while the reader is at the bottom, so they can scroll up mid-answer.
+  const stickToBottomRef = useRef(true)
+  const lastScrollTopRef = useRef(0)
+
+  // Only the reader moving up stops the following: text growing below also widens the gap.
+  const noticeScroll = useCallback(() => {
+    const area = scrollAreaRef.current
+    if (!area) return
+    const gap = area.scrollHeight - area.scrollTop - area.clientHeight
+    if (gap < NEAR_BOTTOM_PX) stickToBottomRef.current = true
+    else if (area.scrollTop < lastScrollTopRef.current) stickToBottomRef.current = false
+    lastScrollTopRef.current = area.scrollTop
+  }, [])
 
   useEffect(() => {
     const scrollArea = scrollAreaRef.current
-    if (scrollArea) scrollArea.scrollTo({ top: scrollArea.scrollHeight, behavior: 'smooth' })
-  }, [messages])
+    if (!messages.length) {
+      stickToBottomRef.current = true // another conversation is loading
+      lastScrollTopRef.current = 0
+    }
+    noticeScroll() // streamed text can arrive before the reader's scroll event does
+    if (scrollArea && stickToBottomRef.current) {
+      scrollArea.scrollTo({ top: scrollArea.scrollHeight, behavior: isStreaming ? 'auto' : 'smooth' })
+      lastScrollTopRef.current = scrollArea.scrollTop
+    }
+  }, [messages, isStreaming, noticeScroll])
 
-  const submitMessage = (event) => {
+  const updateMessage = (value) => {
+    setMessage(value)
+    saveDraft(draftOwner, value)
+  }
+
+  const submitMessage = async (event) => {
     event.preventDefault()
     const trimmedMessage = message.trim()
     if (!trimmedMessage || isStreaming || isLoading) return
     onClearError()
-    onSend(trimmedMessage)
+    stickToBottomRef.current = true
     setMessage('')
+    saveDraft(draftOwner, trimmedMessage) // kept until the server has the question
+    const accepted = await onSend(trimmedMessage, {
+      onAccepted: () => discardDraft(draftOwner, trimmedMessage),
+    })
+    if (accepted === false) setMessage((current) => current || trimmedMessage)
   }
 
   const isEmptyThread = !isLoading && messages.length === 0
@@ -56,8 +90,9 @@ export default function ChatWorkspace({
     <main className="col-2 row-2 flex min-h-0 min-w-0 flex-1 flex-col bg-chat-surface px-5 lte-760:col-1 lte-760:px-[10px]">
       <ToolTabs />
       <div
-        className="min-h-0 flex-1 overflow-y-auto px-3 pb-[10px] lte-760:px-0 lte-760:pb-2"
+        className="thread-scroll min-h-0 flex-1 overflow-y-auto px-3 pb-[10px] lte-760:px-0 lte-760:pb-2"
         ref={scrollAreaRef}
+        onScroll={noticeScroll}
       >
         <div className="mx-auto max-w-[var(--chat-center-max)]">
           {isLoading ? (
@@ -94,7 +129,7 @@ export default function ChatWorkspace({
                     className="relative mb-5 ml-4 rounded-[9px] bg-[image:var(--gradient-chat-user-message)] p-[15px_17px_28px] text-[13px] leading-[1.7] text-chat-user-text lte-760:ml-0 lte-760:text-[12px]"
                     key={item.id}
                   >
-                    <p className="m-0">{item.content}</p>
+                    <p className="m-0 [overflow-wrap:anywhere] whitespace-pre-wrap">{item.content}</p>
                     <time className="absolute right-[17px] bottom-[10px] text-[10px] text-chat-user-time">
                       {formatMessageTime(item.createdAt, localeTag) ?? t('chat.message.justNow')}
                     </time>
@@ -105,7 +140,7 @@ export default function ChatWorkspace({
         </div>
       </div>
       <div className="mx-auto w-full max-w-[var(--chat-center-max)] p-[10px_0_14px]">
-        {isEmptyThread ? <SuggestionGrid onPick={setMessage} /> : null}
+        {isEmptyThread ? <SuggestionGrid onPick={updateMessage} /> : null}
         {error ? (
           <div
             className="mb-2 flex items-center justify-between gap-[10px] rounded-[7px] border border-chat-error-border bg-chat-danger-soft p-[8px_10px] text-[10px] text-chat-error-text"
@@ -129,7 +164,7 @@ export default function ChatWorkspace({
           <textarea
             className="block w-full resize-none border-0 bg-transparent p-[16px_18px_6px] text-chat-ink outline-0 outline-none placeholder:text-chat-composer-placeholder lte-760:p-[13px_14px_5px]"
             value={message}
-            onChange={(event) => setMessage(event.target.value)}
+            onChange={(event) => updateMessage(event.target.value)}
             onKeyDown={(event) => {
               // isComposing guards Telex/VNI and mobile IMEs: the Enter that
               // commits a composition must not also send the message.

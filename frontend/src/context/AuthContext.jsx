@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { setSessionExpiredHandler } from '../services/api'
 import {
   getCurrentUser,
   login as loginRequest,
@@ -27,6 +28,13 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     refreshSession()
   }, [refreshSession])
+
+  // A session that can no longer be renewed signs the user out here too; ProtectedRoute then
+  // leaves the page instead of every request on it failing.
+  useEffect(() => {
+    setSessionExpiredHandler(() => setUser(null))
+    return () => setSessionExpiredHandler(null)
+  }, [])
 
   const register = useCallback(async (payload) => {
     const registeredUser = await registerRequest(payload)

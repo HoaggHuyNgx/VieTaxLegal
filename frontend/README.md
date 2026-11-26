@@ -102,6 +102,10 @@ Token nằm trong cookie HTTP-only do backend đặt, JavaScript không đọc �
 Trong lúc `isLoading`, `ProtectedRoute` hiển thị trạng thái chờ thay vì đá người dùng về trang chủ,
 tránh việc F5 ở `/chat` bị đăng xuất nhầm.
 
+Khi server từ chối refresh token (trả `401`), frontend bỏ người dùng hiện tại và `ProtectedRoute`
+đưa về trang chủ; lỗi mạng hay `5xx` khi refresh thì không đăng xuất. Câu hỏi đang gõ hoặc server
+chưa nhận được giữ trong `sessionStorage` của tab, gắn với tài khoản, và bị xóa khi đăng xuất.
+
 ## Luồng chat streaming
 
 `streamChatMessage` trong `src/services/chat.js` gửi `POST /api/chat/messages/stream` rồi đọc
@@ -116,6 +120,10 @@ tránh việc F5 ở `/chat` bị đăng xuất nhầm.
 
 Nút dừng dùng `AbortController`; backend nhận biết client ngắt kết nối và lưu message ở trạng thái
 `cancelled` cùng phần nội dung đã nhận, nên nội dung dở không bị mất.
+
+Khung chat chỉ tự cuộn khi người đọc đang ở gần cuối. Câu trả lời được hiển thị dạng GitHub Markdown
+(`remark-gfm`: bảng, danh sách; một dấu `~` đơn giữ nguyên). URL trỏ tới hội thoại không mở được
+(`404`/`422`) sẽ quay về khung chat trống kèm thông báo.
 
 Hiện `NullRetriever` ở backend không trả citation nào, nên danh sách nguồn luôn rỗng và không hiển
 thị. Đây là chủ ý: chưa có RAG thì không hiển thị số hiệu văn bản hay điều khoản nào cả.
