@@ -49,28 +49,45 @@ def retrieval_rows(results: list[dict]) -> list[list[str]]:
             _label(result), cfg["chunk_set"], cfg.get("mode", "dense"), cfg.get("rerank") or "-",
             str(s["in_corpus_questions"]), _fmt(_hit(s, 1)), _fmt(_hit(s, 3)),
             _fmt(_hit(s, 5)), _fmt(s["mrr"]), _ms(s["embed_ms"]), _ms(s["search_ms"]),
+            _ms(s.get("retrieval_ms")), result["meta"].get("date", "-"),
         ])  # fmt: skip
     return rows
+
+
+def refusal_rate(rows: list[dict]) -> float | None:
+    """Share of out-of-corpus answers a person marked `refused`; None until all are marked."""
+    labels = [
+        r.get("refused") for r in rows if r.get("type") == "out_of_corpus" and "error" not in r
+    ]
+    if not labels or not all(isinstance(label, bool) for label in labels):
+        return None
+    return sum(labels) / len(labels)
 
 
 def generation_rows(results: list[dict]) -> list[list[str]]:
     rows = []
     for result in (r for r in results if r["meta"]["config"]["tier"] == "generation"):
         s = result["summary"]
+        # `.get`: older result files measured references differently and have no such keys.
         rows.append([
-            _label(result), str(s["answered"]), _fmt(s["citation_precision"]),
-            _fmt(s["citation_recall"]), _fmt(s["hallucinated_reference_rate"]),
-            _fmt(s["ooc_no_citation_rate"]), _fmt(s["ooc_abstain_phrase_rate"]),
-            _ms(s["ttft_ms"]), _ms(s["total_ms"]), f"{s['input_tokens']}/{s['output_tokens']}",
+            _label(result), str(s["answered"]), _fmt(s.get("provider_errors")),
+            _fmt(s.get("truncated_answers")), _fmt(s["citation_precision"]),
+            _fmt(s["citation_recall"]), _fmt(s.get("unsupported_reference_rate")),
+            _fmt(s.get("unknown_doc_rate")), _fmt(s.get("answers_needing_review")),
+            _fmt(s["ooc_no_citation_rate"]), _fmt(refusal_rate(result.get("questions", []))),
+            _ms(s["ttft_ms"]), _ms(s.get("end_to_end_ms")),
+            f"{s['input_tokens']}/{s['output_tokens']}", result["meta"].get("date", "-"),
         ])  # fmt: skip
     return rows
 
 
-RETRIEVAL_HEADER = ["config", "chunks", "mode", "rerank", "n", "Hit@1", "Hit@3", "Hit@5", "MRR",
-                    "embed ms p50/p95", "search ms p50/p95"]  # fmt: skip
-GENERATION_HEADER = ["config", "answered", "cit. precision", "cit. recall", "hallucinated ref",
-                     "OOC no-cite", "OOC abstain", "TTFT ms p50/p95", "total ms p50/p95",
-                     "tokens in/out"]  # fmt: skip
+RETRIEVAL_HEADER = ["config", "chunks", "mode", "rerank", "n", "Hit@1", "Hit@3", "Hit@5", "MRR@5",
+                    "embed ms p50/p95", "search ms p50/p95", "total ms p50/p95",
+                    "date"]  # fmt: skip
+GENERATION_HEADER = ["config", "answered", "errors", "truncated", "cit. precision", "cit. recall",
+                     "unsupported ref", "unknown doc", "needs review", "OOC no-cite",
+                     "OOC refused (hand)", "TTFT ms p50/p95", "end-to-end ms p50/p95",
+                     "tokens in/out", "date"]  # fmt: skip
 
 
 def markdown_table(header: list[str], rows: list[list[str]]) -> str:

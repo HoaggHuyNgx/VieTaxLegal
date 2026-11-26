@@ -50,3 +50,48 @@ def test_a_split_mismatch_is_reported_not_hidden():
 
     assert result["warnings"]
     assert "split" in to_markdown(result, "a", "b").lower()
+
+
+def _verdict(result: dict, metric: str) -> str:
+    line = next(
+        row for row in to_markdown(result, "a", "b").splitlines() if row.startswith(f"| {metric} |")
+    )
+    return line.split("|")[-2].strip()
+
+
+def test_a_gap_needs_both_the_interval_and_mcnemar():
+    """Five wins, no losses: the bootstrap interval excludes 0 but McNemar p = 0.0625."""
+    ids = [f"q{i}" for i in range(20)]
+    a = _run({q: None if i < 5 else 1 for i, q in enumerate(ids)})
+    b = _run({q: 1 for q in ids})
+
+    result = compare_runs(a, b)
+
+    assert result["metrics"]["hit@1"]["ci"][0] > 0
+    assert _verdict(result, "hit@1") == "no (McNemar p >= 0.05)"
+    assert _verdict(result, "mrr") == "yes"  # no McNemar for MRR
+
+
+@pytest.mark.parametrize(
+    ("section", "key", "value"),
+    [
+        ("config", "chunk_set", "fixed"),
+        ("config", "top_k", 10),
+        ("config", "depth", 10),
+        ("meta", "corpus_manifest_sha", "other"),
+        ("meta", "corpus_texts_sha", "other"),
+    ],
+)
+def test_runs_measured_under_different_conditions_are_flagged(section, key, value):
+    a, b = _run({"q1": 1}), _run({"q1": 1})
+    (b["meta"]["config"] if section == "config" else b["meta"])[key] = value
+
+    assert any(key in warning for warning in compare_runs(a, b)["warnings"])
+
+
+def test_changed_gold_answers_are_flagged():
+    a, b = _run({"q1": 1}), _run({"q1": 1})
+    a["questions"][0]["gold"] = [["luat-a", 1]]
+    b["questions"][0]["gold"] = [["luat-b", 1]]
+
+    assert any("gold" in warning for warning in compare_runs(a, b)["warnings"])

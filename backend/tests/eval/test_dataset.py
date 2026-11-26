@@ -88,6 +88,16 @@ def test_existing_splits_never_move_and_a_new_question_fills_the_smaller_side():
     assert new.split == "test"
 
 
+def test_holdout_questions_keep_their_split_when_others_are_assigned():
+    held = _question(id="h", status="approved", split="holdout")
+    new = _question(id="new", status="approved")
+
+    assign_splits([held, new])
+
+    assert held.split == "holdout" and new.split in ("dev", "test")
+    assert Question.from_dict(asdict(held)).split == "holdout"
+
+
 def test_unknown_split_value_is_rejected():
     with pytest.raises(ValueError):
         Question.from_dict({**asdict(_question()), "split": "train"})

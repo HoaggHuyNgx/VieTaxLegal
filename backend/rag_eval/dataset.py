@@ -2,6 +2,8 @@
 
 Approved rows carry a fixed `split`: tune settings (thresholds, RRF) on `dev`, and quote only `test`
 numbers in the thesis, so a reported score is never measured on the questions used to pick it.
+`holdout` is set by hand on questions written after the settings were chosen; nothing assigns it,
+and runs skip it unless asked for it by name.
 """
 
 import hashlib
@@ -14,7 +16,7 @@ DATA_DIR = Path(__file__).resolve().parent / "data"
 QUESTIONS_PATH = DATA_DIR / "questions.jsonl"
 TYPES = ("lookup", "numeric", "multi", "out_of_corpus")
 STATUSES = ("pending", "approved", "rejected")
-SPLITS = ("", "dev", "test")  # "" = not assigned yet
+SPLITS = ("", "dev", "test", "holdout")  # "" = not assigned yet
 
 
 @dataclass

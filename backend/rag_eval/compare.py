@@ -44,6 +44,30 @@ def _per_question(ranks: list[int | None]) -> dict[str, list[float]]:
     return values
 
 
+def _condition_warnings(a: dict, b: dict) -> list[str]:
+    """Differences that can explain a gap by themselves. A warning, not an error: comparing chunk
+    sets, for example, is a legitimate experiment."""
+    warnings = []
+    for section, keys in (
+        ("config", ("chunk_set", "top_k", "depth")),
+        ("meta", ("corpus_manifest_sha", "corpus_texts_sha")),
+    ):
+        for key in keys:
+            side_a = a["meta"]["config"] if section == "config" else a["meta"]
+            side_b = b["meta"]["config"] if section == "config" else b["meta"]
+            if side_a.get(key) != side_b.get(key):
+                warnings.append(f"Different {key}: {side_a.get(key)} vs {side_b.get(key)}.")
+    gold_a = {row["id"]: row.get("gold") for row in a["questions"]}
+    moved = [
+        r["id"] for r in b["questions"] if r["id"] in gold_a and gold_a[r["id"]] != r.get("gold")
+    ]
+    if moved:
+        warnings.append(
+            f"Different gold answers for {len(moved)} question(s): {', '.join(moved[:5])}."
+        )
+    return warnings
+
+
 def compare_runs(a: dict, b: dict, seed: int = 0) -> dict:
     ranks_a, ranks_b = _ranks(a), _ranks(b)
     shared = sorted(ranks_a.keys() & ranks_b.keys())
@@ -52,6 +76,7 @@ def compare_runs(a: dict, b: dict, seed: int = 0) -> dict:
     split_b = b["meta"]["config"].get("split")
     if split_a != split_b:
         warnings.append(f"Different splits ({split_a} vs {split_b}): not a paired comparison.")
+    warnings += _condition_warnings(a, b)
     only_a, only_b = len(ranks_a.keys() - ranks_b.keys()), len(ranks_b.keys() - ranks_a.keys())
     if only_a or only_b:
         warnings.append(f"Question sets differ: {only_a} only in A, {only_b} only in B (ignored).")
@@ -112,7 +137,12 @@ def to_markdown(result: dict, name_a: str, name_b: str) -> str:
     ]
     for name, m in result["metrics"].items():
         low, high = m["ci"]
-        real = "yes" if low > 0 or high < 0 else "no (CI includes 0)"
+        if not (low > 0 or high < 0):
+            real = "no (CI includes 0)"
+        elif m["p"] is not None and m["p"] >= 0.05:
+            real = "no (McNemar p >= 0.05)"
+        else:
+            real = "yes"
         p_value = "-" if m["p"] is None else "<0.001" if m["p"] < 0.001 else f"{m['p']:.3f}"
         lines.append(
             f"| {name} | {m['a']:.3f} | {m['b']:.3f} | {m['diff']:+.3f} | "

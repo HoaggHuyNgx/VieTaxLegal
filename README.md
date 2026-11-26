@@ -268,7 +268,8 @@ Văn bản pháp luật (corpus/, nguồn gốc trong git)
   → model trả lời, ghi [n]; chỉ nguồn được trích mới được lưu và hiển thị
 ```
 
-Số liệu đánh giá nằm ở `backend/rag_eval/results/SUMMARY.md` (sinh bằng `scripts/eval_export_results.py`).
+Bảng số liệu được sinh vào `backend/rag_eval/results/SUMMARY.md` bằng `scripts/eval_export_results.py`.
+Kết quả đo trước 26/11/2026 đã được cất đi vì cách đo khác; cần chạy lại trước khi trích.
 Các số liệu đang đánh dấu `provisional` vì bộ câu hỏi chưa được con người duyệt; chỉ trích dẫn số
 liệu trong luận văn sau khi duyệt xong. Cách chạy từng bước xem [backend/README.md](backend/README.md).
 

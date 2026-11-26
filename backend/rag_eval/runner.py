@@ -1,16 +1,14 @@
-"""Eval runner: config, shared setup, result metadata and the retrieval tier (no chat calls)."""
+"""Eval runner: config, shared setup and the retrieval tier (no chat calls)."""
 
 import hashlib
 import json
-import subprocess
+import time
 from dataclasses import asdict, dataclass
-from datetime import date
 from pathlib import Path
 
 from app.core.config import Settings
 from app.services.rag.index.embeddings import get_embedder
 from app.services.rag.index.qdrant_store import collection_name, get_async_client
-from app.services.rag.ingest.corpus_manifest import CORPUS_DIR
 from app.services.rag.retrieve.fusion import RRF_K
 from app.services.rag.retrieve.qdrant_retriever import QdrantRetriever
 from app.services.rag.retrieve.query_planner import QueryPlanner, RetrievalPipeline, llm_provider
@@ -45,8 +43,8 @@ class EvalConfig:
     # custom = this project's pipeline; langchain_baseline = stock LangChain (retrieval tier only)
     pipeline: str = "custom"
     include_pending: bool = False  # provisional run on unreviewed questions
-    split: str | None = None  # dev (tuning) | test (reported numbers) | None = every question
-    depth: int = 10  # retrieved chunks scored by the retrieval tier
+    # dev (tuning) | test | holdout (written after tuning) | None = every question but holdout
+    split: str | None = None
     embedding_provider: str | None = None
     embedding_model: str | None = None
     limit: int | None = None
@@ -101,6 +99,8 @@ def select_questions(questions: list[Question], config: EvalConfig) -> list[Ques
     chosen = scoreable(questions, config.include_pending)
     if config.split:
         chosen = [q for q in chosen if q.split == config.split]
+    else:  # holdout questions stay unseen until a run asks for them by name
+        chosen = [q for q in chosen if q.split != "holdout"]
     if config.question_types:
         chosen = [q for q in chosen if q.type in config.question_types]
     return chosen[: config.limit] if config.limit else chosen
@@ -118,37 +118,6 @@ def gold_articles(question: Question) -> set[tuple[str, int]]:
 
 def hit_articles(payload: dict) -> set[tuple[str, int]]:
     return {(payload.get("doc_slug", ""), n) for n in payload.get("article_nos", [])}
-
-
-def run_metadata(config: EvalConfig, settings: Settings, questions: list[Question], used: int):
-    try:
-        sha = subprocess.run(
-            ["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True, timeout=10
-        ).stdout.strip()
-    except (OSError, subprocess.SubprocessError):
-        sha = ""
-    manifest = (CORPUS_DIR / "manifest.json").read_bytes()
-    return {
-        "date": date.today().isoformat(),
-        "config": asdict(config),
-        "config_hash": config.digest(),
-        "git_sha": sha or None,
-        "corpus_manifest_sha": hashlib.sha256(manifest).hexdigest()[:12],
-        "models": {
-            "chat": f"{settings.chat_provider}:{settings.chat_model}",
-            "embedding": f"{config.embedding_provider or settings.embedding_provider}:"
-            f"{config.embedding_model or settings.embedding_model}",
-            "eval_generator": settings.eval_generator_model or "(same as chat)",
-            "temperature": "provider default (not settable through the chat provider)",
-        },
-        "dataset": {
-            "total": len(questions),
-            "approved": sum(q.status == "approved" for q in questions),
-            "used": used,
-            # Unreviewed gold answers: fine for tuning, NOT for numbers quoted in the thesis.
-            "provisional": config.include_pending and any(q.status == "pending" for q in questions),
-        },
-    }
 
 
 def threshold_sweep(in_corpus_top1: list[float], ooc_top1: list[float]) -> list[dict]:
@@ -169,9 +138,14 @@ async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, que
     if prepare := getattr(retriever, "prepare", None):  # baseline builds its index up front
         await prepare()
     rows, ranks, embed_ms, search_ms, plans = [], [], [], [], []
+    retrieval_ms = []
     in_top1, ooc_top1 = [], []
     for q in questions:
-        outcome = await retriever.search(q.question, limit=config.depth)
+        # No `limit`: a deeper one also widens the hybrid and rerank candidate pools, which
+        # would measure a pipeline the app never runs. MRR is therefore MRR@top_k.
+        started = time.perf_counter()
+        outcome = await retriever.search(q.question)
+        retrieval_ms.append((time.perf_counter() - started) * 1000)
         embed_ms.append(outcome.embed_ms)
         search_ms.append(outcome.search_ms)
         top1 = outcome.hits[0].score if outcome.hits else 0.0
@@ -201,6 +175,7 @@ async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, que
         "mrr": metrics.mrr(ranks),
         "embed_ms": metrics.latency_summary(embed_ms),
         "search_ms": metrics.latency_summary(search_ms),
+        "retrieval_ms": metrics.latency_summary(retrieval_ms),  # whole call, planner included
         # Cosine thresholds only make sense for dense scores (RRF/BM25 scores are on other scales).
         "threshold_sweep": threshold_sweep(in_top1, ooc_top1) if config.mode == "dense" else None,
         **getattr(retriever, "index_info", {}),

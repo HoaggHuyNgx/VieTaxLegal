@@ -422,8 +422,23 @@ toàn bộ kho văn bản qua OpenAI (dưới 0,1 USD); không cần Qdrant.
 
 Chỉ câu hỏi `approved` được chấm; `--provisional` chấm cả câu chưa duyệt để chỉnh tham số và kết
 quả được đánh dấu `provisional`, không dùng làm số liệu trong luận văn. Tầng `retrieval` chỉ tốn
-một lần nhúng truy vấn; tầng `generation` gọi model chat (đo citation precision/recall, tham chiếu
-bịa, từ chối câu ngoài phạm vi, độ trễ và token).
+một lần nhúng truy vấn (cộng planner/rerank nếu cấu hình bật) và chấm đúng `top_k` đoạn mà app
+nhận, nên MRR là MRR@5. Tầng `generation` gọi model chat và đo:
+
+- citation precision/recall, lỗi, câu bị cắt, token, độ trễ (`end-to-end` gồm cả planner và rerank);
+- `unsupported ref`: số hiệu hoặc Điều không có trong đoạn truy xuất hay trong câu hỏi. Đây **không
+  phải tỉ lệ bịa đặt** (văn bản thật ngoài đoạn truy xuất cũng bị tính) và để trống khi chạy no-RAG;
+- `unknown doc`: số hiệu không có trong manifest của kho, so được giữa RAG và no-RAG;
+- `needs review`: câu gắn Điều với tên luật nhưng không ghi số hiệu, máy không kiểm được;
+- `OOC refused (hand)`: tỉ lệ từ chối câu ngoài phạm vi. Mở file kết quả, đặt `"refused"` thành
+  `true`/`false` cho từng dòng `out_of_corpus` rồi chạy lại `eval_export_results.py`.
+
+So sánh bịa đặt giữa hai cấu hình phải đọc và dán nhãn câu trả lời bằng tay.
+
+Mỗi file kết quả ghi commit (`git_sha`, `git_dirty`), hash của manifest, văn bản và bộ câu hỏi, tên
+collection. Chỉ trích số có `git_dirty: false`. Kết quả đo trước ngày 26/11/2026 nằm trong
+`rag_eval/results/superseded-261126/`: độ sâu truy xuất và cách chấm đã khác, không trích và không
+so với số mới.
 
 Mỗi câu `approved` có trường `split` cố định (`dev` hoặc `test`), chia cân bằng theo lĩnh vực × loại
 câu hỏi và không bao giờ bị đổi khi thêm câu mới; `eval_review.py` tự gán khi lưu. Chọn tham số
@@ -435,7 +450,11 @@ câu hỏi và không bao giờ bị đổi khi thêm câu mới; `eval_review.p
 ```
 
 Tên file kết quả có thêm hậu tố `-dev`/`-test`; bảng trong `SUMMARY.md` ghi `[dev]`/`[test]`. Không
-truyền `--split` thì chấm toàn bộ như trước.
+truyền `--split` thì chấm toàn bộ trừ `holdout`.
+
+Tham số trước đây được chọn trên cả bộ câu hỏi, nên `test` không còn là dữ liệu chưa từng thấy. Câu
+viết sau khi đã chốt tham số thì đặt tay `"split": "holdout"` (cùng `"status": "approved"`) trong
+`rag_eval/data/questions.jsonl`; chỉ `--split holdout` mới chấm chúng.
 
 Chỉ số truy xuất là **Hit@k**: tỉ lệ câu hỏi có ít nhất một Điều gold trong top k (file kết quả cũ
 gọi là `recall@k`, cùng một con số). Gần như mọi câu chỉ có một Điều gold nên Hit@k ≈ Recall@k.
@@ -446,7 +465,8 @@ McNemar cho Hit@k, danh sách câu đổi thứ hạng):
 .\.venv\Scripts\python.exe scripts\eval_compare.py rag_eval/results/A.json rag_eval/results/B.json
 ```
 
-Chênh lệch chỉ được coi là thật khi khoảng tin cậy không chứa 0. Kiểm tra độ nhạy của hằng số RRF
+Chênh lệch chỉ được coi là thật khi khoảng tin cậy không chứa 0 và, với Hit@k, McNemar p < 0,05.
+Hai file khác `chunk_set`, `top_k`, corpus hoặc gold sẽ được cảnh báo. Kiểm tra độ nhạy của hằng số RRF
 bằng `retrieval/hybrid-article-rrfk{20,40,100}.json` (k=60 là `hybrid-article`); mặc định vẫn là 60.
 
 ### Quyền riêng tư
