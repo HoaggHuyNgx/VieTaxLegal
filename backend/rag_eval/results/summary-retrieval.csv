@@ -1,0 +1,17 @@
+config,chunks,mode,rerank,n,Hit@1,Hit@3,Hit@5,MRR@5,embed ms p50/p95,search ms p50/p95,total ms p50/p95,date
+dense-article [dev],article,dense,-,41,0.463,0.585,0.683,0.534,234/277,13/57,249/392,2026-11-26
+dense-fixed [dev],fixed,dense,-,41,0.366,0.585,0.585,0.472,227/347,6/9,234/356,2026-11-26
+dense-s256 [dev],article_s256,dense,-,41,0.366,0.585,0.610,0.464,237/306,7/10,244/313,2026-11-26
+hybrid-article-full [dev],article,hybrid,llm,41,0.756,0.902,0.927,0.831,257/395,2043/2515,4494/5262,2026-11-26
+hybrid-article-llmrerank [dev],article,hybrid,llm,41,0.854,0.902,0.902,0.878,242/457,3720/5021,4041/5272,2026-11-26
+hybrid-article-minirerank [dev],article,hybrid,llm,41,0.732,0.902,0.902,0.817,235/375,1984/2562,2217/2848,2026-11-26
+hybrid-article-planner [dev],article,hybrid,-,41,0.585,0.732,0.805,0.669,255/337,13/24,2353/2956,2026-11-26
+hybrid-article [dev],article,hybrid,-,41,0.585,0.780,0.829,0.674,228/374,15/30,243/387,2026-11-26
+hybrid-article-rrfk100 [dev],article,hybrid,-,41,0.585,0.780,0.829,0.674,244/301,9/11,253/310,2026-11-26
+hybrid-article-rrfk20 [dev],article,hybrid,-,41,0.561,0.756,0.829,0.659,234/293,9/12,244/303,2026-11-26
+hybrid-article-rrfk40 [dev],article,hybrid,-,41,0.585,0.780,0.829,0.674,233/284,9/14,243/299,2026-11-26
+hybrid-fixed [dev],fixed,hybrid,-,41,0.488,0.683,0.707,0.578,236/282,9/13,246/292,2026-11-26
+hybrid-s256 [dev],article_s256,hybrid,-,41,0.488,0.707,0.780,0.612,231/258,10/13,239/269,2026-11-26
+sparse-article [dev],article,sparse,-,41,0.439,0.805,0.878,0.622,235/270,10/19,249/283,2026-11-26
+sparse-fixed [dev],fixed,sparse,-,41,0.439,0.732,0.780,0.568,235/322,5/7,240/330,2026-11-26
+sparse-s256 [dev],article_s256,sparse,-,41,0.390,0.780,0.878,0.583,233/298,6/10,241/304,2026-11-26

@@ -1,0 +1,5 @@
+config,answered,errors,truncated,cit. precision,cit. recall,unsupported ref,unknown doc,needs review,OOC no-cite,OOC refused (hand),TTFT ms p50/p95,end-to-end ms p50/p95,tokens in/out,date
+norag [dev],47,0,0,-,0.000,-,0.362,14,1.000,0.000,9653/17828,13271/20630,8517/80576,2026-11-26
+rag-full-incorpus [dev],41,0,0,0.690,0.890,0.000,0.024,2,-,-,1896/4401,9061/13435,92912/16360,2026-11-26
+rag-full-ooc [dev],6,0,0,-,-,0.000,0.000,0,0.500,1.000,1239/2227,7866/9507,9759/1324,2026-11-26
+rag-hybrid-article [dev],47,0,0,0.717,0.817,0.000,0.021,0,0.500,1.000,1884/3442,4273/7493,110840/17715,2026-11-26
