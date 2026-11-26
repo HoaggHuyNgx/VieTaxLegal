@@ -141,7 +141,7 @@ class QdrantRetriever:
             outcome = await self.search(query)
         except Exception as error:  # degrade to "no sources"; never raise into the chat stream
             logger.warning("RAG retrieval failed: %s", type(error).__name__)
-            return RetrievalResult()
+            return RetrievalResult(searched=True)
         return hits_to_result(outcome.hits)
 
 

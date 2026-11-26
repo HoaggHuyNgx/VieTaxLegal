@@ -4,6 +4,7 @@ import logging
 from qdrant_client import AsyncQdrantClient, models
 
 from app.core.config import get_settings
+from app.services.chat.prompt import NO_SOURCE_RULES, SYSTEM_PROMPT, prompt_with_context
 from app.services.chat.retriever import NullRetriever, get_retriever
 from app.services.rag.index.embeddings import FakeEmbedder, embedding_text
 from app.services.rag.index.qdrant_store import DENSE_VECTOR
@@ -122,6 +123,7 @@ def test_outage_returns_empty_result_and_logs_no_query_text(caplog):
         result = asyncio.run(run())
 
     assert not result.contexts and not result.citations
+    assert NO_SOURCE_RULES in prompt_with_context(result)  # not answered from memory
     assert "RAG retrieval failed" in caplog.text
     assert secret_query not in caplog.text
 
@@ -133,7 +135,11 @@ def test_hits_to_result_handles_empty_and_sparse_payloads():
 
 
 def test_factory_returns_null_retriever_when_rag_disabled():
-    assert isinstance(get_retriever(), NullRetriever)
+    retriever = get_retriever()
+
+    assert isinstance(retriever, NullRetriever)
+    # RAG off was never meant to search, so the plain prompt stays.
+    assert prompt_with_context(asyncio.run(retriever.retrieve("q"))) == SYSTEM_PROMPT
 
 
 def test_misconfigured_rag_degrades_to_no_sources_instead_of_failing_chat(monkeypatch):
@@ -144,4 +150,7 @@ def test_misconfigured_rag_degrades_to_no_sources_instead_of_failing_chat(monkey
 
     monkeypatch.setattr("app.services.rag.retrieve.qdrant_retriever.get_qdrant_retriever", broken)
 
-    assert isinstance(get_retriever(), NullRetriever)
+    retriever = get_retriever()
+
+    assert isinstance(retriever, NullRetriever)
+    assert NO_SOURCE_RULES in prompt_with_context(asyncio.run(retriever.retrieve("q")))

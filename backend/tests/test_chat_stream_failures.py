@@ -1,4 +1,5 @@
 import asyncio
+from dataclasses import replace
 from uuid import UUID
 
 import pytest
@@ -10,7 +11,11 @@ from app.models.user import User
 from app.schemas.chat import MessageResponse, SendMessageRequest
 from app.services.chat import service as chat_service
 from app.services.chat.retriever import RetrievalResult
-from app.services.chat.service import prepare_chat_stream, stream_chat_events
+from app.services.chat.service import (
+    TRUNCATED_NOTE,
+    prepare_chat_stream,
+    stream_chat_events,
+)
 from tests.test_chat import FakeProvider, parse_sse, register
 
 
@@ -104,3 +109,36 @@ def test_follow_up_retrieval_uses_the_previous_question(
     assert retriever.queries[1] == (
         "Thuế GTGT hàng xuất khẩu là bao nhiêu?\ncòn điều kiện thì sao?"
     )
+
+
+class TruncatingProvider(FakeProvider):
+    """Ends the way a real provider does when the output-token cap is reached."""
+
+    def __init__(self, chunks: tuple[str, ...]) -> None:
+        super().__init__(chunks)
+
+    async def stream(self, messages, system_prompt, max_output_tokens):
+        async for event in super().stream(messages, system_prompt, max_output_tokens):
+            yield replace(event, truncated=True) if event.kind == "done" else event
+
+
+@pytest.mark.parametrize("chunks", [("Theo quy ", "định"), ()])
+def test_truncated_answer_says_so_on_screen_and_after_reload(
+    client: TestClient, database_session: Session, chunks: tuple[str, ...]
+) -> None:
+    user = user_for(client, database_session)
+    provider = TruncatingProvider(chunks)
+    prepared = prepare(database_session, user, provider, "Câu hỏi")
+
+    events = asyncio.run(
+        collect(stream_chat_events(database_session, prepared, provider, RecordingRetriever()))
+    )
+
+    parsed = parse_sse("".join(events))
+    shown = "".join(data["text"] for name, data in parsed if name == "delta")
+    database_session.expire_all()
+    stored = database_session.get(Message, prepared.assistant_message_id)
+    assert stored is not None and stored.status == "completed"
+    assert stored.content == shown  # the stream and the saved row agree
+    separator = "\n\n" if chunks else ""
+    assert stored.content == "".join(chunks) + separator + TRUNCATED_NOTE

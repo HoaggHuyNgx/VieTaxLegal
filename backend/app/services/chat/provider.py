@@ -1,9 +1,10 @@
 """LLM access for chat: one `ModelProvider` interface over Anthropic and OpenAI via LangChain.
 
 `stream()` turns the model's chunks into `ProviderEvent`s: `delta` (text) and a final event with
-token usage. `get_model_provider()` picks the provider from `CHAT_PROVIDER`; an unknown name gives
-`UnavailableProvider`. A missing API key or unknown provider raises `ProviderConfigurationError`
-when streaming starts, which the chat reports as `CHAT_NOT_CONFIGURED` instead of crashing.
+token usage and whether the output-token cap cut the reply off. `get_model_provider()` picks the
+provider from `CHAT_PROVIDER`; an unknown name gives `UnavailableProvider`. A missing API key or
+unknown provider raises `ProviderConfigurationError` when streaming starts, which the chat reports
+as `CHAT_NOT_CONFIGURED` instead of crashing.
 """
 
 from collections.abc import AsyncIterator, Sequence
@@ -43,6 +44,7 @@ class ProviderEvent:
     text: str = ""
     input_tokens: int | None = None
     output_tokens: int | None = None
+    truncated: bool = False  # done event only: the reply hit the output-token cap
 
 
 class ModelProvider(Protocol):
@@ -86,6 +88,14 @@ def _to_langchain(messages: Sequence[ProviderMessage], system_prompt: str) -> li
     return converted
 
 
+def _hit_output_cap(metadata: dict) -> bool:
+    """Neither API raises when the cap is hit; they only say so in the chunk metadata."""
+    if metadata.get("stop_reason") == "max_tokens":  # Anthropic
+        return True
+    details = metadata.get("incomplete_details") or {}  # OpenAI Responses API
+    return details.get("reason") == "max_output_tokens"
+
+
 class LangChainProvider:
     """Streams a LangChain chat model as `ProviderEvent`s; the model is built per request."""
 
@@ -107,11 +117,13 @@ class LangChainProvider:
         chat_model = build_chat_model(self.name, api_key, self.model, max_output_tokens)
         input_tokens: int | None = None
         output_tokens: int | None = None
+        truncated = False
         try:
             async for chunk in chat_model.astream(_to_langchain(messages, system_prompt)):
                 text = str(chunk.text)
                 if text:
                     yield ProviderEvent(kind="delta", text=text)
+                truncated = truncated or _hit_output_cap(chunk.response_metadata)
                 # Providers report usage across several chunks (Anthropic: start + delta).
                 if usage := chunk.usage_metadata:
                     input_tokens = (input_tokens or 0) + usage.get("input_tokens", 0)
@@ -120,7 +132,12 @@ class LangChainProvider:
             raise
         except Exception as error:
             raise ProviderError(f"{self.name} request failed") from error
-        yield ProviderEvent(kind="done", input_tokens=input_tokens, output_tokens=output_tokens)
+        yield ProviderEvent(
+            kind="done",
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
+            truncated=truncated,
+        )
 
 
 class UnavailableProvider:

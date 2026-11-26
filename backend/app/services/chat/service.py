@@ -44,6 +44,9 @@ from app.services.chat.retriever import Retriever
 
 logger = logging.getLogger(__name__)
 
+# Part of the answer itself (streamed and saved), so a cut-off answer still says so on reload.
+TRUNCATED_NOTE = "_Câu trả lời đã bị cắt do vượt giới hạn độ dài._"
+
 
 @dataclass(frozen=True, slots=True)
 class PreparedChatStream:
@@ -240,6 +243,7 @@ async def stream_chat_events(
     input_tokens: int | None = None
     output_tokens: int | None = None
     terminal_persisted = False
+    truncated = False
     try:
         yield _sse("meta", prepared.meta)
         history = provider_history(database, prepared.conversation_id)
@@ -261,6 +265,12 @@ async def stream_chat_events(
             else:
                 input_tokens = event.input_tokens
                 output_tokens = event.output_tokens
+                truncated = event.truncated
+
+        if truncated:
+            note = f"\n\n{TRUNCATED_NOTE}" if partial_content else TRUNCATED_NOTE
+            partial_content += note
+            yield _sse("delta", {"messageId": str(prepared.assistant_message_id), "text": note})
 
         selection = select_cited(retrieval, partial_content)
         if selection.unknown_markers:

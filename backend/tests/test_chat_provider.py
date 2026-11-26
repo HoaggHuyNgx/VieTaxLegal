@@ -149,6 +149,30 @@ def test_provider_sends_system_prompt_then_history_in_order(monkeypatch) -> None
     ]
 
 
+@pytest.mark.parametrize(
+    ("metadata", "truncated"),
+    [
+        ({"stop_reason": "max_tokens"}, True),  # Anthropic
+        ({"stop_reason": "end_turn"}, False),
+        # OpenAI Responses API: an incomplete response is not raised as an error.
+        ({"status": "incomplete", "incomplete_details": {"reason": "max_output_tokens"}}, True),
+        ({"status": "completed"}, False),
+    ],
+)
+def test_provider_flags_an_answer_cut_off_by_the_token_cap(
+    monkeypatch, metadata, truncated
+) -> None:
+    chunks = [
+        AIMessageChunk(content="Một phần"),
+        AIMessageChunk(content="", response_metadata=metadata),
+    ]
+    provider = _provider(monkeypatch, FakeChatModel(chunks=chunks, seen=[]))
+
+    events = asyncio.run(_collect(provider))
+
+    assert events[-1].truncated is truncated
+
+
 def test_provider_reports_no_usage_when_upstream_sends_none(monkeypatch) -> None:
     provider = _provider(monkeypatch, FakeChatModel(chunks=[AIMessageChunk(content="x")], seen=[]))
 

@@ -150,6 +150,7 @@ def test_retrieve_degrades_to_no_sources():
     result = asyncio.run(retriever.retrieve("a"))
 
     assert not result.contexts and not result.citations
+    assert result.searched  # RAG is on, so the model must be told there are no sources
 
 
 def test_planner_is_off_without_a_model():

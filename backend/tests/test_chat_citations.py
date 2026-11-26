@@ -1,6 +1,7 @@
 import asyncio
 from uuid import UUID
 
+import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 from test_chat import FakeProvider, register
@@ -54,6 +55,28 @@ def test_select_cited_returns_only_used_sources_and_reports_invented_ones():
     assert [c.id for c in selection.cited] == ["2", "1"]
     assert selection.unknown_markers == ["7"]
     assert select_cited(RESULT, "Trả lời không trích nguồn.").cited == []
+
+
+@pytest.mark.parametrize(
+    ("answer", "ids"),
+    [
+        ("Theo [1, 2].", ["1", "2"]),
+        ("Theo [2; 3].", ["2", "3"]),
+        ("Theo [1-3].", ["1", "2", "3"]),
+        ("Theo [1–2, 3] và [2].", ["1", "2", "3"]),
+        ("Theo [1][2].", ["1", "2"]),
+        ("Không phải nguồn: [2024], [a, 1], [1,].", []),
+        # Not a plausible range: keep the two numbers, do not invent the ones between.
+        ("Dải ngược [3-1], quá rộng [1-999].", ["3", "1", "999"]),
+    ],
+)
+def test_marker_ids_read_grouped_and_ranged_markers(answer, ids):
+    assert marker_ids(answer) == ids
+
+
+def test_grouped_markers_select_sources_and_are_stripped_from_history():
+    assert [c.id for c in select_cited(RESULT, "Căn cứ [2, 1].").cited] == ["2", "1"]
+    assert strip_markers("Theo luật [1, 2], mức phạt [1-3].") == "Theo luật, mức phạt."
 
 
 def test_snapshot_is_camel_case_without_nulls():

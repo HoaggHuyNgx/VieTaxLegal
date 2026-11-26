@@ -3,6 +3,8 @@
 Chat only knows the `Retriever` protocol and its result types (`Citation`, `RetrievedContext`,
 `RetrievalResult`). `get_retriever()` returns `NullRetriever` (no sources) when RAG is off or
 fails to start, otherwise the Qdrant retriever wrapped by the optional planner/rerank/gate steps.
+With RAG on, any failure is reported as "searched, nothing found" so the model never answers a
+legal question from memory just because retrieval broke.
 """
 
 import logging
@@ -38,7 +40,8 @@ class RetrievedContext:
 class RetrievalResult:
     contexts: Sequence[RetrievedContext] = ()
     citations: Sequence[Citation] = ()
-    # True when the corpus was really searched, so empty means "nothing relevant".
+    # True when RAG is on (it searched, or failed to): empty then means "say there are no
+    # sources". False only when RAG is off.
     searched: bool = False
 
 
@@ -53,11 +56,14 @@ class Retriever(Protocol):
 
 
 class NullRetriever:
-    """Placeholder until RAG exists: no sources, so the model must say it cannot verify."""
+    """No sources: RAG is off, or it failed to start (`searched=True`)."""
+
+    def __init__(self, searched: bool = False) -> None:
+        self._searched = searched
 
     async def retrieve(self, query: str) -> RetrievalResult:
         del query  # Unused; required by the Retriever protocol.
-        return RetrievalResult()
+        return RetrievalResult(searched=self._searched)
 
 
 def get_retriever() -> Retriever:
@@ -71,4 +77,4 @@ def get_retriever() -> Retriever:
         return build_pipeline(get_qdrant_retriever(), get_settings())
     except Exception as error:  # e.g. missing OPENAI_API_KEY: chat must still work, without sources
         logger.warning("RAG disabled for this request: %s", type(error).__name__)
-        return NullRetriever()
+        return NullRetriever(searched=True)

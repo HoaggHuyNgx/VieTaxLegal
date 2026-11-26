@@ -357,7 +357,10 @@ Khi không có nguồn, system prompt yêu cầu model không bịa số hiệu,
 bản. Khi có nguồn, mỗi đoạn được đưa vào prompt trong thẻ `<reference id="n">`; model được yêu cầu
 ghi `[n]` sau mỗi nhận định. Chỉ những nguồn thực sự được trích `[n]` mới được trả về và lưu vào
 `messages.citations` (ảnh chụp tại thời điểm trả lời, nên nạp lại sẽ giữ nguyên). Số `[n]` không
-tồn tại bị bỏ qua. Nếu Qdrant hoặc embedding lỗi, retriever trả kết quả rỗng và chat vẫn chạy.
+tồn tại bị bỏ qua. Dạng gộp `[1, 2]`, `[1; 2]` và khoảng `[1-3]` cũng được nhận. Nếu RAG bật mà
+Qdrant, embedding hoặc khởi tạo retriever lỗi, chat vẫn chạy nhưng prompt dùng luật "không có
+nguồn" như khi tìm không ra, nên model không trả lời từ trí nhớ. Câu trả lời chạm
+`CHAT_MAX_OUTPUT_TOKENS` vẫn lưu là `completed`, kèm dòng ghi chú ở cuối rằng nội dung đã bị cắt.
 
 ### Kho văn bản và chỉ mục
 

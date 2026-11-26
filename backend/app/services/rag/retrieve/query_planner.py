@@ -189,7 +189,7 @@ class RetrievalPipeline:
             outcome = await self.search(query)
         except Exception as error:  # same policy as plain retrieval: degrade to "no sources"
             logger.warning("RAG retrieval failed: %s", type(error).__name__)
-            return RetrievalResult()
+            return RetrievalResult(searched=True)
         return hits_to_result(outcome.hits)
 
 
