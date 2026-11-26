@@ -1,0 +1,1801 @@
+{
+  "meta": {
+    "date": "2026-11-26",
+    "config": {
+      "name": "norag",
+      "tier": "generation",
+      "chunk_set": "article",
+      "top_k": 5,
+      "min_similarity": 0.0,
+      "require_in_force": true,
+      "rag": false,
+      "mode": "dense",
+      "rrf_k": 60,
+      "rerank": null,
+      "rerank_provider": "openai",
+      "rerank_model": null,
+      "query_planner_provider": "openai",
+      "query_planner_model": null,
+      "min_top_score": 0.0,
+      "question_types": null,
+      "pipeline": "custom",
+      "include_pending": false,
+      "split": "dev",
+      "embedding_provider": null,
+      "embedding_model": null,
+      "limit": null,
+      "max_output_tokens": 4000
+    },
+    "config_hash": "b8f671cd8102",
+    "git_sha": "95fcc79",
+    "git_dirty": false,
+    "corpus_manifest_sha": "2593878a885e",
+    "corpus_texts_sha": "df27b3d4e5c4",
+    "questions_sha": "a2777305e8b4",
+    "collection": null,
+    "models": {
+      "chat": "openai:gpt-6-luna",
+      "embedding": "openai:text-embedding-3-small",
+      "eval_generator": "(same as chat)",
+      "temperature": "provider default (not settable through the chat provider)"
+    },
+    "dataset": {
+      "total": 105,
+      "approved": 91,
+      "used": 47,
+      "provisional": false
+    },
+    "answer_judge_model": "gpt-4.1-mini"
+  },
+  "summary": {
+    "answered": 47,
+    "provider_errors": 0,
+    "truncated_answers": 0,
+    "citation_precision": null,
+    "citation_recall": 0.0,
+    "answers_without_citation": 41,
+    "unsupported_reference_rate": null,
+    "unknown_doc_rate": 0.3617021276595745,
+    "answers_needing_review": 14,
+    "ooc_no_citation_rate": 1.0,
+    "retrieval_ms": {
+      "p50": 0.0,
+      "p95": 0.0
+    },
+    "plan_ms": {
+      "p50": 0.0,
+      "p95": 0.0
+    },
+    "ttft_ms": {
+      "p50": 9652.868899982423,
+      "p95": 17827.839999925345
+    },
+    "total_ms": {
+      "p50": 13271.280399989337,
+      "p95": 20629.98010008596
+    },
+    "end_to_end_ms": {
+      "p50": 13271.280399989337,
+      "p95": 20629.98010008596
+    },
+    "input_tokens": 8517,
+    "output_tokens": 80576,
+    "answer_judged": 41,
+    "judge_errors": 0,
+    "answer_correct_rate": 0.5121951219512195,
+    "answer_partial": 13,
+    "answer_incorrect": 6,
+    "answer_refused": 1,
+    "gold_numbers_present_rate": 0.75
+  },
+  "questions": [
+    {
+      "id": "q001",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "38/2019/QH14",
+          "126/2020/NĐ-CP",
+          "80/2021/TT-BTC"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "38/2019/QH14",
+        "126/2020/NĐ-CP",
+        "80/2021/TT-BTC"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 9145.095399813727,
+      "total_ms": 11952.988300006837,
+      "end_to_end_ms": 11952.988300006837,
+      "truncated": false,
+      "input_tokens": 186,
+      "output_tokens": 1379,
+      "answer": "**Cơ quan quy định chi tiết chủ yếu là Bộ Tài chính**, nhưng căn cứ được đặt ở nhiều cấp:\n\n- **Quốc hội** quy định nguyên tắc trong Luật Quản lý thuế số 38/2019/QH14.\n- **Chính phủ** quy định chi tiết, hướng dẫn thi hành bằng nghị định, trong đó có Nghị định 126/2020/NĐ-CP.\n- **Bộ trưởng Bộ Tài chính** ban hành thông tư hướng dẫn nghiệp vụ, hồ sơ và quy trình; văn bản thường được viện dẫn là Thông tư 80/2021/TT-BTC.\n- **Cơ quan thuế** tiếp nhận, xử lý hồ sơ, xác định khoản được hoàn hoặc phải thu hồi và thực hiện việc bù trừ theo quy định. Kho bạc Nhà nước tham gia khâu thanh toán, hạch toán theo quy trình.\n\nNếu là **hoàn thuế GTGT**, cần đối chiếu thêm quy định về thuế GTGT áp dụng cho kỳ tính thuế liên quan. Tôi chưa xác minh được tình trạng sửa đổi, thay thế mới nhất của các văn bản nêu trên, nên không khẳng định đây là danh mục đầy đủ hoặc bản đang có hiệu lực hiện hành.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Chỉ nêu Bộ trưởng và cơ quan thuế, thiếu vai trò Quốc hội, Chính phủ",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q002",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "48/2024/QH15"
+        ],
+        "articles": [
+          5
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 16436.87880015932,
+      "total_ms": 20400.348500115797,
+      "end_to_end_ms": 20400.348500115797,
+      "truncated": false,
+      "input_tokens": 204,
+      "output_tokens": 3076,
+      "answer": "Theo **Điều 5 Luật Thuế giá trị gia tăng số 48/2024/QH15**, các trường hợp liên quan có thể thuộc diện **không chịu thuế GTGT** gồm:\n\n| Hàng hóa nhập khẩu | Điều kiện chính |\n|---|---|\n| Máy móc, thiết bị, phụ tùng, phương tiện vận tải chuyên dùng và vật tư phục vụ tìm kiếm, thăm dò, phát triển mỏ dầu, khí đốt | Thuộc loại **trong nước chưa sản xuất được** và được nhập khẩu để **trực tiếp** phục vụ các hoạt động này. |\n| Máy móc, thiết bị, phụ tùng, phương tiện vận tải chuyên dùng và vật tư phục vụ nghiên cứu khoa học, phát triển công nghệ | Thuộc loại **trong nước chưa sản xuất được** và được nhập khẩu để **sử dụng trực tiếp** cho hoạt động nghiên cứu khoa học, phát triển công nghệ. |\n| Tàu bay, trực thăng, tàu lượn, du thuyền | Thuộc loại **trong nước chưa sản xuất được**, nhập khẩu để tạo tài sản cố định của doanh nghiệp hoặc thuê từ nước ngoài để sử dụng cho sản xuất, kinh doanh hoặc cho thuê. |\n\n**Lưu ý về “tàu thuyền”:** quy định nêu cụ thể *du thuyền*, không mặc nhiên áp dụng cho mọi loại tàu, thuyền. Tàu hoặc phương tiện chuyên dùng trong hoạt động dầu khí có thể được xét theo nhóm phục vụ tìm kiếm, thăm dò, phát triển mỏ dầu khí nếu đáp ứng đầy đủ điều kiện về mục đích sử dụng trực tiếp và hàng trong nước chưa sản xuất được.\n\nCác điều kiện trên cần được xem xét theo **từng mặt hàng và mục đích nhập khẩu thực tế**; chỉ dùng trong doanh nghiệp hoặc ghi nhận là tài sản cố định chưa đủ để đương nhiên được không chịu thuế. Đây là diện **không chịu thuế GTGT**, không đồng nghĩa với việc được miễn các loại thuế, phí khác.\n\nTôi chưa thể đối chiếu cơ sở dữ liệu pháp luật cập nhật để xác nhận mọi văn bản hướng dẫn hoặc sửa đổi tại thời điểm doanh nghiệp làm thủ tục. Do đó, nên kiểm tra thêm quy định hiện hành về xác định hàng trong nước chưa sản xuất được và hồ sơ hải quan áp dụng cho mặt hàng cụ thể.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đầy đủ các trường hợp và điều kiện không chịu thuế GTGT",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q004",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 8239.905499853194,
+      "total_ms": 11578.309699892998,
+      "end_to_end_ms": 11578.309699892998,
+      "truncated": false,
+      "input_tokens": 184,
+      "output_tokens": 1444,
+      "answer": "Nếu đây là **dự án đầu tư mới thuộc diện ưu đãi và thực sự triển khai trong khu công nghệ cao**, thì mức ưu đãi thường được áp dụng là:\n\n- **Thuế suất thuế thu nhập doanh nghiệp 10% trong tối đa 15 năm** đối với thu nhập đủ điều kiện từ dự án.\n- Đồng thời, dự án có thể được **miễn thuế tối đa 4 năm**, sau đó **giảm 50% số thuế phải nộp trong tối đa 9 năm tiếp theo**. Vì vậy, trong thời gian giảm 50%, mức thuế thực nộp tương ứng thường là 5% nếu áp dụng thuế suất 10%.\n\nƯu đãi **không tự động áp dụng cho toàn bộ thu nhập của công ty chỉ vì công ty có dự án trong khu công nghệ cao**. Cần xác định dự án có đáp ứng điều kiện về dự án đầu tư mới, hoạt động và địa điểm, đồng thời hạch toán riêng được phần thu nhập đủ điều kiện hay không. Thời điểm bắt đầu tính thời hạn ưu đãi cũng phụ thuộc vào thời điểm dự án phát sinh thu nhập chịu thuế và các quy định áp dụng.\n\nTôi chưa thể xác minh hiệu lực hiện hành và quy định chuyển tiếp áp dụng đúng cho kỳ tính thuế của công ty bạn. Vì vậy, trước khi kê khai, nên đối chiếu văn bản đang có hiệu lực tại kỳ tính thuế và hồ sơ chấp thuận dự án; nếu bạn cho biết dự án bắt đầu hoạt động/kỳ tính thuế nào, có thể xác định cụ thể hơn.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu đúng thuế suất và thời gian nhưng thêm chi tiết không có trong đáp án chuẩn",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q006",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 7459.578400012106,
+      "total_ms": 9641.28930005245,
+      "end_to_end_ms": 9641.28930005245,
+      "truncated": false,
+      "input_tokens": 190,
+      "output_tokens": 1241,
+      "answer": "Không thể kết luận chỉ từ mô tả “ngành nghề thuộc nhóm được ưu đãi”, vì mức thuế và thời hạn phụ thuộc **ngành nghề cụ thể, loại dự án và thời điểm áp dụng**.\n\nNếu bạn đang hỏi về cơ chế ưu đãi theo quy định trước đây, một số **dự án đầu tư mới thuộc ngành, nghề ưu đãi** được áp dụng thuế suất **10% trong 15 năm**. Tuy nhiên, có nhóm hoạt động được hưởng mức hoặc thời hạn khác; không thể mặc nhiên áp dụng 10% trong 15 năm cho mọi doanh nghiệp có thu nhập từ ngành nghề ưu đãi.\n\nBạn cho biết ngành nghề cụ thể và kỳ tính thuế cần xem xét để xác định chính xác. Tôi chưa thể xác minh quy định hiện hành áp dụng cho trường hợp này chỉ từ thông tin đã nêu. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "incorrect",
+      "answer_verdict_reason": "không nêu mức 15% và thời gian suốt đời hoạt động",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q010",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "71/2014/QH13"
+        ],
+        "articles": [
+          4
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "71/2014/QH13"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 9652.868899982423,
+      "total_ms": 12398.756900103763,
+      "end_to_end_ms": 12398.756900103763,
+      "truncated": false,
+      "input_tokens": 203,
+      "output_tokens": 1752,
+      "answer": "**Có thể được miễn thuế thu nhập cá nhân**, nếu khoản thu nhập đáp ứng đúng điều kiện luật định.\n\nKhoản 5a Điều 4 Luật Thuế thu nhập cá nhân, được bổ sung bởi Luật số 71/2014/QH13, quy định miễn thuế đối với thu nhập của **chủ tàu, cá nhân có quyền sử dụng tàu và cá nhân làm việc trên tàu** từ việc cung cấp hàng hóa, dịch vụ **trực tiếp phục vụ hoạt động khai thác thủy sản xa bờ**.\n\nVì vậy, trường hợp của bạn có thể thuộc diện miễn nếu:\n\n- Quyền khai thác tàu của bạn đồng thời là căn cứ xác lập **quyền sử dụng tàu** theo quy định; và\n- Vật tư, dịch vụ bạn cung cấp có liên hệ trực tiếp với hoạt động khai thác thủy sản xa bờ, không chỉ là hoạt động kinh doanh chung.\n\nNên lưu giữ tài liệu chứng minh quyền sử dụng/khai thác tàu và mối liên hệ giữa khoản thu với chuyến khai thác xa bờ, chẳng hạn hợp đồng, hóa đơn và hồ sơ chuyến biển. Việc được miễn thuế TNCN không tự động đồng nghĩa với được miễn các loại thuế hoặc nghĩa vụ khác.\n\nTôi chưa thể xác minh tình trạng hiệu lực mới nhất của quy định tại thời điểm trả lời. Nội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Chỉ nêu một phần điều kiện, không đúng tuyệt đối đáp án chuẩn.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q011",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "219/2013/TT-BTC"
+        ],
+        "articles": [
+          7
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "219/2013/TT-BTC"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 14992.771499790251,
+      "total_ms": 18048.404400004074,
+      "end_to_end_ms": 18048.404400004074,
+      "truncated": false,
+      "input_tokens": 184,
+      "output_tokens": 2599,
+      "answer": "Về nguyên tắc, **lấy tổng giá đất được trừ của dự án chia cho tổng diện tích sàn căn hộ được bán**, không chia cho diện tích thửa đất hoặc tổng diện tích sàn xây dựng của cả tòa nhà.\n\nTheo hướng dẫn tại khoản 10 Điều 7 Thông tư 219/2013/TT-BTC về nhà chung cư, diện tích làm mẫu số **không bao gồm phần diện tích sử dụng chung**, như hành lang, cầu thang, tầng hầm và công trình phụ trợ.\n\n**Công thức khái quát:**\n\n> Giá đất được trừ trên 1 m² căn hộ = Tổng giá đất được trừ của dự án ÷ Tổng diện tích sàn căn hộ bán được\n\nVì vậy, nếu dự án có khu thương mại, chỗ đỗ xe hoặc diện tích khác được chuyển nhượng riêng, không nên mặc nhiên gộp các diện tích đó vào mẫu số căn hộ; cần phân bổ phù hợp với phần diện tích và giao dịch tương ứng. Cũng cần xác định nhất quán loại diện tích dùng để tính theo hồ sơ dự án và cách kê khai thuế, thay vì tự động lấy diện tích thông thủy ghi trong hợp đồng.\n\n**Lưu ý về hiệu lực:** Tôi chưa thể xác minh từ nguồn chính thức cập nhật rằng hướng dẫn này còn nguyên vẹn sau các thay đổi pháp luật thuế có hiệu lực hiện nay. Trước khi kê khai, nên đối chiếu quy định VAT hiện hành và hồ sơ cụ thể của dự án.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng ý chính và phù hợp với đáp án chuẩn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q015",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "219/2013/TT-BTC"
+        ],
+        "articles": [
+          11
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "219/2013/TT-BTC"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 7140.822499990463,
+      "total_ms": 9804.173199925572,
+      "end_to_end_ms": 9804.173199925572,
+      "truncated": false,
+      "input_tokens": 185,
+      "output_tokens": 1302,
+      "answer": "Về nguyên tắc, cơ sở kinh doanh phải **xác định doanh thu riêng cho từng nhóm hàng hóa, dịch vụ để áp đúng thuế suất**. Nếu không xác định được doanh thu theo từng mức thuế suất, thì phần doanh thu không tách được phải tính thuế theo **mức thuế suất cao nhất áp dụng cho các hàng hóa, dịch vụ đó** — không tính theo mức bình quân.\n\nVí dụ: nếu phần doanh thu không phân định được thuộc các mặt hàng chịu thuế suất 5% và 10%, thì áp dụng 10% cho phần doanh thu đó.\n\nQuy tắc này được nêu tại khoản 2 Điều 11 Thông tư 219/2013/TT-BTC. Tuy nhiên, tôi chưa thể xác minh tình trạng hiệu lực và hướng dẫn áp dụng hiện hành của quy định này sau khi pháp luật thuế GTGT mới có hiệu lực. Hàng hóa không chịu thuế hoặc thuộc trường hợp không phải kê khai, tính nộp thuế cần được phân loại riêng, không nên mặc nhiên gộp vào phần doanh thu chịu thuế suất cao nhất.\n\n**Lưu ý:** Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nội dung khớp đáp án chuẩn về tính thuế suất cao nhất",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q016",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "38/2019/QH14",
+          "123/2020/NĐ-CP",
+          "70/2025/NĐ-CP"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "38/2019/QH14",
+        "123/2020/NĐ-CP",
+        "70/2025/NĐ-CP"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 11965.360000031069,
+      "total_ms": 14967.032999964431,
+      "end_to_end_ms": 14967.032999964431,
+      "truncated": false,
+      "input_tokens": 176,
+      "output_tokens": 2126,
+      "answer": "Theo **Luật Quản lý thuế số 38/2019/QH14**, Chính phủ được giao quy định chi tiết các nội dung về hóa đơn điện tử, trong đó có việc xác định các loại hóa đơn và nguyên tắc áp dụng, lập, quản lý, sử dụng hóa đơn điện tử. Các nội dung này được hướng dẫn chủ yếu tại **Nghị định 123/2020/NĐ-CP**, đã được sửa đổi, bổ sung bởi **Nghị định 70/2025/NĐ-CP**.\n\nVề thực tế triển khai, các quy định của Chính phủ bao quát những vấn đề như:\n\n- Nội dung, định dạng và thời điểm lập hóa đơn;\n- Trường hợp sử dụng hóa đơn có mã hoặc không có mã của cơ quan thuế;\n- Đăng ký sử dụng, lập và gửi hóa đơn; cấp mã và truyền dữ liệu hóa đơn;\n- Xử lý hóa đơn sai sót;\n- Việc sử dụng hóa đơn do cơ quan thuế đặt in trong các trường hợp luật định;\n- Lưu trữ, tra cứu dữ liệu và trách nhiệm của các bên liên quan.\n\nĐây là phần khái quát; doanh nghiệp cần đối chiếu quy định cụ thể áp dụng cho loại hình và hoạt động của mình. Tôi chưa thể xác minh độc lập liệu có văn bản sửa đổi nào mới hơn các văn bản nêu trên tại thời điểm bạn triển khai.\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "nêu đủ các ý chính của đáp án chuẩn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q017",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "48/2024/QH15"
+        ],
+        "articles": [
+          14,
+          15
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 9575.086599914357,
+      "total_ms": 13523.930999916047,
+      "end_to_end_ms": 13523.930999916047,
+      "truncated": false,
+      "input_tokens": 195,
+      "output_tokens": 1892,
+      "answer": "**Khác biệt chính:** hàng hóa, dịch vụ *không chịu thuế GTGT* và hàng hóa, dịch vụ *chịu thuế suất 0%* không phải cùng một chế độ.\n\n| Trường hợp | Thuế GTGT đầu vào | Có thể đề nghị hoàn? |\n|---|---|---|\n| **Hàng hóa, dịch vụ không chịu thuế GTGT** | Về nguyên tắc, thuế đầu vào dùng cho hoạt động này **không được khấu trừ**. | Thông thường **không được hoàn** khoản thuế đầu vào đó. |\n| **Hàng hóa, dịch vụ chịu thuế suất 0%** | Thuế suất 0% vẫn là **chịu thuế GTGT**; thuế đầu vào phục vụ hoạt động này có thể được khấu trừ nếu đáp ứng điều kiện. | Có thể được hoàn nếu đáp ứng điều kiện và thủ tục hoàn thuế; **không tự động được hoàn** chỉ vì áp dụng thuế suất 0%. |\n\nNếu công ty vừa kinh doanh hàng **không chịu thuế** vừa kinh doanh hàng **chịu thuế**, thuế đầu vào dùng riêng cho từng hoạt động cần được phân loại; phần dùng chung phải được phân bổ theo quy định. Do đó, không thể mặc nhiên khấu trừ toàn bộ thuế đầu vào chỉ vì công ty có một phần doanh thu chịu thuế.\n\nĐối với thuế suất 0%, cần xác định giao dịch thực sự thuộc diện áp dụng 0% và có đủ hồ sơ, chứng từ theo quy định cho loại giao dịch đó. Quy định về hoàn thuế còn phụ thuộc vào trường hợp cụ thể, chẳng hạn hoạt động xuất khẩu hay dự án đầu tư.\n\nCăn cứ chung là Luật Thuế GTGT số 48/2024/QH15, trong đó Điều 14 quy định về khấu trừ và Điều 15 về hoàn thuế; Luật này có hiệu lực từ ngày 1/7/2025. **Tôi chưa đối chiếu được cơ sở dữ liệu pháp luật cập nhật để xác nhận mọi sửa đổi, văn bản hướng dẫn còn hiệu lực tại thời điểm trả lời**, nên cần kiểm tra thêm theo loại hàng hóa, giao dịch và kỳ thuế cụ thể.\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý chính, không mâu thuẫn đáp án chuẩn",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q020",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "48/2024/QH15"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 10661.260500084609,
+      "total_ms": 13585.460900096223,
+      "end_to_end_ms": 13585.460900096223,
+      "truncated": false,
+      "input_tokens": 215,
+      "output_tokens": 1870,
+      "answer": "**Nếu doanh nghiệp áp dụng phương pháp khấu trừ và xe phục vụ hoạt động sản xuất, kinh doanh chịu thuế GTGT**, phần thuế đầu vào được khấu trừ tối đa theo tỷ lệ:\n\n**1,6 tỷ / 2 tỷ = 80% thuế GTGT đầu vào trên hóa đơn.**\n\nPhần thuế tương ứng với giá trị vượt **1,6 tỷ đồng** không được khấu trừ. Do xe không thuộc các trường hợp ngoại lệ bạn nêu, giới hạn này được áp dụng theo quy định về khấu trừ thuế đầu vào đối với ô tô chở người từ 9 chỗ ngồi trở xuống tại Luật Thuế GTGT số 48/2024/QH15, có hiệu lực từ ngày 1/7/2025.\n\nVí dụ, nếu hóa đơn tính thuế suất **10%** thì VAT đầu vào là 200 triệu đồng; được khấu trừ tối đa **160 triệu đồng**, còn **40 triệu đồng** không được khấu trừ. Số thực tế còn phụ thuộc thuế suất ghi trên hóa đơn và các điều kiện khấu trừ thông thường như hóa đơn hợp lệ, thanh toán theo quy định.\n\nTôi chưa thể đối chiếu cơ sở dữ liệu pháp luật theo thời gian thực để xác minh tình trạng sửa đổi, hiệu lực tại thời điểm doanh nghiệp kê khai. Nội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng giới hạn khấu trừ thuế VAT theo giá trị 1,6 tỷ đồng",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q021",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "38/2019/QH14"
+        ],
+        "articles": [
+          125,
+          133
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "38/2019/QH14"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 18587.378700030968,
+      "total_ms": 24528.056500013918,
+      "end_to_end_ms": 24528.056500013918,
+      "truncated": false,
+      "input_tokens": 202,
+      "output_tokens": 3324,
+      "answer": "**Cơ quan thuế không thể buộc công ty bạn trả thay toàn bộ khoản nợ thuế chỉ vì công ty bạn đang nợ hoặc giữ tài sản của doanh nghiệp đó.** Việc yêu cầu nộp tiền hoặc giao tài sản thường phải gắn với một quyết định cưỡng chế hợp pháp và giới hạn ở khoản tiền, tài sản của doanh nghiệp bị cưỡng chế mà công ty bạn thực sự đang nợ hoặc nắm giữ.\n\nTheo **Điều 125 và Điều 133 Luật Quản lý thuế số 38/2019/QH14**, có thể hiểu như sau:\n\n### 1. Điều kiện để áp dụng cưỡng chế\n\nCơ quan thuế phải có căn cứ cưỡng chế theo luật — chẳng hạn, khoản thuế đã quá hạn trên 90 ngày hoặc thuộc trường hợp đặc biệt khác được luật quy định — và áp dụng biện pháp cưỡng chế phù hợp. **Chỉ riêng việc doanh nghiệp kia đang bị nợ thuế chưa đủ để công ty bạn phải tự động nộp tiền hoặc giao tài sản.**\n\nCơ quan thuế có thể yêu cầu công ty bạn cung cấp thông tin về khoản nợ hoặc tài sản đang giữ. Tuy nhiên, yêu cầu cung cấp thông tin khác với yêu cầu bắt buộc chuyển tiền hay giao tài sản.\n\n### 2. Nếu công ty bạn đang nợ tiền doanh nghiệp bị cưỡng chế\n\nKhi có quyết định cưỡng chế phù hợp, cơ quan thuế có thể yêu cầu công ty bạn nộp vào ngân sách khoản tiền mà công ty bạn đang phải trả cho doanh nghiệp đó, trong phạm vi và thời hạn được nêu trong quyết định.\n\nCông ty bạn nên đối chiếu số tiền thực tế còn phải trả, hợp đồng, thời hạn thanh toán, chứng từ thanh toán và các khoản đối trừ có căn cứ. **Không nên mặc nhiên xem mình phải trả toàn bộ khoản nợ thuế của đối tác.**\n\n### 3. Nếu công ty bạn đang giữ tài sản\n\nCơ quan thuế có thể yêu cầu xử lý hoặc giao tài sản **thuộc doanh nghiệp bị cưỡng chế** mà công ty bạn đang nắm giữ, theo thủ tục cưỡng chế. Việc công ty bạn giữ tài sản không tự nó làm phát sinh quyền lấy tài sản thuộc sở hữu của công ty bạn hoặc của người khác.\n\nNên chuẩn bị hợp đồng gửi giữ, biên bản giao nhận, danh mục tài sản và chứng từ chứng minh chủ sở hữu, đặc biệt nếu có tranh chấp về quyền sở hữu, quyền cầm giữ hoặc nghĩa vụ hoàn trả.\n\n### 4. Công ty bạn nên làm gì khi nhận yêu cầu?\n\n- Kiểm tra đó là **yêu cầu cung cấp thông tin** hay **quyết định cưỡng chế/yêu cầu chuyển giao để thi hành cưỡng chế**.\n- Đề nghị cơ quan thuế cung cấp quyết định, căn cứ, số tiền hoặc tài sản cụ thể, thời hạn thực hiện và thông tin nộp tiền.\n- Phản hồi bằng văn bản nếu số dư công nợ, thời hạn thanh toán hoặc quyền sở hữu tài sản không đúng như yêu cầu; gửi kèm chứng từ.\n- Không tự ý chuyển tài sản hoặc thanh toán chỉ dựa trên trao đổi miệng, nhưng cũng không nên phớt lờ một quyết định hợp lệ.\n\nTôi chưa thể xác minh trên cơ sở dữ liệu pháp luật thời gian thực liệu các quy định liên quan có sửa đổi hoặc hướng dẫn mới hay không; nếu đang nhận quyết định cụ thể, nên kiểm tra văn bản và hồ sơ kèm theo trước khi thực hiện.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu được điều kiện và quyền yêu cầu nhưng chi tiết về sở hữu tài sản thiếu",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q024",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "103/2014/TT-BTC"
+        ],
+        "articles": [
+          4
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "103/2014/TT-BTC"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 8439.009299967438,
+      "total_ms": 11000.14299992472,
+      "end_to_end_ms": 11000.14299992472,
+      "truncated": false,
+      "input_tokens": 188,
+      "output_tokens": 1494,
+      "answer": "**Thông thường, doanh nghiệp nước ngoài là người nộp thuế đối với thu nhập phát sinh từ dịch vụ thuộc diện chịu thuế tại Việt Nam.** Việc công ty Việt Nam khấu trừ, kê khai và nộp thuế thay không tự nó làm công ty Việt Nam trở thành bên có thu nhập chịu thuế đó.\n\nTheo cơ chế thuế nhà thầu tại **Điều 4 Thông tư 103/2014/TT-BTC**, có trường hợp bên Việt Nam phải khấu trừ và nộp thuế thay nhà thầu nước ngoài. Khi đó, công ty Việt Nam là bên thực hiện nghĩa vụ kê khai, khấu trừ và nộp thay; nếu không thực hiện đúng, công ty có thể phải chịu trách nhiệm theo quy định. Cách xử lý cụ thể còn tùy loại dịch vụ, phương thức kê khai của nhà cung cấp nước ngoài và điều khoản hợp đồng.\n\nLưu ý: tôi chưa thể xác minh đầy đủ tình trạng sửa đổi, thay thế và hiệu lực hiện hành của văn bản nêu trên tại thời điểm trả lời. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu được bên Việt Nam nộp thuế thay nhưng thiếu định nghĩa rõ người nộp thuế là tổ chức VN",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q026",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "111/2013/TT-BTC"
+        ],
+        "articles": [
+          11,
+          12
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "111/2013/TT-BTC"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 13999.493299983442,
+      "total_ms": 19211.418099934235,
+      "end_to_end_ms": 19211.418099934235,
+      "truncated": false,
+      "input_tokens": 186,
+      "output_tokens": 2714,
+      "answer": "Về nguyên tắc, **thu nhập từ chuyển nhượng vốn, chuyển nhượng chứng khoán và chuyển nhượng vốn dưới hình thức khác đều thuộc diện thu nhập chịu thuế TNCN**. Tuy nhiên, cách xác định số thuế khác nhau:\n\n| Giao dịch | Khoản thu nhập/căn cứ tính thuế thường áp dụng |\n|---|---|\n| **Bán phần vốn góp trong công ty** | Thu nhập tính thuế thường là **giá chuyển nhượng trừ giá vốn của phần vốn chuyển nhượng và các chi phí hợp lý, trực tiếp liên quan**. Với cá nhân cư trú, thuế suất thông thường là **20% trên thu nhập tính thuế**. |\n| **Chuyển nhượng chứng khoán** | Thuế thường tính bằng **0,1% giá chuyển nhượng từng lần**. Vì vậy, đây không nhất thiết là phần lãi sau khi trừ giá mua; giao dịch bán lỗ vẫn có thể phát sinh thuế trên giá chuyển nhượng. |\n| **Chuyển nhượng vốn theo hình thức khác** | Nếu về bản chất là chuyển nhượng vốn thuộc diện chịu thuế, khoản thu nhập thường được xác định theo cách tính đối với chuyển nhượng vốn: giá chuyển nhượng trừ giá vốn và chi phí hợp lý liên quan. Trường hợp người chuyển nhượng là **cá nhân không cư trú**, cách tính có thể khác, thường căn cứ vào giá chuyển nhượng. |\n\n**Phân biệt quan trọng:** “Thu nhập chịu thuế” không phải lúc nào cũng đồng nghĩa với toàn bộ số tiền nhận được. Với chuyển nhượng phần vốn góp, thường tính trên phần chênh lệch sau khi trừ giá vốn và chi phí hợp lệ; còn với chuyển nhượng chứng khoán, thuế thường tính trực tiếp trên giá chuyển nhượng.\n\nCăn cứ tôi xác định được là Luật Thuế thu nhập cá nhân, trong đó có quy định về thu nhập từ chuyển nhượng vốn và chứng khoán, cùng Thông tư 111/2013/TT-BTC, Điều 11 và Điều 12. **Tôi chưa thể đối chiếu trực tiếp bản hợp nhất và tình trạng hiệu lực của toàn bộ văn bản tại thời điểm trả lời**, nên các mức và cách tính trên cần được kiểm tra lại theo trường hợp cụ thể, nhất là tình trạng cư trú, loại chứng khoán và hồ sơ xác định giá vốn, chi phí.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu được thu nhập từ chuyển nhượng vốn nhưng thêm chi tiết và phân biệt thuế",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q027",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 14877.61259987019,
+      "total_ms": 19219.08329986036,
+      "end_to_end_ms": 19219.08329986036,
+      "truncated": false,
+      "input_tokens": 200,
+      "output_tokens": 2729,
+      "answer": "Về nguyên tắc, thu nhập từ hoạt động kinh doanh ở nước ngoài có thể vẫn phải tính vào thu nhập chịu thuế TNDN tại Việt Nam. Nếu **chính công ty Việt Nam** đã nộp thuế thu nhập ở nước ngoài trên khoản thu nhập đó, số thuế này thường được **khấu trừ vào thuế TNDN phải nộp tại Việt Nam**, nhưng tối đa bằng phần thuế TNDN Việt Nam tính trên khoản thu nhập tương ứng. Vì vậy, đây thường là **khoản khấu trừ thuế**, không phải khoản chi phí được trừ để làm giảm thu nhập chịu thuế.\n\nVí dụ minh họa: giả sử thu nhập chịu thuế từ nước ngoài là 1 tỷ đồng và thuế TNDN Việt Nam tính trên khoản đó là 200 triệu đồng. Nếu công ty đã nộp 120 triệu đồng thuế tương ứng ở nước ngoài, phần thuế còn phải nộp tại Việt Nam có thể là 80 triệu đồng. Nếu thuế nước ngoài đã nộp là 250 triệu đồng, phần được khấu trừ thông thường không vượt quá 200 triệu đồng.\n\n**Cần phân biệt cách tổ chức hoạt động:**\n- Nếu công ty Việt Nam trực tiếp kinh doanh ở nước ngoài, cần xác định thuế đã nộp có đánh trên thu nhập của chính công ty hay không.\n- Nếu hoạt động thông qua **công ty con ở nước ngoài**, thuế TNDN do công ty con nộp không mặc nhiên được coi là thuế mà công ty mẹ Việt Nam đã nộp. Cách xử lý khoản cổ tức hoặc lợi nhuận chuyển về có thể khác.\n- Hiệp định tránh đánh thuế hai lần giữa Việt Nam và nước sở tại, nếu có, cùng loại thuế, loại thu nhập và hồ sơ chứng minh việc nộp thuế cũng có thể ảnh hưởng đến kết quả.\n\nNên lưu hồ sơ về thu nhập phát sinh ở nước ngoài và chứng từ xác nhận số thuế đã nộp, đồng thời đối chiếu quy định áp dụng cho nước sở tại và hình thức đầu tư cụ thể. Tôi chưa thể xác minh hiệu lực và văn bản hợp nhất mới nhất tại thời điểm hiện nay, nên chưa nêu số điều, khoản cụ thể.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu được khấu trừ thuế nhưng thêm nhiều chi tiết phụ",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q028",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 11206.033499911427,
+      "total_ms": 15352.826999966055,
+      "end_to_end_ms": 15352.826999966055,
+      "truncated": false,
+      "input_tokens": 183,
+      "output_tokens": 2041,
+      "answer": "Nếu hóa đơn gốc **đã áp dụng sai thuế suất** — chẳng hạn hàng hóa, dịch vụ đủ điều kiện giảm thuế tại thời điểm phát sinh nhưng hóa đơn lại tính theo mức chưa giảm — thì cách xử lý thường là:\n\n| Bên | Xử lý hóa đơn | Kê khai thuế GTGT |\n|---|---|---|\n| **Bên bán** | Lập hóa đơn điều chỉnh giảm phần thuế GTGT tính cao hơn, theo quy định về hóa đơn điện tử. | Điều chỉnh giảm thuế GTGT đầu ra và **kê khai bổ sung kỳ thuế có hóa đơn gốc bị sai**. |\n| **Bên mua** | Tiếp nhận hóa đơn điều chỉnh; đối chiếu và điều chỉnh chứng từ, sổ sách liên quan. | Nếu đã khấu trừ thuế đầu vào theo hóa đơn gốc, kê khai bổ sung để **giảm số thuế GTGT đầu vào được khấu trừ** ở kỳ tương ứng. Nếu chưa kê khai thì kê khai theo số đúng sau điều chỉnh. |\n\n**Ví dụ:** Giá tính thuế là 100 triệu đồng; hóa đơn ban đầu tính 10% VAT (10 triệu đồng), nhưng mức đúng phải là 8% (8 triệu đồng). Hóa đơn điều chỉnh giảm 2 triệu đồng thuế. Bên bán giảm thuế đầu ra; bên mua giảm thuế đầu vào đã khấu trừ tương ứng.\n\nLưu ý: Cách trên giả định hàng hóa, dịch vụ **thực sự thuộc diện được giảm thuế tại thời điểm tính thuế**. Nếu mức thuế trên hóa đơn ban đầu là đúng theo quy định tại thời điểm bán, việc chính sách giảm thuế có hiệu lực về sau không tự làm phát sinh căn cứ điều chỉnh hóa đơn cũ. Trường hợp điều chỉnh do chiết khấu, trả hàng hoặc thay đổi giá sau giao dịch cũng có thể có cách kê khai khác với trường hợp hóa đơn gốc sai thuế suất.\n\nTôi chưa có đủ thông tin về thời điểm lập hóa đơn, loại hàng hóa/dịch vụ và kỳ kê khai để xác định chính xác quy định áp dụng cho trường hợp của doanh nghiệp; cũng chưa thể xác minh hiệu lực hiện hành của văn bản áp dụng cho giao dịch cụ thể. Nội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đầy đủ cách xử lý của bên bán và bên mua theo đáp án chuẩn.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q029",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "40/2021/TT-BTC"
+        ],
+        "articles": [
+          10
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "40/2021/TT-BTC"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 8096.123400144279,
+      "total_ms": 11052.347300108522,
+      "end_to_end_ms": 11052.347300108522,
+      "truncated": false,
+      "input_tokens": 174,
+      "output_tokens": 1331,
+      "answer": "Đối với cá nhân kinh doanh nộp thuế theo tỷ lệ trên doanh thu, **tỷ lệ được xác định theo ngành nghề, hoạt động kinh doanh thực tế**, không phải theo mức lợi nhuận hay do cá nhân tự chọn.\n\nCăn cứ thường được áp dụng là **Điều 10 và Phụ lục I Thông tư 40/2021/TT-BTC**. Phụ lục quy định riêng tỷ lệ **thuế GTGT** và **thuế TNCN** theo nhóm hoạt động, chẳng hạn phân phối hàng hóa; dịch vụ; sản xuất, vận tải hoặc xây dựng. Vì vậy, cần phân loại đúng hoạt động kinh doanh rồi áp tỷ lệ tương ứng lên doanh thu chịu thuế.\n\nNếu kinh doanh nhiều ngành nghề, về nguyên tắc cần xác định doanh thu của từng hoạt động để áp tỷ lệ tương ứng. Doanh thu tính thuế được xác định theo quy định tại Điều 10, không đơn thuần là phần lãi sau khi trừ chi phí.\n\nTôi chưa thể xác minh hiệu lực hiện hành của các quy định nêu trên tại thời điểm trả lời; nếu áp dụng cho kỳ tính thuế cụ thể, nên kiểm tra văn bản sửa đổi, bổ sung mới nhất và đối chiếu ngành nghề thực tế.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "chỉ nêu theo danh mục nghị định, thiếu chi tiết về các văn bản cụ thể",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q032",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "80/2021/TT-BTC",
+          "117/2025/NĐ-CP"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "80/2021/TT-BTC",
+        "117/2025/NĐ-CP"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 14250.932000111789,
+      "total_ms": 19049.72120001912,
+      "end_to_end_ms": 19049.72120001912,
+      "truncated": false,
+      "input_tokens": 179,
+      "output_tokens": 2699,
+      "answer": "**Không phải trong mọi trường hợp nền tảng đều là bên chịu trách nhiệm nộp thuế thay.** Trách nhiệm phụ thuộc vào loại nền tảng, cách thanh toán và việc cá nhân đã đăng ký thuế hay chưa.\n\n### Các tình huống thường gặp\n\n- **Cá nhân nước ngoài tự kinh doanh và trực tiếp nhận tiền:** Cá nhân có thể phải đăng ký, kê khai và nộp thuế tại Việt Nam theo cơ chế dành cho nhà cung cấp nước ngoài, nếu hoạt động phát sinh nghĩa vụ thuế tại Việt Nam. Việc giao dịch qua nền tảng không tự động làm mất nghĩa vụ này.\n\n- **Giao dịch qua nền tảng thuộc diện phải khấu trừ và có chức năng thanh toán:** Theo khuôn khổ quy định về quản lý thuế đối với hoạt động kinh doanh trên nền tảng thương mại điện tử, đơn vị quản lý nền tảng có thể phải **khấu trừ, kê khai và nộp thuế thay** cho cá nhân. Điều này phụ thuộc nền tảng và giao dịch có thuộc phạm vi quy định hay không; không thể suy ra chỉ từ việc giao dịch diễn ra trên nền tảng số.\n\n- **Doanh nghiệp Việt Nam thanh toán trực tiếp cho cá nhân nước ngoài:** Doanh nghiệp trả tiền có thể phải khấu trừ, kê khai và nộp thuế thay theo quy định áp dụng cho khoản thanh toán hoặc dịch vụ của nhà cung cấp nước ngoài. Cần xem hợp đồng, bản chất khoản thu và cách thanh toán.\n\n### Thuế và các khoản phải xem xét\n\nThông thường cần xác định **thuế giá trị gia tăng và thuế thu nhập cá nhân**; loại thuế, cách tính và mức áp dụng tùy ngành nghề, loại giao dịch, nguồn thu và tình trạng cư trú thuế. Nếu có hàng hóa nhập khẩu hoặc hoạt động thuộc diện chịu thuế riêng, có thể phát sinh thêm thuế, phí hoặc nghĩa vụ khác. Không thể kết luận có một khoản “thu khác” cụ thể nếu chưa biết hoạt động kinh doanh là gì.\n\nCác quy định liên quan gồm Luật Quản lý thuế, Thông tư 80/2021/TT-BTC và quy định về quản lý thuế đối với hoạt động kinh doanh của cá nhân trên nền tảng số, trong đó có Nghị định 117/2025/NĐ-CP. **Tôi chưa thể xác minh tại thời điểm trả lời liệu có văn bản mới hơn hoặc hướng dẫn mới làm thay đổi cách áp dụng trong trường hợp cụ thể hay không.**\n\nĐể xác định đúng bên kê khai, cần biết: nền tảng nào quản lý giao dịch, nền tảng có thu/giữ tiền hay không, ai là người trả tiền, cá nhân bán hàng hay cung cấp dịch vụ gì, và cá nhân đã đăng ký thuế tại Việt Nam chưa.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu được cá nhân tự kê khai hoặc ủy quyền, thiếu trừ trường hợp riêng",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q033",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "174/2025/NĐ-CP",
+          "204/2025/QH15"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "204/2025/QH15"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 13166.882700053975,
+      "total_ms": 16748.169499915093,
+      "end_to_end_ms": 16748.169499915093,
+      "truncated": false,
+      "input_tokens": 189,
+      "output_tokens": 2462,
+      "answer": "Với **hóa đơn bán hàng** của doanh nghiệp tính thuế GTGT theo phương pháp trực tiếp, mức giảm **không phải là giảm 20% giá bán**. Doanh nghiệp giảm **20% mức tỷ lệ % tính thuế GTGT trên doanh thu** áp dụng cho hàng hóa đó.\n\nNếu hóa đơn được lập trong thời gian **từ 1/7/2025 đến 31/12/2026**, cách thể hiện theo chính sách giảm thuế tại Nghị định 174/2025/NĐ-CP là:\n\n- **Cột “Thành tiền”**: ghi đầy đủ giá trị hàng hóa trước khi giảm.\n- **Dòng “Cộng tiền hàng hóa, dịch vụ”**: ghi số tiền sau khi trừ khoản giảm.\n- **Ghi chú**: “Đã giảm … đồng, tương ứng 20% mức tỷ lệ % để tính thuế GTGT theo Nghị quyết số 204/2025/QH15.”\n\n**Ví dụ:** Hàng hóa có doanh thu 100 triệu đồng, giả sử tỷ lệ tính thuế GTGT trực tiếp áp dụng là 1%. Khoản giảm là 100 triệu × 1% × 20% = **200.000 đồng**. Hóa đơn ghi “Thành tiền” 100 triệu đồng; số cộng tiền hàng hóa, dịch vụ sau giảm là **99,8 triệu đồng**; ghi chú số tiền đã giảm 200.000 đồng.\n\nNếu hóa đơn thuộc thời kỳ khác, cần dùng quy định và số nghị quyết áp dụng tại thời điểm lập hóa đơn; bạn nên cho biết ngày lập hóa đơn để xác định chính xác. Tôi chưa đối chiếu hiệu lực trên cơ sở dữ liệu pháp luật trực tuyến.\n\nNội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đầy đủ cách ghi theo đáp án chuẩn",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q035",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          147,
+          146
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 147 Bộ luật Lao động 2019**"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 9407.921900041401,
+      "total_ms": 13191.317099845037,
+      "end_to_end_ms": 13191.317099845037,
+      "truncated": false,
+      "input_tokens": 176,
+      "output_tokens": 1525,
+      "answer": "**Không được giao cho bạn 16 tuổi trực tiếp làm công việc bảo dưỡng máy móc.**\n\nTheo **điểm d khoản 1 Điều 147 Bộ luật Lao động 2019**, người từ đủ 15 đến chưa đủ 18 tuổi không được làm công việc **“bảo dưỡng, bảo trì máy, thiết bị”**. Vì vậy, việc có người giám sát hoặc có sự đồng ý của cha mẹ/người đại diện cũng không làm cho công việc này trở thành được phép.\n\nBạn có thể xem xét tuyển bạn ấy vào **một công việc khác phù hợp, không thuộc danh mục công việc bị cấm**. Với người lao động từ đủ 15 đến chưa đủ 18 tuổi, thời giờ làm việc thông thường không quá **8 giờ/ngày và 40 giờ/tuần** theo Điều 146 Bộ luật này.\n\nNếu nhiệm vụ dự kiến chỉ là vệ sinh hoặc hỗ trợ việc khác, cần xem xét **công việc thực tế và mức độ tiếp xúc với máy móc**; nếu bản chất vẫn là bảo dưỡng/bảo trì thì không được giao. Tôi chưa tra cứu được nguồn chính thức cập nhật để xác nhận có sửa đổi, bổ sung mới nhất đối với các quy định được viện dẫn.\n\n*Thông tin chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng quy định và lý do cấm",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q038",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          148,
+          32
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 148 Bộ luật Lao động 2019 quy định người lao động cao tuổi có quyền thỏa"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 11040.587400086224,
+      "total_ms": 14111.218800069764,
+      "end_to_end_ms": 14111.218800069764,
+      "truncated": false,
+      "input_tokens": 175,
+      "output_tokens": 1759,
+      "answer": "**Có.** Công ty có thể thỏa thuận với người lao động đã qua độ tuổi nghỉ hưu để rút ngắn thời giờ làm việc hằng ngày hoặc làm việc không trọn thời gian (bán thời gian).\n\n- **Căn cứ:** Khoản 2 Điều 148 Bộ luật Lao động 2019 quy định người lao động cao tuổi có quyền thỏa thuận với người sử dụng lao động về việc rút ngắn giờ làm mỗi ngày hoặc làm không trọn thời gian. Điều 32 cũng quy định người lao động và người sử dụng lao động thỏa thuận về việc làm không trọn thời gian.\n- **Không nên tự ý áp dụng:** Quy định đặt cơ sở trên sự thỏa thuận, nên công ty không nên đơn phương giảm giờ làm hoặc chuyển sang bán thời gian chỉ vì người lao động đã qua tuổi nghỉ hưu. Nếu hai bên đồng ý thay đổi thời giờ làm việc, nên ghi rõ lịch làm, tiền lương và quyền lợi trong hợp đồng hoặc văn bản sửa đổi hợp đồng.\n- Người lao động cao tuổi vẫn được bảo đảm quyền lợi theo pháp luật; công ty cũng cần lưu ý nghĩa vụ bảo đảm an toàn, sức khỏe trong công việc.\n\nTôi chưa đối chiếu trực tiếp cơ sở dữ liệu pháp luật để xác nhận tình trạng sửa đổi, hiệu lực mới nhất tại thời điểm trả lời. Nội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý về thỏa thuận giảm giờ làm việc hoặc làm không đủ thời gian",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q040",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 17719.907300081104,
+      "total_ms": 20629.98010008596,
+      "end_to_end_ms": 20629.98010008596,
+      "truncated": false,
+      "input_tokens": 188,
+      "output_tokens": 2864,
+      "answer": "Chỉ với mốc “ngừng đóng trước ngày 1/7/2024” thì chưa thể xác định công ty thuộc diện nào, vì bạn chưa nêu tên hoặc nội dung của “quy định này”. **Mốc 1/7/2024 tự nó không xác định tình trạng pháp lý của doanh nghiệp**; nếu bạn đang nói đến Luật BHXH năm 2024 thì luật này có hiệu lực từ **1/7/2025**, không phải 1/7/2024.\n\nNếu quy định bạn hỏi liên quan đến xử lý thời gian người lao động chưa được đóng BHXH do doanh nghiệp ngừng hoạt động hoặc không còn khả năng đóng, các tình huống thường cần xem xét gồm: doanh nghiệp đang làm thủ tục giải thể hoặc phá sản; đã chấm dứt hoạt động; không còn hoạt động tại địa chỉ đăng ký; hoặc chủ doanh nghiệp bỏ trốn. Tuy nhiên, đây **không phải danh sách có thể khẳng định áp dụng cho mọi quy định**. Việc công ty chỉ ngừng đóng BHXH nhưng vẫn hoạt động cũng không tự động được xem là thuộc diện đặc biệt đó.\n\nBạn gửi tên văn bản, đường dẫn hoặc ảnh chụp đoạn quy định đang hỏi, tôi có thể đối chiếu chính xác các trường hợp và điều kiện áp dụng. Nội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "refused",
+      "answer_verdict_reason": "Không nêu tình trạng của công ty theo đáp án chuẩn.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q042",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          63
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 63 Bộ luật Lao động 2019"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 12576.052699936554,
+      "total_ms": 15693.237700033933,
+      "end_to_end_ms": 15693.237700033933,
+      "truncated": false,
+      "input_tokens": 174,
+      "output_tokens": 1986,
+      "answer": "**Có.** Ngoài các trường hợp pháp luật bắt buộc, doanh nghiệp có thể chủ động tổ chức đối thoại thêm khi thấy cần thiết — chẳng hạn đối thoại thường xuyên hơn mức tối thiểu hằng năm hoặc trao đổi đột xuất về vấn đề mới phát sinh tại nơi làm việc. Pháp luật không ấn định một danh sách riêng các “lý do” cho những cuộc đối thoại tự nguyện này.\n\n**Căn cứ chính** là khoản 3 Điều 63 Bộ luật Lao động 2019: người sử dụng lao động và người lao động hoặc tổ chức đại diện người lao động tại cơ sở thỏa thuận về số lần, thời gian, địa điểm và thành phần tham gia đối thoại, phù hợp với điều kiện sản xuất, kinh doanh và tổ chức lao động. Doanh nghiệp nên quy định cách tổ chức đối thoại thêm trong **quy chế dân chủ ở cơ sở tại nơi làm việc** hoặc quy trình đối thoại; nếu có thỏa ước lao động tập thể liên quan thì cần thực hiện thống nhất với thỏa ước.\n\n**Lưu ý:** Khi người lao động hoặc tổ chức đại diện người lao động yêu cầu đối thoại thuộc trường hợp tại khoản 2 Điều 63, đây là trường hợp phải tổ chức, không còn là cuộc đối thoại tùy chọn. Đối thoại thêm cũng không thay thế các nghĩa vụ đối thoại, tham vấn bắt buộc khác.\n\nTôi chưa đối chiếu trực tiếp cơ sở dữ liệu pháp luật để xác nhận tình trạng sửa đổi, hiệu lực mới nhất tại thời điểm trả lời. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "nêu thêm chi tiết và căn cứ pháp luật không có trong đáp án chuẩn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q044",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "145/2020/NĐ-CP"
+        ],
+        "articles": [
+          107,
+          62
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 107 Bộ luật Lao động 2019 và Điều 62 Nghị định 145/2020/NĐ-CP"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 4836.850799852982,
+      "total_ms": 6460.272899828851,
+      "end_to_end_ms": 6460.272899828851,
+      "truncated": false,
+      "input_tokens": 186,
+      "output_tokens": 726,
+      "answer": "Chậm nhất **trong 15 ngày kể từ ngày bắt đầu tổ chức làm thêm giờ** thuộc mức trên 200 giờ và không quá 300 giờ/năm, công ty phải gửi thông báo theo quy định. Căn cứ: khoản 4 Điều 107 Bộ luật Lao động 2019 và Điều 62 Nghị định 145/2020/NĐ-CP.\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nội dung đúng và đầy đủ theo đáp án chuẩn",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q045",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 11330.076099839061,
+      "total_ms": 15259.588799905032,
+      "end_to_end_ms": 15259.588799905032,
+      "truncated": false,
+      "input_tokens": 199,
+      "output_tokens": 1941,
+      "answer": "Cần phân biệt **xác nhận thời gian đã đóng** với **ghi nhận thời gian công ty còn nợ**:\n\n- Công ty cần làm thủ tục báo giảm và đề nghị cơ quan BHXH xác nhận quá trình tham gia của nhân viên khi nghỉ việc. Theo thực tiễn xử lý nợ, cơ quan BHXH thường chỉ xác nhận những tháng đã được đóng đủ, hạch toán cho người lao động; tháng còn nợ không được coi là đã đóng.\n- Vì vậy, công ty nên **đề nghị xác nhận ngay phần đã đóng**, đồng thời thông tin rõ cho nhân viên những tháng chưa được xác nhận do công ty còn nợ. Không nên chờ đến khi có đủ tiền mới làm toàn bộ thủ tục nghỉ việc. Bộ luật Lao động quy định trách nhiệm hoàn tất thủ tục xác nhận thời gian đóng BHXH, bảo hiểm thất nghiệp khi chấm dứt hợp đồng; thông thường các khoản liên quan phải được thanh toán trong 14 ngày làm việc, một số trường hợp được kéo dài nhưng không quá 30 ngày.\n- Khi có tiền trả nợ, công ty cần nộp khoản còn thiếu và khoản lãi chậm đóng nếu phát sinh; ghi rõ người lao động, thời gian và loại bảo hiểm được nộp. Sau đó, đề nghị cơ quan BHXH đối chiếu, cập nhật và **xác nhận bổ sung** các tháng tương ứng. Nên lưu chứng từ nộp tiền và kết quả đối chiếu để xử lý nếu dữ liệu chưa cập nhật.\n\nViệc xác nhận cụ thể có thể phụ thuộc vào khoản tiền đã được cơ quan BHXH phân bổ, hạch toán đến tháng nào. Công ty nên đối chiếu với cơ quan BHXH quản lý trước khi thông báo chính xác các tháng được xác nhận cho nhân viên. Tôi chưa kiểm chứng được hướng dẫn nghiệp vụ mới nhất của cơ quan BHXH tại địa phương, nên không khẳng định một biểu mẫu hay quy trình điện tử cụ thể.\n\n**Lưu ý:** Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Đã nêu xác nhận thời gian đóng và xác nhận bổ sung khi thu hồi",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q047",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 23218.9909000881,
+      "total_ms": 26610.042999964207,
+      "end_to_end_ms": 26610.042999964207,
+      "truncated": false,
+      "input_tokens": 200,
+      "output_tokens": 3801,
+      "answer": "**Nếu anh vẫn đi làm và không nghỉ để chăm con, anh thường không được nhận khoản trợ cấp thai sản hằng tháng cho thời gian còn lại của vợ ngoài tiền lương.** Chế độ này gắn với thời gian người cha **nghỉ việc hưởng chế độ thai sản**; việc vợ mất, tự nó, không làm phát sinh khoản tiền hằng tháng trả thêm cho người cha vẫn đang làm việc.\n\nNếu anh nghỉ để hưởng chế độ, thời gian được tính là **phần còn lại trong thời gian nghỉ thai sản của mẹ** — thông thường là đến khi hết 6 tháng tính từ ngày sinh con, chứ không phải thêm 6 tháng tính từ ngày mẹ mất. Trợ cấp được tính theo tiền lương đóng BHXH của anh theo quy định áp dụng, và bắt đầu theo thời gian anh thực tế nghỉ hưởng chế độ.\n\nCó thể có **trợ cấp một lần khi sinh con** trong một số trường hợp, chẳng hạn chỉ người cha tham gia BHXH và đáp ứng điều kiện luật định. Đây là khoản riêng, không phải trợ cấp hằng tháng cho thời gian nghỉ còn lại; cần biết tình trạng tham gia và điều kiện BHXH của cả hai vợ chồng mới xác định được anh có thuộc trường hợp này không.\n\nNgày sinh và ngày vợ mất có thể ảnh hưởng đến văn bản áp dụng: Luật BHXH 2024 có hiệu lực từ **1/7/2025**, còn trường hợp phát sinh trước đó và trường hợp chuyển tiếp cần được đối chiếu riêng. Tôi chưa có các mốc ngày và chưa thể xác minh trực tiếp quy định chuyển tiếp áp dụng cho trường hợp cụ thể của anh.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "incorrect",
+      "answer_verdict_reason": "nói không được hưởng trợ cấp khi không nghỉ việc",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q050",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          33
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 17827.839999925345,
+      "total_ms": 20348.19779987447,
+      "end_to_end_ms": 20348.19779987447,
+      "truncated": false,
+      "input_tokens": 202,
+      "output_tokens": 3072,
+      "answer": "Nếu tháng bạn hỏi **từ ngày 1/7/2025 trở đi**, theo Luật Bảo hiểm xã hội 2024 (Điều 33), nguyên tắc là:\n\n- Nếu bạn **không làm việc và không hưởng lương từ 14 ngày làm việc trở lên trong tháng**, bạn **không phải đóng BHXH bắt buộc cho tháng đó**. Mốc này tính theo ngày làm việc, không phải 14 ngày theo lịch.\n- **Bạn và công ty có thể thỏa thuận tiếp tục đóng BHXH** cho tháng đó. Khi thỏa thuận, việc đóng phải theo căn cứ và mức đóng luật định; căn cứ tiền lương là tiền lương làm căn cứ đóng BHXH của tháng gần nhất.\n\nQuy tắc chung này có ngoại lệ, trong đó có trường hợp nghỉ hưởng chế độ thai sản từ 14 ngày làm việc trở lên trong tháng; trường hợp đó được xử lý theo quy định riêng. Nếu bạn hỏi về tháng **trước ngày 1/7/2025**, cần áp dụng quy định có hiệu lực tại thời điểm đó.\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đầy đủ ý và không mâu thuẫn với đáp án chuẩn",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q051",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 8666.747699957341,
+      "total_ms": 11113.661600043997,
+      "end_to_end_ms": 11113.661600043997,
+      "truncated": false,
+      "input_tokens": 196,
+      "output_tokens": 1410,
+      "answer": "**Có, nếu việc tăng lương được xác định có hiệu lực từ các tháng trước.** Khi đó, công ty cần tính lại căn cứ đóng BHXH cho từng tháng, nộp phần chênh lệch còn thiếu (bao gồm phần thuộc trách nhiệm của công ty và phần người lao động đóng theo quy định). Việc nộp muộn **có thể** phát sinh tiền lãi chậm đóng hoặc hệ quả xử lý khác.\n\n**Không mặc nhiên phải nộp bù** nếu mức lương mới chỉ có hiệu lực từ hiện tại. Việc công ty ghi nhận mức mới cho các tháng trước không tự nó làm thay đổi căn cứ đóng của những tháng đó; cần xem thỏa thuận, phụ lục hợp đồng hoặc quyết định điều chỉnh lương và ngày có hiệu lực.\n\nVì vậy, cần đối chiếu hồ sơ lương và ngày hiệu lực của việc điều chỉnh. Tôi chưa có nguồn pháp luật đã kiểm chứng để xác nhận các quy định hướng dẫn và mức xử lý hiện hành cụ thể.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đầy đủ và chính xác quy định truy đóng BHXH.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q052",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "88/2016/NĐ-CP"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "88/2016/NĐ-CP"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 10359.845000086352,
+      "total_ms": 15107.405500020832,
+      "end_to_end_ms": 15107.405500020832,
+      "truncated": false,
+      "input_tokens": 189,
+      "output_tokens": 2010,
+      "answer": "**Trả lời ngắn:** Công ty có thể xây dựng chính sách đóng góp cho phần của mình, nhưng không nên hiểu là được tự ý ấn định mọi khoản đóng hoặc khấu trừ tiền lương của nhân viên. Chương trình hưu trí bổ sung tự nguyện dựa trên nguyên tắc tự nguyện và thỏa thuận giữa người sử dụng lao động với người lao động.\n\n### 1. Mức đóng\n\n- Công ty có thể đề xuất mức hoặc cách tính khoản đóng góp của mình, chẳng hạn theo số tiền cố định hoặc tỷ lệ tiền lương, rồi quy định trong chương trình và thỏa thuận với nhân viên.\n- Nếu nhân viên cũng đóng góp, khoản đó cần có sự đồng ý của họ; công ty không nên tự khấu trừ lương khi chưa có căn cứ thỏa thuận phù hợp.\n- Cần quy định rõ trong tài liệu chương trình: ai được tham gia, mức đóng của mỗi bên, cách thay đổi hoặc dừng đóng và cách xử lý khi nhân viên nghỉ việc.\n\n### 2. Quản lý và đầu tư tiền đóng\n\nTheo mô hình hưu trí bổ sung tự nguyện, tiền đóng được ghi nhận vào tài khoản hưu trí của từng người tham gia. Tài sản được đưa vào cơ chế quỹ và được quản lý, đầu tư theo chương trình, quy định áp dụng; công ty không nên coi số tiền này là tài sản tự do sử dụng cho hoạt động kinh doanh của mình.\n\nGiá trị tài khoản phụ thuộc vào tiền đóng, kết quả đầu tư và các khoản phí. Vì vậy, không nên mặc định lợi nhuận hoặc số tiền nhận được được bảo đảm, trừ khi văn bản chương trình và quy định có liên quan xác lập rõ điều đó.\n\n### 3. Chi trả\n\nKhi đến điều kiện nhận hưu trí, quyền lợi thường được chi trả theo quy chế của chương trình và giá trị tài khoản của người tham gia, có thể theo hình thức trả định kỳ hoặc hình thức khác nếu quy định chương trình cho phép. Cần kiểm tra cụ thể điều kiện hưởng, thời điểm chi trả, cách tính quyền lợi và các trường hợp được nhận trước hạn.\n\nCăn cứ pháp lý tôi có thể xác định là **Nghị định 88/2016/NĐ-CP về chương trình hưu trí bổ sung tự nguyện**. Tuy nhiên, tôi chưa thể xác minh tại thời điểm trả lời văn bản này còn hiệu lực nguyên trạng hay đã được sửa đổi, bổ sung; trước khi triển khai, công ty nên đối chiếu văn bản hiện hành và quy chế của đơn vị cung cấp chương trình.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu phần lớn ý, thiếu nhấn mạnh quản lý riêng tài khoản cá nhân",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q054",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          18
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 18 Luật Doanh nghiệp 2020**"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 6378.384999930859,
+      "total_ms": 10175.887400051579,
+      "end_to_end_ms": 10175.887400051579,
+      "truncated": false,
+      "input_tokens": 184,
+      "output_tokens": 1267,
+      "answer": "Nếu bạn ký hợp đồng thuê **trước khi công ty được cấp Giấy chứng nhận đăng ký doanh nghiệp**, thì việc hồ sơ bị từ chối **không tự động làm hợp đồng thuê chấm dứt**.\n\nTheo quy định tại **Điều 18 Luật Doanh nghiệp 2020**, với hợp đồng phục vụ việc thành lập và hoạt động của doanh nghiệp:\n\n- Nếu doanh nghiệp được cấp đăng ký, doanh nghiệp tiếp tục thực hiện quyền và nghĩa vụ theo hợp đồng, trừ khi các bên có thỏa thuận khác.\n- Nếu doanh nghiệp **không được cấp đăng ký**, người đã ký hợp đồng phải thực hiện hợp đồng; nếu có nhiều người cùng tham gia thành lập doanh nghiệp thì họ có thể phải **liên đới chịu trách nhiệm**.\n\nVì vậy, nếu bạn là người ký hợp đồng để chuẩn bị mở công ty, thông thường bạn vẫn phải xử lý các nghĩa vụ thuê theo hợp đồng — chẳng hạn tiền thuê, tiền đặt cọc hoặc thủ tục chấm dứt — trừ khi hợp đồng có điều khoản khác hoặc bạn và chủ nhà thỏa thuận chấm dứt, chuyển giao nghĩa vụ. Việc hồ sơ chỉ đang bị yêu cầu bổ sung, chưa có kết quả từ chối cuối cùng, cũng không tự nó xóa nghĩa vụ đã phát sinh.\n\nCần xem kỹ **ai được ghi là bên thuê**, bạn ký với tư cách nào, điều khoản về việc thành lập công ty, chấm dứt hợp đồng và tiền đặt cọc. Nếu hợp đồng ghi bạn là bên thuê cá nhân, đây càng là căn cứ quan trọng để xác định trách nhiệm của bạn.\n\nTôi chưa thể xác minh hiệu lực hiện hành của quy định tại thời điểm bạn hỏi; nên đối chiếu văn bản pháp luật đang áp dụng và nội dung hợp đồng cụ thể. Nội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đầy đủ trách nhiệm của người ký và liên đới theo luật.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q055",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 10556.14100000821,
+      "total_ms": 14484.28520001471,
+      "end_to_end_ms": 14484.28520001471,
+      "truncated": false,
+      "input_tokens": 167,
+      "output_tokens": 1820,
+      "answer": "**Có thể, nhưng cần phân biệt “đứng tên cổ đông” với “đại diện cho cổ đông”.**\n\n- Nếu bạn được ghi tên trong **sổ đăng ký cổ đông**, công ty thường sẽ ghi nhận bạn là cổ đông và làm việc với bạn về các quyền, nghĩa vụ của cổ đông. Việc người khác đưa tiền không tự động khiến họ trở thành cổ đông của công ty.\n- Hai bên có thể lập thỏa thuận riêng về việc người kia cấp tiền và quyền lợi giữa hai bên. Tuy nhiên, thỏa thuận đó **không đương nhiên buộc công ty công nhận người kia là chủ sở hữu cổ phần**; đồng thời có thể phát sinh tranh chấp về cổ tức, biểu quyết, chuyển nhượng hoặc hoàn trả tiền.\n- Nếu chỉ muốn thay người kia tham dự họp, bỏ phiếu hoặc thực hiện một số quyền, phương án rõ ràng hơn thường là để người kia đứng tên cổ đông và **ủy quyền cho bạn** thực hiện các quyền đó.\n- Không nên dùng việc đứng tên để che giấu chủ sở hữu thực tế hoặc né hạn chế pháp luật. Giao dịch giả tạo nhằm che giấu giao dịch khác có thể bị xem xét theo quy định của Bộ luật Dân sự; các nghĩa vụ kê khai chủ sở hữu hưởng lợi và hạn chế đối với một số chủ thể cũng cần được kiểm tra theo tình huống cụ thể.\n\nTrước khi thực hiện, nên lập thỏa thuận bằng văn bản, ghi rõ nguồn tiền, quyền hưởng lợi, quyền biểu quyết, nghĩa vụ thuế và cách xử lý khi muốn chuyển nhượng hoặc chấm dứt thỏa thuận. Nếu cổ phần dự kiến đứng tên bạn, cần đặc biệt lưu ý bạn có thể phải chịu các nghĩa vụ tương ứng với tư cách cổ đông.\n\nTôi chưa thể xác minh hiệu lực của các quy định cập nhật tại đúng thời điểm bạn thực hiện giao dịch; nên kiểm tra hồ sơ và quy định hiện hành với luật sư hoặc chuyên gia pháp lý. **Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.**",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "incorrect",
+      "answer_verdict_reason": "Mâu thuẫn với đáp án chuẩn về việc đứng tên thay người khác",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q057",
+      "type": "numeric",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "01/2021/NĐ-CP"
+        ],
+        "articles": [
+          45,
+          31
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 45 Luật Doanh nghiệp 2020 và Điều 31 Nghị định 01/2021/NĐ-CP"
+      ],
+      "unknown_docs": [
+        "01/2021/NĐ-CP"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 12071.788599947467,
+      "total_ms": 14846.427100012079,
+      "end_to_end_ms": 14846.427100012079,
+      "truncated": false,
+      "input_tokens": 190,
+      "output_tokens": 2147,
+      "answer": "**Theo quy định tôi có thể xác định**, doanh nghiệp phải thông báo việc lập chi nhánh ở nước ngoài **trong 30 ngày kể từ ngày chi nhánh chính thức được thành lập**. Nơi nhận là **cơ quan đăng ký kinh doanh nơi doanh nghiệp đặt trụ sở chính**.\n\nHồ sơ theo quy định hướng dẫn mà tôi có thể đối chiếu gồm **văn bản thông báo** và **bản sao giấy chứng nhận đăng ký chi nhánh ở nước ngoài hoặc giấy tờ tương đương**. Sau khi nhận thông báo, cơ quan đăng ký kinh doanh cập nhật thông tin vào Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp **trong 3 ngày làm việc**.\n\nCăn cứ được biết: khoản 3 Điều 45 Luật Doanh nghiệp 2020 và Điều 31 Nghị định 01/2021/NĐ-CP. **Lưu ý:** tôi chưa thể xác minh hiệu lực hiện hành của nghị định và biểu mẫu áp dụng tại thời điểm bạn nộp hồ sơ; vì vậy, nên kiểm tra với cơ quan đăng ký kinh doanh cấp tỉnh nơi công ty đặt trụ sở về biểu mẫu và yêu cầu hồ sơ hiện hành. Mốc 30 ngày tính từ ngày chi nhánh được thành lập chính thức theo quy định của nước sở tại, không phải ngày công ty Việt Nam quyết định mở chi nhánh.\n\nNội dung này chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý chính và không mâu thuẫn với đáp án chuẩn.",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q059",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          16,
+          36
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 16 Luật Doanh nghiệp 2020"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 9713.181300088763,
+      "total_ms": 13271.280399989337,
+      "end_to_end_ms": 13271.280399989337,
+      "truncated": false,
+      "input_tokens": 183,
+      "output_tokens": 1733,
+      "answer": "**Có thể vi phạm điều cấm**, nhưng cần phân biệt hai tình huống:\n\n1. **Đăng ký vốn điều lệ cao hơn số tiền đã góp tại thời điểm đăng ký:** Chưa đương nhiên là vi phạm nếu đó là số vốn cam kết góp và bạn vẫn còn trong thời hạn góp vốn theo loại hình doanh nghiệp. Nhưng **kê khai khống vốn điều lệ hoặc không góp đủ vốn đã đăng ký khi hết thời hạn** thuộc hành vi bị cấm tại khoản 4 Điều 16 Luật Doanh nghiệp 2020. Khi không góp đủ, doanh nghiệp còn có thể phải đăng ký điều chỉnh vốn điều lệ theo quy định.\n\n2. **Cố ý định giá tài sản góp vốn cao hơn giá trị thực tế:** Đây là hành vi bị cấm theo khoản 4 Điều 16 Luật Doanh nghiệp 2020. Quy định về định giá tài sản góp vốn tại Điều 36 của Luật này cũng đặt ra trách nhiệm đối với việc cố ý định giá cao hơn thực tế, gồm trách nhiệm về phần chênh lệch và thiệt hại phát sinh theo trường hợp cụ thể.\n\nVì vậy, nếu bạn **cố ý ghi vốn không có thực** hoặc **cố ý nâng khống giá trị tài sản**, rủi ro pháp lý là đáng kể. Nếu số vốn chưa góp chỉ vì thời hạn góp vốn chưa hết, hoặc mức định giá chênh lệch do sai sót thiện chí, cần xem xét hồ sơ, thời điểm và căn cứ định giá để kết luận chính xác.\n\nCăn cứ nêu trên là Luật Doanh nghiệp 2020; tôi chưa thể xác minh từ nguồn cập nhật trong phiên này liệu có sửa đổi hoặc quy định liên quan mới ảnh hưởng đến việc áp dụng hiện hành hay không.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng các điều cấm theo luật doanh nghiệp",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q061",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          24,
+          138
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 24 Luật Doanh nghiệp 2020"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 8078.163699945435,
+      "total_ms": 10100.69220000878,
+      "end_to_end_ms": 10100.69220000878,
+      "truncated": false,
+      "input_tokens": 165,
+      "output_tokens": 1214,
+      "answer": "Đối với **công ty cổ phần**, bản Điều lệ đã sửa đổi, bổ sung phải có **họ tên và chữ ký của Chủ tịch Hội đồng quản trị** theo điểm c khoản 4 Điều 24 Luật Doanh nghiệp 2020.\n\nViệc sửa đổi Điều lệ thuộc thẩm quyền quyết định của **Đại hội đồng cổ đông** theo điểm đ khoản 2 Điều 138 Luật này. Vì vậy, cần phân biệt: **Đại hội đồng cổ đông thông qua nội dung sửa đổi; Chủ tịch Hội đồng quản trị ký vào bản Điều lệ đã sửa đổi**. Luật không yêu cầu tất cả cổ đông hoặc cổ đông sáng lập cùng ký bản Điều lệ sửa đổi.\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Chỉ nêu người đại diện theo pháp luật, không ghi cụ thể Chủ tịch HĐQT",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q062",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "01/2021/NĐ-CP"
+        ],
+        "articles": [
+          26
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "01/2021/NĐ-CP"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 12201.684300089255,
+      "total_ms": 14578.546399949118,
+      "end_to_end_ms": 14578.546399949118,
+      "truncated": false,
+      "input_tokens": 196,
+      "output_tokens": 2011,
+      "answer": "Nếu công ty **nhận thêm vốn góp trực tiếp từ người mới** để chuyển thành công ty TNHH hai thành viên trở lên, hồ sơ chuyển đổi cần bổ sung:\n\n- **Nghị quyết hoặc quyết định của chủ sở hữu công ty** về việc huy động thêm vốn góp của tổ chức, cá nhân khác; và\n- **Giấy tờ chứng minh thành viên mới đã góp vốn**. Tùy cách góp vốn, giấy tờ có thể là chứng từ chuyển tiền, chứng từ nộp tiền hoặc hồ sơ bàn giao tài sản góp vốn.\n\nĐây là nhóm giấy tờ được quy định tại **Điều 26 Nghị định 01/2021/NĐ-CP** về đăng ký doanh nghiệp. Nếu thực chất là chủ sở hữu **chuyển nhượng một phần vốn góp** cho người mới, hồ sơ chứng minh sẽ là hợp đồng chuyển nhượng hoặc giấy tờ chứng minh việc chuyển nhượng đã hoàn tất, không phải hồ sơ huy động vốn mới.\n\nTôi chưa thể xác minh tình trạng hiệu lực hiện hành của quy định này tại thời điểm bạn nộp hồ sơ. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý nghị quyết và giấy tờ góp vốn thành viên mới",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q068",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          55,
+          396
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 55 Luật Hôn nhân và gia đình 2014 và Điều 396 Bộ luật Tố tụng dân sự",
+        "Điều 396 Bộ luật Tố tụng dân sự 2015"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 6425.479300087318,
+      "total_ms": 10369.618400000036,
+      "end_to_end_ms": 10369.618400000036,
+      "truncated": false,
+      "input_tokens": 159,
+      "output_tokens": 1160,
+      "answer": "Hồ sơ **yêu cầu công nhận thuận tình ly hôn** thường gồm:\n\n**Giấy tờ chính**\n- Đơn yêu cầu công nhận thuận tình ly hôn và thỏa thuận về con chung, tài sản (theo mẫu của Tòa án nơi nộp); thường cần chữ ký của cả hai vợ chồng.\n- Bản chính giấy chứng nhận kết hôn. Nếu mất, nên xin trích lục hoặc bản sao hợp lệ.\n- Bản sao giấy tờ tùy thân của hai vợ chồng (CCCD/hộ chiếu) và thông tin về nơi cư trú, làm việc theo yêu cầu của Tòa án.\n- Bản sao giấy khai sinh của con chung, nếu có.\n\n**Tài liệu bổ sung tùy trường hợp**\n- Giấy tờ về nhà đất, xe, tiền gửi hoặc tài sản khác nếu đề nghị Tòa án ghi nhận thỏa thuận phân chia tài sản.\n- Tài liệu về khoản vay, nợ chung nếu có thỏa thuận xử lý nợ.\n- Tài liệu về điều kiện chăm sóc, nuôi dưỡng con nếu có con chung và Tòa án yêu cầu làm rõ.\n\nNếu hai bên **không yêu cầu Tòa án giải quyết tài sản hoặc nợ**, hãy ghi rõ điều đó trong đơn. Tòa án có thể yêu cầu bổ sung giấy tờ tùy hồ sơ và mẫu đơn áp dụng tại địa phương.\n\nCăn cứ chung về thuận tình ly hôn và hồ sơ yêu cầu được quy định tại Điều 55 Luật Hôn nhân và gia đình 2014 và Điều 396 Bộ luật Tố tụng dân sự 2015. Tôi chưa đối chiếu được nguồn chính thức để xác minh hiệu lực hiện hành hoặc yêu cầu tiếp nhận mới nhất tại từng Tòa án.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "refused": false
+    },
+    {
+      "id": "q071",
+      "type": "out_of_corpus",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          200
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 200 Bộ luật Hình sự"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 4263.928800122812,
+      "total_ms": 6173.674399964511,
+      "end_to_end_ms": 6173.674399964511,
+      "truncated": false,
+      "input_tokens": 161,
+      "output_tokens": 650,
+      "answer": "Đối với **cá nhân**, mức tù cao nhất về tội trốn thuế là **7 năm**. Theo khoản 3 Điều 200 Bộ luật Hình sự, mức này áp dụng khi số tiền trốn thuế **từ 1 tỷ đồng trở lên**.\n\nTôi chưa thể xác minh hiệu lực hiện hành của quy định tại thời điểm bạn hỏi. Lưu ý, pháp nhân thương mại không bị phạt tù; hình phạt áp dụng với pháp nhân được quy định riêng.\n\n*Thông tin chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "refused": false
+    },
+    {
+      "id": "q074",
+      "type": "out_of_corpus",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          4,
+          5,
+          54
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 11295.566100161523,
+      "total_ms": 16796.52320011519,
+      "end_to_end_ms": 16796.52320011519,
+      "truncated": false,
+      "input_tokens": 160,
+      "output_tokens": 2092,
+      "answer": "Theo **Luật Phá sản 2014**, cần phân biệt **mất khả năng thanh toán** với **bị tuyên bố phá sản**: doanh nghiệp mất khả năng thanh toán khi không trả khoản nợ đến hạn trong **03 tháng** kể từ ngày đến hạn; chỉ khi Tòa án ra quyết định thì doanh nghiệp mới bị tuyên bố phá sản (Điều 4).\n\nNếu doanh nghiệp rơi vào tình trạng này, có thể thực hiện các bước sau:\n\n1. **Rà soát tình trạng nợ và tài sản:** xác định các khoản nợ đã đến hạn, thời gian chưa thanh toán, tài sản bảo đảm, công nợ phải thu, nghĩa vụ thuế và quyền lợi của người lao động.\n2. **Người có nghĩa vụ nộp đơn cần thực hiện việc nộp đơn:** theo Điều 5, người đại diện theo pháp luật của doanh nghiệp có nghĩa vụ nộp đơn yêu cầu mở thủ tục phá sản khi doanh nghiệp mất khả năng thanh toán. Với doanh nghiệp tư nhân, chủ doanh nghiệp là người có nghĩa vụ này. Một số chủ thể khác, như chủ nợ đủ điều kiện, cũng có quyền nộp đơn.\n3. **Nộp đơn đến Tòa án có thẩm quyền** và cung cấp hồ sơ, tài liệu trung thực về tình hình tài chính, chủ nợ, con nợ, tài sản và hoạt động của doanh nghiệp. Danh mục hồ sơ cụ thể cần đối chiếu với loại hình doanh nghiệp và trường hợp thực tế.\n4. **Phối hợp với Tòa án trong quá trình giải quyết:** cung cấp thông tin, lập và đối chiếu danh sách chủ nợ, tham gia các thủ tục liên quan và thực hiện yêu cầu về kiểm kê, quản lý tài sản. Nộp đơn không đồng nghĩa doanh nghiệp lập tức bị tuyên bố phá sản; Tòa án sẽ xem xét việc mở thủ tục và các bước tiếp theo.\n5. **Bảo toàn tài sản, sổ sách và chứng từ.** Không nên che giấu, tẩu tán tài sản hoặc lập giao dịch giả tạo. Một số giao dịch trong quá trình giải quyết phá sản có thể bị hạn chế hoặc bị xem xét tính hợp lệ.\n6. **Thực hiện thanh toán theo thứ tự luật định** nếu bị tuyên bố phá sản. Điều 54 quy định thứ tự phân chia tài sản, trong đó có chi phí phá sản, quyền lợi của người lao động và các khoản nợ khác; nợ có bảo đảm được xử lý theo tài sản bảo đảm và quy định liên quan.\n\n**Lưu ý:** Đây là hướng dẫn khái quát. Tôi chưa thể xác minh trực tiếp cơ sở dữ liệu pháp luật để xác nhận tình trạng hiệu lực hiện hành hoặc các sửa đổi mới nhất của Luật Phá sản 2014; trường hợp cụ thể nên kiểm tra văn bản đang có hiệu lực và hồ sơ thực tế. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "refused": false
+    },
+    {
+      "id": "q077",
+      "type": "out_of_corpus",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 5473.09729992412,
+      "total_ms": 7533.968199975789,
+      "end_to_end_ms": 7533.968199975789,
+      "truncated": false,
+      "input_tokens": 164,
+      "output_tokens": 983,
+      "answer": "Mức lương tối thiểu **theo tháng** áp dụng từ ngày **1/1/2026** được công bố như sau:\n\n| Vùng | Mức tối thiểu |\n|---|---:|\n| I | 5.310.000 đồng/tháng |\n| II | 4.730.000 đồng/tháng |\n| III | 4.140.000 đồng/tháng |\n| IV | 3.700.000 đồng/tháng |\n\nTôi chưa thể đối chiếu trực tiếp văn bản chính thức để xác minh hiệu lực hiện hành và địa bàn cụ thể thuộc từng vùng. Mức áp dụng phụ thuộc vào nơi làm việc của người lao động.\n\n*Thông tin chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "refused": false
+    },
+    {
+      "id": "q078",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 3128.2844999805093,
+      "total_ms": 6730.662600137293,
+      "end_to_end_ms": 6730.662600137293,
+      "truncated": false,
+      "input_tokens": 162,
+      "output_tokens": 720,
+      "answer": "Nếu bạn là **công dân Việt Nam đang nộp hồ sơ tại Việt Nam** và đi Nhật với mục đích du lịch ngắn ngày, hồ sơ thường gồm:\n\n- **Hộ chiếu** còn hạn và còn trang trống.\n- **Đơn xin thị thực** điền đầy đủ, ký tên.\n- **Ảnh thẻ** đúng quy cách của cơ quan tiếp nhận.\n- **Lịch trình tại Nhật**: ngày đi/về, địa điểm dự kiến và hoạt động từng ngày.\n- **Giấy tờ chứng minh khả năng chi trả chuyến đi**, chẳng hạn giấy tờ thu nhập, công việc và tài liệu về tài chính.\n- **Giấy tờ chứng minh công việc hoặc tình trạng học tập**; nếu là chủ doanh nghiệp, có thể cần giấy tờ liên quan đến hoạt động kinh doanh.\n- Nếu có **người khác chi trả hoặc bảo lãnh**, có thể cần giấy tờ của người đó và tài liệu chứng minh mối quan hệ.\n\nTùy hồ sơ, cơ quan xét duyệt có thể yêu cầu bổ sung giấy tờ. Thành phần cụ thể cũng khác nhau theo loại thị thực, nơi nộp và hoàn cảnh của người xin. Tôi **chưa thể xác minh checklist, quy cách ảnh, nơi tiếp nhận và lệ phí hiện hành**; trước khi nộp, hãy kiểm tra hướng dẫn mới nhất của Đại sứ quán/Lãnh sự quán Nhật Bản tại Việt Nam hoặc đơn vị tiếp nhận hồ sơ được chỉ định. Không nên đặt vé hoặc dịch vụ không hoàn hủy chỉ dựa trên dự kiến được cấp thị thực.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "refused": false
+    },
+    {
+      "id": "q079",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "15/2018/NĐ-CP"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "15/2018/NĐ-CP"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 10143.473900156096,
+      "total_ms": 14842.865100130439,
+      "end_to_end_ms": 14842.865100130439,
+      "truncated": false,
+      "input_tokens": 160,
+      "output_tokens": 2017,
+      "answer": "Nhà hàng kinh doanh dịch vụ ăn uống **thường phải có Giấy chứng nhận cơ sở đủ điều kiện an toàn thực phẩm (ATTP)** trước khi hoạt động. Tuy nhiên, một số cơ sở được miễn giấy chứng nhận theo quy định, chẳng hạn cơ sở đã có chứng nhận hệ thống quản lý ATTP phù hợp hoặc thuộc nhóm kinh doanh nhỏ lẻ được miễn. Được miễn giấy chứng nhận **không có nghĩa là được miễn các điều kiện ATTP**.\n\n### Các bước thực hiện\n\n1. **Kiểm tra nhà hàng có thuộc diện phải xin giấy hay không.**  \n   Việc miễn hay không phụ thuộc vào loại hình, quy mô và giấy chứng nhận khác mà cơ sở đang có.\n\n2. **Xác định cơ quan tiếp nhận hồ sơ.**  \n   Thẩm quyền cấp thường do cơ quan được UBND cấp tỉnh phân công, có thể khác nhau giữa các địa phương và theo loại hình cơ sở. Hãy hỏi cơ quan tiếp nhận thủ tục hành chính tại địa phương hoặc cơ quan quản lý ATTP để biết đúng đầu mối.\n\n3. **Chuẩn bị cơ sở và hồ sơ.**  \n   Nhà hàng cần bảo đảm các điều kiện như khu vực chế biến, bảo quản thực phẩm phù hợp; thiết bị, dụng cụ sạch; nguồn nước và xử lý chất thải bảo đảm; quy trình ngăn nhiễm chéo; người trực tiếp chế biến đáp ứng yêu cầu về sức khỏe và kiến thức ATTP.  \n   \n   Hồ sơ thường gồm đơn đề nghị, giấy tờ đăng ký kinh doanh, bản thuyết minh điều kiện cơ sở và các giấy tờ liên quan đến người trực tiếp chế biến. **Thành phần cụ thể cần đối chiếu với thủ tục do cơ quan có thẩm quyền tại địa phương công bố**, vì yêu cầu hồ sơ có thể phụ thuộc loại hình và phân cấp quản lý.\n\n4. **Nộp hồ sơ và tiếp đoàn kiểm tra.**  \n   Cơ quan tiếp nhận sẽ thẩm định hồ sơ và kiểm tra thực tế. Nếu đáp ứng điều kiện, cơ sở được cấp giấy; nếu chưa đạt, cần khắc phục theo yêu cầu rồi thực hiện lại theo hướng dẫn.\n\n5. **Duy trì điều kiện sau khi được cấp.**  \n   Giấy chứng nhận có thời hạn; nhà hàng cần theo dõi thời hạn để làm thủ tục cấp lại và tiếp tục bảo đảm ATTP trong quá trình hoạt động.\n\nCăn cứ khung pháp lý thường được áp dụng là Luật An toàn thực phẩm năm 2010 và Nghị định 15/2018/NĐ-CP. **Tôi chưa thể xác minh hiệu lực hiện hành của toàn bộ quy định và thủ tục riêng tại địa phương ở thời điểm trả lời**, nên bạn nên kiểm tra thủ tục công bố trên cổng dịch vụ công hoặc hỏi cơ quan tiếp nhận tại nơi đặt nhà hàng trước khi nộp hồ sơ.\n\nNội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "refused": false
+    },
+    {
+      "id": "h06",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "135/2020/NĐ-CP"
+        ],
+        "articles": [
+          169,
+          4
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 169 Bộ luật Lao động 2019 và Điều 4 Nghị định 135/2020/NĐ-CP"
+      ],
+      "unknown_docs": [
+        "135/2020/NĐ-CP"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 4113.67390002124,
+      "total_ms": 6114.990399917588,
+      "end_to_end_ms": 6114.990399917588,
+      "truncated": false,
+      "input_tokens": 162,
+      "output_tokens": 688,
+      "answer": "Trong điều kiện lao động bình thường, tuổi nghỉ hưu của lao động nam tăng theo lộ trình. **Nếu nghỉ hưu trong năm 2026, tuổi nghỉ hưu bình thường là 61 tuổi 6 tháng**. Theo lộ trình, tuổi này tăng dần đến **62 tuổi từ năm 2028**.\n\nCăn cứ: khoản 2 Điều 169 Bộ luật Lao động 2019 và Điều 4 Nghị định 135/2020/NĐ-CP. Đây là điều kiện **về tuổi**; để hưởng lương hưu còn phải đáp ứng điều kiện về thời gian đóng bảo hiểm xã hội và các điều kiện liên quan.\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ và chính xác điều kiện tuổi nghỉ hưu theo lộ trình.",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "h07",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 5045.904600061476,
+      "total_ms": 7660.889900056645,
+      "end_to_end_ms": 7660.889900056645,
+      "truncated": false,
+      "input_tokens": 174,
+      "output_tokens": 968,
+      "answer": "Theo mức áp dụng từ **ngày 1/7/2025**, đối với người lao động thuộc diện đóng BHXH bắt buộc thông thường:\n\n- **Người lao động đóng 8%** tiền lương làm căn cứ đóng BHXH.\n- **Doanh nghiệp đóng 17,5%**, gồm 3% vào quỹ ốm đau, thai sản; 14% vào quỹ hưu trí, tử tuất; và 0,5% vào quỹ tai nạn lao động, bệnh nghề nghiệp.\n\nNhư vậy, tổng mức đóng là **25,5%** tiền lương làm căn cứ đóng. Trường hợp doanh nghiệp đủ điều kiện áp dụng mức đóng thấp hơn vào quỹ tai nạn lao động, bệnh nghề nghiệp thì phần doanh nghiệp có thể giảm.\n\nLưu ý: Đây là tỷ lệ **BHXH bắt buộc**, không phải tổng các khoản bảo hiểm khấu trừ/đóng hằng tháng; bảo hiểm y tế và bảo hiểm thất nghiệp được tính riêng. Căn cứ tiền lương đóng bảo hiểm cũng không nhất thiết bằng toàn bộ lương thực nhận. Mức trên căn cứ Luật BHXH năm 2024, có hiệu lực từ 1/7/2025.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "incorrect",
+      "answer_verdict_reason": "Sai tỷ lệ đóng của doanh nghiệp và người lao động theo đáp án chuẩn.",
+      "gold_numbers_present": false
+    },
+    {
+      "id": "h08",
+      "type": "numeric",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          111
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 111 Luật Doanh nghiệp 2020**"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 1935.011199908331,
+      "total_ms": 3466.563900001347,
+      "end_to_end_ms": 3466.563900001347,
+      "truncated": false,
+      "input_tokens": 164,
+      "output_tokens": 294,
+      "answer": "Công ty cổ phần phải có **ít nhất 03 cổ đông** và không giới hạn số lượng tối đa. Đây là quy định tại **khoản 1 Điều 111 Luật Doanh nghiệp 2020**.\n\nTôi chưa thể xác minh hiệu lực của quy định tại thời điểm hiện tại. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ số lượng cổ đông, không hạn chế tối đa.",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "h11",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 5276.576499920338,
+      "total_ms": 6773.84030004032,
+      "end_to_end_ms": 6773.84030004032,
+      "truncated": false,
+      "input_tokens": 164,
+      "output_tokens": 840,
+      "answer": "**Thuế suất GTGT thông thường là 10%.** Tuy nhiên, từ **01/07/2025 đến hết 31/12/2026**, nhiều hàng hóa, dịch vụ đủ điều kiện được giảm còn **8%**; một số nhóm bị loại trừ, chẳng hạn dịch vụ tài chính, ngân hàng, bảo hiểm, bất động sản và một số hàng hóa, dịch vụ khác.\n\nVì vậy, chỉ biết là “hàng hóa, dịch vụ thông thường” thì chưa thể xác định chắc chắn áp dụng 10% hay 8% — cần đối chiếu mặt hàng hoặc dịch vụ cụ thể với danh mục quy định. **Lưu ý:** Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Đưa thêm thông tin giảm thuế 8%, thiếu ý chính mức 10% phổ thông",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "h12",
+      "type": "numeric",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          46
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 46 Luật Doanh nghiệp 2020"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 2455.579400062561,
+      "total_ms": 4071.2137001100928,
+      "end_to_end_ms": 4071.2137001100928,
+      "truncated": false,
+      "input_tokens": 166,
+      "output_tokens": 394,
+      "answer": "Công ty TNHH hai thành viên trở lên có **tối đa 50 thành viên**; số thành viên tối thiểu là 2. Quy định này được nêu tại khoản 1 Điều 46 Luật Doanh nghiệp 2020.\n\nTôi chưa thể xác minh bản hợp nhất và hiệu lực hiện hành của quy định tại thời điểm bạn hỏi. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng từ 2 đến 50 thành viên",
+      "gold_numbers_present": false
+    },
+    {
+      "id": "h13",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          139
+        ]
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 139 Bộ luật Lao động 2019"
+      ],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 3590.097199892625,
+      "total_ms": 5384.041199926287,
+      "end_to_end_ms": 5384.041199926287,
+      "truncated": false,
+      "input_tokens": 159,
+      "output_tokens": 567,
+      "answer": "Lao động nữ sinh **con thứ hai được nghỉ thai sản 6 tháng**; việc đây là con thứ hai không làm tăng thời gian nghỉ. Thời gian nghỉ trước sinh tối đa là 2 tháng.\n\nNếu sinh đôi, thời gian nghỉ được cộng thêm 1 tháng cho con thứ hai, tức tổng cộng 7 tháng. Căn cứ: Điều 139 Bộ luật Lao động 2019. Tôi chưa thể xác minh hiệu lực hiện hành qua nguồn cập nhật tại thời điểm trả lời.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "incorrect",
+      "answer_verdict_reason": "Sai thời gian nghỉ, đáp án chuẩn là 7 tháng",
+      "gold_numbers_present": false
+    },
+    {
+      "id": "h15",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "954/2020/UBTVQH14"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": null,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "954/2020/UBTVQH14"
+      ],
+      "retrieved": [],
+      "retrieval_ms": 0.0,
+      "plan_ms": 0.0,
+      "ttft_ms": 2925.501399906352,
+      "total_ms": 4736.008299980313,
+      "end_to_end_ms": 4736.008299980313,
+      "truncated": false,
+      "input_tokens": 169,
+      "output_tokens": 442,
+      "answer": "Mức giảm trừ gia cảnh cho **bản thân người nộp thuế là 11 triệu đồng/tháng** (tương đương 132 triệu đồng/năm), theo mức tại Nghị quyết 954/2020/UBTVQH14. Khoản này được trừ khỏi thu nhập chịu thuế, không phải khoản tiền được nhận thêm.\n\nTôi chưa thể xác minh trực tiếp hiệu lực văn bản tại thời điểm hiện tại. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "incorrect",
+      "answer_verdict_reason": "Sai số liệu giảm trừ gia cảnh theo đáp án chuẩn",
+      "gold_numbers_present": false
+    }
+  ]
+}

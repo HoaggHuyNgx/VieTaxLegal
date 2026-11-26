@@ -1,0 +1,441 @@
+{
+  "meta": {
+    "date": "2026-11-26",
+    "config": {
+      "name": "rag-full-ooc",
+      "tier": "generation",
+      "chunk_set": "article",
+      "top_k": 5,
+      "min_similarity": 0.0,
+      "require_in_force": true,
+      "rag": true,
+      "mode": "hybrid",
+      "rrf_k": 60,
+      "rerank": "llm",
+      "rerank_provider": "openai",
+      "rerank_model": "gpt-4.1-mini",
+      "query_planner_provider": "openai",
+      "query_planner_model": "gpt-4.1-mini",
+      "min_top_score": 0.5,
+      "question_types": [
+        "out_of_corpus"
+      ],
+      "pipeline": "custom",
+      "include_pending": false,
+      "split": "dev",
+      "embedding_provider": null,
+      "embedding_model": null,
+      "limit": null,
+      "max_output_tokens": 4000
+    },
+    "config_hash": "9cdd229e053a",
+    "git_sha": "95fcc79",
+    "git_dirty": false,
+    "corpus_manifest_sha": "2593878a885e",
+    "corpus_texts_sha": "df27b3d4e5c4",
+    "questions_sha": "a2777305e8b4",
+    "collection": "legal_article_text_embedding_3_small",
+    "models": {
+      "chat": "openai:gpt-6-luna",
+      "embedding": "openai:text-embedding-3-small",
+      "eval_generator": "(same as chat)",
+      "temperature": "provider default (not settable through the chat provider)"
+    },
+    "dataset": {
+      "total": 105,
+      "approved": 91,
+      "used": 6,
+      "provisional": false
+    }
+  },
+  "summary": {
+    "answered": 6,
+    "provider_errors": 0,
+    "truncated_answers": 0,
+    "citation_precision": null,
+    "citation_recall": null,
+    "answers_without_citation": 0,
+    "unsupported_reference_rate": 0.0,
+    "unknown_doc_rate": 0.0,
+    "answers_needing_review": 0,
+    "ooc_no_citation_rate": 0.5,
+    "retrieval_ms": {
+      "p50": 4697.126900078729,
+      "p95": 5676.648499909788
+    },
+    "plan_ms": {
+      "p50": 2317.473800154403,
+      "p95": 2811.48390006274
+    },
+    "ttft_ms": {
+      "p50": 1238.5543999262154,
+      "p95": 2226.7414000816643
+    },
+    "total_ms": {
+      "p50": 3124.33909997344,
+      "p95": 3830.755600007251
+    },
+    "end_to_end_ms": {
+      "p50": 7866.134600015357,
+      "p95": 9507.40409991704
+    },
+    "input_tokens": 9759,
+    "output_tokens": 1324
+  },
+  "questions": [
+    {
+      "id": "q068",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "eaa3cea3-bc10-5dae-a46b-952a8f937873",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "67346f01-37cb-5643-9eb4-e9d141c0d985",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "9c370007-5b0f-54a7-a858-7b7080378bd6",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            61
+          ]
+        },
+        {
+          "id": "d567e26b-a3d5-52fc-9951-9abde5b1431f",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            11
+          ]
+        },
+        {
+          "id": "76fb8e18-abef-5894-afce-c6061085a0d2",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            26
+          ]
+        }
+      ],
+      "retrieval_ms": 4988.36850002408,
+      "plan_ms": 2811.48390006274,
+      "ttft_ms": 1275.086599867791,
+      "total_ms": 2877.766099991277,
+      "end_to_end_ms": 7866.134600015357,
+      "truncated": false,
+      "input_tokens": 1560,
+      "output_tokens": 153,
+      "answer": "Các nguồn được cung cấp không đề cập đến hồ sơ hoặc thủ tục ly hôn thuận tình, nên **chưa đủ căn cứ để liệt kê giấy tờ cần chuẩn bị**. Tôi cũng chưa thể xác minh hiệu lực hiện hành của quy định về vấn đề này từ các nguồn hiện có.\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "refused": true
+    },
+    {
+      "id": "q071",
+      "type": "out_of_corpus",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "642db61e-d51f-57df-9afd-529ce07aa31e",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            45
+          ]
+        },
+        {
+          "id": "d5b0bd8d-9085-585d-975c-542edc2f6cec",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            44
+          ]
+        },
+        {
+          "id": "5ec5a686-4f92-58f0-a773-13cade40d3bf",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            44
+          ]
+        },
+        {
+          "id": "47637a44-3131-5e5c-8ab9-ef3617f14130",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            45
+          ]
+        },
+        {
+          "id": "a9d27be1-4b0d-5a26-a31a-7b83d5eb72bd",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            44
+          ]
+        }
+      ],
+      "retrieval_ms": 5676.648499909788,
+      "plan_ms": 2396.556300111115,
+      "ttft_ms": 2226.7414000816643,
+      "total_ms": 3830.755600007251,
+      "end_to_end_ms": 9507.40409991704,
+      "truncated": false,
+      "input_tokens": 2575,
+      "output_tokens": 293,
+      "answer": "Các nguồn được cung cấp chỉ đề cập xử phạt vi phạm hành chính về quản lý thuế, không nêu khung hình phạt tù đối với tội trốn thuế. Vì vậy, chưa đủ căn cứ để xác định mức tù tối đa hoặc xác minh quy định hình sự hiện hành. [1][5]\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "refused": true
+    },
+    {
+      "id": "q074",
+      "type": "out_of_corpus",
+      "field": "enterprise",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "086f1e71-0142-524f-ae85-351b640e5078",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            214
+          ]
+        },
+        {
+          "id": "e53185f0-a1e2-5d20-8568-c6bd6531dcfe",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            211
+          ]
+        },
+        {
+          "id": "3173d3dc-0e19-52ba-900c-bd1ed632da10",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            209
+          ]
+        },
+        {
+          "id": "b48e6469-61ef-54f0-b9b1-8f4dd34fb1fd",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            208
+          ]
+        },
+        {
+          "id": "a8435a8c-d285-5855-9713-a32462e5db4b",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            208
+          ]
+        }
+      ],
+      "retrieval_ms": 4697.126900078729,
+      "plan_ms": 2317.473800154403,
+      "ttft_ms": 1666.598399868235,
+      "total_ms": 3668.790299911052,
+      "end_to_end_ms": 8365.91719998978,
+      "truncated": false,
+      "input_tokens": 1426,
+      "output_tokens": 277,
+      "answer": "Theo dữ liệu được cung cấp, việc phá sản doanh nghiệp được thực hiện theo pháp luật về phá sản.[1] Tuy nhiên, các nguồn hiện có không nêu doanh nghiệp phải làm những gì, hồ sơ cần chuẩn bị hay thời hạn thực hiện theo Luật Phá sản; vì vậy, chưa đủ căn cứ để hướng dẫn cụ thể hoặc xác minh hiệu lực hiện hành.\n\nLưu ý: Quy định về các việc bị cấm sau khi có quyết định giải thể là quy định về **giải thể**, không phải căn cứ để kết luận về nghĩa vụ của doanh nghiệp khi phá sản.[2]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "refused": true
+    },
+    {
+      "id": "q077",
+      "type": "out_of_corpus",
+      "field": "labor",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "b27c8514-d6b4-55c2-93db-7a71edd31ac0",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            91
+          ]
+        },
+        {
+          "id": "191b0e4a-9c74-5779-93a0-99917c3af9c9",
+          "doc_number": "145/2020/NĐ-CP",
+          "article_nos": [
+            89
+          ]
+        },
+        {
+          "id": "1ea9ec87-c51e-551c-b4f1-9ae4147b7c3f",
+          "doc_number": "145/2020/NĐ-CP",
+          "article_nos": [
+            50
+          ]
+        },
+        {
+          "id": "740f8a11-5e55-5114-b312-0d6da6c4b0c1",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            90
+          ]
+        },
+        {
+          "id": "904f9de2-f009-5657-9845-a96fb39a5ef3",
+          "doc_number": "145/2020/NĐ-CP",
+          "article_nos": [
+            8
+          ]
+        }
+      ],
+      "retrieval_ms": 4984.66349998489,
+      "plan_ms": 2424.325600033626,
+      "ttft_ms": 1238.5543999262154,
+      "total_ms": 3124.33909997344,
+      "end_to_end_ms": 8109.00259995833,
+      "truncated": false,
+      "input_tokens": 1943,
+      "output_tokens": 210,
+      "answer": "Các nguồn được cung cấp **chưa nêu mức tiền cụ thể áp dụng từ năm 2026**, nên tôi chưa đủ căn cứ để xác định mức lương tối thiểu theo từng vùng. Mức này được Chính phủ quyết định và công bố theo vùng, theo tháng và theo giờ. [1]\n\nTôi cũng chưa thể xác minh từ các nguồn hiện có văn bản quy định mức áp dụng năm 2026 hoặc hiệu lực hiện hành của văn bản đó.\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "refused": true
+    },
+    {
+      "id": "q078",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "eaa3cea3-bc10-5dae-a46b-952a8f937873",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "d567e26b-a3d5-52fc-9951-9abde5b1431f",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            11
+          ]
+        },
+        {
+          "id": "e9dbea01-de28-5d0d-b8e1-7e9c731d5a47",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "a47345dd-6a1f-50ca-acd8-a58c4bfbbe8d",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            12
+          ]
+        },
+        {
+          "id": "ca417228-ea89-5381-9250-e5e7f341a70a",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            26
+          ]
+        }
+      ],
+      "retrieval_ms": 4195.024199783802,
+      "plan_ms": 1989.5625000353903,
+      "ttft_ms": 1062.7973000518978,
+      "total_ms": 3043.9430000260472,
+      "end_to_end_ms": 7238.967199809849,
+      "truncated": false,
+      "input_tokens": 2007,
+      "output_tokens": 192,
+      "answer": "Các nguồn được cung cấp không đề cập đến thủ tục hoặc hồ sơ xin thị thực du lịch Nhật Bản, nên chưa đủ căn cứ để liệt kê giấy tờ cần nộp hay xác nhận yêu cầu hiện hành.\n\nBạn nên kiểm tra hướng dẫn mới nhất từ Đại sứ quán hoặc Tổng Lãnh sự quán Nhật Bản tại Việt Nam, vì yêu cầu có thể tùy thuộc vào nơi nộp hồ sơ và trường hợp của người xin thị thực. Tôi chưa thể xác minh hiệu lực hiện hành của các yêu cầu đó từ nguồn đã cung cấp.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "refused": true
+    },
+    {
+      "id": "q079",
+      "type": "out_of_corpus",
+      "field": "other",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [],
+      "retrieval_ms": 2176.5431000385433,
+      "plan_ms": 1914.536700118333,
+      "ttft_ms": 1119.7983000893146,
+      "total_ms": 3153.5738001111895,
+      "end_to_end_ms": 5330.116900149733,
+      "truncated": false,
+      "input_tokens": 248,
+      "output_tokens": 199,
+      "answer": "Hiện chưa đủ căn cứ trong kho văn bản hiện có để xác định nhà hàng của bạn cần xin giấy chứng nhận nào, nộp hồ sơ ở đâu và theo thủ tục nào. Tôi cũng chưa thể xác minh quy định hiện hành cho trường hợp cụ thể.\n\nBạn nên hỏi cơ quan có thẩm quyền về an toàn thực phẩm tại địa phương và cung cấp thông tin về địa điểm, quy mô, loại hình kinh doanh, cách chế biến và phục vụ để được hướng dẫn đúng trường hợp.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "refused": true
+    }
+  ]
+}

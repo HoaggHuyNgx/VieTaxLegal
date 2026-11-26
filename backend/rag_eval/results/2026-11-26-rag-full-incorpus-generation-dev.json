@@ -1,0 +1,2949 @@
+{
+  "meta": {
+    "date": "2026-11-26",
+    "config": {
+      "name": "rag-full-incorpus",
+      "tier": "generation",
+      "chunk_set": "article",
+      "top_k": 5,
+      "min_similarity": 0.0,
+      "require_in_force": true,
+      "rag": true,
+      "mode": "hybrid",
+      "rrf_k": 60,
+      "rerank": "llm",
+      "rerank_provider": "openai",
+      "rerank_model": "gpt-4.1-mini",
+      "query_planner_provider": "openai",
+      "query_planner_model": "gpt-4.1-mini",
+      "min_top_score": 0.5,
+      "question_types": [
+        "lookup",
+        "numeric"
+      ],
+      "pipeline": "custom",
+      "include_pending": false,
+      "split": "dev",
+      "embedding_provider": null,
+      "embedding_model": null,
+      "limit": null,
+      "max_output_tokens": 4000
+    },
+    "config_hash": "ebac3eea859c",
+    "git_sha": "95fcc79",
+    "git_dirty": false,
+    "corpus_manifest_sha": "2593878a885e",
+    "corpus_texts_sha": "df27b3d4e5c4",
+    "questions_sha": "a2777305e8b4",
+    "collection": "legal_article_text_embedding_3_small",
+    "models": {
+      "chat": "openai:gpt-6-luna",
+      "embedding": "openai:text-embedding-3-small",
+      "eval_generator": "(same as chat)",
+      "temperature": "provider default (not settable through the chat provider)"
+    },
+    "dataset": {
+      "total": 105,
+      "approved": 91,
+      "used": 41,
+      "provisional": false
+    },
+    "answer_judge_model": "gpt-4.1-mini"
+  },
+  "summary": {
+    "answered": 41,
+    "provider_errors": 0,
+    "truncated_answers": 0,
+    "citation_precision": 0.6895833333333333,
+    "citation_recall": 0.8902439024390244,
+    "answers_without_citation": 1,
+    "unsupported_reference_rate": 0.0,
+    "unknown_doc_rate": 0.024390243902439025,
+    "answers_needing_review": 2,
+    "ooc_no_citation_rate": null,
+    "retrieval_ms": {
+      "p50": 4814.454199979082,
+      "p95": 5358.463899930939
+    },
+    "plan_ms": {
+      "p50": 2290.8900999464095,
+      "p95": 2784.858400002122
+    },
+    "ttft_ms": {
+      "p50": 1896.45959995687,
+      "p95": 4401.011300040409
+    },
+    "total_ms": {
+      "p50": 4137.210699962452,
+      "p95": 8063.23379999958
+    },
+    "end_to_end_ms": {
+      "p50": 9060.933100059628,
+      "p95": 13434.832899831235
+    },
+    "input_tokens": 92912,
+    "output_tokens": 16360,
+    "answer_judged": 41,
+    "judge_errors": 0,
+    "answer_correct_rate": 0.6585365853658537,
+    "answer_partial": 11,
+    "answer_incorrect": 0,
+    "answer_refused": 3,
+    "gold_numbers_present_rate": 0.6875
+  },
+  "questions": [
+    {
+      "id": "q001",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "cf97d7de-8e43-5082-9445-0467f496c1a8",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            18
+          ]
+        },
+        {
+          "id": "40d0ba6f-3a3b-505b-9f5e-e596b5d6c678",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            18
+          ]
+        },
+        {
+          "id": "6b1dfe14-1181-5a09-9c8d-249793bb2cd1",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            31
+          ]
+        },
+        {
+          "id": "c2bd130a-cf09-5bc2-b526-e855da593258",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            31
+          ]
+        },
+        {
+          "id": "4d80bf32-66cb-5e7d-9883-6bdba0b1dd1b",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            31
+          ]
+        }
+      ],
+      "retrieval_ms": 5169.279099907726,
+      "plan_ms": 2510.772400069982,
+      "ttft_ms": 2152.8998999856412,
+      "total_ms": 4137.210699962452,
+      "end_to_end_ms": 9306.489799870178,
+      "truncated": false,
+      "input_tokens": 1930,
+      "output_tokens": 362,
+      "answer": "Theo dữ liệu được cung cấp, **Bộ trưởng Bộ Tài chính** là người quy định chi tiết trình tự, thủ tục hoàn thuế, thu hồi tiền đã hoàn và việc bù trừ nợ qua hoàn thuế. [1]\n\nLưu ý: đây là thẩm quyền **quy định chi tiết**; người có thẩm quyền quyết định hoàn hoặc thu hồi hoàn thuế được nêu riêng tại nguồn. [2] Tôi chưa thể xác minh hiệu lực hiện hành của các văn bản trong dữ liệu được cung cấp.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Đề cập đúng Bộ trưởng Bộ Tài chính nhưng thêm thận trọng và không rõ ràng",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q002",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "06fe2dbf-7416-572f-85a6-a828693bcb0b",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            5
+          ]
+        },
+        {
+          "id": "9c914d74-2e54-559e-a298-c958d1719bb0",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "f0f0efc3-a9d5-50e3-9bc7-073fdcde7df2",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            5
+          ]
+        },
+        {
+          "id": "9b63ceaa-6f30-5224-90d0-5598d84ba8da",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "c7bd049d-6b12-5cc9-807e-cee4b0a0df55",
+          "doc_number": "69/2025/TT-BTC",
+          "article_nos": [
+            9
+          ]
+        }
+      ],
+      "retrieval_ms": 4933.482900029048,
+      "plan_ms": 2760.685499990359,
+      "ttft_ms": 1978.9316998794675,
+      "total_ms": 5477.735999971628,
+      "end_to_end_ms": 10411.218900000677,
+      "truncated": false,
+      "input_tokens": 2595,
+      "output_tokens": 560,
+      "answer": "Theo các trích dẫn được cung cấp, hàng nhập khẩu thuộc diện **không chịu thuế GTGT** nếu đáp ứng đúng nhóm hàng và điều kiện sau:\n\n- **Phục vụ nghiên cứu khoa học, phát triển công nghệ:** máy móc, thiết bị, phụ tùng, vật tư phải thuộc loại **trong nước chưa sản xuất được** và được nhập khẩu để sử dụng **trực tiếp** cho hoạt động này. [1][2]\n- **Phục vụ tìm kiếm, thăm dò, phát triển mỏ dầu khí:** máy móc, thiết bị, phụ tùng thay thế, phương tiện vận tải chuyên dùng và vật tư phải thuộc loại **trong nước chưa sản xuất được**, nhập khẩu để tiến hành các hoạt động nêu trên. [1][2]\n- **Máy bay, trực thăng, tàu lượn, giàn khoan, tàu thuyền:** phải thuộc loại **trong nước chưa sản xuất được** và được nhập khẩu để tạo tài sản cố định của doanh nghiệp, hoặc thuê từ nước ngoài để sử dụng cho sản xuất, kinh doanh, cho thuê. [1][2]\n\nDanh mục hàng hóa trong nước đã sản xuất được — dùng làm căn cứ phân biệt với hàng chưa sản xuất được — do Bộ Tài chính ban hành theo nội dung trích dẫn. Vì vậy, chưa đủ căn cứ từ các nguồn hiện có để kết luận một máy móc, vật tư hoặc phương tiện cụ thể có đáp ứng điều kiện này hay không. [2]\n\nCác nguồn được cung cấp chưa đủ để tôi xác minh hiệu lực hiện hành của các quy định và danh mục áp dụng tại thời điểm doanh nghiệp nhập khẩu. Lưu ý: nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu được nhiều ý chính nhưng thêm thông tin không trong đáp án chuẩn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q004",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 4,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "dc3c5659-6d97-5016-971d-703914d885ae",
+          "doc_number": "67/2025/QH15",
+          "article_nos": [
+            13
+          ]
+        },
+        {
+          "id": "f07b95f1-9c6f-51eb-baa8-163e526e3c77",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            19
+          ]
+        },
+        {
+          "id": "0751c7f6-6070-5a56-b3fb-a7351cc40c64",
+          "doc_number": "67/2025/QH15",
+          "article_nos": [
+            13
+          ]
+        },
+        {
+          "id": "1a6978b5-1cd5-5a53-930a-6fabb08a897c",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            19
+          ]
+        },
+        {
+          "id": "2911e16c-ebd7-58bf-8bc5-b28cb9bc4816",
+          "doc_number": "67/2025/QH15",
+          "article_nos": [
+            13
+          ]
+        }
+      ],
+      "retrieval_ms": 5146.298400126398,
+      "plan_ms": 2299.9356999062,
+      "ttft_ms": 1519.7433999273926,
+      "total_ms": 3699.3076000362635,
+      "end_to_end_ms": 8845.606000162661,
+      "truncated": false,
+      "input_tokens": 2209,
+      "output_tokens": 348,
+      "answer": "Theo các trích dẫn được cung cấp, **thu nhập từ dự án đầu tư mới tại khu công nghệ cao có thể được áp dụng thuế suất thuế thu nhập doanh nghiệp 10% trong 15 năm**, nếu dự án đáp ứng điều kiện áp dụng ưu đãi tương ứng.[1][2]\n\nThời gian ưu đãi được tính từ năm đầu tiên dự án có doanh thu. Nếu doanh nghiệp được cấp một trong các giấy chứng nhận hoặc xác nhận ưu đãi được nêu trong quy định sau khi đã phát sinh doanh thu, thời gian áp dụng được tính từ năm được cấp giấy chứng nhận hoặc xác nhận đó.[3][4]\n\nCác nguồn được cung cấp chưa đủ để xác định dự án cụ thể của công ty có đáp ứng đầy đủ điều kiện hay không; tôi cũng chưa thể xác minh hiệu lực hiện hành của các văn bản được trích dẫn. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý chính: thuế suất 10% trong 15 năm",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q006",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          12
+        ]
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 12 Luật Thuế thu nhập doanh nghiệp thì áp dụng thuế suất **15%**"
+      ],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "6d36c049-2711-5811-a9ae-978197720d60",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            19
+          ]
+        },
+        {
+          "id": "eeb3ee2a-a53f-5f49-9da5-6135d378523b",
+          "doc_number": "67/2025/QH15",
+          "article_nos": [
+            13
+          ]
+        },
+        {
+          "id": "4b8825e7-d9dd-5824-a55f-cdf0c83b797d",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            23
+          ]
+        },
+        {
+          "id": "406e3d3c-f883-56ec-9191-f5913abe6246",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            23
+          ]
+        },
+        {
+          "id": "daf5e7cc-ce80-5459-a506-19c89b783a45",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            19
+          ]
+        }
+      ],
+      "retrieval_ms": 5358.463899930939,
+      "plan_ms": 2290.8900999464095,
+      "ttft_ms": 1274.371599778533,
+      "total_ms": 3494.3784999195486,
+      "end_to_end_ms": 8852.842399850488,
+      "truncated": false,
+      "input_tokens": 2122,
+      "output_tokens": 288,
+      "answer": "Theo dữ liệu được cung cấp, doanh nghiệp **không thuộc địa bàn được quy định riêng** và có thu nhập từ hoạt động thuộc ngành, nghề nêu tại điểm l khoản 2 Điều 12 Luật Thuế thu nhập doanh nghiệp thì áp dụng thuế suất **15%**. [2]\n\nNghị định được trích dẫn nêu mức này được áp dụng **trong suốt thời gian hoạt động**. [1] Mức ưu đãi này chỉ áp dụng nếu hoạt động của doanh nghiệp đúng ngành, nghề được dẫn chiếu; dữ liệu hiện có chưa đủ để xác định ngành nghề cụ thể của doanh nghiệp có đáp ứng điều kiện hay không. Tôi cũng chưa thể xác minh hiệu lực hiện hành của các văn bản từ nguồn đã cung cấp.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng mức thuế và thời gian áp dụng.",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q010",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "3a8fce4a-1a0a-55d8-ab01-10e1e944bc85",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            33
+          ]
+        },
+        {
+          "id": "f1c34e16-aafb-5e9f-80ea-49591184a74a",
+          "doc_number": "109/2025/QH15",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "9cafecd9-fa72-57b4-8995-a62da8bc8c16",
+          "doc_number": "109/2025/QH15",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "8d8121e0-e1ac-5942-bfdb-70257957b0e6",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            32
+          ]
+        },
+        {
+          "id": "0aae9f2a-9cf8-50e3-937c-03759f0a6cd9",
+          "doc_number": "109/2025/QH15",
+          "article_nos": [
+            4
+          ]
+        }
+      ],
+      "retrieval_ms": 4830.491200089455,
+      "plan_ms": 2282.068399945274,
+      "ttft_ms": 2667.5505000166595,
+      "total_ms": 5416.601000120863,
+      "end_to_end_ms": 10247.092200210318,
+      "truncated": false,
+      "input_tokens": 1279,
+      "output_tokens": 570,
+      "answer": "**Có thể được miễn thuế thu nhập cá nhân**, nếu “có quyền khai thác một con tàu” của bạn đồng thời đáp ứng điều kiện là **cá nhân có quyền sử dụng tàu**, và khoản thu nhập phát sinh từ việc cung cấp vật tư, dịch vụ **trực tiếp phục vụ hoạt động khai thác, đánh bắt thủy sản xa bờ**. Luật được cung cấp quy định miễn thuế cho thu nhập của cá nhân có quyền sử dụng tàu từ hoạt động cung cấp hàng hóa, dịch vụ trực tiếp phục vụ hoạt động này. [2]\n\nĐiểm cần làm rõ là **quyền khai thác tàu** và **quyền sử dụng tàu** có thể không đồng nhất; các nguồn hiện có chưa đủ căn cứ để xác định quyền của bạn thuộc trường hợp nào. Nghị định được cung cấp cũng mô tả diện miễn thuế theo điều kiện cung cấp hàng hóa, dịch vụ trực tiếp phục vụ hoạt động khai thác thủy sản xa bờ. [1]\n\nTôi chưa thể xác minh hiệu lực hiện hành của các văn bản từ dữ liệu được cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu được miễn thuế thu nhập cá nhân nhưng chưa rõ 'quyền sử dụng tàu'",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q011",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "369aca59-d2ac-5648-8322-ff5dbc877c0f",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            8
+          ]
+        },
+        {
+          "id": "f71e6566-e706-5b1a-9168-78f6791ad315",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            8
+          ]
+        },
+        {
+          "id": "ccc61c24-2e23-589d-87a6-b10e84dd6846",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            8
+          ]
+        },
+        {
+          "id": "18618f0a-c0d0-55f8-8390-871f0dcf0e19",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            8
+          ]
+        },
+        {
+          "id": "013aea6f-5c0c-5718-9c51-6a5ffa68224c",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            8
+          ]
+        }
+      ],
+      "retrieval_ms": 4398.5031000338495,
+      "plan_ms": 2011.9425000157207,
+      "ttft_ms": 1603.4229998476803,
+      "total_ms": 3143.7129999976605,
+      "end_to_end_ms": 7542.21610003151,
+      "truncated": false,
+      "input_tokens": 1360,
+      "output_tokens": 243,
+      "answer": "Theo nội dung nguồn được cung cấp, giá đất được trừ cho 1 m² nhà để bán được tính bằng **giá đất được trừ chia cho tổng diện tích sàn xây dựng**, không tính diện tích dùng chung như hành lang, cầu thang, tầng hầm và công trình xây dựng dưới mặt đất. [1]\n\nTôi chưa thể xác minh hiệu lực hiện hành của quy định này. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng tổng diện tích sàn xây dựng dùng để bán, không tính diện tích chung.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q015",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "7f906852-41e7-521b-8884-5afa3fff45e7",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            9
+          ]
+        },
+        {
+          "id": "7e2b2d03-fece-5a36-814e-138cc6b4ff59",
+          "doc_number": "69/2025/TT-BTC",
+          "article_nos": [
+            5
+          ]
+        },
+        {
+          "id": "cb8a9800-c218-5e90-8b0a-2e7957053d2d",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            23
+          ]
+        },
+        {
+          "id": "9bbc4761-5cd1-51f1-afb1-4237231ed8dc",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            21
+          ]
+        },
+        {
+          "id": "62368831-7622-53ba-bac0-8d4090d95ab5",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            12
+          ]
+        }
+      ],
+      "retrieval_ms": 4287.375699961558,
+      "plan_ms": 2104.8646001145244,
+      "ttft_ms": 1902.6343999430537,
+      "total_ms": 4134.186299983412,
+      "end_to_end_ms": 8421.56199994497,
+      "truncated": false,
+      "input_tokens": 3155,
+      "output_tokens": 336,
+      "answer": "Nếu cơ sở của bạn áp dụng **phương pháp tính thuế GTGT trực tiếp theo doanh thu** và có hàng hóa, dịch vụ thuộc các mức tỷ lệ khác nhau, thì thông thường phải khai theo từng mức tỷ lệ. Nếu không xác định được doanh thu tương ứng từng mức, phải áp dụng **mức tỷ lệ cao nhất** cho toàn bộ doanh thu tính thuế của kỳ đó. [2]\n\nLưu ý: quy định này áp dụng cho các nhóm hàng hóa, dịch vụ tính thuế theo **tỷ lệ % trên doanh thu**, không phải quy tắc chung cho mọi cơ sở tính thuế GTGT. [2] Tôi chưa thể xác minh độc lập hiệu lực hiện hành của văn bản từ nguồn bên ngoài.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu đúng áp dụng tỷ lệ cao nhất nhưng thêm điều kiện không cần thiết.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q016",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "d905c21f-6735-50a2-867f-da0313780a7a",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            26
+          ]
+        },
+        {
+          "id": "cc9b554a-1b3d-5114-abe8-6a71729b104f",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            26
+          ]
+        },
+        {
+          "id": "9592e77d-12dc-555f-aac1-261574c35eac",
+          "doc_number": "254/2026/NĐ-CP",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "6377727c-6eb1-5c57-b557-b62615971b0b",
+          "doc_number": "254/2026/NĐ-CP",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "c820ce64-85b2-5d35-8f0b-7aed0fde775e",
+          "doc_number": "254/2026/NĐ-CP",
+          "article_nos": [
+            4
+          ]
+        }
+      ],
+      "retrieval_ms": 4494.663899997249,
+      "plan_ms": 2116.9600000139326,
+      "ttft_ms": 1295.4847000073642,
+      "total_ms": 3129.5292999129742,
+      "end_to_end_ms": 7624.1931999102235,
+      "truncated": false,
+      "input_tokens": 1724,
+      "output_tokens": 216,
+      "answer": "Theo dữ liệu được cung cấp, Chính phủ sẽ quy định các nội dung liên quan đến hóa đơn điện tử gồm: **loại hóa đơn; đối tượng sử dụng; nội dung và thời điểm lập; trường hợp không phải sử dụng; trường hợp được miễn phí dịch vụ; cùng nhiệm vụ, quyền hạn và trách nhiệm của tổ chức, cá nhân trong quản lý, sử dụng hóa đơn điện tử**. [1]\n\nTôi chưa thể xác minh hiệu lực hiện hành của văn bản được dẫn trong dữ liệu tham khảo. Nội dung này chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "nêu đủ ý chính của đáp án chuẩn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q017",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 4,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "64bb2f2b-f06d-5e98-9b71-1f602457afcb",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            5
+          ]
+        },
+        {
+          "id": "8ebc9518-120d-5683-930a-81aa85a8926e",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "cb8a9800-c218-5e90-8b0a-2e7957053d2d",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            23
+          ]
+        },
+        {
+          "id": "15de2e62-1bef-5d5d-9d55-e237aed92f4c",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            23
+          ]
+        },
+        {
+          "id": "77cdaf6b-17de-584a-ab01-11c9da6154ad",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            14
+          ]
+        }
+      ],
+      "retrieval_ms": 4467.940499773249,
+      "plan_ms": 2296.654200181365,
+      "ttft_ms": 2866.681900108233,
+      "total_ms": 5755.615999922156,
+      "end_to_end_ms": 10223.556499695405,
+      "truncated": false,
+      "input_tokens": 2929,
+      "output_tokens": 603,
+      "answer": "**Nếu hàng hóa của công ty thuộc đối tượng không chịu thuế GTGT:** thuế GTGT đầu vào phục vụ hoạt động này **không được khấu trừ và không được hoàn**. [1][2]\n\n**Nếu đầu vào dùng chung** cho hoạt động chịu thuế và không chịu thuế, chỉ phần thuế đầu vào dùng cho hoạt động chịu thuế được khấu trừ. Công ty cần hạch toán riêng; nếu không hạch toán riêng được thì tính theo tỷ lệ doanh thu chịu thuế trên tổng doanh thu bán ra trong kỳ. [3]\n\n**Trường hợp áp dụng thuế suất 0%:** có khác với hàng hóa, dịch vụ không chịu thuế. Quy định nêu ngoại lệ đối với trường hợp áp dụng thuế suất 0% khi nói về việc không được khấu trừ, hoàn thuế; do đó không thể mặc nhiên áp dụng kết luận dành cho hàng hóa không chịu thuế. Tuy nhiên, các nguồn được cung cấp chưa nêu đủ điều kiện để xác định công ty có được khấu trừ hoặc hoàn thuế trong trường hợp cụ thể hay không. [1][2][5]\n\nTôi chưa thể xác minh độc lập hiệu lực hiện hành của các quy định ngoài nội dung nguồn đã cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.25,
+      "citation_recall": 1.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Chưa nêu rõ ngoại lệ áp dụng thuế suất 0%",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q020",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "a6fa5411-d57e-5958-967e-42226bb6c440",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            24
+          ]
+        },
+        {
+          "id": "77cdaf6b-17de-584a-ab01-11c9da6154ad",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            14
+          ]
+        },
+        {
+          "id": "89623797-8e79-55f9-9224-b968e3f1ceff",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            14
+          ]
+        },
+        {
+          "id": "8891c24d-878c-5ff1-a972-a3d7467ff5d9",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            23
+          ]
+        },
+        {
+          "id": "ef27a3e1-45aa-5a72-8871-f28a995a966c",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            10
+          ]
+        }
+      ],
+      "retrieval_ms": 4997.908799909055,
+      "plan_ms": 2368.36490011774,
+      "ttft_ms": 3203.7192001007497,
+      "total_ms": 5625.385300023481,
+      "end_to_end_ms": 10623.294099932536,
+      "truncated": false,
+      "input_tokens": 2992,
+      "output_tokens": 571,
+      "answer": "Theo nguồn được cung cấp, thuế VAT đầu vào được khấu trừ chỉ tương ứng với **1,6 tỷ đồng** giá trị xe; phần giá trị vượt mức này không được khấu trừ. [1]\n\nVới giá chưa VAT là **2 tỷ đồng**, nếu VAT được tính đồng đều trên toàn bộ giá mua, phần được khấu trừ tương đương **80% tổng VAT đầu vào**; **20% còn lại** không được khấu trừ. Chưa thể tính số tiền VAT cụ thể vì bạn chưa nêu thuế suất hoặc số VAT trên hóa đơn.\n\nViệc khấu trừ còn phụ thuộc các điều kiện chung, gồm có hóa đơn VAT hợp lệ và chứng từ thanh toán không dùng tiền mặt, trừ trường hợp đặc thù. [3] Kết luận trên dựa trên dữ liệu tham khảo được cung cấp; tôi chưa thể xác minh độc lập hiệu lực hiện hành của các văn bản này.\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng phần được khấu trừ 1,6 tỷ đồng, không mâu thuẫn",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q021",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 4,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "252/2026/NĐ-CP"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "f9285162-4fcd-58c5-a344-f7cfa0698811",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            70
+          ]
+        },
+        {
+          "id": "c4927129-e3e3-5753-a3ba-cc3dfef46763",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            70
+          ]
+        },
+        {
+          "id": "b08e2093-c10d-52d7-8448-90ecb49a10ce",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            70
+          ]
+        },
+        {
+          "id": "324bb700-0f8e-5a92-ac2a-755a1af67a33",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            70
+          ]
+        },
+        {
+          "id": "a7a4eaf1-d324-5411-a87f-87625160c321",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            70
+          ]
+        }
+      ],
+      "retrieval_ms": 5168.376800138503,
+      "plan_ms": 2812.60919990018,
+      "ttft_ms": 4491.683600004762,
+      "total_ms": 8524.07729998231,
+      "end_to_end_ms": 13692.454100120813,
+      "truncated": false,
+      "input_tokens": 2265,
+      "output_tokens": 988,
+      "answer": "Theo dữ liệu được cung cấp, cơ quan thuế có thể áp dụng biện pháp thu từ bên thứ ba khi có căn cứ hợp pháp xác định bên thứ ba đang có khoản nợ hoặc đang nắm giữ tiền, tài sản thuộc sở hữu của doanh nghiệp bị cưỡng chế.[1]\n\n- **Với khoản tiền công ty bạn đang nợ:** Nếu khoản nợ đã đến hạn phải trả cho doanh nghiệp bị cưỡng chế, cơ quan thuế có thể yêu cầu công ty bạn nộp thay khoản tiền đó. Công ty bạn phải nộp thay **ngay trong ngày khoản nợ đến hạn thanh toán**.[1][2]\n- **Với tài sản đang giữ:** Việc cưỡng chế có thể được xem xét nếu tài sản đó thuộc sở hữu của doanh nghiệp bị cưỡng chế và công ty bạn đang được giao nắm giữ. Nếu là tài sản khác, không phải tiền, nguồn quy định việc xử lý theo thủ tục kê biên, bán đấu giá tài sản; dữ liệu hiện có không nêu chi tiết các bước của thủ tục này.[1][2]\n- **Trước khi thực hiện:** Cơ quan thuế có thể yêu cầu công ty bạn cung cấp thông tin về khoản nợ, tiền hoặc tài sản đang giữ. Khi đã nhận văn bản yêu cầu xác minh, công ty bạn không được trả tiền hoặc chuyển tài sản lại cho doanh nghiệp bị cưỡng chế cho đến khi nộp tiền vào ngân sách hoặc chuyển giao tài sản theo đề nghị của cơ quan thuế.[3][5]\n- **Nếu đang giữ tiền của doanh nghiệp:** Sau khi nhận quyết định cưỡng chế, bên giữ tiền phải nộp thay trong thời hạn **15 ngày** kể từ ngày nhận quyết định. Với khoản nợ phải trả, thời điểm nộp thay là ngày khoản nợ đến hạn như nêu trên.[2]\n\nLưu ý: nguồn được cung cấp ghi Nghị định 252/2026/NĐ-CP; tôi chưa thể xác minh văn bản này và hiệu lực hiện hành. Vì vậy, các nội dung trên chỉ phản ánh dữ liệu tham khảo đã cung cấp, chưa đủ để kết luận chắc chắn về quy định đang áp dụng.[1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ căn cứ và điều kiện về khoản nợ và tài sản của bên thứ ba",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q024",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "c1e92c31-63ab-514c-a073-84e8a6a85eb1",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            2
+          ]
+        },
+        {
+          "id": "696efb57-f792-5581-ab69-5fbeac36b07f",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "f34cedd9-e9f3-51c0-9d50-78f5b5d64647",
+          "doc_number": "67/2025/QH15",
+          "article_nos": [
+            2
+          ]
+        },
+        {
+          "id": "6abc90e3-1f8b-59fb-9704-25689eac4012",
+          "doc_number": "67/2025/QH15",
+          "article_nos": [
+            2
+          ]
+        },
+        {
+          "id": "1568bdf3-4587-5e04-bc2c-a2e6e37ba7c0",
+          "doc_number": "20/2026/TT-BTC",
+          "article_nos": [
+            7
+          ]
+        }
+      ],
+      "retrieval_ms": 4607.699100160971,
+      "plan_ms": 2040.551400044933,
+      "ttft_ms": 2230.439699953422,
+      "total_ms": 5128.501300001517,
+      "end_to_end_ms": 9736.200400162488,
+      "truncated": false,
+      "input_tokens": 2912,
+      "output_tokens": 480,
+      "answer": "Theo các nguồn được cung cấp, nếu công ty Việt Nam phải nộp thuế thay khi mua dịch vụ từ doanh nghiệp nước ngoài, **công ty Việt Nam là bên được xác định là người nộp thuế thay** trong trường hợp thuộc quy định tương ứng. [1]\n\nCụ thể, với **thuế giá trị gia tăng**, tổ chức sản xuất, kinh doanh tại Việt Nam mua dịch vụ của tổ chức nước ngoài không có cơ sở thường trú tại Việt Nam được xác định là người nộp thuế, trừ các trường hợp ngoại lệ được quy định. [2] Với **thuế thu nhập doanh nghiệp**, nguồn được cung cấp cũng xác định tổ chức thành lập và hoạt động theo pháp luật Việt Nam là người nộp thuế trong một số trường hợp nộp thay khi bên Việt Nam mua dịch vụ của doanh nghiệp nước ngoài. [1]\n\nDo bạn chưa nêu loại thuế và đặc điểm giao dịch, chưa thể kết luận trường hợp cụ thể có thuộc diện phải nộp thay hay không. Tôi cũng chưa thể xác minh độc lập hiệu lực hiện hành của các quy định trong nguồn đã cung cấp.\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng tổ chức Việt Nam là người nộp thuế thay.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q026",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "74cfc8f1-36a7-5964-aa97-70846ad5272c",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            10
+          ]
+        },
+        {
+          "id": "c0c786b2-64ae-5793-9c5c-6c43b5c2424b",
+          "doc_number": "109/2025/QH15",
+          "article_nos": [
+            3
+          ]
+        },
+        {
+          "id": "3ffb06fb-1db1-5c6b-ad09-e9331d189ca4",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            53
+          ]
+        },
+        {
+          "id": "88dd3881-b55c-5e1e-8e17-4a71595eb075",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            53
+          ]
+        },
+        {
+          "id": "7eb13b5b-63c1-556e-afd9-069cb36bd119",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            54
+          ]
+        }
+      ],
+      "retrieval_ms": 4858.924699947238,
+      "plan_ms": 2598.443199880421,
+      "ttft_ms": 1774.4994999375194,
+      "total_ms": 4745.420699939132,
+      "end_to_end_ms": 9604.34539988637,
+      "truncated": false,
+      "input_tokens": 2421,
+      "output_tokens": 484,
+      "answer": "Theo các nguồn được cung cấp, **thu nhập từ chuyển nhượng vốn** thuộc nhóm thu nhập chịu thuế thu nhập cá nhân, gồm:\n\n- Thu nhập từ chuyển nhượng một phần hoặc toàn bộ vốn góp trong các tổ chức kinh tế, như công ty trách nhiệm hữu hạn, công ty hợp danh, hợp tác xã và một số tổ chức khác. [1][2]\n- Thu nhập từ chuyển nhượng chứng khoán, gồm cổ phiếu, quyền mua cổ phiếu, trái phiếu, tín phiếu, chứng chỉ quỹ và các loại chứng khoán khác theo quy định liên quan. [1]\n- Thu nhập khi góp vốn bằng phần vốn góp hoặc chứng khoán để thành lập doanh nghiệp hoặc tăng vốn doanh nghiệp. [1]\n- Thu nhập từ các hình thức chuyển nhượng vốn khác, kể cả bán doanh nghiệp hoặc chuyển nhượng quyền góp vốn. [1]\n\n**Trường hợp cần lưu ý:** bán toàn bộ doanh nghiệp tư nhân hoặc công ty trách nhiệm hữu hạn một thành viên do cá nhân làm chủ, nếu việc chuyển nhượng vốn gắn với bất động sản, được xác định là thu nhập từ chuyển nhượng bất động sản, không phải thu nhập từ chuyển nhượng vốn. [1]\n\nCác nguồn trên giúp xác định **loại thu nhập**, nhưng chưa đủ để tính số thuế phải nộp cho trường hợp cụ thể. Tôi cũng chưa thể xác minh hiệu lực hiện hành của các văn bản được nêu trong nguồn.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý chính của đáp án chuẩn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q027",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "a5a52cb7-ad9d-5a54-b3c6-56db8659a792",
+          "doc_number": "67/2025/QH15",
+          "article_nos": [
+            3
+          ]
+        },
+        {
+          "id": "ced92023-26cd-5625-89c5-ac2d27b24020",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            12
+          ]
+        },
+        {
+          "id": "d50e791e-d4b1-5eea-b169-c638c245c4f8",
+          "doc_number": "20/2026/TT-BTC",
+          "article_nos": [
+            6
+          ]
+        },
+        {
+          "id": "6abc90e3-1f8b-59fb-9704-25689eac4012",
+          "doc_number": "67/2025/QH15",
+          "article_nos": [
+            2
+          ]
+        },
+        {
+          "id": "f34cedd9-e9f3-51c0-9d50-78f5b5d64647",
+          "doc_number": "67/2025/QH15",
+          "article_nos": [
+            2
+          ]
+        }
+      ],
+      "retrieval_ms": 4474.721699953079,
+      "plan_ms": 2266.4779000915587,
+      "ttft_ms": 3389.91229981184,
+      "total_ms": 5772.090499987826,
+      "end_to_end_ms": 10246.812199940905,
+      "truncated": false,
+      "input_tokens": 2792,
+      "output_tokens": 555,
+      "answer": "Theo các nguồn được cung cấp, thuế thu nhập doanh nghiệp đã nộp ở nước ngoài được **khấu trừ vào số thuế thu nhập doanh nghiệp phải nộp tại Việt Nam**, nhưng mức khấu trừ **không vượt quá số thuế tính theo quy định của Việt Nam đối với khoản thu nhập đó**. Đây là khấu trừ vào số thuế phải nộp, không phải khấu trừ khoản thuế nước ngoài khỏi thu nhập chịu thuế. [1][2]\n\nCách áp dụng còn tùy nước nơi công ty kinh doanh: nếu Việt Nam đã ký hiệp định tránh đánh thuế hai lần với nước đó thì thực hiện theo hiệp định; nếu chưa ký, áp dụng quy định tại Nghị định được nêu trong nguồn. [2]\n\nCác nguồn được cung cấp chưa đủ để xác minh hiệu lực hiện hành của những văn bản này hoặc xác định hiệp định áp dụng cho quốc gia cụ thể. **Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.**",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng và đủ ý chính, không mâu thuẫn đáp án chuẩn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q028",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "b0caae78-1e07-54fd-9aa2-cd45b7097b1a",
+          "doc_number": "174/2025/NĐ-CP",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "1b8aaf78-bee6-5f44-be42-744126ec43eb",
+          "doc_number": "174/2025/NĐ-CP",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "4f94b82f-2816-5a10-9131-4c88102f83f6",
+          "doc_number": "174/2025/NĐ-CP",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "91637a6c-c7ec-5aea-aaee-f2ba1ed3fb77",
+          "doc_number": "174/2025/NĐ-CP",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "ab3257c1-9c3a-5f0e-bcea-838091644325",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            16
+          ]
+        }
+      ],
+      "retrieval_ms": 4756.047000177205,
+      "plan_ms": 2425.9879998862743,
+      "ttft_ms": 1316.0467999987304,
+      "total_ms": 3320.1252000872046,
+      "end_to_end_ms": 8076.172200264409,
+      "truncated": false,
+      "input_tokens": 1637,
+      "output_tokens": 236,
+      "answer": "Theo nội dung được cung cấp, nếu hóa đơn đã lập và đã kê khai theo mức thuế suất hoặc tỷ lệ tính thuế chưa được giảm, bên bán và bên mua xử lý hóa đơn theo quy định về hóa đơn, chứng từ. **Sau khi xử lý hóa đơn**, bên bán kê khai điều chỉnh thuế GTGT đầu ra; bên mua kê khai điều chỉnh thuế GTGT đầu vào, nếu có. Việc điều chỉnh căn cứ vào hóa đơn sau khi xử lý.[1]\n\nNguồn hiện có chưa đủ để xác minh hiệu lực hiện hành hoặc hướng dẫn chi tiết cách lập hồ sơ kê khai điều chỉnh.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Trùng khớp đáp án chuẩn, đầy đủ ý chính",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q029",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          7
+        ]
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "85fd5d01-458c-5bb6-a940-65fbeba4abe9",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            45
+          ]
+        },
+        {
+          "id": "d392bf72-25ad-5bb2-a11c-a15669d03efd",
+          "doc_number": "109/2025/QH15",
+          "article_nos": [
+            7
+          ]
+        },
+        {
+          "id": "13e7d887-28ce-5ef8-87fb-f0ec942eda31",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            67
+          ]
+        },
+        {
+          "id": "0e4a62ff-6419-586a-a38f-dda367a44fec",
+          "doc_number": "109/2025/QH15",
+          "article_nos": [
+            6
+          ]
+        },
+        {
+          "id": "7f1d2249-9d6e-590d-93f6-21aac2e6255a",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            66
+          ]
+        }
+      ],
+      "retrieval_ms": 5164.021800039336,
+      "plan_ms": 2250.5483999848366,
+      "ttft_ms": 2389.3619999289513,
+      "total_ms": 4877.1813998464495,
+      "end_to_end_ms": 10041.203199885786,
+      "truncated": false,
+      "input_tokens": 2618,
+      "output_tokens": 475,
+      "answer": "Tỷ lệ thuế tính trên doanh thu **được xác định theo ngành, nghề kinh doanh** trong danh mục tại Phụ lục ban hành kèm nghị định được trích dẫn.[1] Căn cứ luật là quy định về thuế suất tại khoản 3 Điều 7: mức thuế suất khác nhau tùy nhóm hoạt động kinh doanh.[2]\n\nCách tính theo tỷ lệ trên doanh thu áp dụng cho cá nhân kinh doanh có doanh thu năm trên ngưỡng luật định đến 03 tỷ đồng nếu lựa chọn phương pháp này; doanh thu tính thuế là phần doanh thu vượt ngưỡng đó.[2] Vì bạn chưa nêu ngành, nghề cụ thể, các nguồn hiện có chưa đủ căn cứ để xác định tỷ lệ áp dụng cho trường hợp của bạn; phần Phụ lục liệt kê tỷ lệ cũng chưa được cung cấp.\n\nTôi chưa thể xác minh hiệu lực hiện hành của các văn bản được trích dẫn. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng căn cứ xác định tỷ lệ thuế theo danh mục ngành nghề",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q032",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          12
+        ]
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "e014e8c4-1900-52d0-a837-475850585650",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            40
+          ]
+        },
+        {
+          "id": "9546d412-ba21-525d-b7b1-c11e7b863f4e",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            40
+          ]
+        },
+        {
+          "id": "22ce3e5f-5b01-5d0c-b41c-966030822440",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            40
+          ]
+        },
+        {
+          "id": "d13c9240-d1c0-5f60-9dec-0bc5d5f36acd",
+          "doc_number": "252/2026/NĐ-CP",
+          "article_nos": [
+            41
+          ]
+        },
+        {
+          "id": "10cffc65-fc77-59e8-b922-bcc51107c5de",
+          "doc_number": "108/2025/QH15",
+          "article_nos": [
+            12
+          ]
+        }
+      ],
+      "retrieval_ms": 4837.183800060302,
+      "plan_ms": 2445.9762000478804,
+      "ttft_ms": 2077.7248998638242,
+      "total_ms": 4223.7492999993265,
+      "end_to_end_ms": 9060.933100059628,
+      "truncated": false,
+      "input_tokens": 3405,
+      "output_tokens": 359,
+      "answer": "Theo nguồn được cung cấp, **cá nhân nước ngoài** kinh doanh trên nền tảng thương mại điện tử, nền tảng số khác hoặc qua các dịch vụ khác tại Việt Nam phải **trực tiếp kê khai, nộp thuế và các khoản thu khác, hoặc ủy quyền cho bên khác thực hiện**, trừ trường hợp thuộc ngoại lệ được quy định tại khoản 3 Điều 12. [5]\n\nNguồn hiện có không nêu nội dung ngoại lệ đó, cũng chưa đủ căn cứ để xác định trong trường hợp cụ thể nền tảng có trách nhiệm khấu trừ, kê khai hoặc nộp thay hay không. Tôi cũng chưa thể xác minh hiệu lực hiện hành của quy định từ các nguồn đã cung cấp.\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng trách nhiệm kê khai và nộp thuế của cá nhân hoặc người ủy quyền.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q033",
+      "type": "lookup",
+      "field": "tax",
+      "n_cited": 3,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "204/2025/QH15"
+        ],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [
+        "204/2025/QH15"
+      ],
+      "retrieved": [
+        {
+          "id": "91637a6c-c7ec-5aea-aaee-f2ba1ed3fb77",
+          "doc_number": "174/2025/NĐ-CP",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "1b8aaf78-bee6-5f44-be42-744126ec43eb",
+          "doc_number": "174/2025/NĐ-CP",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "4f94b82f-2816-5a10-9131-4c88102f83f6",
+          "doc_number": "174/2025/NĐ-CP",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "8531efd0-6268-5da8-bdcf-1e97149154a2",
+          "doc_number": "254/2026/NĐ-CP",
+          "article_nos": [
+            10
+          ]
+        },
+        {
+          "id": "9592e77d-12dc-555f-aac1-261574c35eac",
+          "doc_number": "254/2026/NĐ-CP",
+          "article_nos": [
+            4
+          ]
+        }
+      ],
+      "retrieval_ms": 4564.128300175071,
+      "plan_ms": 2413.8913999777287,
+      "ttft_ms": 2525.995400035754,
+      "total_ms": 4964.150300016627,
+      "end_to_end_ms": 9528.278600191697,
+      "truncated": false,
+      "input_tokens": 1791,
+      "output_tokens": 519,
+      "answer": "Theo các trích dẫn được cung cấp, doanh nghiệp tính thuế GTGT theo phương pháp trực tiếp khi xuất hóa đơn bán hàng cho hàng hóa thuộc diện được giảm thuế cần thể hiện như sau:\n\n- **Cột “Thành tiền”**: ghi đầy đủ tiền hàng trước khi giảm.\n- **Dòng “Cộng tiền hàng hóa, dịch vụ”**: ghi số tiền sau khi đã giảm **20% mức tỷ lệ % tính thuế GTGT trên doanh thu**.\n- **Ghi chú**: ghi “đã giảm… (số tiền) tương ứng 20% mức tỷ lệ % để tính thuế giá trị gia tăng theo Nghị quyết số 204/2025/QH15”. Phần “số tiền” là số tiền giảm; đồng thời hóa đơn bán hàng phải ghi rõ số tiền được giảm. [1][2][3]\n\nSố tiền giảm cụ thể phụ thuộc vào mức tỷ lệ % áp dụng cho hàng hóa; các nguồn được cung cấp không nêu mức tỷ lệ đó nên chưa đủ căn cứ để tính số tiền cụ thể. Tôi cũng chưa thể xác minh hiệu lực hiện hành của văn bản từ các trích dẫn này.\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đầy đủ, chính xác cách ghi trên hóa đơn theo đáp án chuẩn.",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q035",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "a0582717-538b-5b92-9250-a9956639b894",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            147
+          ]
+        },
+        {
+          "id": "d939df38-c337-5058-85e5-8c8baf284df8",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            143
+          ]
+        },
+        {
+          "id": "b820a58c-f15b-5be7-b55d-264c372ac829",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            146
+          ]
+        },
+        {
+          "id": "007bf5f3-d38c-5c47-ab73-e5ff00bfb70c",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            145
+          ]
+        },
+        {
+          "id": "2dedfcfb-96ca-51be-95d3-8c8562f6681b",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            149
+          ]
+        }
+      ],
+      "retrieval_ms": 4677.057499997318,
+      "plan_ms": 2118.470499990508,
+      "ttft_ms": 1747.6802000310272,
+      "total_ms": 3484.2572999186814,
+      "end_to_end_ms": 8161.314799915999,
+      "truncated": false,
+      "input_tokens": 2202,
+      "output_tokens": 243,
+      "answer": "Không được phép. Người 16 tuổi thuộc nhóm từ đủ 15 tuổi đến chưa đủ 18 tuổi; nhóm này bị cấm làm công việc **bảo trì, bảo dưỡng thiết bị, máy móc**. [1][2]\n\nKết luận trên căn cứ vào nguồn được cung cấp; tôi chưa thể xác minh độc lập hiệu lực hiện hành của văn bản. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý cấm làm bảo dưỡng cho người dưới 18 tuổi.",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q038",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "520e0c8f-e94a-526b-9661-07135f5e329f",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            148
+          ]
+        },
+        {
+          "id": "a72a5985-c3c7-5211-9ac4-f43eeaa9efad",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            32
+          ]
+        },
+        {
+          "id": "2dedfcfb-96ca-51be-95d3-8c8562f6681b",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            149
+          ]
+        },
+        {
+          "id": "d5732c56-4499-5226-8f58-c61ff671159a",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            105
+          ]
+        },
+        {
+          "id": "29295a53-3923-5a3d-991d-c782b240511f",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            169
+          ]
+        }
+      ],
+      "retrieval_ms": 4484.083800110966,
+      "plan_ms": 2263.24769994244,
+      "ttft_ms": 1863.9870998449624,
+      "total_ms": 5443.153999978676,
+      "end_to_end_ms": 9927.237800089642,
+      "truncated": false,
+      "input_tokens": 1877,
+      "output_tokens": 351,
+      "answer": "Có. Theo dữ liệu được cung cấp, người lao động cao tuổi có quyền **thỏa thuận với người sử dụng lao động** để rút ngắn thời giờ làm việc hằng ngày hoặc làm việc không trọn thời gian (bán thời gian). [1]\n\nViệc làm không trọn thời gian cần được hai bên thỏa thuận khi giao kết hợp đồng lao động; người làm theo chế độ này vẫn được hưởng lương và bình đẳng về quyền, nghĩa vụ, cơ hội với người làm trọn thời gian. [2] Vì vậy, công ty có thể bố trí theo phương án hai bên thống nhất, nhưng các nguồn được cung cấp không nói rằng công ty được đơn phương áp dụng chế độ này.\n\nCác trích dẫn trên lấy từ văn bản hợp nhất được cung cấp; tôi chưa thể xác minh hiệu lực hiện hành của văn bản. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý chính về thỏa thuận giảm giờ làm việc.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q040",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [
+          "158/2025/NĐ-CP"
+        ],
+        "articles": [
+          26
+        ]
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "4bcbc944-7039-566a-a8e5-c3d988ebf26b",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            26
+          ]
+        },
+        {
+          "id": "c0be05de-9f7a-5818-a314-f965af7fc8d2",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            27
+          ]
+        },
+        {
+          "id": "0f5fb63a-afdd-562d-a28f-675afb18665e",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            30
+          ]
+        },
+        {
+          "id": "a28c9d65-1fbd-5ac9-bf26-ec8bc2a50299",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            3
+          ]
+        },
+        {
+          "id": "24c9affb-0b2a-5dba-942f-44c3cc152190",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            219
+          ]
+        }
+      ],
+      "retrieval_ms": 4075.1114999875426,
+      "plan_ms": 2060.925600118935,
+      "ttft_ms": 2687.7570000942796,
+      "total_ms": 5205.418800003827,
+      "end_to_end_ms": 9280.53029999137,
+      "truncated": false,
+      "input_tokens": 2470,
+      "output_tokens": 423,
+      "answer": "Theo nội dung Điều 26 Nghị định 158/2025/NĐ-CP được cung cấp, quy định áp dụng với người lao động mà người sử dụng lao động **không còn khả năng đóng BHXH trước ngày 1/7/2024**, nếu công ty thuộc một trong các tình trạng sau:[1]\n\n- Đã có quyết định của Tòa án tuyên bố phá sản;\n- Đang làm thủ tục phá sản;\n- Đang làm thủ tục giải thể;\n- Được cơ quan quản lý thuế xác định không còn hoạt động kinh doanh tại địa chỉ đã đăng ký;\n- Bị thu hồi Giấy chứng nhận đăng ký doanh nghiệp;\n- Không có người đại diện theo pháp luật hoặc người được ủy quyền thực hiện quyền, nghĩa vụ của người đại diện theo pháp luật.[1]\n\nVì vậy, việc công ty chỉ ngừng đóng BHXH trước mốc thời gian trên chưa tự nó xác nhận công ty thuộc diện này; cần đối chiếu thêm với các tình trạng nêu trên. Nguồn được cung cấp chưa đủ để tôi xác minh hiệu lực hiện hành của quy định.\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý chính, không mâu thuẫn với đáp án chuẩn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q042",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "561a70bb-bcfe-5cd3-8c1b-c9650e5bf6af",
+          "doc_number": "145/2020/NĐ-CP",
+          "article_nos": [
+            37
+          ]
+        },
+        {
+          "id": "fc476854-2683-5a9f-816a-eaa9271bd57c",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            63
+          ]
+        },
+        {
+          "id": "38955875-1991-52f3-a2a7-e04b931b2e99",
+          "doc_number": "145/2020/NĐ-CP",
+          "article_nos": [
+            37
+          ]
+        },
+        {
+          "id": "e71a99b3-6061-5c34-b4a8-ee3b7f25ca55",
+          "doc_number": "145/2020/NĐ-CP",
+          "article_nos": [
+            37
+          ]
+        },
+        {
+          "id": "a6d880f8-8493-52f5-b19a-a0e12f78dd24",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            206
+          ]
+        }
+      ],
+      "retrieval_ms": 4984.170299954712,
+      "plan_ms": 2355.7563999202102,
+      "ttft_ms": 1082.6994001399726,
+      "total_ms": 3058.8507000356913,
+      "end_to_end_ms": 8043.020999990404,
+      "truncated": false,
+      "input_tokens": 2080,
+      "output_tokens": 201,
+      "answer": "Ngoài các trường hợp bắt buộc, doanh nghiệp **được khuyến khích tổ chức đối thoại thêm**. Việc tổ chức nên phù hợp với điều kiện sản xuất, kinh doanh và cách thức tổ chức lao động tại nơi làm việc, đồng thời căn cứ vào quy định cụ thể trong quy chế dân chủ ở cơ sở tại nơi làm việc. [1][2]\n\nCác nguồn được cung cấp không nêu thêm mốc thời gian hay trường hợp cụ thể bắt buộc cho những cuộc đối thoại ngoài diện bắt buộc. [1][2]\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Đủ ý khuyến khích, điều kiện và quy chế dân chủ",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q044",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "0cde3224-5856-5b8f-80f4-b90fb2c6e7c8",
+          "doc_number": "145/2020/NĐ-CP",
+          "article_nos": [
+            62
+          ]
+        },
+        {
+          "id": "070b9412-b4ff-5f93-8aef-fb8de5295f42",
+          "doc_number": "145/2020/NĐ-CP",
+          "article_nos": [
+            61
+          ]
+        },
+        {
+          "id": "17c469b4-d78e-55d3-8bc3-a74222cf0b0e",
+          "doc_number": "145/2020/NĐ-CP",
+          "article_nos": [
+            59
+          ]
+        },
+        {
+          "id": "cd602a9e-b264-5f05-a5fa-f6a9960fb266",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            108
+          ]
+        },
+        {
+          "id": "54019ecf-030f-597a-bd75-56710c18835f",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            107
+          ]
+        }
+      ],
+      "retrieval_ms": 4766.437100013718,
+      "plan_ms": 2328.80249992013,
+      "ttft_ms": 1265.4804999474436,
+      "total_ms": 2927.0333000458777,
+      "end_to_end_ms": 7693.470400059596,
+      "truncated": false,
+      "input_tokens": 2144,
+      "output_tokens": 199,
+      "answer": "Theo nội dung được cung cấp, công ty phải gửi thông báo **chậm nhất trong vòng 15 ngày kể từ ngày thực hiện làm thêm từ trên 200 giờ đến 300 giờ trong năm**. [1]\n\nLưu ý: Tôi chưa thể xác minh hiệu lực hiện hành của quy định từ các nguồn được cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đúng thời hạn gửi thông báo 15 ngày",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q045",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 5,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "614ebb00-4979-5a44-be23-c609776aed33",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            29
+          ]
+        },
+        {
+          "id": "c66471b0-26db-580e-a922-9e6f3fa0b2a2",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            18
+          ]
+        },
+        {
+          "id": "c0be05de-9f7a-5818-a314-f965af7fc8d2",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            27
+          ]
+        },
+        {
+          "id": "4c270201-68e8-59c8-acd4-9cc073e68042",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            31
+          ]
+        },
+        {
+          "id": "307a3a02-5fdf-5e38-b863-8c3a441cd955",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            40
+          ]
+        }
+      ],
+      "retrieval_ms": 5030.293900053948,
+      "plan_ms": 2554.976199986413,
+      "ttft_ms": 4813.478600000963,
+      "total_ms": 8974.10330013372,
+      "end_to_end_ms": 14004.397200187668,
+      "truncated": false,
+      "input_tokens": 2132,
+      "output_tokens": 1095,
+      "answer": "Theo các trích dẫn được cung cấp, cần phân biệt **trường hợp đặc biệt công ty không còn khả năng đóng** với trường hợp công ty vẫn có thể thanh toán nhưng đang nợ. Chưa đủ căn cứ trong các nguồn để xác định công ty bạn thuộc trường hợp nào, vì chưa có thông tin về tình trạng khả năng thanh toán và điều kiện áp dụng cụ thể. [1][3]\n\n- **Nếu thuộc trường hợp đặc biệt** được quy định cho người sử dụng lao động không còn khả năng đóng: người lao động, hoặc thân nhân nếu người lao động đã mất, gửi văn bản đề nghị theo mẫu của cơ quan BHXH đến cơ quan BHXH. Cơ quan này xác nhận thời gian đóng trong 15 ngày làm việc; nếu cần xác minh thì thời hạn không quá 45 ngày, còn nếu không xác nhận phải trả lời bằng văn bản và nêu lý do. [1] Thời gian được xác nhận theo cơ chế này có thể bao gồm thời gian chậm đóng, trốn đóng trước ngày 01/07/2024, nhưng có các điều kiện và ngoại lệ riêng. [3]\n\n- **Nếu công ty vẫn còn khả năng đóng:** nguồn hiện có không quy định thủ tục để công ty tự xác nhận riêng phần quá trình đã đóng hoặc cách ghi nhận phần còn nợ khi nhân viên nghỉ việc. Luật được trích dẫn quy định cơ quan BHXH có trách nhiệm xác nhận thời gian đóng cho người lao động và cung cấp thông tin khi được yêu cầu. [2] Vì vậy, nên đề nghị cơ quan BHXH quản lý trực tiếp hướng dẫn cách thể hiện thời gian đã đóng và phần còn thiếu; chưa đủ căn cứ trong các nguồn để khẳng định một thủ tục cụ thể cho trường hợp này.\n\n**Khi thu hồi được tiền nợ:** nếu công ty còn khả năng đóng, cơ quan BHXH và cơ quan có thẩm quyền có trách nhiệm truy thu vào quỹ BHXH và xử lý vi phạm theo quy định. [4] Luật được trích dẫn cũng quy định phải đóng đủ số tiền chậm đóng và nộp khoản tính theo mức 0,03%/ngày trên số tiền và số ngày chậm đóng. [5] Các nguồn hiện có chưa nêu chi tiết cách đối chiếu, cập nhật lại quá trình đóng sau khi công ty nộp tiền; nên xác nhận việc ghi nhận với cơ quan BHXH sau khi thanh toán.\n\nCác trích dẫn chưa đủ để tôi xác minh hiệu lực hiện hành của các quy định nêu trên hoặc kết luận chắc chắn trường hợp của công ty thuộc cơ chế nào. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.0,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu được xác nhận thời gian đã đóng và xử lý khi thu hồi tiền, thiếu ý điều chỉnh mức hưởng",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q047",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "a67536b6-c7de-5d81-88fb-a96c78d84dbe",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            53
+          ]
+        },
+        {
+          "id": "12bb66c6-305d-54ee-abbc-cbb92b6e04ec",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            53
+          ]
+        },
+        {
+          "id": "9f730d3b-02f4-54a6-8b86-3be6fdb435a2",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            53
+          ]
+        },
+        {
+          "id": "ab4293f2-772a-55f8-9603-a0ff9acbdc47",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            53
+          ]
+        },
+        {
+          "id": "e213fe2f-571c-5406-b97e-f2d434ef6572",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            53
+          ]
+        }
+      ],
+      "retrieval_ms": 5020.5234999302775,
+      "plan_ms": 2562.1620998717844,
+      "ttft_ms": 3374.017800204456,
+      "total_ms": 5484.269600128755,
+      "end_to_end_ms": 10504.793100059032,
+      "truncated": false,
+      "input_tokens": 1360,
+      "output_tokens": 499,
+      "answer": "Có. **Nếu thuộc trường hợp mẹ hoặc cả hai vợ chồng tham gia bảo hiểm xã hội bắt buộc**, và bạn không nghỉ việc theo chế độ để chăm con, bạn được hưởng **trợ cấp thai sản cho thời gian nghỉ thai sản còn lại của vợ**, ngoài tiền lương. [1][2]\n\nThời gian được tính **từ ngày liền kề sau ngày vợ bạn mất**. [1]\n\nCác trích dẫn được cung cấp chưa nêu cách tính mức trợ cấp, và tôi chưa thể xác minh độc lập hiệu lực hiện hành của quy định. **Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.**",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "nêu đủ ý chính và đúng thời điểm bắt đầu tính",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q050",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          2
+        ]
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [
+        "Điều 2 Luật BHXH"
+      ],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "6027f537-d987-53c8-a371-ffdfb47daa30",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            33
+          ]
+        },
+        {
+          "id": "5da6aaf7-d3c7-5cb3-b647-7c676e45d2c7",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            11
+          ]
+        },
+        {
+          "id": "127c1570-1ca0-578d-91f1-6531fd048746",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            9
+          ]
+        },
+        {
+          "id": "82aeafb6-c933-5f5e-abd1-e8dd747053d3",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            33
+          ]
+        },
+        {
+          "id": "758a972c-1e98-5184-aca1-b752eb9a6a31",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            168
+          ]
+        }
+      ],
+      "retrieval_ms": 4814.454199979082,
+      "plan_ms": 2671.703100204468,
+      "ttft_ms": 1880.674400134012,
+      "total_ms": 4044.603999936953,
+      "end_to_end_ms": 8859.058199916035,
+      "truncated": false,
+      "input_tokens": 2139,
+      "output_tokens": 367,
+      "answer": "Nếu bạn thuộc nhóm lao động quy định tại các điểm a, b, c, d hoặc i khoản 1, hay khoản 2 Điều 2 Luật BHXH, và **không hưởng tiền lương từ 14 ngày làm việc trở lên trong tháng**, thì thông thường bạn và công ty **không phải đóng BHXH cho tháng đó**. [1]\n\nTuy nhiên, bạn và công ty **có thể thỏa thuận tiếp tục đóng BHXH** cho tháng đó; khi thỏa thuận, căn cứ đóng là căn cứ đóng BHXH của tháng gần nhất. [1]\n\nKết luận này áp dụng nếu bạn đúng thuộc nhóm đối tượng nêu trên. Tôi chưa thể xác minh hiệu lực hiện hành của các văn bản chỉ từ dữ liệu được cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Đáp án nêu đủ ý chính không mâu thuẫn",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "q051",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "b471abf0-1adb-56dc-b210-da1c10e6d77d",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            73
+          ]
+        },
+        {
+          "id": "55a9b510-a579-5fdc-9cfa-736721c65589",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            16
+          ]
+        },
+        {
+          "id": "3dea522b-71d5-5376-921e-228645cfd96d",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            72
+          ]
+        },
+        {
+          "id": "188b3eb7-c991-5377-a6a5-f253ab493dc6",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            15
+          ]
+        },
+        {
+          "id": "29fd4df0-8363-5b3e-af74-a070dbdaa0e6",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            15
+          ]
+        }
+      ],
+      "retrieval_ms": 5092.521399958059,
+      "plan_ms": 2784.858400002122,
+      "ttft_ms": 1627.8929999098182,
+      "total_ms": 4128.665699856356,
+      "end_to_end_ms": 9221.187099814415,
+      "truncated": false,
+      "input_tokens": 2964,
+      "output_tokens": 339,
+      "answer": "**Chưa đủ căn cứ trong các nguồn đã cung cấp để kết luận công ty có phải nộp bù phần bảo hiểm xã hội của các tháng trước hay không.** Các nguồn này quy định việc điều chỉnh tiền lương làm căn cứ đóng để tính mức bình quân hưởng chế độ hưu trí; không xác định nghĩa vụ truy đóng khi doanh nghiệp hồi tố mức lương cho người lao động. [1][2]\n\nVì vậy, cần phân biệt **điều chỉnh tiền lương để tính chế độ hưu trí** với **điều chỉnh tiền lương đóng BHXH cho các tháng đã qua**. Từ các trích dẫn hiện có, chưa thể xác định trường hợp của công ty thuộc trường hợp nào hoặc nghĩa vụ nộp bù phát sinh ra sao. [1][2]\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.0,
+      "citation_recall": 0.0,
+      "answer_verdict": "refused",
+      "answer_verdict_reason": "Không nêu ý chính về nghĩa vụ truy đóng BHXH",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q052",
+      "type": "lookup",
+      "field": "labor",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "25b71097-1ac2-5dd3-82fc-5cf4a316b5f8",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            125
+          ]
+        },
+        {
+          "id": "d5bc3229-3fdd-51d5-a0f3-b8f9b4b5d89d",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            126
+          ]
+        },
+        {
+          "id": "d47247b6-8fbe-5aa5-ac84-71d47054ac58",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            127
+          ]
+        },
+        {
+          "id": "f98b3e56-6f76-5b0a-9c11-879196370e9b",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            36
+          ]
+        },
+        {
+          "id": "d0dca3f3-d7ed-54a4-8c20-759e5300173b",
+          "doc_number": "320/2025/NĐ-CP",
+          "article_nos": [
+            10
+          ]
+        }
+      ],
+      "retrieval_ms": 5165.209300117567,
+      "plan_ms": 2457.3319000191987,
+      "ttft_ms": 1376.7045000568032,
+      "total_ms": 4130.303399870172,
+      "end_to_end_ms": 9295.51269998774,
+      "truncated": false,
+      "input_tokens": 3650,
+      "output_tokens": 392,
+      "answer": "Theo các quy định được trích trong nguồn tham khảo, **công ty không tự quyết định mức đóng một cách đơn phương**: mức đóng bảo hiểm hưu trí bổ sung do người sử dụng lao động và người lao động **tự nguyện thỏa thuận**. [1]\n\nKhoản đóng góp được quản lý theo **từng tài khoản hưu trí cá nhân**. Hoạt động quản lý quỹ phải công khai, minh bạch và việc đầu tư phải tuân thủ pháp luật. [1] Quỹ được hình thành từ đóng góp của người sử dụng lao động, người lao động và tiền sinh lời từ đầu tư; quỹ là quỹ tài chính độc lập với ngân sách nhà nước. [2]\n\nKhi chi trả, mức hưởng được xác định dựa trên số dư tài khoản hưu trí cá nhân tại thời điểm chi trả; số dư này được tích lũy thông qua hoạt động đầu tư quỹ theo nguyên tắc thị trường. [1] Quỹ được sử dụng để chi trả chế độ hưu trí bổ sung và chi phí tổ chức, quản lý quỹ. [2]\n\nTôi chưa thể xác minh hiệu lực hiện hành của các quy định này hoặc các quy định hướng dẫn chi tiết trong phạm vi nguồn được cung cấp.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nội dung đáp ứng đầy đủ và đúng với đáp án chuẩn.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q054",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "24c8a26f-682d-5dae-a5ec-7993d7e72107",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            18
+          ]
+        },
+        {
+          "id": "a02d53f5-1959-50c3-845a-53b991140498",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "2d01cfe7-de8f-5176-a67b-30e365c00194",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            34
+          ]
+        },
+        {
+          "id": "a43535e2-b831-5511-a346-97722e48692c",
+          "doc_number": "296/2026/NĐ-CP",
+          "article_nos": [
+            2
+          ]
+        },
+        {
+          "id": "96f15f2d-985c-5adf-8fd6-278a79c0148a",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            24
+          ]
+        }
+      ],
+      "retrieval_ms": 4865.345400059596,
+      "plan_ms": 2099.9175999313593,
+      "ttft_ms": 1393.318000016734,
+      "total_ms": 3438.7008000630885,
+      "end_to_end_ms": 8304.046200122684,
+      "truncated": false,
+      "input_tokens": 2552,
+      "output_tokens": 258,
+      "answer": "Nếu doanh nghiệp **không được cấp Giấy chứng nhận đăng ký doanh nghiệp**, thì **người ký hợp đồng thuê mặt bằng phải thực hiện các nghĩa vụ phát sinh từ hợp đồng**. Nếu có người khác cùng tham gia thành lập doanh nghiệp, những người đó **cùng liên đới chịu trách nhiệm thực hiện hợp đồng**. [1]\n\nĐiều này áp dụng khi việc “không được chấp thuận” đồng nghĩa với việc doanh nghiệp không được cấp giấy chứng nhận. Nếu hồ sơ chỉ đang bị yêu cầu sửa đổi, bổ sung hoặc chưa có kết quả cuối cùng, dữ liệu được cung cấp chưa đủ để xác định trách nhiệm theo tình huống cụ thể. [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ các ý chính của đáp án chuẩn và không mâu thuẫn.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q055",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "51f2a0aa-fd0a-592d-a112-54397af88511",
+          "doc_number": "296/2026/NĐ-CP",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "44ab020e-cb95-55be-970c-d7e312836ef8",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            187
+          ]
+        },
+        {
+          "id": "d8924cb8-2423-556e-85f5-5dea9c99d72f",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            119
+          ]
+        },
+        {
+          "id": "5502a852-7585-5062-ad2b-7c875de1828e",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            111
+          ]
+        },
+        {
+          "id": "d097bb92-0e4c-5e90-86ee-117d931546de",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            115
+          ]
+        }
+      ],
+      "retrieval_ms": 4255.617700051516,
+      "plan_ms": 1996.8432001769543,
+      "ttft_ms": 1896.45959995687,
+      "total_ms": 4258.1529000308365,
+      "end_to_end_ms": 8513.770600082353,
+      "truncated": false,
+      "input_tokens": 2079,
+      "output_tokens": 260,
+      "answer": "Theo nguồn được cung cấp, **không**: cổ đông không được đứng tên thay người khác để góp vốn vào doanh nghiệp. [1]\n\nTôi chưa thể xác minh độc lập hiệu lực hiện hành của quy định này từ các nguồn đã cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Trùng khớp đáp án chuẩn, không mâu thuẫn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q057",
+      "type": "numeric",
+      "field": "enterprise",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "54a79176-4f4d-526c-9d34-921a53725a05",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            30
+          ]
+        },
+        {
+          "id": "d0f900c0-c0a4-597f-b03f-1f51499a67c5",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            45
+          ]
+        },
+        {
+          "id": "3cf8e5a1-8e50-5bb6-97e6-ffc2ce47afd3",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            66
+          ]
+        },
+        {
+          "id": "2ad809ec-e50f-5bc4-b7ac-84bd52b7c98a",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            66
+          ]
+        },
+        {
+          "id": "47b18af2-27ed-5d2e-bee2-3a332f6a3097",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            66
+          ]
+        }
+      ],
+      "retrieval_ms": 5092.876800103113,
+      "plan_ms": 2412.527000065893,
+      "ttft_ms": 1208.2207999192178,
+      "total_ms": 3402.36290008761,
+      "end_to_end_ms": 8495.239700190723,
+      "truncated": false,
+      "input_tokens": 2507,
+      "output_tokens": 271,
+      "answer": "Theo nguồn được cung cấp, trong **30 ngày kể từ ngày chính thức lập chi nhánh ở nước ngoài**, công ty phải gửi **thông báo bằng văn bản** đến **Cơ quan đăng ký kinh doanh cấp tỉnh nơi công ty đặt trụ sở chính**. [1]\n\nThông báo phải kèm **bản sao giấy chứng nhận đăng ký hoạt động chi nhánh hoặc giấy tờ tương đương**. [1] Cơ quan này cập nhật thông tin chi nhánh vào Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp trong **03 ngày làm việc kể từ ngày nhận được thông báo**. [1]\n\nTôi chưa thể xác minh hiệu lực hiện hành của quy định từ các nguồn được cung cấp.\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đủ ý chính và thời hạn, cơ quan, giấy tờ, thời gian cập nhật",
+      "gold_numbers_present": false
+    },
+    {
+      "id": "q059",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 5,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "c3c6500e-25c6-5b27-883c-4af05085321e",
+          "doc_number": "76/2025/QH15",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "41710d2a-7adb-5ef3-bf66-c6ebc69ed05e",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            36
+          ]
+        },
+        {
+          "id": "dcca6aee-282b-5f6c-aa13-d4eface90648",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            47
+          ]
+        },
+        {
+          "id": "c84d3e90-1607-5b19-8b39-563dc4e525c1",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            47
+          ]
+        },
+        {
+          "id": "1864dda3-0d56-5a4f-8416-e41a98615d68",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            75
+          ]
+        }
+      ],
+      "retrieval_ms": 5371.599099831656,
+      "plan_ms": 2163.640200160444,
+      "ttft_ms": 4401.011300040409,
+      "total_ms": 8063.23379999958,
+      "end_to_end_ms": 13434.832899831235,
+      "truncated": false,
+      "input_tokens": 2088,
+      "output_tokens": 797,
+      "answer": "**Có thể vi phạm điều cấm**, nhưng cần phân biệt hai hành vi:\n\n- **Vốn đăng ký cao hơn số vốn đã góp:** Theo nguồn được cung cấp, hành vi bị nêu là kê khai khống vốn điều lệ khi **không góp đủ vốn đã đăng ký và không đăng ký điều chỉnh vốn điều lệ**. Vì vậy, chỉ riêng việc số vốn đã góp hiện thấp hơn vốn đăng ký chưa đủ để kết luận có hành vi này; cần xét thời hạn góp vốn và việc công ty có điều chỉnh đăng ký hay không. [1]  \n  Với công ty TNHH hai thành viên trở lên và công ty TNHH một thành viên, nguồn quy định thời hạn góp vốn và việc đăng ký điều chỉnh khi không góp đủ; các quy định được trích dẫn này không đủ để kết luận về mọi loại hình công ty. [3][4][5]\n\n- **Định giá tài sản góp vốn cao hơn giá trị thực:** Luật sửa đổi được cung cấp nêu hành vi **cố ý định giá tài sản góp vốn không đúng giá trị** là hành vi bị cấm. [1] Luật Doanh nghiệp cũng quy định trách nhiệm góp thêm phần chênh lệch và trách nhiệm đối với thiệt hại trong trường hợp tài sản được định giá cao hơn thực tế; cách áp dụng cụ thể phụ thuộc vào việc định giá khi thành lập hay trong quá trình hoạt động. [2]\n\nCác nguồn được cung cấp không cho biết ngày có hiệu lực và chưa đủ để tôi xác minh **hiệu lực hiện hành** của các quy định tại thời điểm bạn thực hiện. Để đánh giá chính xác, cần biết loại hình công ty, thời điểm đăng ký, thời hạn góp vốn đã qua chưa, và việc định giá cao có phải do cố ý hay không.\n\n*Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": 0.0,
+      "citation_recall": 0.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu phần chính về vi phạm nhưng phân tích nhưng thiếu câu trả lời dứt khoát",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q061",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "27e3e064-ce81-5dd2-95c6-f07c21882b69",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            24
+          ]
+        },
+        {
+          "id": "81c6f97e-2776-5798-9f03-a528c72851cb",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            24
+          ]
+        },
+        {
+          "id": "9670ae16-ebe7-58e0-9582-b2f30cb5b6ba",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            44
+          ]
+        },
+        {
+          "id": "7e35e34d-e66b-5d6a-bffb-22a14335cba6",
+          "doc_number": "76/2025/QH15",
+          "article_nos": [
+            1
+          ]
+        },
+        {
+          "id": "30080a3c-13f4-542a-aa2e-7c22d8a73fe8",
+          "doc_number": "76/2025/QH15",
+          "article_nos": [
+            1
+          ]
+        }
+      ],
+      "retrieval_ms": 4273.421999998391,
+      "plan_ms": 1825.904899975285,
+      "ttft_ms": 1705.991400172934,
+      "total_ms": 3181.132100056857,
+      "end_to_end_ms": 7454.5541000552475,
+      "truncated": false,
+      "input_tokens": 1617,
+      "output_tokens": 165,
+      "answer": "Đối với **công ty cổ phần**, bản điều lệ đã sửa đổi, bổ sung phải có **họ, tên và chữ ký của người đại diện theo pháp luật** của công ty. [1]\n\nLưu ý: nội dung trên căn cứ vào dữ liệu được cung cấp; tôi chưa thể xác minh hiệu lực hiện hành của quy định. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đầy đủ ý chính và không mâu thuẫn",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "q062",
+      "type": "lookup",
+      "field": "enterprise",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "51398f1f-a267-5a4e-aa9f-09d57eab4852",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            26
+          ]
+        },
+        {
+          "id": "5fc990ad-16cb-5736-88ed-ecf6d9ead8a6",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            26
+          ]
+        },
+        {
+          "id": "1ebd35f0-bc1d-5de7-b148-78f26b66867c",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            26
+          ]
+        },
+        {
+          "id": "8ea5e352-aff0-57d3-a607-426566a176a6",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            26
+          ]
+        },
+        {
+          "id": "9ba0aea5-3148-5aaa-a7c8-bff5a9c4ade0",
+          "doc_number": "168/2025/NĐ-CP",
+          "article_nos": [
+            45
+          ]
+        }
+      ],
+      "retrieval_ms": 4874.818299897015,
+      "plan_ms": 2455.880500143394,
+      "ttft_ms": 1916.6985000483692,
+      "total_ms": 4072.8593999519944,
+      "end_to_end_ms": 8947.67769984901,
+      "truncated": false,
+      "input_tokens": 2487,
+      "output_tokens": 371,
+      "answer": "Nếu công ty chuyển đổi bằng cách **huy động thêm vốn góp của thành viên mới**, ngoài hồ sơ chuyển đổi thông thường, cần kèm:\n\n- Bản sao hoặc bản chính nghị quyết/quyết định của chủ sở hữu công ty về việc huy động thêm vốn góp; và\n- Giấy tờ chứng minh thành viên mới đã góp vốn. [1]\n\nNếu trường hợp này thuộc diện phải đăng ký việc nhà đầu tư nước ngoài hoặc tổ chức kinh tế có vốn đầu tư nước ngoài góp vốn, mua cổ phần, mua phần vốn góp, cần kèm thêm bản sao văn bản chấp thuận của Cơ quan đăng ký đầu tư. [1]\n\nTôi chưa thể xác minh hiệu lực hiện hành của quy định từ các nguồn được cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Nêu đầy đủ và đúng các giấy tờ cần nộp.",
+      "gold_numbers_present": null
+    },
+    {
+      "id": "h06",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "29295a53-3923-5a3d-991d-c782b240511f",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            169
+          ]
+        },
+        {
+          "id": "b4ee5349-ac22-5f53-9c33-04bab89a8854",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            64
+          ]
+        },
+        {
+          "id": "f58f610c-6cf7-5cc2-8dfc-8b0179376901",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            219
+          ]
+        },
+        {
+          "id": "24c9affb-0b2a-5dba-942f-44c3cc152190",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            219
+          ]
+        },
+        {
+          "id": "4fc99bf5-99ce-5abe-b138-08da6347e817",
+          "doc_number": "158/2025/NĐ-CP",
+          "article_nos": [
+            41
+          ]
+        }
+      ],
+      "retrieval_ms": 4049.291200004518,
+      "plan_ms": 1988.4961999487132,
+      "ttft_ms": 2703.2471999991685,
+      "total_ms": 4764.964600093663,
+      "end_to_end_ms": 8814.25580009818,
+      "truncated": false,
+      "input_tokens": 2461,
+      "output_tokens": 473,
+      "answer": "Theo lộ trình được nêu trong nguồn, lao động nam làm việc trong điều kiện bình thường đủ tuổi nghỉ hưu ở tuổi **62 từ năm 2028**. Tuổi này tăng thêm 3 tháng mỗi năm kể từ mức 60 tuổi 3 tháng vào năm 2021; theo đó, năm 2026 là **61 tuổi 6 tháng**. [1]\n\nĐủ tuổi chưa đồng nghĩa tự động được hưởng lương hưu: theo nguồn được cung cấp, người lao động còn phải đáp ứng điều kiện về thời gian đóng bảo hiểm xã hội và các điều kiện liên quan. [2]\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Chỉ nêu lộ trình tăng tuổi, không nói rõ đủ điều kiện tuổi nghỉ hưu theo đáp án chuẩn.",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "h07",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": [
+          33
+        ]
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "20458882-c6d2-59f9-802b-1daae723b89c",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            33
+          ]
+        },
+        {
+          "id": "eeee684c-f48a-5ff3-9c4f-0efe7065459f",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            33
+          ]
+        },
+        {
+          "id": "1d1f4712-d8a6-5f9b-a7f2-8af566d2b7ab",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            33
+          ]
+        },
+        {
+          "id": "5769afb8-f39b-533b-8f17-a7e16a23e0b3",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            33
+          ]
+        },
+        {
+          "id": "6027f537-d987-53c8-a371-ffdfb47daa30",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            33
+          ]
+        }
+      ],
+      "retrieval_ms": 5405.784799950197,
+      "plan_ms": 2918.2432999368757,
+      "ttft_ms": 1917.620699852705,
+      "total_ms": 4204.008899861947,
+      "end_to_end_ms": 9609.793699812144,
+      "truncated": false,
+      "input_tokens": 2276,
+      "output_tokens": 313,
+      "answer": "Theo nguồn được cung cấp, người lao động thuộc nhóm được nêu tại khoản 1 Điều 33 đóng **8% tiền lương làm căn cứ đóng BHXH bắt buộc** vào quỹ hưu trí và tử tuất, theo phương thức hằng tháng. [1]\n\nNguồn hiện có **chưa cho biết tỷ lệ doanh nghiệp phải đóng**, nên chưa đủ căn cứ để xác định phần đóng của doanh nghiệp hoặc tổng tỷ lệ đóng của cả hai bên. Tôi cũng chưa thể xác minh hiệu lực hiện hành của quy định từ các nguồn đã cung cấp.\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 1.0,
+      "citation_recall": 0.5,
+      "answer_verdict": "refused",
+      "answer_verdict_reason": "Không nêu tỷ lệ cụ thể của doanh nghiệp và người lao động",
+      "gold_numbers_present": false
+    },
+    {
+      "id": "h08",
+      "type": "numeric",
+      "field": "enterprise",
+      "n_cited": 1,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "02077266-5309-5656-bb9a-cb8f270b812e",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            120
+          ]
+        },
+        {
+          "id": "5502a852-7585-5062-ad2b-7c875de1828e",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            111
+          ]
+        },
+        {
+          "id": "5651c417-806e-53d6-b28d-58f59934fcf3",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            4
+          ]
+        },
+        {
+          "id": "8c23cd16-4c11-5e04-85b3-7d966e4b76ce",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            22
+          ]
+        },
+        {
+          "id": "96dbcbbf-2c9e-5a3e-b03e-3661278bf031",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            25
+          ]
+        }
+      ],
+      "retrieval_ms": 4399.558800039813,
+      "plan_ms": 2052.8440999332815,
+      "ttft_ms": 643.7882999889553,
+      "total_ms": 2080.522699980065,
+      "end_to_end_ms": 6480.081500019878,
+      "truncated": false,
+      "input_tokens": 1922,
+      "output_tokens": 59,
+      "answer": "Công ty cổ phần phải có tối thiểu **03 cổ đông**; không giới hạn số lượng cổ đông tối đa. [2]\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "citation_precision": 1.0,
+      "citation_recall": 1.0,
+      "answer_verdict": "correct",
+      "answer_verdict_reason": "Trùng khớp số lượng cổ đông tối thiểu và tối đa",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "h11",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 4,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "effe56a7-e88a-5a7c-b6d3-6515e06262cd",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            9
+          ]
+        },
+        {
+          "id": "6f8c8583-c243-5bcd-9115-e4f2e4f6549c",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            19
+          ]
+        },
+        {
+          "id": "e95c653e-a57b-5eac-887e-6d60d26a4af0",
+          "doc_number": "181/2025/NĐ-CP",
+          "article_nos": [
+            17
+          ]
+        },
+        {
+          "id": "7e2b2d03-fece-5a36-814e-138cc6b4ff59",
+          "doc_number": "69/2025/TT-BTC",
+          "article_nos": [
+            5
+          ]
+        },
+        {
+          "id": "7f906852-41e7-521b-8884-5afa3fff45e7",
+          "doc_number": "12/VBHN-VPQH",
+          "article_nos": [
+            9
+          ]
+        }
+      ],
+      "retrieval_ms": 3939.6649999544024,
+      "plan_ms": 1955.993500072509,
+      "ttft_ms": 3613.308500032872,
+      "total_ms": 5338.322900002822,
+      "end_to_end_ms": 9277.987899957225,
+      "truncated": false,
+      "input_tokens": 1394,
+      "output_tokens": 508,
+      "answer": "Theo dữ liệu được cung cấp, hàng hóa, dịch vụ thông thường thuộc mức thuế giá trị gia tăng **10%** nếu không thuộc nhóm áp dụng mức 0% hoặc 5%. [1][2][3]\n\nTuy nhiên, mức thuế cụ thể còn phụ thuộc vào loại hàng hóa, dịch vụ; nếu kinh doanh nhiều loại thì phải xác định thuế suất cho từng loại. [5]\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.3333333333333333,
+      "citation_recall": 1.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "nêu được mức thuế 10%, thiếu ý về mức giảm còn 8%",
+      "gold_numbers_present": false
+    },
+    {
+      "id": "h12",
+      "type": "numeric",
+      "field": "enterprise",
+      "n_cited": 0,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "e6056dd0-64f8-5631-aab9-10fa17e1b663",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            47
+          ]
+        },
+        {
+          "id": "1890d9fa-2783-5053-8c22-de9063461ac5",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            178
+          ]
+        },
+        {
+          "id": "44ab020e-cb95-55be-970c-d7e312836ef8",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            187
+          ]
+        },
+        {
+          "id": "dcca6aee-282b-5f6c-aa13-d4eface90648",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            47
+          ]
+        },
+        {
+          "id": "25808d00-6069-5787-9008-750a0757e98a",
+          "doc_number": "59/2020/QH14",
+          "article_nos": [
+            47
+          ]
+        }
+      ],
+      "retrieval_ms": 4394.447699887678,
+      "plan_ms": 1823.6819000449032,
+      "ttft_ms": 1256.8220999091864,
+      "total_ms": 2772.530500078574,
+      "end_to_end_ms": 7166.978199966252,
+      "truncated": false,
+      "input_tokens": 2116,
+      "output_tokens": 139,
+      "answer": "Các nguồn được cung cấp chưa nêu số lượng thành viên tối đa của công ty TNHH hai thành viên trở lên, nên chưa đủ căn cứ để xác định con số này.  \n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": null,
+      "citation_recall": 0.0,
+      "answer_verdict": "refused",
+      "answer_verdict_reason": "Không nêu số lượng thành viên tối đa",
+      "gold_numbers_present": false
+    },
+    {
+      "id": "h13",
+      "type": "numeric",
+      "field": "labor",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "c100c3e7-a2f9-5374-a324-e5179987dcd2",
+          "doc_number": "18/VBHN-VPQH",
+          "article_nos": [
+            139
+          ]
+        },
+        {
+          "id": "e213fe2f-571c-5406-b97e-f2d434ef6572",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            53
+          ]
+        },
+        {
+          "id": "9a587e80-00bf-57da-9cd2-98539c853975",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            53
+          ]
+        },
+        {
+          "id": "4b93cda3-d8e3-527e-891a-df4194177dca",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            53
+          ]
+        },
+        {
+          "id": "40e12cac-e8c3-5486-82d8-28731a16d138",
+          "doc_number": "41/2024/QH15",
+          "article_nos": [
+            53
+          ]
+        }
+      ],
+      "retrieval_ms": 4654.676799895242,
+      "plan_ms": 2029.1203998494893,
+      "ttft_ms": 1857.2317999787629,
+      "total_ms": 3433.754700003192,
+      "end_to_end_ms": 8088.431499898434,
+      "truncated": false,
+      "input_tokens": 1702,
+      "output_tokens": 256,
+      "answer": "Theo tài liệu được cung cấp, lao động nữ sinh con thứ hai được nghỉ thai sản **07 tháng**; thời gian nghỉ trước khi sinh không quá **02 tháng**. [1] Thời gian nghỉ hưởng chế độ thai sản được thực hiện theo quy định này. [2]\n\nTôi chưa thể xác minh hiệu lực hiện hành của các quy định từ nguồn đã cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu được thời gian 7 tháng nhưng không nhấn mạnh trước và sau sinh như đáp án chuẩn",
+      "gold_numbers_present": true
+    },
+    {
+      "id": "h15",
+      "type": "numeric",
+      "field": "tax",
+      "n_cited": 2,
+      "unknown_markers": 0,
+      "references": {
+        "docs": [],
+        "articles": []
+      },
+      "unsupported_reference": false,
+      "unsupported": {
+        "docs": [],
+        "articles": []
+      },
+      "needs_review": [],
+      "unknown_docs": [],
+      "retrieved": [
+        {
+          "id": "dd1aaebd-70b8-5cee-b328-f511b4f084ca",
+          "doc_number": "109/2025/QH15",
+          "article_nos": [
+            10
+          ]
+        },
+        {
+          "id": "a3723359-d1db-518d-b67e-c978020bae81",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            47
+          ]
+        },
+        {
+          "id": "dfe37728-36f7-5999-84e0-ac3e33ba07ea",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            48
+          ]
+        },
+        {
+          "id": "e01534ac-64ed-511a-9c84-23c760804937",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            47
+          ]
+        },
+        {
+          "id": "23985ef0-bde8-549d-906a-d9feed7abdd4",
+          "doc_number": "253/2026/NĐ-CP",
+          "article_nos": [
+            47
+          ]
+        }
+      ],
+      "retrieval_ms": 4174.656100105494,
+      "plan_ms": 1994.8454000987113,
+      "ttft_ms": 1200.6292999722064,
+      "total_ms": 2790.615899953991,
+      "end_to_end_ms": 6965.272000059485,
+      "truncated": false,
+      "input_tokens": 2557,
+      "output_tokens": 188,
+      "answer": "Theo dữ liệu được cung cấp, mức giảm trừ gia cảnh cho bản thân người nộp thuế là **15,5 triệu đồng mỗi tháng** [1][2]. Tôi chưa thể xác minh từ các nguồn này liệu quy định đó đang có hiệu lực hiện hành hay không.\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "citation_precision": 0.5,
+      "citation_recall": 1.0,
+      "answer_verdict": "partial",
+      "answer_verdict_reason": "Nêu đúng số tiền nhưng có phần phụ thêm không cần thiết",
+      "gold_numbers_present": false
+    }
+  ]
+}
