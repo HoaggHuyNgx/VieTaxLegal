@@ -9,7 +9,7 @@ from app.core.security import hash_password, verify_dummy_password, verify_passw
 from app.models.user import User
 from app.schemas.auth import LoginRequest, RegisterRequest
 from app.services.auth.email_otp import require_proof
-from app.services.auth.login_throttle import get_login_throttle
+from app.services.auth.login_throttle import get_login_ip_throttle, get_login_throttle
 
 
 def get_registration_conflict(database: Session, payload: RegisterRequest) -> AppError | None:
@@ -78,14 +78,19 @@ def authenticate_user(database: Session, payload: LoginRequest) -> User:
 
 
 def login_user(database: Session, payload: LoginRequest, client_host: str) -> User:
-    """Authenticate, rejecting early once a client/identifier pair has failed too often.
+    """Authenticate, rejecting early once a client/identifier pair or a client failed too often.
 
     Keyed by client and identifier so one source cannot grind a single account, while a
-    stranger still cannot lock a victim out from every other address.
+    stranger still cannot lock a victim out from every other address. A second, higher cap per
+    client stops one source from trying account after account.
     """
     throttle = get_login_throttle()
+    by_address = get_login_ip_throttle()
     key = f"{client_host}|{payload.identifier}"
     throttle.acquire(key)  # counts the attempt up front; a success clears it
+    by_address.acquire(client_host)
     user = authenticate_user(database, payload)
     throttle.reset(key)
+    # Only this attempt: clearing the address would let an attacker's own account wipe it.
+    by_address.release(client_host)
     return user

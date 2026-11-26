@@ -37,9 +37,20 @@ export function validateRegistration(formData, isEmailVerified) {
   return errors
 }
 
+// For input the server rejected as invalid, its text comes from the framework, partly in
+// English; the catalog already has wording for each field.
+const INVALID_FIELD_KEYS = {
+  email: 'auth.validation.emailInvalid',
+  username: 'auth.validation.usernameInvalid',
+  fullName: 'auth.validation.fullNameRequired',
+  phone: 'auth.validation.phoneInvalid',
+  password: 'auth.validation.passwordWeak',
+  acceptTerms: 'auth.validation.termsRequired',
+}
+
 // Backend field errors use API names (and sometimes snake_case); map them onto form fields.
 // Empty entries are dropped so only fields the server complained about are marked.
-export function mapBackendErrors(fields = {}) {
+export function mapBackendErrors(fields = {}, code) {
   const mapped = {
     loginIdentifier: fields.identifier,
     loginPassword: fields.password,
@@ -50,5 +61,9 @@ export function mapBackendErrors(fields = {}) {
     password: fields.password,
     acceptTerms: fields.acceptTerms || fields.accept_terms,
   }
-  return Object.fromEntries(Object.entries(mapped).filter(([, message]) => message))
+  const present = Object.entries(mapped).filter(([, message]) => message)
+  if (code !== 'VALIDATION_ERROR') return Object.fromEntries(present)
+  return Object.fromEntries(
+    present.map(([field]) => [field, INVALID_FIELD_KEYS[field] ?? 'auth.validation.serverField'])
+  )
 }

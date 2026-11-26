@@ -284,3 +284,34 @@ def test_full_name_falls_back_to_the_email_when_too_short(
     sign_in(client, monkeypatch, email="a@example.com", name=None)
 
     assert database_session.scalar(select(User)).full_name == "a@example.com"
+
+
+def test_non_ascii_state_is_refused_not_a_crash(client: TestClient, google_enabled: None) -> None:
+    start(client)
+
+    response = client.get(
+        "/api/auth/google/callback",
+        params={"code": "c", "state": "trạng-thái"},
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 302
+    assert "authError=GOOGLE_AUTH_FAILED" in response.headers["location"]
+
+
+@pytest.mark.parametrize(
+    ("method", "path", "status", "code"),
+    [
+        ("GET", "/api/khong-co", 404, "NOT_FOUND"),
+        ("DELETE", "/api/health", 405, "METHOD_NOT_ALLOWED"),
+    ],
+)
+def test_unknown_routes_use_the_error_envelope(
+    client: TestClient, method: str, path: str, status: int, code: str
+) -> None:
+    response = client.request(method, path)
+
+    assert response.status_code == status
+    assert response.json()["error"]["code"] == code
+    if status == 405:
+        assert response.headers["allow"] == "GET"

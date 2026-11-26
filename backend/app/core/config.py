@@ -142,6 +142,9 @@ class Settings(BaseSettings):
             raise ValueError("JWT_SECRET phải là một chuỗi ngẫu nhiên có ít nhất 32 ký tự.")
         if "*" in self.cors_origin_list:
             raise ValueError("CORS_ORIGINS không được dùng '*' khi xác thực bằng cookie.")
+        # Anything else would silently behave as non-production (no Secure cookies, docs open).
+        if self.app_env.lower() not in ("development", "testing", "production"):
+            raise ValueError("APP_ENV must be development, testing or production.")
         if self.jwt_algorithm not in ("HS256", "HS384", "HS512"):
             raise ValueError("JWT_ALGORITHM must be HS256, HS384 or HS512.")
         if self.log_level.upper() not in ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"):

@@ -75,7 +75,7 @@ Các biến còn lại đều có giá trị mặc định, chỉ đặt khi mu�
 
 | Biến                         | Mặc định                | Mô tả                                                        |
 | ---------------------------- | ----------------------- | ------------------------------------------------------------ |
-| `APP_ENV`                    | `development`           | `production` bật thêm cookie `Secure`.                       |
+| `APP_ENV`                    | `development`           | `development`, `testing` hoặc `production` (bật cookie `Secure`); giá trị khác bị từ chối. |
 | `SESSION_COOKIE_NAME`        | `vietaxlegal_session`   | Tên cookie phiên.                                            |
 | `SESSION_TOKEN_HOURS`        | `24`                    | Hạn token khi đăng nhập không chọn ghi nhớ.                  |
 | `REMEMBER_ME_DAYS`           | `30`                    | Hạn token và cookie khi đăng nhập với `rememberMe: true`.    |
@@ -235,9 +235,11 @@ Payload đăng nhập:
 Đăng nhập sai liên tiếp bị giới hạn theo cặp (địa chỉ client, email/username): quá
 `LOGIN_MAX_FAILED_ATTEMPTS` lần sai trong `LOGIN_ATTEMPT_WINDOW_MINUTES` phút thì `/api/auth/login`
 trả `429 AUTH_RATE_LIMITED`, kể cả khi mật khẩu đúng, cho đến khi hết khung thời gian. Đăng nhập
-thành công xóa bộ đếm. Bộ đếm nằm trong bộ nhớ của tiến trình nên được đặt lại khi khởi động lại
-server và không chia sẻ giữa nhiều worker. Phía sau reverse proxy, mọi client có thể dùng chung
-một địa chỉ; cần xử lý lại khi triển khai thật.
+thành công xóa bộ đếm của cặp đó. Thêm một trần theo riêng địa chỉ, gấp 6 lần (mặc định 30 lần
+sai), để một nguồn không thể thử lần lượt nhiều tài khoản; đăng nhập đúng không bị tính vào trần
+này. Bộ đếm nằm trong bộ nhớ của tiến trình nên được đặt lại khi khởi động lại server và không chia
+sẻ giữa nhiều worker. Phía sau reverse proxy không chuyển IP thật, mọi client dùng chung một địa
+chỉ và cùng một trần (nginx trong Compose đã chuyển IP thật).
 
 Cookie phiên có `HttpOnly`, `SameSite=Lax` và `Path=/`. Khi `APP_ENV=production`, cookie có thêm
 `Secure`.
@@ -316,7 +318,7 @@ hiển thị trực tiếp cho người dùng.
 | `422`  | `VALIDATION_ERROR`         | Payload sai định dạng; luôn kèm `fields`.                    |
 | `429`  | `CHAT_RATE_LIMITED`        | Vượt `CHAT_RATE_LIMIT_PER_MINUTE`.                           |
 | `429`  | `CHAT_DAILY_LIMIT_REACHED` | Vượt `CHAT_DAILY_MESSAGE_LIMIT` trong ngày UTC.              |
-| `429`  | `AUTH_RATE_LIMITED`        | Đăng nhập sai quá `LOGIN_MAX_FAILED_ATTEMPTS` lần trong khung thời gian. |
+| `429`  | `AUTH_RATE_LIMITED`        | Đăng nhập sai quá `LOGIN_MAX_FAILED_ATTEMPTS` lần cho một tài khoản, hoặc gấp 6 số đó cho một IP. |
 
 Riêng `/api/chat/messages/stream`: mọi lỗi trên đều xảy ra **trước** khi SSE bắt đầu, nên client vẫn
 đọc được status code thật. Sau khi stream đã mở, status bị ghim ở `200` và lỗi chỉ còn được báo qua

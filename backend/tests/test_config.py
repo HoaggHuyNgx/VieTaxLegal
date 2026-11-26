@@ -97,3 +97,24 @@ def test_settings_reject_unknown_embedding_provider() -> None:
             jwt_secret="a-secure-test-secret-with-at-least-32-characters",
             embedding_provider="word2vec",
         )
+
+
+@pytest.mark.parametrize("value", ["prod", "Productoin", ""])
+def test_settings_reject_a_mistyped_app_env(value: str) -> None:
+    """A typo would silently run without Secure cookies and with the API docs open."""
+    with pytest.raises(ValidationError, match="APP_ENV"):
+        Settings(
+            database_url="sqlite+pysqlite://",
+            jwt_secret="a-secure-test-secret-with-at-least-32-characters",
+            app_env=value,
+        )
+
+
+def test_settings_accept_app_env_in_any_case() -> None:
+    settings = Settings(
+        database_url="sqlite+pysqlite://",
+        jwt_secret="a-secure-test-secret-with-at-least-32-characters",
+        app_env="Production",
+    )
+
+    assert settings.is_production

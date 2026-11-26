@@ -266,3 +266,19 @@ def test_one_client_cannot_guess_codes_without_limit(client) -> None:
 
     assert response.status_code == 429
     assert response.json()["error"]["code"] == "OTP_VERIFY_RATE_LIMITED"
+
+
+def test_using_the_newest_code_also_retires_the_older_ones(
+    client, outbox, database_session
+) -> None:
+    request_code(client)
+    older = last_code(outbox)
+    age_codes(database_session, timedelta(minutes=2))  # past the resend cooldown
+    request_code(client)
+    newer = last_code(outbox)
+    assert verify(client, newer).status_code == 200
+
+    response = verify(client, older)
+
+    assert response.status_code == 400
+    assert response.json()["error"]["code"] == "OTP_INVALID"

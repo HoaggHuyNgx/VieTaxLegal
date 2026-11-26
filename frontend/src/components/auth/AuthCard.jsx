@@ -114,14 +114,14 @@ export default function AuthCard() {
       }
       navigate('/chat')
     } catch (error) {
-      setErrors(error instanceof ApiError ? mapBackendErrors(error.fields) : {})
+      setErrors(error instanceof ApiError ? mapBackendErrors(error.fields, error.code) : {})
       setFeedback({ type: 'error', error })
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  // Backend field errors are Vietnamese sentences, not keys. t() echoes a miss,
+  // Some backend field errors are Vietnamese sentences, not keys. t() echoes a miss,
   // so resolving every value here handles both sources without storing copy.
   const translatedErrors = Object.fromEntries(
     Object.entries(errors).map(([field, keyOrMessage]) => [field, t(keyOrMessage)])

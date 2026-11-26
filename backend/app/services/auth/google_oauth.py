@@ -103,7 +103,8 @@ def read_state_cookie(cookie: str | None, returned_state: str | None) -> FlowSta
         )
         if payload.get("type") != STATE_TYPE:
             raise google_failed()
-        if not secrets.compare_digest(str(payload["state"]), returned_state):
+        # Bytes: compare_digest refuses non-ASCII str, and this value comes from the URL.
+        if not secrets.compare_digest(str(payload["state"]).encode(), returned_state.encode()):
             raise google_failed()
         user_id = UUID(payload["uid"]) if payload.get("uid") else None
         return FlowState(

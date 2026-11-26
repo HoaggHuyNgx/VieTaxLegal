@@ -161,6 +161,8 @@ const en = {
   errors: {
     byCode: {
       REQUEST_FAILED: 'Could not reach the server. Please try again.',
+      NOT_FOUND: 'Resource not found.',
+      METHOD_NOT_ALLOWED: 'Method not allowed.',
       INVALID_RESPONSE: 'The server returned invalid data.',
       INVALID_STREAM_EVENT: 'Could not read the live response from the server.',
       EMPTY_STREAM: 'The server returned no response content.',
@@ -289,6 +291,7 @@ const en = {
       confirmMismatch: 'The two passwords do not match.',
       termsRequired: 'Please accept the Terms of Use.',
       checkForm: 'Please check the information you entered.',
+      serverField: 'This value is not valid.',
     },
   },
 
@@ -388,6 +391,7 @@ const en = {
       adminPage: 'Admin page',
       historyLoadFailed: 'Could not load your chat history.',
       conversationLoadFailed: 'Could not load the conversation.',
+      logoutFailed: 'You are still signed in. Check your connection and try again.',
       deleteFailed: 'Could not delete the conversation.',
       sendFailed: 'Could not get an answer. Please try again.',
     },

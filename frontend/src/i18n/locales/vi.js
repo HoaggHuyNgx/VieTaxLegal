@@ -164,6 +164,8 @@ const vi = {
   errors: {
     byCode: {
       REQUEST_FAILED: 'Không thể kết nối đến máy chủ. Vui lòng thử lại.',
+      NOT_FOUND: 'Không tìm thấy tài nguyên.',
+      METHOD_NOT_ALLOWED: 'Phương thức không được hỗ trợ.',
       INVALID_RESPONSE: 'Máy chủ trả về dữ liệu không hợp lệ.',
       INVALID_STREAM_EVENT: 'Không thể đọc phản hồi trực tiếp từ máy chủ.',
       EMPTY_STREAM: 'Máy chủ không trả về nội dung phản hồi.',
@@ -294,6 +296,7 @@ const vi = {
       confirmMismatch: 'Mật khẩu nhập lại chưa khớp.',
       termsRequired: 'Vui lòng đồng ý với Điều khoản sử dụng.',
       checkForm: 'Vui lòng kiểm tra lại thông tin đã nhập.',
+      serverField: 'Giá trị không hợp lệ.',
     },
   },
 
@@ -393,6 +396,7 @@ const vi = {
       adminPage: 'Trang quản trị',
       historyLoadFailed: 'Không thể tải lịch sử trò chuyện.',
       conversationLoadFailed: 'Không thể tải cuộc trò chuyện.',
+      logoutFailed: 'Chưa đăng xuất được. Hãy kiểm tra kết nối rồi thử lại.',
       deleteFailed: 'Không thể xóa cuộc trò chuyện.',
       sendFailed: 'Không thể nhận câu trả lời. Vui lòng thử lại.',
     },

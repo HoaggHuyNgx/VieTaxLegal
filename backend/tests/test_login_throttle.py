@@ -3,6 +3,7 @@ import threading
 import pytest
 from fastapi.testclient import TestClient
 
+from app.core.config import get_settings
 from app.core.errors import AppError
 from app.services.auth import login_throttle
 from app.services.auth.login_throttle import LoginThrottle
@@ -179,3 +180,27 @@ def test_unknown_account_is_throttled_like_a_known_one(client: TestClient) -> No
 
     assert blocked.status_code == 429
     assert blocked.json()["error"]["code"] == "AUTH_RATE_LIMITED"
+
+
+def test_one_address_cannot_try_account_after_account(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setattr(get_settings(), "login_max_failed_attempts", 2)  # 12 per address
+    for number in range(12):
+        assert login(client, f"nobody{number}", "sai-mat-khau").status_code == 401
+
+    blocked = login(client, "nobody-new", "sai-mat-khau")
+
+    assert blocked.status_code == 429
+    assert blocked.json()["error"]["code"] == "AUTH_RATE_LIMITED"
+
+
+def test_successful_logins_do_not_use_up_the_address_budget(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A class behind one address signing in correctly must never be locked out."""
+    monkeypatch.setattr(get_settings(), "login_max_failed_attempts", 2)
+    register(client)
+
+    for _ in range(15):
+        assert login(client, "throttle@example.com", PASSWORD).status_code == 200

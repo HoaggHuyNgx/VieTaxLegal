@@ -172,12 +172,15 @@ export default function ChatPage() {
 
   const handleLogout = async () => {
     cancelStream()
-    clearDraft()
     try {
       await logout()
-    } finally {
-      navigate('/', { replace: true })
+    } catch {
+      // The session cookie is still valid, so leaving the page would only look like logging out.
+      setChatError({ error: {}, fallbackKey: 'chat.page.logoutFailed' })
+      return
     }
+    clearDraft()
+    navigate('/', { replace: true })
   }
 
   return (

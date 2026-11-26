@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.errors import AppError
-from app.models.user import ROLES, User
+from app.models.user import ROLE_ADMIN, ROLES, User
 from app.schemas.admin import AdminUserUpdate
 from app.services.auth.refresh_tokens import revoke_all_for_user
 
@@ -17,6 +17,14 @@ def list_users(database: Session, limit: int, offset: int) -> list[User]:
 def update_user(database: Session, admin: User, user_id: UUID, payload: AdminUserUpdate) -> User:
     if user_id == admin.id:
         raise AppError(409, "CANNOT_MODIFY_SELF", "Bạn không thể tự thay đổi quyền của mình.")
+    # Lock the admins (always in one order) and look at the actor again: of two admins demoting
+    # each other at once, the second then sees it is no longer one, so one admin always remains.
+    database.execute(
+        select(User.id).where(User.role == ROLE_ADMIN).order_by(User.id).with_for_update()
+    )
+    database.refresh(admin)
+    if admin.role != ROLE_ADMIN or not admin.is_active:
+        raise AppError(403, "FORBIDDEN", "Bạn không có quyền thực hiện thao tác này.")
     user = database.get(User, user_id)
     if user is None:
         raise AppError(404, "USER_NOT_FOUND", "Không tìm thấy người dùng.")

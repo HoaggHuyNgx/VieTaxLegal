@@ -26,12 +26,14 @@ from app.main import app  # noqa: E402
 from app.services.auth.login_throttle import (  # noqa: E402
     get_email_code_throttle,
     get_email_verify_throttle,
+    get_login_ip_throttle,
     get_login_throttle,
     get_register_throttle,
 )
 
 THROTTLES = (
     get_login_throttle,
+    get_login_ip_throttle,
     get_register_throttle,
     get_email_code_throttle,
     get_email_verify_throttle,

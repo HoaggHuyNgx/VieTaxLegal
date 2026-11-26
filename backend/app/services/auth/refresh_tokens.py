@@ -72,6 +72,15 @@ def issue_refresh_token(
     return raw
 
 
+def _lock_user(database: Session, user_id: UUID) -> None:
+    """Queue every rotation and revocation of one account behind its user row, until commit.
+
+    Without it a logout's UPDATE cannot see the successor a concurrent rotation is inserting, and
+    that token survives. Take this lock before any token lock, so the two cannot deadlock.
+    """
+    database.scalar(select(User.id).where(User.id == user_id).with_for_update())
+
+
 def _revoke(database: Session, *conditions: object) -> None:
     database.execute(
         update(RefreshToken)
@@ -83,6 +92,7 @@ def _revoke(database: Session, *conditions: object) -> None:
 
 
 def revoke_all_for_user(database: Session, user_id: UUID) -> None:
+    _lock_user(database, user_id)
     _revoke(database, RefreshToken.user_id == user_id)
 
 
@@ -94,6 +104,7 @@ def revoke_session(database: Session, raw_token: str | None) -> None:
         select(RefreshToken).where(RefreshToken.token_hash == hash_refresh_token(raw_token))
     )
     if row:
+        _lock_user(database, row.user_id)
         _revoke(database, RefreshToken.family_id == row.family_id)
 
 
@@ -104,11 +115,13 @@ def rotate_refresh_token(database: Session, raw_token: str | None) -> tuple[User
     """
     if not raw_token:
         raise _invalid()
-    row = database.scalar(
-        select(RefreshToken)
-        .where(RefreshToken.token_hash == hash_refresh_token(raw_token))
-        .with_for_update()
-    )
+    by_token = select(RefreshToken).where(RefreshToken.token_hash == hash_refresh_token(raw_token))
+    owner = database.scalar(by_token)
+    if owner is None:
+        raise _invalid()
+    _lock_user(database, owner.user_id)
+    # Read again under the lock: whoever held it may have revoked or removed this token.
+    row = database.scalar(by_token.with_for_update().execution_options(populate_existing=True))
     if row is None:
         raise _invalid()
 

@@ -1,10 +1,16 @@
 from datetime import datetime, timedelta, timezone
+from uuid import UUID
 
+import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import select
+from sqlalchemy import event, select, update
 
+from app.core.errors import AppError
 from app.models.refresh_token import RefreshToken
 from app.models.user import ROLE_ADMIN, User
+from app.schemas.admin import AdminUserUpdate
+from app.services.admin import update_user
+from app.services.auth.refresh_tokens import revoke_all_for_user
 from tests.test_auth import create_user, register_payload
 
 PASSWORD = "Mat-khau-an-toan-2026!"
@@ -192,3 +198,60 @@ def test_cors_preflight_allows_patch_for_admin_routes(client: TestClient) -> Non
 
     assert response.status_code == 200
     assert "PATCH" in response.headers["access-control-allow-methods"]
+
+
+@pytest.mark.parametrize("path", ["/api/auth/refresh", "/api/auth/logout", None])
+def test_token_changes_lock_the_user_row_first(
+    client: TestClient, database_session, path: str | None
+) -> None:
+    """Rotation and revocation must queue on one lock, or a token born during a logout survives.
+
+    SQLite ignores FOR UPDATE, so this only checks the order the statements ask for.
+    """
+    create_user(client)
+    user_id = UUID(client.get("/api/auth/me").json()["id"])
+    steps: list[str] = []
+
+    def record(state) -> None:
+        statement = state.statement
+        locked = getattr(statement, "_for_update_arg", None) is not None
+        if state.is_select and locked:
+            steps.append(f"lock {statement.column_descriptions[0]['entity'].__tablename__}")
+        elif state.is_update:
+            steps.append(f"update {statement.table.name}")
+
+    event.listen(database_session, "do_orm_execute", record)
+    if path:
+        client.post(path)
+    else:  # what deactivating an account does
+        revoke_all_for_user(database_session, user_id)
+    event.remove(database_session, "do_orm_execute", record)
+
+    assert steps[0] == "lock users"
+    assert any("refresh_tokens" in step for step in steps[1:])
+
+
+def test_an_admin_demoted_meanwhile_cannot_demote_others(
+    client: TestClient, database_session
+) -> None:
+    """Two admins demoting each other at once must not leave the system with none."""
+    create_user(client, email="other@example.com", username="other_admin")
+    create_user(client)
+    promote(database_session, "huy_legal")
+    promote(database_session, "other_admin")
+    me = database_session.scalar(select(User).where(User.username == "huy_legal"))
+    other = database_session.scalar(select(User).where(User.username == "other_admin"))
+    database_session.execute(
+        update(User)
+        .where(User.id == me.id)
+        .values(role="user")
+        .execution_options(synchronize_session=False)
+    )
+    database_session.commit()
+
+    with pytest.raises(AppError) as refused:
+        update_user(database_session, me, other.id, AdminUserUpdate(role="user"))
+
+    assert refused.value.status_code == 403
+    database_session.refresh(other)
+    assert other.role == ROLE_ADMIN

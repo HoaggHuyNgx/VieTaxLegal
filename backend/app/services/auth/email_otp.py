@@ -128,7 +128,13 @@ def verify_code(database: Session, email: str, code: str) -> str:
     if not hmac.compare_digest(row.code_hash, _hash_code(email, code)):
         raise AppError(400, "OTP_INVALID", "Mã xác minh không đúng.")
 
-    row.consumed_at = now
+    # Retire every unused code of this address, or an older one becomes "the newest unused".
+    database.execute(
+        update(EmailOtp)
+        .where(EmailOtp.email == email, EmailOtp.consumed_at.is_(None))
+        .values(consumed_at=now)
+        .execution_options(synchronize_session=False)
+    )
     database.commit()
     return create_email_proof(email)
 

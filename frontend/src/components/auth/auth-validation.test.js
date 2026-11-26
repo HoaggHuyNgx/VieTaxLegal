@@ -73,3 +73,23 @@ describe('mapBackendErrors', () => {
     expect(mapBackendErrors(undefined)).toEqual({})
   })
 })
+
+describe('mapBackendErrors for rejected input', () => {
+  // Validation messages come from the framework, partly in English: show the catalog's wording.
+  it('replaces server text with a key per form field', () => {
+    const fields = { email: 'value is not a valid email address', password: 'x', identifier: 'y' }
+
+    expect(mapBackendErrors(fields, 'VALIDATION_ERROR')).toEqual({
+      email: 'auth.validation.emailInvalid',
+      password: 'auth.validation.passwordWeak',
+      loginPassword: 'auth.validation.serverField',
+      loginIdentifier: 'auth.validation.serverField',
+    })
+  })
+
+  it('keeps the server wording for other errors', () => {
+    expect(mapBackendErrors({ email: 'Email đã tồn tại.' }, 'EMAIL_TAKEN')).toEqual({
+      email: 'Email đã tồn tại.',
+    })
+  })
+})

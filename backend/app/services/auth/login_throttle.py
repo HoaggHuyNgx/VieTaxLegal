@@ -62,6 +62,15 @@ class LoginThrottle:
         with self._lock:
             self._failures.pop(key, None)
 
+    def release(self, key: str) -> None:
+        """Take back one counted attempt, keeping the others (unlike `reset`)."""
+        with self._lock:
+            stamps = self._failures.get(key)
+            if stamps:
+                stamps.pop()
+                if not stamps:
+                    del self._failures[key]
+
 
 @lru_cache
 def get_register_throttle() -> LoginThrottle:
@@ -101,5 +110,15 @@ def get_login_throttle() -> LoginThrottle:
     settings = get_settings()
     return LoginThrottle(
         settings.login_max_failed_attempts,
+        settings.login_attempt_window_minutes * 60,
+    )
+
+
+@lru_cache
+def get_login_ip_throttle() -> LoginThrottle:
+    """Failed logins per client address, across identifiers (password spraying)."""
+    settings = get_settings()
+    return LoginThrottle(
+        settings.login_max_failed_attempts * 6,  # many people can share one address
         settings.login_attempt_window_minutes * 60,
     )
