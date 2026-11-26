@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useI18n } from '../../i18n/useI18n'
-import { safeExternalUrl } from './chat-sources'
+import { citationMeta, safeExternalUrl } from './chat-sources'
 import { DocumentIcon, MinusIcon, PlusIcon, SparkleIcon } from './ChatIcons'
 
 const VISIBLE_SOURCE_LIMIT = 3
@@ -15,16 +15,11 @@ const EMPTY_TEXT = 'm-0 text-[10.5px] leading-[1.65] text-chat-muted'
 const CARD_TEXT = 'block text-[11.5px] leading-[1.45] font-[650] [overflow-wrap:anywhere]'
 
 // Every optional key (url, excerpt, locator, documentNumber, issuedOn) may be
-// absent. Render a field only when the backend sent it, and never invent one:
-// a made-up article or document number is the biggest risk in a legal product.
+// absent. Render a field only when the backend sent it, and never invent one.
 function SourceCard({ citation }) {
   const { t } = useI18n()
   const href = safeExternalUrl(citation.url)
-  const meta = [
-    citation.locator,
-    citation.documentNumber,
-    citation.issuedOn ? t('chat.sources.issuedOn', { date: citation.issuedOn }) : null,
-  ].filter(Boolean)
+  const meta = citationMeta(citation, t)
 
   return (
     <li className="source-card grid grid-cols-[28px_minmax(0,1fr)] gap-[9px] rounded-chat border border-chat-border bg-chat-surface p-[11px_12px] shadow-chat-soft hover:border-chat-border-hover">
@@ -48,9 +43,9 @@ function SourceCard({ citation }) {
         ) : (
           <span className={`source-card-title ${CARD_TEXT} text-chat-ink-soft`}>{citation.title}</span>
         )}
-        {meta.length > 0 ? (
+        {meta ? (
           <p className="source-card-meta mt-[5px] text-[10px] leading-[1.6] font-semibold [overflow-wrap:anywhere] text-chat-muted">
-            {meta.join(' · ')}
+            {meta}
           </p>
         ) : null}
         {citation.excerpt ? (

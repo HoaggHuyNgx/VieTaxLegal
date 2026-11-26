@@ -8,6 +8,10 @@ const en = {
     brandName: 'VieTaxLegal',
     pageTitle: 'VieTaxLegal - AI legal and tax assistant for Vietnamese businesses',
     pageDescription: 'VieTaxLegal — AI legal and tax assistant for Vietnamese businesses',
+    errorBoundary: {
+      message: 'Something went wrong on this page. Reload it; saved conversations are kept.',
+      reload: 'Reload page',
+    },
   },
 
   landing: {
@@ -54,9 +58,9 @@ const en = {
         },
         {
           id: 'ragReady',
-          title: 'Ready for RAG',
+          title: 'Cited sources',
           description:
-            'The retrieval layer is already separated, so verified legal sources can be added later.',
+            'When the legal corpus has a matching source, the answer shows its number and article to check.',
         },
       ],
     },
@@ -96,7 +100,7 @@ const en = {
           id: 'trustworthy',
           question: 'Is VieTaxLegal reliable?',
           answer:
-            'The Beta supports first-pass research with AI but has no RAG corpus of legal sources yet. Check that a document is still in force, or consult a professional, before you act on anything.',
+            'The Beta can search a limited corpus (tax, labour, enterprise law) and cites sources when it finds them. The corpus is incomplete and the AI can still be wrong: check that a document is in force, or consult a professional, before you act.',
         },
         {
           id: 'benefits',
@@ -149,9 +153,7 @@ const en = {
       links: [
         { id: 'product', label: 'Product' },
         { id: 'features', label: 'Features' },
-        { id: 'pricing', label: 'Pricing' },
         { id: 'contact', label: 'Contact' },
-        { id: 'privacy', label: 'Privacy policy' },
       ],
     },
   },
@@ -268,9 +270,9 @@ const en = {
 
     terms: {
       prefix: 'I agree to the ',
-      termsLink: 'Terms of Use',
+      termsName: 'Terms of Use',
       middle: ' and the ',
-      privacyLink: 'Privacy Policy',
+      privacyName: 'Privacy Policy',
       suffix: '.',
     },
 

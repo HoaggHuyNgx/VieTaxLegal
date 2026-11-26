@@ -40,6 +40,10 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       SMTP_FROM: ${SMTP_FROM:-}
       RAG_ENABLED: ${RAG_ENABLED:-false}
+      # Optional retrieval steps, off while blank or 0. RAG_MIN_TOP_SCORE is the no-source gate.
+      RAG_QUERY_PLANNER_MODEL: ${RAG_QUERY_PLANNER_MODEL:-}
+      RAG_RERANK_MODEL: ${RAG_RERANK_MODEL:-}
+      RAG_MIN_TOP_SCORE: ${RAG_MIN_TOP_SCORE:-0}
       QDRANT_URL: http://qdrant:6333
     volumes:
       - ./backend/corpus:/app/corpus:ro # source of truth for RAG; the index is rebuildable

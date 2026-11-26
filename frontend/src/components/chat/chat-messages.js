@@ -1,10 +1,15 @@
+// Not `crypto.randomUUID`: it only exists on https and localhost, so a demo opened over
+// `http://<LAN-IP>` could not send at all. The id just has to be unique within this tab.
+let temporaryIdCount = 0
+
 /**
  * A placeholder shown immediately on send, before the server echoes back the
  * persisted row in `meta`. Its id is temporary and gets replaced there.
  */
 export function createTemporaryMessage(role, content) {
+  temporaryIdCount += 1
   return {
-    id: crypto.randomUUID(),
+    id: `temporary-${Date.now()}-${temporaryIdCount}`,
     role,
     content,
     status: role === 'assistant' ? 'pending' : 'completed',

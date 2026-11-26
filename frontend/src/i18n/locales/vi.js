@@ -12,6 +12,10 @@ const vi = {
     brandName: 'VieTaxLegal',
     pageTitle: 'VieTaxLegal - AI pháp lý & thuế cho doanh nghiệp Việt Nam',
     pageDescription: 'VieTaxLegal — AI pháp lý và thuế cho doanh nghiệp Việt Nam',
+    errorBoundary: {
+      message: 'Trang gặp lỗi. Hãy tải lại; hội thoại đã lưu không bị mất.',
+      reload: 'Tải lại trang',
+    },
   },
 
   landing: {
@@ -56,8 +60,9 @@ const vi = {
         },
         {
           id: 'ragReady',
-          title: 'Sẵn sàng mở rộng RAG',
-          description: 'Kiến trúc đã tách lớp truy xuất để bổ sung nguồn luật được kiểm chứng sau này.',
+          title: 'Trích dẫn nguồn',
+          description:
+            'Khi kho văn bản có nguồn phù hợp, câu trả lời kèm số hiệu và Điều/Khoản để bạn đối chiếu.',
         },
       ],
     },
@@ -96,7 +101,7 @@ const vi = {
           id: 'trustworthy',
           question: 'VieTaxLegal có đáng tin cậy không?',
           answer:
-            'Phiên bản Beta hỗ trợ tra cứu ban đầu bằng AI nhưng chưa có kho nguồn luật RAG. Cần kiểm tra hiệu lực văn bản hoặc tham vấn chuyên gia trước khi áp dụng.',
+            'Phiên bản Beta có thể tra cứu trên một kho văn bản giới hạn (thuế, lao động, doanh nghiệp) và trích nguồn khi tìm được. Kho chưa đầy đủ và AI vẫn có thể sai: hãy kiểm tra hiệu lực văn bản hoặc tham vấn chuyên gia trước khi áp dụng.',
         },
         {
           id: 'benefits',
@@ -149,9 +154,7 @@ const vi = {
       links: [
         { id: 'product', label: 'Sản phẩm' },
         { id: 'features', label: 'Tính năng' },
-        { id: 'pricing', label: 'Bảng giá' },
         { id: 'contact', label: 'Liên hệ' },
-        { id: 'privacy', label: 'Chính sách bảo mật' },
       ],
     },
   },
@@ -272,9 +275,9 @@ const vi = {
     // links are rendered by the component and joined around these pieces.
     terms: {
       prefix: 'Tôi đồng ý với ',
-      termsLink: 'Điều khoản sử dụng',
+      termsName: 'Điều khoản sử dụng',
       middle: ' và ',
-      privacyLink: 'Chính sách bảo mật',
+      privacyName: 'Chính sách bảo mật',
       suffix: '.',
     },
 

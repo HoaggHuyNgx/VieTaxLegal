@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useI18n } from '../../i18n/useI18n'
-import { safeExternalUrl } from './chat-sources'
+import { citationMeta, safeExternalUrl } from './chat-sources'
 import { CopyIcon, LogoMark } from './ChatIcons'
 
 // Button font/color come from the chat-wide base rules (index.css), so only layout is set here.
@@ -30,19 +30,31 @@ function CitationList({ citations }) {
         // are not. Anything other than http(s) is dropped rather than rendered:
         // this text comes from the model.
         const safeUrl = safeExternalUrl(citation.url)
+        const meta = citationMeta(citation, t)
         return (
-          <div className={SOURCE_ROW} key={citation.id}>
-            <span className="mr-0.5 inline-grid size-[19px] flex-none place-items-center rounded-[50%] bg-chat-number-bg text-[9px] font-[750] text-chat-number-fg">
-              {citation.id}
-            </span>
-            {safeUrl ? (
-              <a className="text-chat-source-link underline" href={safeUrl} target="_blank" rel="noreferrer">
-                {citation.title}
-              </a>
-            ) : (
-              <span>{citation.title}</span>
-            )}
-            {citation.excerpt ? <span>{citation.excerpt}</span> : null}
+          <div className="mb-[5px] last:mb-0" key={citation.id}>
+            <div className={SOURCE_ROW}>
+              <span className="mr-0.5 inline-grid size-[19px] flex-none place-items-center rounded-[50%] bg-chat-number-bg text-[9px] font-[750] text-chat-number-fg">
+                {citation.id}
+              </span>
+              {safeUrl ? (
+                <a
+                  className="text-chat-source-link underline"
+                  href={safeUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {citation.title}
+                </a>
+              ) : (
+                <span>{citation.title}</span>
+              )}
+              {citation.excerpt ? <span>{citation.excerpt}</span> : null}
+            </div>
+            {/* Outside the row, so narrow screens wrap it instead of cutting it off. */}
+            {meta ? (
+              <p className="source-meta m-0 pl-[26px] font-semibold [overflow-wrap:anywhere]">{meta}</p>
+            ) : null}
           </div>
         )
       })}

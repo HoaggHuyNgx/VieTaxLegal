@@ -13,7 +13,7 @@ import {
   OPTIONAL_MARK,
   REQUIRED_MARK,
   TERMS_LABEL,
-  TERMS_LINK,
+  TERMS_NAME,
   TOGGLE_PASSWORD,
 } from './auth-styles'
 
@@ -184,13 +184,9 @@ export default function RegisterForm({
         />
         <span>
           {t('auth.terms.prefix')}
-          <a className={TERMS_LINK} href="#terms">
-            {t('auth.terms.termsLink')}
-          </a>
+          <span className={TERMS_NAME}>{t('auth.terms.termsName')}</span>
           {t('auth.terms.middle')}
-          <a className={TERMS_LINK} href="#privacy">
-            {t('auth.terms.privacyLink')}
-          </a>
+          <span className={TERMS_NAME}>{t('auth.terms.privacyName')}</span>
           {t('auth.terms.suffix')}
         </span>
       </label>

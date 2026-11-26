@@ -64,7 +64,7 @@ export default function AuthCard() {
     // The code input only takes digits; a code belongs to one address, so editing the
     // email discards any code requested for the old one.
     const nextValue = name === 'emailCode' ? value.replace(/\D/g, '') : value
-    if (name === 'email' && emailVerification.status === 'sent') emailVerification.reset()
+    if (name === 'email') emailVerification.reset() // also drops a request still in flight
     setFormData((current) => ({ ...current, [name]: type === 'checkbox' ? checked : nextValue }))
     setErrors((current) => ({ ...current, [name]: '' }))
     setFeedback(null)

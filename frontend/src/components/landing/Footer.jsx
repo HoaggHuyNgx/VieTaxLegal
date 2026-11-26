@@ -7,9 +7,7 @@ const CONTACT_EMAIL = 'hello@vietaxlegal.vn'
 const NAV_HREFS = {
   product: '#features',
   features: '#features',
-  pricing: '#pricing',
-  contact: '#contact',
-  privacy: '#privacy',
+  contact: `mailto:${CONTACT_EMAIL}`,
 }
 
 export default function Footer() {

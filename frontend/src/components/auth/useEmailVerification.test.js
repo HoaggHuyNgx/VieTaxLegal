@@ -91,4 +91,29 @@ describe('useEmailVerification', () => {
     expect(result.current.status).toBe('idle')
     expect(result.current.error).toBeNull()
   })
+
+  it.each(['sendCode', 'verifyCode'])(
+    'ignores a %s answer that arrives after the email was edited',
+    async (action) => {
+      let answer
+      const pending = new Promise((resolve) => (answer = resolve))
+      sendEmailCode.mockReturnValue(pending)
+      verifyEmailCode.mockReturnValue(pending)
+      const { result } = renderHook(() => useEmailVerification())
+      let request
+      act(() => {
+        request = result.current[action]('old@example.com', '123456')
+      })
+
+      act(() => result.current.reset())
+      await act(async () => {
+        answer({ proof: 'proof-of-the-old-address' })
+        await request
+      })
+
+      expect(result.current.status).toBe('idle')
+      expect(result.current.proof).toBe('')
+      expect(result.current.isBusy).toBe(false)
+    }
+  )
 })

@@ -59,6 +59,11 @@ export default function EmailVerificationField({
               placeholder={t('auth.emailCode.placeholder')}
               value={code}
               onChange={onCodeChange}
+              onKeyDown={(event) => {
+                if (event.key !== 'Enter') return
+                event.preventDefault() // Enter here must not submit the whole sign-up form
+                if (!isBusy && code.length === 6) onVerify()
+              }}
               aria-invalid={Boolean(errorText)}
               aria-describedby={errorText ? 'email-code-error' : undefined}
             />

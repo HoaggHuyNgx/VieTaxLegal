@@ -5,6 +5,20 @@ export function safeExternalUrl(url) {
   return /^https?:\/\//i.test(url || '') ? url : null
 }
 
+/**
+ * Article, document number and issue date, as one line. Only what the backend sent: a made-up
+ * article or document number is the biggest risk in a legal product.
+ */
+export function citationMeta(citation, t) {
+  return [
+    citation.locator,
+    citation.documentNumber,
+    citation.issuedOn ? t('chat.sources.issuedOn', { date: citation.issuedOn }) : null,
+  ]
+    .filter(Boolean)
+    .join(' · ')
+}
+
 // Sources belong to the newest assistant turn, whatever its status — not to the
 // newest turn that happens to have citations. If turn 1 cited documents and
 // turn 2 cited none, carrying turn 1's citations forward would attach real legal

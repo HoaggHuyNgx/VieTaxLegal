@@ -156,4 +156,38 @@ describe('AuthCard email verification at sign-up', () => {
     expect(register).not.toHaveBeenCalled()
     expect(screen.getByText('Vui lòng xác minh email bằng mã trước khi đăng ký.')).toBeTruthy()
   })
+
+  it('does not ask for a code when the email changed while it was being sent', async () => {
+    let sent
+    sendEmailCode.mockReturnValue(new Promise((resolve) => (sent = resolve)))
+    renderCard()
+    openRegisterTab()
+    typeInto(/^Email/, 'old@example.com')
+    fireEvent.click(screen.getByRole('button', { name: 'Gửi mã xác minh' }))
+
+    typeInto(/^Email/, 'new@example.com')
+    sent()
+    await waitFor(() => expect(sendEmailCode).toHaveBeenCalled())
+    await Promise.resolve()
+
+    expect(screen.queryByLabelText('Mã xác minh')).toBeNull()
+    expect(screen.getByRole('button', { name: 'Gửi mã xác minh' }).disabled).toBe(false)
+  })
+
+  it('checks the code on Enter instead of submitting the sign-up form', async () => {
+    sendEmailCode.mockResolvedValue(undefined)
+    verifyEmailCode.mockResolvedValue({ proof: 'signed-proof' })
+    renderCard()
+    openRegisterTab()
+    typeInto(/^Email/, 'huy@example.com')
+    fireEvent.click(screen.getByRole('button', { name: 'Gửi mã xác minh' }))
+    const codeInput = await screen.findByLabelText('Mã xác minh')
+    fireEvent.change(codeInput, { target: { value: '123456' } })
+
+    const notPrevented = fireEvent.keyDown(codeInput, { key: 'Enter' })
+
+    expect(notPrevented).toBe(false)
+    await waitFor(() => expect(verifyEmailCode).toHaveBeenCalledWith('huy@example.com', '123456'))
+    expect(register).not.toHaveBeenCalled()
+  })
 })

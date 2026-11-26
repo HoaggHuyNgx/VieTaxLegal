@@ -168,7 +168,7 @@ $env:ANTHROPIC_API_KEY = "..."   # hoặc OPENAI_API_KEY + CHAT_PROVIDER=openai
 docker compose up --build
 ```
 
-Mở `http://localhost:3000`. Có thể đặt các biến trên vào file `.env` ở thư mục gốc (đã gitignore). `RAG_ENABLED=true` để bật RAG; `backend/corpus/` được mount read-only, index Qdrant dựng lại bằng `scripts/corpus_ingest.py`.
+Mở `http://localhost:3000`. Có thể đặt các biến trên vào file `.env` ở thư mục gốc (đã gitignore). `RAG_ENABLED=true` để bật RAG; `backend/corpus/` được mount read-only, index Qdrant dựng lại bằng `scripts/corpus_ingest.py`. Compose không đọc `backend/.env`: muốn bật planner, rerank hay cổng "không có nguồn" thì đặt `RAG_QUERY_PLANNER_MODEL`, `RAG_RERANK_MODEL`, `RAG_MIN_TOP_SCORE` ở `.env` thư mục gốc.
 Nếu đang chạy container Qdrant riêng (`scripts/start-qdrant.ps1`) thì dừng nó trước, vì cùng cổng 6333.
 
 ## Xác thực & phân quyền

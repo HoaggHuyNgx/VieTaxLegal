@@ -1,5 +1,6 @@
 from typing import Annotated
 from urllib.parse import urlencode
+from uuid import UUID
 
 from fastapi import APIRouter, Cookie, Depends, Response
 from fastapi.responses import RedirectResponse
@@ -42,16 +43,23 @@ def _back_to_app(path: str, **params: str) -> RedirectResponse:
     return response
 
 
+def _start(intent: google_oauth.Intent, failure_path: str, user_id: UUID | None = None):
+    # The browser navigates to these URLs, so a refusal goes back to the app, not out as JSON.
+    try:
+        url, state_cookie = google_oauth.start_flow(intent, user_id)
+    except AppError as failure:
+        return _back_to_app(failure_path, authError=failure.code)
+    return _redirect_to_google(url, state_cookie)
+
+
 @router.get("/login")
 def google_login() -> Response:
-    url, state_cookie = google_oauth.start_flow("login")
-    return _redirect_to_google(url, state_cookie)
+    return _start("login", "/")
 
 
 @router.get("/link")
 def google_link(current_user: Annotated[User, Depends(get_current_user)]) -> Response:
-    url, state_cookie = google_oauth.start_flow("link", current_user.id)
-    return _redirect_to_google(url, state_cookie)
+    return _start("link", "/settings", current_user.id)
 
 
 @router.get("/callback")

@@ -67,10 +67,22 @@ def user_count(database_session) -> int:
 
 
 def test_google_login_is_off_until_configured(client: TestClient) -> None:
+    """The browser navigates here, so it must land back in the app, not on a JSON error."""
     response = client.get("/api/auth/google/login", follow_redirects=False)
 
-    assert response.status_code == 503
-    assert response.json()["error"]["code"] == "GOOGLE_NOT_CONFIGURED"
+    assert response.status_code == 302
+    location = response.headers["location"]
+    assert location.startswith(get_settings().frontend_url)
+    assert location.endswith("/?authError=GOOGLE_NOT_CONFIGURED")
+
+
+def test_google_link_when_unconfigured_returns_to_settings(client: TestClient) -> None:
+    create_user(client)
+
+    response = client.get("/api/auth/google/link", follow_redirects=False)
+
+    assert response.status_code == 302
+    assert response.headers["location"].endswith("/settings?authError=GOOGLE_NOT_CONFIGURED")
 
 
 def test_login_redirects_to_google_with_pkce_and_state_cookie(

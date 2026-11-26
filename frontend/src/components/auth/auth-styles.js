@@ -27,7 +27,7 @@ export const CHECKBOX_LABEL =
   'flex cursor-pointer items-start gap-2 text-[0.85rem] leading-[1.45] text-gray-700'
 export const CHECKBOX_INPUT = 'mt-[0.15rem] size-4 accent-blue-primary'
 export const TERMS_LABEL = '-mt-[0.1rem] mb-4'
-export const TERMS_LINK = `font-medium text-blue-primary no-underline hover:underline ${FOCUS_RING}`
+export const TERMS_NAME = 'font-medium' // no terms or privacy page exists yet, so not a link
 // `font: inherit` here also resets weight to the inherited value, so no font-medium.
 export const FORGOT_LINK = `cursor-pointer border-none bg-transparent p-0 [font:inherit] text-blue-primary no-underline hover:underline ${FOCUS_RING}`
 
