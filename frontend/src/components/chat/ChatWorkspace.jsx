@@ -5,20 +5,19 @@ import { discardDraft, readDraft, saveDraft } from './chat-draft'
 import { DocumentIcon, LogoMark, PaperclipIcon, SendIcon, ShieldIcon, SparkleIcon } from './ChatIcons'
 import { formatMessageTime } from './message-time'
 import SuggestionGrid from './SuggestionGrid'
-import ToolTabs from './ToolTabs'
 
 const MAX_MESSAGE_LENGTH = 4000
 const NEAR_BOTTOM_PX = 80
 
 // Sparkles are drawn over the logo; positions are the old absolute offsets.
 const SPARKLE = 'absolute text-chat-sparkle-soft'
-// Controls without a backend share this look (see also ToolTabs).
+// Controls without a backend share this look.
 const COMING_SOON = 'opacity-[0.62]'
 const TOOLTIP =
   'relative inline-flex after:pointer-events-none after:absolute after:bottom-[calc(100%+7px)] after:left-1/2 after:z-5 after:rounded-[6px] after:bg-chat-tooltip after:px-2 after:py-1 after:text-[9.5px] after:font-semibold after:whitespace-nowrap after:text-white after:opacity-0 after:content-[attr(data-tooltip)] after:[transform:translateX(-50%)] after:transition-[opacity] after:duration-150 after:ease-[ease] hover:after:opacity-100 motion-reduce:after:transition-none'
 
-// Same reason as ToolTabs: the backend has no upload endpoint yet, so these
-// render inert with a "coming soon" hint rather than faking attachments.
+// The backend has no upload endpoint yet, so these render inert with a
+// "coming soon" hint rather than faking attachments.
 const COMPOSER_TOOLS = [
   { id: 'attach', labelKey: 'chat.workspace.attachFile', Icon: PaperclipIcon },
   { id: 'document', labelKey: 'chat.workspace.attachDocument', Icon: DocumentIcon },
@@ -88,7 +87,6 @@ export default function ChatWorkspace({
 
   return (
     <main className="col-2 row-2 flex min-h-0 min-w-0 flex-1 flex-col bg-chat-surface px-5 lte-760:col-1 lte-760:px-[10px]">
-      <ToolTabs />
       <div
         className="thread-scroll min-h-0 flex-1 overflow-y-auto px-3 pb-[10px] lte-760:px-0 lte-760:pb-2"
         ref={scrollAreaRef}

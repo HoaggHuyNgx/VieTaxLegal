@@ -55,7 +55,6 @@
   --color-chat-blue: #1449ea;
   --color-chat-blue-strong: #0d3cdf;
   --color-chat-light-blue: #eff4ff;
-  --color-chat-tab-active: #eef3ff;
   --color-chat-danger: #b43f4d;
   --color-chat-danger-soft: #fff6f7;
 
@@ -146,7 +145,6 @@
   --gradient-chat-halo: radial-gradient(circle, #e2ebff 0%, #eef3ff 55%, rgb(238 243 255 / 0%) 72%);
 
   /* chat workspace (messages, composer, suggestions) */
-  --color-chat-badge: #8a97b2;
   --color-chat-sparkle-blue: #a9c5f7;
   --color-chat-sparkle-soft: #c3d6fb;
   --color-chat-heading: #172a61;

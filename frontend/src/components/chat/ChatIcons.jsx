@@ -53,15 +53,6 @@ export function ChevronDownIcon() {
   )
 }
 
-export function LegalIcon() {
-  return (
-    <Icon>
-      <rect x="5" y="4" width="14" height="16" rx="2" stroke="currentColor" strokeWidth="1.7" />
-      <path d="M9 9h6M9 13h6M9 17h3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-    </Icon>
-  )
-}
-
 export function SendIcon() {
   return (
     <Icon>
@@ -138,35 +129,6 @@ export function ChatBubbleIcon({ size = 26 }) {
         strokeLinejoin="round"
       />
       <path d="M9.5 12.2h5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-    </Icon>
-  )
-}
-
-export function CalculatorIcon() {
-  return (
-    <Icon>
-      <rect x="5" y="3.5" width="14" height="17" rx="2.2" stroke="currentColor" strokeWidth="1.7" />
-      <rect x="8" y="6.5" width="8" height="3" rx="1" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M9 13h.01M12 13h.01M15 13h.01M9 16.5h.01M12 16.5h.01M15 16.5h.01"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </Icon>
-  )
-}
-
-export function ScanIcon() {
-  return (
-    <Icon>
-      <path
-        d="M4 8.5V6a2 2 0 0 1 2-2h2.5M20 8.5V6a2 2 0 0 0-2-2h-2.5M4 15.5V18a2 2 0 0 0 2 2h2.5M20 15.5V18a2 2 0 0 1-2 2h-2.5"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-      />
-      <path d="M4 12h16" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
     </Icon>
   )
 }

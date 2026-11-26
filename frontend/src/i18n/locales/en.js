@@ -334,10 +334,6 @@ const en = {
 
   chat: {
     workspace: {
-      toolsAria: 'VieTaxLegal tools',
-      toolLabel: 'Legal research',
-      toolTax: 'Tax calculator',
-      toolScan: 'Contract scan',
       comingSoon: 'Coming soon',
       comingSoonAria: '{{name}} — coming soon',
       attachFile: 'Attach file',

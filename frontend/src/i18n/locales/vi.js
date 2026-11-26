@@ -339,10 +339,6 @@ const vi = {
 
   chat: {
     workspace: {
-      toolsAria: 'Công cụ VieTaxLegal',
-      toolLabel: 'Tra cứu pháp luật',
-      toolTax: 'Tính thuế',
-      toolScan: 'Scan hợp đồng',
       comingSoon: 'Sắp có',
       comingSoonAria: '{{name}} — tính năng sắp có',
       attachFile: 'Đính kèm tệp',

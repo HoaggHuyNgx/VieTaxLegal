@@ -35,27 +35,7 @@ function renderWorkspace(props) {
   )
 }
 
-describe('ChatWorkspace tool tabs', () => {
-  // "Tính thuế" and "Scan hợp đồng" have no backend endpoint, so they must be
-  // visibly and actually inert rather than a mocked-up feature.
-  it('renders the unbuilt tools as disabled and labelled "Sắp có"', () => {
-    renderWorkspace()
-    const tax = screen.getByRole('button', { name: /Tính thuế/ })
-    const scan = screen.getByRole('button', { name: /Scan hợp đồng/ })
-
-    expect(tax.disabled).toBe(true)
-    expect(scan.disabled).toBe(true)
-    expect(tax.getAttribute('aria-disabled')).toBe('true')
-    expect(screen.getAllByText('Sắp có')).toHaveLength(2)
-  })
-
-  it('leaves the composer untouched when an unbuilt tool is clicked', () => {
-    renderWorkspace()
-    const textarea = screen.getByRole('textbox')
-    fireEvent.click(screen.getByRole('button', { name: /Tính thuế/ }))
-    expect(textarea.value).toBe('')
-  })
-
+describe('ChatWorkspace composer tools', () => {
   it('keeps the attach buttons disabled while no upload endpoint exists', () => {
     renderWorkspace()
     expect(screen.getByRole('button', { name: /Đính kèm tệp/ }).disabled).toBe(true)
