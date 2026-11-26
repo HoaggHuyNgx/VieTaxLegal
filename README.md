@@ -1,114 +1,115 @@
 # VieTaxLegal
 
-VieTaxLegal là nền tảng hỗ trợ tra cứu pháp luật và nghiệp vụ thuế bằng tiếng Việt. Dự án gồm
-frontend React, backend FastAPI, cơ sở dữ liệu PostgreSQL và lớp AI có thể chuyển đổi giữa
-Anthropic và OpenAI.
+VieTaxLegal is a Vietnamese-language assistant for looking up tax and business law. It has a React
+frontend, a FastAPI backend, a PostgreSQL database (Supabase) and an AI layer that can switch between
+Anthropic and OpenAI.
 
-Phiên bản hiện tại có xác thực tài khoản, chat pháp luật có lịch sử riêng theo từng người dùng và
-một pipeline RAG: kho văn bản pháp luật → chỉ mục Qdrant → truy xuất (dense/sparse/hybrid) → câu
-trả lời kèm trích dẫn thật. RAG tắt mặc định (`RAG_ENABLED=false`) và cần điền hiệu lực văn bản
-trước khi bật (xem [backend/README.md](backend/README.md)).
+The current version has accounts, a legal chat with per-user history, and a RAG pipeline: legal
+corpus → Qdrant index → retrieval (dense, sparse or hybrid) → an answer that cites real sources. RAG
+is off by default (`RAG_ENABLED=false`); see [backend/README.md](backend/README.md#ai-and-rag) to
+build the index and turn it on.
 
-## Trạng thái tính năng
+This is a graduation thesis project and is still in progress.
 
-| Tính năng                                       | Trạng thái      |
-| ----------------------------------------------- | --------------- |
-| Đăng ký, đăng nhập, đăng xuất và kiểm tra phiên | Hoàn thành      |
-| Cookie phiên HTTP-only và mật khẩu Argon2       | Hoàn thành      |
-| Chat streaming bằng SSE                         | Hoàn thành      |
-| Lưu, mở và xóa lịch sử hội thoại                | Hoàn thành      |
-| Anthropic và OpenAI provider (qua LangChain)    | Hoàn thành      |
-| Refresh token xoay vòng, vai trò admin, chặn dò mật khẩu | Hoàn thành |
-| Rate limit theo phút và theo ngày               | Hoàn thành      |
-| Giao diện song ngữ Việt–Anh                     | Hoàn thành      |
-| Kho văn bản pháp luật (21 văn bản) và parser     | Hoàn thành*     |
-| Chỉ mục Qdrant, embedding OpenAI, dense/hybrid   | Hoàn thành      |
-| Citation thật: lưu, trả về và hiển thị nguồn     | Hoàn thành      |
-| Bộ đánh giá RAG (câu hỏi, metric, runner, export) | Hoàn thành*     |
-| Tính thuế, scan hợp đồng và đính kèm tài liệu   | Chưa triển khai |
+## Feature status
 
-\* Cần con người hoàn tất: điền hiệu lực văn bản, bổ sung văn bản còn thiếu và duyệt bộ câu hỏi
-đánh giá.
+| Feature                                                        | Status          |
+| -------------------------------------------------------------- | --------------- |
+| Register, sign in, sign out, session check                     | Done            |
+| Email verification code before registration (needs SMTP)       | Done            |
+| Google sign-in and account linking (needs OAuth client)        | Done            |
+| HTTP-only session cookies, Argon2id passwords                  | Done            |
+| Rotating refresh tokens, admin role, login throttling          | Done            |
+| Streaming chat over SSE                                        | Done            |
+| Save, open and delete conversations                            | Done            |
+| Anthropic and OpenAI providers (via LangChain)                 | Done            |
+| Per-minute and per-day chat limits                             | Done            |
+| Vietnamese / English interface                                 | Done            |
+| Legal corpus (23 documents, 21 indexed) and Điều/Khoản parser  | Done            |
+| Qdrant index, OpenAI embeddings, dense / sparse / hybrid       | Done            |
+| Query rewriting, reranking, "no source" gate (optional)        | Done            |
+| Real citations: stored, returned and shown                     | Done            |
+| RAG evaluation (questions, metrics, runner, comparison, export) | Done\*          |
+| Tax calculation, contract scanning, file attachments           | Not built       |
 
-Khi RAG tắt hoặc không tìm thấy nguồn, chatbot không hiển thị nguồn hoặc điều luật giả và luôn
-cảnh báo người dùng cần kiểm tra lại hiệu lực văn bản.
+\* The evaluation questions still need human review. Until then every result is marked
+`provisional` and must not be quoted as a final number.
 
-## Kiến trúc hiện tại
+When RAG is off or finds nothing, the assistant shows no sources, never invents document numbers or
+articles, and always reminds the user to check that a document is still in force.
+
+## Architecture
 
 ```mermaid
 flowchart LR
-    U["Người dùng"] --> F["React / Vite"]
+    U["User"] --> F["React / Vite"]
     F -->|"/api proxy"| B["FastAPI"]
-    B --> D["PostgreSQL"]
-    B --> A["Anthropic hoặc OpenAI"]
-    B -->|"RAG_ENABLED"| Q["Qdrant (chỉ mục dựng lại được)"]
-    B -->|"nhúng truy vấn"| E["OpenAI Embeddings"]
+    B --> D["PostgreSQL (Supabase)"]
+    B --> A["Anthropic or OpenAI"]
+    B -->|"RAG_ENABLED"| Q["Qdrant (rebuildable index)"]
+    B -->|"query embedding"| E["OpenAI Embeddings"]
 ```
 
-Backend là lớp duy nhất truy cập dữ liệu ứng dụng; frontend không bao giờ kết nối database trực
-tiếp. Database là PostgreSQL do Supabase quản lý, backend kết nối qua Session pooler; không cần cài
-PostgreSQL trên máy.
+The backend is the only layer that touches application data; the frontend never connects to the
+database. The database is Supabase-managed PostgreSQL reached through the Session pooler, so no
+local PostgreSQL install is needed. Qdrant runs in Docker.
 
-## Công nghệ
+## Tech stack
 
-- Frontend: React 18, Vite, React Router DOM, React Markdown.
+- Frontend: React 18, Vite 5, React Router 6, Tailwind CSS v4, React Markdown (JavaScript, no
+  TypeScript).
 - Backend: Python 3.12+, FastAPI, Uvicorn, Pydantic.
-- Database: PostgreSQL trên Supabase, SQLAlchemy 2.0, Alembic, Psycopg.
-- Xác thực: Argon2 (`pwdlib`), JWT (`PyJWT`) và cookie HTTP-only.
-- AI: LangChain (`langchain-anthropic` Messages API hoặc `langchain-openai` Responses API) cho chat và embedding OpenAI; truy xuất Qdrant, hybrid và trích dẫn vẫn tự viết.
-- RAG: Qdrant (Docker), embedding OpenAI `text-embedding-3-small`,
-  truy xuất dense, sparse (BM25 tự cài) và hybrid (RRF).
+- Database: PostgreSQL on Supabase, SQLAlchemy 2, Alembic, Psycopg 3.
+- Auth: Argon2id (`pwdlib`), JWT (`PyJWT`), HTTP-only cookies.
+- AI: LangChain (`langchain-anthropic` or `langchain-openai` Responses API) for chat and OpenAI
+  embeddings. Qdrant retrieval, sparse vectors, RRF fusion, chunking and citations are hand-written.
+- RAG: Qdrant (Docker), OpenAI `text-embedding-3-small`, dense, sparse (hand-written BM25) and hybrid
+  (RRF) retrieval.
 - Streaming: Server-Sent Events (SSE).
-- Kiểm thử: Pytest, Vitest, Ruff, ESLint và Prettier.
-- CI: GitHub Actions cho frontend và backend.
+- Quality: Pytest, Ruff, Vitest, ESLint, Prettier; GitHub Actions CI for both sides.
 
-## Cấu trúc repository
+## Repository layout
 
 ```text
 VieTaxLegal/
 ├── backend/
 │   ├── app/
-│   │   ├── api/           # FastAPI routes và dependencies
-│   │   ├── core/          # Cấu hình, bảo mật và lỗi dùng chung
-│   │   ├── db/            # SQLAlchemy engine và session
-│   │   ├── models/        # Database models
+│   │   ├── api/           # FastAPI routes and dependencies (current user, roles)
+│   │   ├── core/          # settings, security, errors, logging
+│   │   ├── db/            # SQLAlchemy engine and session
+│   │   ├── models/        # database models
 │   │   ├── schemas/       # Pydantic request/response schemas
-│   │   └── services/      # auth/, chat/, rag/ (+ admin.py)
+│   │   └── services/      # admin.py, auth/, chat/, rag/{ingest,index,retrieve}
+│   ├── corpus/            # legal documents: source of truth for the index
+│   ├── rag_eval/          # evaluation harness, configs and results
+│   ├── scripts/           # corpus_*, eval_*, admin_create
 │   ├── migrations/        # Alembic migrations
-│   ├── tests/             # Backend tests
-│   ├── .env.example
-│   └── README.md          # Tài liệu backend chi tiết
+│   ├── tests/             # backend tests
+│   └── README.md          # backend details
 ├── frontend/
 │   ├── src/
-│   │   ├── components/
-│   │   │   ├── auth/      # Form và luồng xác thực
-│   │   │   ├── chat/      # Giao diện và luồng chat
-│   │   │   ├── common/    # Component dùng chung như LanguageToggle
-│   │   │   └── landing/   # Các khối của landing page
-│   │   ├── context/       # AuthContext và hook useAuth
-│   │   ├── data/          # Nội dung tĩnh của landing page
-│   │   ├── i18n/          # Internationalization và catalog VI/EN
-│   │   ├── pages/         # LandingPage và ChatPage
-│   │   ├── services/      # Lời gọi API và SSE client
-│   │   └── styles/        # index.css: token và luật nền Tailwind
-│   ├── .env.example
-│   ├── package.json
-│   └── README.md          # Tài liệu frontend chi tiết
-├── .github/workflows/     # CI frontend và backend
-└── README.md
+│   │   ├── components/    # admin/, auth/, chat/, common/, landing/
+│   │   ├── context/       # AuthContext and useAuth
+│   │   ├── data/          # static landing and chat content
+│   │   ├── i18n/          # translator and VI/EN catalogs
+│   │   ├── pages/         # Landing, Chat, Settings, Admin
+│   │   ├── services/      # API calls and SSE client
+│   │   └── styles/        # index.css: Tailwind tokens and base rules
+│   ├── nginx.conf         # production static server + /api proxy
+│   └── README.md          # frontend details
+├── docker-compose.yml     # Qdrant + backend + frontend
+└── .github/workflows/     # backend and frontend CI
 ```
 
-Tài liệu chi tiết theo từng phần nằm trong [backend/README.md](backend/README.md) và
-[frontend/README.md](frontend/README.md).
+## Requirements
 
-## Yêu cầu
+- Node.js 20.19+, 22.13+ or 24+, and npm.
+- Python 3.12 or newer.
+- A Supabase project (its Session pooler URL is `DATABASE_URL`).
+- An Anthropic or OpenAI API key for real chat answers.
+- Docker Desktop, only for Qdrant (RAG) or the Compose setup.
 
-- Node.js 20.19+, 22.13+ hoặc 24+ và npm.
-- Python 3.12 trở lên.
-- Một project Supabase đang hoạt động (lấy Session pooler URL làm `DATABASE_URL`).
-- API key của Anthropic hoặc OpenAI nếu muốn dùng chat thật.
-
-## Chạy nhanh trên Windows
+## Quick start on Windows
 
 ### 1. Backend
 
@@ -118,29 +119,26 @@ Copy-Item .env.example .env
 notepad .env
 ```
 
-Lấy Session pooler URL của project Supabase (xem
-[backend/README.md](backend/README.md#1-kết-nối-database-supabase)), điền vào `DATABASE_URL`, tạo
-`JWT_SECRET` có ít nhất 32 ký tự và cấu hình một AI provider. Không đưa database password, JWT
-secret hoặc API key lên GitHub.
+Put the Supabase Session pooler URL in `DATABASE_URL` (see
+[backend/README.md](backend/README.md#1-connect-the-database-supabase)), generate a `JWT_SECRET` of at
+least 32 characters and configure one AI provider. Never commit the database password, JWT secret or
+API keys.
 
 ```powershell
 py -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+.\.venv\Scripts\python.exe -m pip install -c constraints.txt -e ".[dev]"
 .\.venv\Scripts\python.exe -m alembic upgrade head
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --port 5000
 ```
 
-Giữ terminal backend mở. Kiểm tra:
+`alembic upgrade head` changes the real Supabase database. Keep the backend terminal open and check:
 
 - Health: <http://127.0.0.1:5000/api/health>
-- Swagger: <http://127.0.0.1:5000/docs>
-
-Hướng dẫn đầy đủ về database, migration, API và xử lý lỗi nằm trong
-[backend/README.md](backend/README.md).
+- Swagger UI: <http://127.0.0.1:5000/docs>
 
 ### 2. Frontend
 
-Mở terminal khác:
+In a second terminal:
 
 ```powershell
 cd D:\VieTaxLegal\frontend
@@ -148,83 +146,114 @@ npm install
 npm run dev
 ```
 
-Mở <http://localhost:3000>. Vite proxy các request `/api` tới backend ở
-`http://localhost:5000`.
+Open <http://localhost:3000>. Vite forwards every `/api` request to `http://localhost:5000`.
 
-Chi tiết về scripts, cấu trúc `src/`, luồng xác thực và SSE client nằm trong
-[frontend/README.md](frontend/README.md).
+## Docker Compose
 
-## Chạy bằng Docker
-
-Một lệnh dựng Qdrant, backend và frontend (nginx, proxy `/api`).
-Không có container Postgres: database vẫn là Supabase, truyền qua `DATABASE_URL`.
-Backend **không** tự chạy migration (database là dữ liệu thật); chạy tay khi cần:
-`docker compose run --rm backend alembic upgrade head`.
+One command starts Qdrant, the backend and the frontend (nginx serving the build and proxying
+`/api`). There is no Postgres container: the database is still Supabase, passed in as
+`DATABASE_URL`. The backend does **not** run migrations on start, because the database holds real
+data; run them by hand when needed with `docker compose run --rm backend alembic upgrade head`.
 
 ```powershell
 $env:DATABASE_URL = "postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres"
-$env:JWT_SECRET = "chuoi-ngau-nhien-it-nhat-32-ky-tu"
-$env:ANTHROPIC_API_KEY = "..."   # hoặc OPENAI_API_KEY + CHAT_PROVIDER=openai
+$env:JWT_SECRET = "a-random-string-of-at-least-32-characters"
+$env:ANTHROPIC_API_KEY = "..."   # or OPENAI_API_KEY + CHAT_PROVIDER=openai
 docker compose up --build
 ```
 
-Mở `http://localhost:3000`. Có thể đặt các biến trên vào file `.env` ở thư mục gốc (đã gitignore). `RAG_ENABLED=true` để bật RAG; `backend/corpus/` được mount read-only, index Qdrant dựng lại bằng `scripts/corpus_ingest.py`. Compose không đọc `backend/.env`: muốn bật planner, rerank hay cổng "không có nguồn" thì đặt `RAG_QUERY_PLANNER_MODEL`, `RAG_RERANK_MODEL`, `RAG_MIN_TOP_SCORE` ở `.env` thư mục gốc.
-Nếu đang chạy container Qdrant riêng (`scripts/start-qdrant.ps1`) thì dừng nó trước, vì cùng cổng 6333.
+Open <http://localhost:3000>. The same variables can live in a `.env` file at the repository root
+(gitignored). Compose does not read `backend/.env`: set `RAG_ENABLED=true` and, if wanted,
+`RAG_QUERY_PLANNER_MODEL`, `RAG_RERANK_MODEL` and `RAG_MIN_TOP_SCORE` in the root `.env`.
+`backend/corpus/` is mounted read-only; build the Qdrant index with `scripts/corpus_ingest.py`. If a
+standalone Qdrant container is running (`scripts/start-qdrant.ps1`), stop it first: both use port
+6333.
 
-## Xác thực & phân quyền
+## Authentication and roles
 
-- **Access token**: JWT sống ngắn (`ACCESS_TOKEN_MINUTES`, mặc định 15) trong cookie httponly `vietaxlegal_session`.
-- **Refresh token**: chuỗi ngẫu nhiên, chỉ lưu hash SHA-256 trong bảng `refresh_tokens`, cookie httponly `vietaxlegal_refresh` giới hạn path `/api/auth`. Mỗi lần dùng sẽ bị thu hồi và cấp token mới (rotation); dùng lại token cũ coi là bị lộ và thu hồi cả phiên. Sống 24 giờ, hoặc 30 ngày nếu chọn "ghi nhớ".
-- **Logout** thu hồi phiên phía server; khoá user (`isActive=false`) thu hồi mọi phiên của user đó.
-- **RBAC**: cột `users.role` (`user` | `admin`), dependency `require_role(...)` trả `403 FORBIDDEN`. Admin đầu tiên tạo bằng `python scripts/admin_create.py email@...` (không có đường HTTP để tự nâng quyền).
-- **Rate limit**: đăng nhập sai 5 lần/15 phút theo `ip|identifier` và 30 lần/15 phút theo IP; đăng ký `REGISTER_MAX_PER_HOUR` (10) lần/giờ theo IP; chat 10 tin/phút và 100 tin/ngày theo user. Mã xác minh email: mỗi mã thử tối đa 5 lần (trừ lượt nguyên tử trong database), mỗi IP kiểm tra mã tối đa `REGISTER_MAX_PER_HOUR × 5` lần/giờ. Bộ đếm đăng nhập/đăng ký nằm trong bộ nhớ process (kiểm tra và đếm nguyên tử dưới một lock, loại key ít dùng nhất khi đầy), nên chỉ đúng với một worker; cần nhiều worker thì chuyển sang Postgres/Redis. Sau nginx, IP lấy từ `X-Forwarded-For` do nginx ghi đè.
-- Frontend tự gọi `/auth/refresh` một lần khi gặp `401` rồi gửi lại request (`authFetch` trong `services/api.js`).
+- **Access token**: short-lived JWT (`ACCESS_TOKEN_MINUTES`, default 15) in the HTTP-only cookie
+  `vietaxlegal_session`.
+- **Refresh token**: random string, stored only as a SHA-256 hash in `refresh_tokens`, in the
+  HTTP-only cookie `vietaxlegal_refresh` scoped to `/api/auth`. Each use revokes it and issues a new
+  one; reusing an old token revokes the whole session family. Lifetime is 24 hours, or 30 days with
+  "remember me".
+- **Sign-out** revokes the session on the server. Deactivating a user (`isActive=false`) revokes all
+  of that user's sessions.
+- **Roles**: `users.role` is `user` or `admin`; `require_role(...)` returns `403 FORBIDDEN`. The
+  first admin can only be created with `scripts/admin_create.py`; there is no HTTP path to promote
+  yourself.
+- **Registration** needs a verified email: request a 6-digit code, verify it, and send the returned
+  proof with the register payload. New passwords need 12+ characters, an uppercase letter, a digit
+  and a symbol, and must not contain the username or email name.
+- **Rate limits**: failed logins 5 per 15 minutes per `ip|identifier` and 30 per 15 minutes per IP;
+  registration `REGISTER_MAX_PER_HOUR` (10) per IP; chat 10 messages per minute and 100 per day per
+  user. These counters (except chat, which is stored in the database) live in process memory, so
+  they are correct for a single worker only.
+- The frontend calls `/auth/refresh` once on a `401` and retries the request (`authFetch` in
+  `frontend/src/services/api.js`).
 
-## Bảo mật triển khai
+## Frontend routes
 
-nginx gắn CSP, `X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options` (HSTS đặt ở lớp TLS phía trước). Ở `APP_ENV=production` các trang `/docs`, `/redoc`, `/openapi.json` bị tắt. Gọi provider chat có timeout 60 giây, embedding lúc truy vấn 15 giây (lỗi thì chat chạy không có nguồn).
+| Route       | Description                                          |
+| ----------- | ---------------------------------------------------- |
+| `/`         | Landing page with sign-in and registration.          |
+| `/chat`     | Legal chat; requires sign-in.                        |
+| `/settings` | Account settings (link a Google account).            |
+| `/admin`    | User management; requires the `admin` role.          |
 
-## Logging
+## API
 
-Cấu hình tập trung ở `app/core/logging.py`. `LOG_LEVEL` (mặc định `INFO`) và `LOG_JSON` (`true` = mỗi dòng một JSON, compose bật sẵn). Mỗi request có `X-Request-ID` (nhận từ client nếu hợp lệ, không thì tự sinh), được trả về trong response header và gắn vào mọi dòng log của request đó. Access log chỉ ghi method, path, status, thời gian; không ghi query string hay body.
+All endpoints are under `/api`.
 
-## Routes frontend
+| Method   | Endpoint                       | Description                                         |
+| -------- | ------------------------------ | --------------------------------------------------- |
+| `GET`    | `/api/health`                  | API and database check; `503` if the DB is down.    |
+| `POST`   | `/api/auth/email-code`         | Email a verification code (needs SMTP).             |
+| `POST`   | `/api/auth/email-code/verify`  | Check the code; returns the `proof` for registering. |
+| `GET`    | `/api/auth/google/login`       | Redirect to Google to sign in.                      |
+| `GET`    | `/api/auth/google/link`        | Redirect to Google to link an account (signed in).  |
+| `GET`    | `/api/auth/google/callback`    | Google callback; creates the session, back to app.  |
+| `POST`   | `/api/auth/register`           | Register and start a session.                       |
+| `POST`   | `/api/auth/login`              | Sign in with email or username.                     |
+| `POST`   | `/api/auth/refresh`            | Rotate the refresh token, issue a new access token. |
+| `POST`   | `/api/auth/logout`             | Sign out and revoke the refresh token.              |
+| `GET`    | `/api/auth/me`                 | Current user.                                       |
+| `GET`    | `/api/admin/users`             | (admin) List users.                                 |
+| `PATCH`  | `/api/admin/users/{id}`        | (admin) Change `role` or `isActive`.                |
+| `GET`    | `/api/chat/usage`              | Messages used and left today.                       |
+| `GET`    | `/api/chat/conversations`      | List conversations.                                 |
+| `GET`    | `/api/chat/conversations/{id}` | One conversation with its messages.                 |
+| `DELETE` | `/api/chat/conversations/{id}` | Delete a conversation.                              |
+| `POST`   | `/api/chat/messages/stream`    | Send a question and receive an SSE stream.          |
 
-| Route   | Mô tả                               |
-| ------- | ----------------------------------- |
-| `/`     | Landing page, đăng ký và đăng nhập. |
-| `/chat` | Chat pháp luật; yêu cầu đăng nhập.  |
+Every error uses one envelope: `{"error": {"code", "message", "fields"}}`. The frontend translates by
+`code` into the selected language; the backend's Vietnamese `message` is only a fallback. The full
+error code table is in [backend/README.md](backend/README.md#error-format).
 
-## API chính
+## RAG
 
-| Method   | Endpoint                       | Mô tả                                        |
-| -------- | ------------------------------ | -------------------------------------------- |
-| `GET`    | `/api/health`                  | Kiểm tra API và database; `503` nếu DB chết. |
-| `POST`   | `/api/auth/email-code`         | Gửi mã xác minh về email (cần SMTP).         |
-| `POST`   | `/api/auth/email-code/verify`  | Xác minh mã, trả `proof` dùng khi đăng ký.   |
-| `GET`    | `/api/auth/google/login`       | Chuyển hướng sang Google để đăng nhập.       |
-| `GET`    | `/api/auth/google/link`        | Chuyển hướng sang Google để liên kết tài khoản (cần đăng nhập). |
-| `GET`    | `/api/auth/google/callback`    | Google gọi lại; tạo phiên rồi quay về frontend. |
-| `POST`   | `/api/auth/register`           | Đăng ký và tạo phiên.                        |
-| `POST`   | `/api/auth/login`              | Đăng nhập bằng email hoặc username.          |
-| `POST`   | `/api/auth/refresh`            | Đổi refresh token (xoay vòng), cấp access mới. |
-| `POST`   | `/api/auth/logout`             | Đăng xuất, thu hồi refresh token phía server. |
-| `GET`    | `/api/auth/me`                 | Lấy người dùng hiện tại.                     |
-| `GET`    | `/api/admin/users`             | (admin) Danh sách người dùng.                |
-| `PATCH`  | `/api/admin/users/{id}`        | (admin) Đổi `role` / khoá `isActive`.        |
-| `GET`    | `/api/chat/usage`              | Số lượt chat đã dùng và còn lại hôm nay.     |
-| `GET`    | `/api/chat/conversations`      | Danh sách hội thoại.                         |
-| `GET`    | `/api/chat/conversations/{id}` | Nội dung một hội thoại.                      |
-| `DELETE` | `/api/chat/conversations/{id}` | Xóa hội thoại.                               |
-| `POST`   | `/api/chat/messages/stream`    | Gửi câu hỏi và nhận SSE stream.              |
+```text
+Legal documents (backend/corpus/, tracked in git)
+  → text extraction (DOCX / PDF)
+  → split by Điều / Khoản / Điểm, check numbering order and gaps
+  → dense embedding (OpenAI) + sparse vector (hand-written BM25)
+  → Qdrant (rebuildable from corpus/)
+  → [optional] rewrite the question into several queries
+  → dense / sparse / hybrid (RRF) search, in-force documents only
+  → [optional] rerank, "no source" gate
+  → the model answers and writes [n]; only cited sources are stored and shown
+```
 
-Mọi lỗi dùng chung envelope `{"error": {"code", "message", "fields"}}`. Frontend ưu tiên dịch theo
-`code` bằng ngôn ngữ đang chọn; `message` tiếng Việt từ backend chỉ được dùng làm fallback khi chưa
-có bản dịch tương ứng. Bảng mã lỗi đầy đủ nằm trong [backend/README.md](backend/README.md).
+`backend/corpus/` is the source of truth; the Qdrant index can be deleted and rebuilt at any time.
+Steps for building the index and running the evaluation are in
+[backend/README.md](backend/README.md#ai-and-rag).
 
-## Kiểm tra chất lượng
+Result tables are generated into `backend/rag_eval/results/SUMMARY.md` by
+`scripts/eval_export_results.py`. Results measured before 2026-11-26 are archived in
+`rag_eval/results/superseded-261126/` because the scoring changed; do not compare them with new
+results. All current numbers stay `provisional` until the question set is human-reviewed.
 
-Backend:
+## Quality checks
 
 ```powershell
 cd D:\VieTaxLegal\backend
@@ -233,45 +262,33 @@ cd D:\VieTaxLegal\backend
 .\.venv\Scripts\python.exe -m ruff format --check app tests
 ```
 
-Frontend:
-
 ```powershell
 cd D:\VieTaxLegal\frontend
 npm run check
 ```
 
-`npm run check` chạy Vitest, ESLint, Prettier check và production build. Backend tests dùng SQLite
-trong bộ nhớ và fake AI provider, không truy cập database thật hoặc API trả phí.
+`npm run check` runs Vitest, ESLint (0 warnings), the Prettier check and a production build; the
+Husky pre-commit hook runs it too. Backend tests use in-memory SQLite, a fake AI provider and an
+in-memory Qdrant client: they never touch a real database, a paid API or a Qdrant server. CI also
+runs `alembic upgrade head` and `alembic check` against Postgres 15.
 
-## Bảo mật
+## Security
 
-- Mật khẩu được băm bằng Argon2 và không lưu plaintext.
-- JWT được đặt trong cookie HTTP-only, `SameSite=Lax`; production bật thêm `Secure`.
-- Backend từ chối JWT secret yếu và CORS wildcard.
-- Mọi truy vấn hội thoại đều lọc theo người dùng hiện tại; UUID của người khác trả `404`.
-- Khi chạy trên Supabase, migration tự bật RLS và thu hồi quyền `anon`, `authenticated` trên các
-  bảng ứng dụng; trên PostgreSQL thường, bước này được bỏ qua vì hai role đó không tồn tại.
-- `.env`, key, certificate, database local, upload và log không được commit.
-- API key AI chỉ tồn tại trong backend và không được log hoặc gửi xuống frontend.
+- Passwords are hashed with Argon2id and never stored in plain text.
+- JWTs live in HTTP-only, `SameSite=Lax` cookies; production adds `Secure`.
+- The backend refuses a weak JWT secret and a CORS wildcard.
+- Every conversation query is filtered by the current user; another user's UUID returns `404`.
+- On Supabase, migrations enable RLS and revoke `anon` / `authenticated` on application tables; on
+  plain PostgreSQL that step is skipped because those roles do not exist.
+- nginx adds CSP, `X-Content-Type-Options`, `Referrer-Policy` and `X-Frame-Options`. With
+  `APP_ENV=production`, `/docs`, `/redoc` and `/openapi.json` are turned off.
+- AI API keys exist only in the backend and are never logged or sent to the frontend. Logs never
+  contain prompts, passwords, tokens, query strings or request bodies.
+- `.env` files, keys, certificates, database dumps, uploads and logs are never committed.
 
-## RAG
+## Logging
 
-Pipeline đã triển khai:
-
-```text
-Văn bản pháp luật (corpus/, nguồn gốc trong git)
-  → trích xuất text (DOCX/PDF)
-  → tách theo Điều/Khoản/Điểm, kiểm tra thứ tự và khoảng trống
-  → embedding (OpenAI) + vector sparse (BM25 tự cài)
-  → Qdrant (dựng lại được từ corpus/)
-  → truy xuất dense / sparse / hybrid, chỉ lấy văn bản in_force
-  → model trả lời, ghi [n]; chỉ nguồn được trích mới được lưu và hiển thị
-```
-
-Bảng số liệu được sinh vào `backend/rag_eval/results/SUMMARY.md` bằng `scripts/eval_export_results.py`.
-Kết quả đo trước 26/11/2026 đã được cất đi vì cách đo khác; cần chạy lại trước khi trích.
-Các số liệu đang đánh dấu `provisional` vì bộ câu hỏi chưa được con người duyệt; chỉ trích dẫn số
-liệu trong luận văn sau khi duyệt xong. Cách chạy từng bước xem [backend/README.md](backend/README.md).
-
-Còn lại: điền hiệu lực văn bản, bổ sung văn bản bị cắt/thiếu, duyệt bộ câu hỏi, rồi tinh chỉnh
-ngưỡng điểm và cân nhắc rerank dựa trên số liệu đã duyệt.
+Configured in `backend/app/core/logging.py`. `LOG_LEVEL` (default `INFO`) and `LOG_JSON` (`true` =
+one JSON object per line; Compose turns it on). Each request gets an `X-Request-ID` (taken from the
+client if valid, otherwise generated), returned in the response header and attached to every log
+line of that request. The access log records only method, path, status and duration.
