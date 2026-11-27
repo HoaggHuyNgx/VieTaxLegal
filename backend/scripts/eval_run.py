@@ -4,6 +4,7 @@ From backend/:
   .venv/Scripts/python.exe scripts/eval_run.py rag_eval/configs/retrieval/dense-article.json
 Retrieval tier needs only the query embedding (cheap). Generation tier calls the chat model.
 --provisional also scores unreviewed (pending) questions: for tuning only, flagged in the result.
+--pause N waits N seconds between questions (retrieval tier), for rate-limited API keys.
 """
 
 import argparse
@@ -39,12 +40,17 @@ async def main() -> int:
     parser.add_argument(
         "--split", choices=("dev", "test", "holdout"), help="tune on dev, report test and holdout"
     )
+    parser.add_argument(
+        "--pause", type=float, default=0.0, help="seconds between questions (retrieval tier)"
+    )
     args = parser.parse_args()
 
     config = EvalConfig.load(args.config)
     config.include_pending = config.include_pending or args.provisional
     config.tier = args.tier or config.tier
     config.split = args.split or config.split
+    if args.pause and config.tier != "retrieval":
+        parser.error("--pause supports the retrieval tier only.")
     settings = get_settings()
     questions = load_questions()
     chosen = select_questions(questions, config)
@@ -54,7 +60,7 @@ async def main() -> int:
 
     retriever, embedder = build_retriever(config, settings)
     if config.tier == "retrieval":
-        summary, rows = await run_retrieval_tier(config, retriever, chosen)
+        summary, rows = await run_retrieval_tier(config, retriever, chosen, args.pause)
     else:
         provider = LangChainProvider("openai", settings.openai_api_key, settings.chat_model)
         summary, rows = await run_generation_tier(

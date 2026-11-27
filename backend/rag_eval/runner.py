@@ -1,5 +1,6 @@
 """Eval runner: config, shared setup and the retrieval tier (no chat calls)."""
 
+import asyncio
 import hashlib
 import json
 import time
@@ -136,13 +137,17 @@ def threshold_sweep(in_corpus_top1: list[float], ooc_top1: list[float]) -> list[
     ]  # fmt: skip
 
 
-async def run_retrieval_tier(config: EvalConfig, retriever: QdrantRetriever, questions):
+async def run_retrieval_tier(
+    config: EvalConfig, retriever: QdrantRetriever, questions, pause_seconds: float = 0.0
+):
     if prepare := getattr(retriever, "prepare", None):  # baseline builds its index up front
         await prepare()
     rows, ranks, embed_ms, search_ms, plans = [], [], [], [], []
     retrieval_ms = []
     in_top1, ooc_top1 = [], []
-    for q in questions:
+    for index, q in enumerate(questions):
+        if index and pause_seconds:  # rate-limited keys; outside the timer, so latency is unchanged
+            await asyncio.sleep(pause_seconds)
         # No `limit`: a deeper one also widens the hybrid and rerank candidate pools, which
         # would measure a pipeline the app never runs. MRR is therefore MRR@top_k.
         started = time.perf_counter()

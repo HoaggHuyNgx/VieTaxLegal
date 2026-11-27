@@ -116,6 +116,26 @@ def test_retrieval_tier_searches_exactly_as_the_app_does():
     assert summary["retrieval_ms"]["p50"] is not None  # whole call, planner included
 
 
+def test_retrieval_tier_pauses_between_questions_only(monkeypatch):
+    """Pacing for rate-limited APIs: no wait before the first question or after the last."""
+    events = []
+
+    async def fake_sleep(seconds: float) -> None:
+        events.append(seconds)
+
+    class Recording:
+        async def search(self, query: str, limit: int | None = None) -> SearchOutcome:
+            events.append(query)
+            return SearchOutcome()
+
+    monkeypatch.setattr("rag_eval.runner.asyncio.sleep", fake_sleep)
+    questions = [_question(text, text) for text in ("a", "b", "c")]
+
+    asyncio.run(run_retrieval_tier(EvalConfig("t"), Recording(), questions, pause_seconds=7))
+
+    assert events == ["a", 7, "b", 7, "c"]
+
+
 def test_threshold_sweep_trades_answerable_kept_against_out_of_corpus_rejected():
     rows = {r["threshold"]: r for r in threshold_sweep([0.7, 0.6, 0.4], [0.5, 0.3])}
 
