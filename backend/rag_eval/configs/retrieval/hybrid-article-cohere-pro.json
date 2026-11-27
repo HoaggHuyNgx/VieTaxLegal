@@ -1,0 +1,11 @@
+{
+  "require_in_force": true,
+  "top_k": 5,
+  "min_similarity": 0.0,
+  "name": "hybrid-article-cohere-pro",
+  "tier": "retrieval",
+  "chunk_set": "article",
+  "mode": "hybrid",
+  "rerank": "cohere",
+  "rerank_model": "rerank-v5.0-pro"
+}
