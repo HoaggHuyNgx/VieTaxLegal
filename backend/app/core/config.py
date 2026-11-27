@@ -40,9 +40,9 @@ class Settings(BaseSettings):
     # Rewrites the question into several search queries before retrieval. Blank model = off.
     rag_query_planner_provider: str = "openai"
     rag_query_planner_model: str = ""
-    # Reorders the fused candidates with this model. Blank model = off.
-    rag_rerank_provider: str = "openai"
+    # Reorders the fused candidates with this Cohere Rerank model. Blank model = off.
     rag_rerank_model: str = ""
+    cohere_api_key: SecretStr | None = None
     # No sources when the question's best dense cosine is below this (0 = off).
     rag_min_top_score: float = 0.0
     # Model that writes eval questions. Blank = CHAT_MODEL (set a different one to limit bias).
@@ -102,10 +102,10 @@ class Settings(BaseSettings):
     def blank_embedding_dimensions_is_none(cls, value: object) -> object:
         return None if isinstance(value, str) and not value.strip() else value
 
-    @field_validator("qdrant_api_key", mode="before")
+    @field_validator("qdrant_api_key", "cohere_api_key", mode="before")
     @classmethod
-    def blank_qdrant_api_key_is_none(cls, value: object) -> object:
-        # `.env.example` ships `QDRANT_API_KEY=` for the local, unauthenticated server.
+    def blank_api_key_is_none(cls, value: object) -> object:
+        # `.env.example` ships these blank (local Qdrant needs no key, rerank is off).
         return None if isinstance(value, str) and not value.strip() else value
 
     @field_validator("google_client_id", "google_client_secret", mode="before")

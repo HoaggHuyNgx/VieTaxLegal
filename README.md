@@ -164,7 +164,8 @@ docker compose up --build
 
 Open <http://localhost:3000>. The same variables can live in a `.env` file at the repository root
 (gitignored). Compose does not read `backend/.env`: set `RAG_ENABLED=true` and, if wanted,
-`RAG_QUERY_PLANNER_MODEL`, `RAG_RERANK_MODEL` and `RAG_MIN_TOP_SCORE` in the root `.env`.
+`RAG_QUERY_PLANNER_MODEL`, `RAG_RERANK_MODEL` (+ `COHERE_API_KEY`) and `RAG_MIN_TOP_SCORE` in the
+root `.env`.
 `backend/corpus/` is mounted read-only; build the Qdrant index with `scripts/corpus_ingest.py`. If a
 standalone Qdrant container is running (`scripts/start-qdrant.ps1`), stop it first: both use port
 6333.

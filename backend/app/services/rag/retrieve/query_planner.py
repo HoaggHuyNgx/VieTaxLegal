@@ -28,7 +28,7 @@ from app.services.rag.retrieve.qdrant_retriever import (
     SearchOutcome,
     hits_to_result,
 )
-from app.services.rag.retrieve.reranker import LlmReranker
+from app.services.rag.retrieve.reranker import CohereReranker
 
 logger = logging.getLogger(__name__)
 MAX_REWRITES = 2
@@ -111,7 +111,7 @@ class RetrievalPipeline:
         inner: QdrantRetriever,
         top_k: int,
         planner: QueryPlanner | None = None,
-        reranker: LlmReranker | None = None,
+        reranker: CohereReranker | None = None,
         min_top_score: float = 0.0,
     ) -> None:
         self._inner = inner  # the plain dense/sparse/hybrid retriever being wrapped
@@ -210,9 +210,7 @@ def build_pipeline(
             )
         )
     if settings.rag_rerank_model:
-        reranker = LlmReranker(
-            llm_provider(settings, settings.rag_rerank_provider, settings.rag_rerank_model)
-        )
+        reranker = CohereReranker(settings.cohere_api_key, settings.rag_rerank_model)
     if not (planner or reranker or settings.rag_min_top_score):
         return retriever
     return RetrievalPipeline(

@@ -43,6 +43,7 @@ services:
       # Optional retrieval steps, off while blank or 0. RAG_MIN_TOP_SCORE is the no-source gate.
       RAG_QUERY_PLANNER_MODEL: ${RAG_QUERY_PLANNER_MODEL:-}
       RAG_RERANK_MODEL: ${RAG_RERANK_MODEL:-}
+      COHERE_API_KEY: ${COHERE_API_KEY:-}
       RAG_MIN_TOP_SCORE: ${RAG_MIN_TOP_SCORE:-0}
       QDRANT_URL: http://qdrant:6333
     volumes:

@@ -17,6 +17,7 @@ from rag_eval.generation_tier import run_generation_tier
 from rag_eval.provenance import run_metadata
 from rag_eval.runner import (
     EvalConfig,
+    build_retriever,
     result_filename,
     run_retrieval_tier,
     select_questions,
@@ -268,3 +269,14 @@ def test_rrf_sensitivity_configs_differ_from_hybrid_article_only_in_rrf_k():
         variant = asdict(EvalConfig.load(configs / f"hybrid-article-rrfk{k}.json"))
         assert variant["rrf_k"] == k
         assert {**variant, "name": base["name"], "rrf_k": 60} == base
+
+
+@pytest.mark.parametrize(
+    ("update", "message"),
+    [({"rerank": "llm"}, "only 'cohere'"), ({"rerank": "cohere"}, "needs rerank_model")],
+)
+def test_build_retriever_rejects_an_unusable_rerank_config(update, message):
+    config = EvalConfig("t", embedding_provider="fake", **update)
+
+    with pytest.raises(ValueError, match=message):
+        build_retriever(config, get_settings())

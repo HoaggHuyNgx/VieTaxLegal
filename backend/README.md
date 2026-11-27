@@ -149,8 +149,8 @@ History is also capped at 40,000 characters (`MAX_HISTORY_CHARACTERS` in
 | `RAG_REQUIRE_IN_FORCE`       | `true`                   | Only return documents marked `in_force`; `false` for dev only.  |
 | `RAG_QUERY_PLANNER_PROVIDER` | `openai`                 | Provider of the query planner.                                  |
 | `RAG_QUERY_PLANNER_MODEL`    | empty                    | Rewrites the question before search; empty = off.               |
-| `RAG_RERANK_PROVIDER`        | `openai`                 | Provider of the reranker.                                       |
-| `RAG_RERANK_MODEL`           | empty                    | Reorders the fused candidates; empty = off.                     |
+| `RAG_RERANK_MODEL`           | empty                    | Cohere Rerank model (e.g. `rerank-v5.0-fast`); empty = off.     |
+| `COHERE_API_KEY`             | empty                    | Needed when `RAG_RERANK_MODEL` is set.                          |
 | `RAG_MIN_TOP_SCORE`          | `0`                      | "No source" when the best dense cosine is lower; `0` = off.     |
 | `EMBEDDING_PROVIDER`         | `openai`                 | `openai`, `bkai` (local, experiment only) or `fake` (tests).    |
 | `EMBEDDING_MODEL`            | `text-embedding-3-small` | Embedding model; the Qdrant collection name is derived from it. |
@@ -458,7 +458,9 @@ Retrieval options:
 - `RAG_QUERY_PLANNER_MODEL` rewrites the question into up to 2 extra queries; the original is always
   searched and results are fused with RRF. On failure only the original is searched. Adds one model
   call per question.
-- `RAG_RERANK_MODEL` reorders the candidates with that model; on failure the order is kept.
+- `RAG_RERANK_MODEL` reorders the candidates with the Cohere Rerank API (`/v2/rerank`, needs
+  `COHERE_API_KEY`); on an API error or timeout the fused order is kept and counted as
+  `rerank_fallbacks` in eval results. Without the key RAG does not start (chat answers with no sources).
 - `RAG_MIN_TOP_SCORE` returns "no source" when the original question's best dense cosine is below
   the threshold.
 
@@ -536,7 +538,7 @@ cd D:\VieTaxLegal\backend
 ```
 
 Tests use in-memory SQLite, a fake chat provider and `QdrantClient(":memory:")`. They never call a
-real database, Anthropic, OpenAI or a Qdrant server, and cost nothing. `tests/conftest.py` disables
+real database, Anthropic, OpenAI, Cohere or a Qdrant server, and cost nothing. `tests/conftest.py` disables
 `backend/.env` during tests.
 
 - `tests/test_*.py`: auth, sessions and roles, login throttle, password policy, email codes, Google

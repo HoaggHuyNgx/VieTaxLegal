@@ -12,7 +12,7 @@ from app.services.rag.index.qdrant_store import collection_name, get_async_clien
 from app.services.rag.retrieve.fusion import RRF_K
 from app.services.rag.retrieve.qdrant_retriever import QdrantRetriever
 from app.services.rag.retrieve.query_planner import QueryPlanner, RetrievalPipeline, llm_provider
-from app.services.rag.retrieve.reranker import LlmReranker
+from app.services.rag.retrieve.reranker import CohereReranker
 from rag_eval import metrics
 from rag_eval.dataset import Question, scoreable
 from rag_eval.langchain_baseline import build_baseline
@@ -33,9 +33,8 @@ class EvalConfig:
     rag: bool = True  # False = no-RAG baseline (generation tier only)
     mode: str = "dense"  # dense | hybrid
     rrf_k: int = RRF_K  # hybrid fusion constant; varied only for the sensitivity check
-    rerank: str | None = None  # None | "llm" (experiment 2 trial)
-    rerank_provider: str = "openai"
-    rerank_model: str | None = None  # None = CHAT_MODEL
+    rerank: str | None = None  # None | "cohere"
+    rerank_model: str | None = None  # Cohere Rerank model id; required with rerank="cohere"
     query_planner_provider: str = "openai"
     query_planner_model: str | None = None  # None = no query planning
     min_top_score: float = 0.0  # no-source gate on the best dense cosine
@@ -85,9 +84,12 @@ def build_retriever(config: EvalConfig, settings: Settings) -> tuple[QdrantRetri
         planner = QueryPlanner(
             llm_provider(settings, config.query_planner_provider, config.query_planner_model)
         )
-    if config.rerank == "llm":
-        model = config.rerank_model or settings.chat_model
-        reranker = LlmReranker(llm_provider(settings, config.rerank_provider, model))
+    if config.rerank not in (None, "cohere"):
+        raise ValueError(f"Unknown rerank {config.rerank!r}; only 'cohere' is supported.")
+    if config.rerank == "cohere":
+        if not config.rerank_model:
+            raise ValueError("rerank='cohere' needs rerank_model.")
+        reranker = CohereReranker(settings.cohere_api_key, config.rerank_model)
     if planner or reranker or config.min_top_score:
         retriever = RetrievalPipeline(
             retriever, config.top_k, planner, reranker, config.min_top_score

@@ -2,6 +2,7 @@ import asyncio
 import json
 
 import pytest
+from pydantic import SecretStr
 
 from app.core.config import get_settings
 from app.services.chat.provider import ProviderError, ProviderEvent
@@ -241,6 +242,16 @@ def test_invalid_route_searches_nothing():
 def test_pipeline_is_built_for_rerank_or_gate_alone():
     base = get_settings()
 
-    for update in ({"rag_rerank_model": "small-model"}, {"rag_min_top_score": 0.5}):
+    rerank = {"rag_rerank_model": "rerank-test", "cohere_api_key": SecretStr("test-key")}
+    for update in (rerank, {"rag_min_top_score": 0.5}):
         built = build_pipeline(object(), base.model_copy(update=update))
         assert isinstance(built, RetrievalPipeline)
+
+
+def test_rerank_without_cohere_key_refuses_to_build():
+    settings = get_settings().model_copy(
+        update={"rag_rerank_model": "rerank-test", "cohere_api_key": None}
+    )
+
+    with pytest.raises(ValueError, match="COHERE_API_KEY"):
+        build_pipeline(object(), settings)
