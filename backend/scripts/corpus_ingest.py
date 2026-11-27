@@ -23,10 +23,11 @@ from app.services.rag.index.embeddings import (  # noqa: E402
 )
 from app.services.rag.index.qdrant_store import collection_name, get_sync_client  # noqa: E402
 from app.services.rag.ingest.chunking import estimate_tokens  # noqa: E402
-from app.services.rag.ingest.corpus_manifest import load_manifest  # noqa: E402
+from app.services.rag.ingest.corpus_manifest import CORPUS_DIR, load_manifest  # noqa: E402
 from app.services.rag.ingest.ingest import CHUNKERS, build_chunks, ingest_corpus  # noqa: E402
 
 BKAI_LIMIT = 256
+VBPL_MANIFEST = CORPUS_DIR / "vbpl" / "manifest.json"
 
 
 def dry_run(docs, chunk_set: str, model: str, short_prefix: bool) -> None:
@@ -50,7 +51,13 @@ def main() -> int:
     parser.add_argument("--chunk-set", choices=sorted(CHUNKERS), default=None)
     parser.add_argument("--only", help="ingest a single document slug")
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--extra-manifest", type=Path, help="add documents from another manifest")
+    parser.add_argument(
+        "--extra-manifest",
+        type=Path,
+        action="append",
+        default=[],
+        help="add documents from another manifest (repeatable)",
+    )
     args = parser.parse_args()
 
     settings = get_settings()
@@ -58,8 +65,8 @@ def main() -> int:
     if chunk_set not in CHUNKERS:
         parser.error(f"unknown chunk set '{chunk_set}'")
     manifest = load_manifest()
-    if args.extra_manifest:
-        manifest += load_manifest(args.extra_manifest)
+    for extra in args.extra_manifest:
+        manifest += load_manifest(extra)
     docs = [d for d in manifest if not args.only or d.slug == args.only]
     if not any(d.ingest for d in docs):
         parser.error("no documents selected")
@@ -69,7 +76,8 @@ def main() -> int:
         dry_run([d for d in docs if d.ingest], chunk_set, settings.embedding_model, short_prefix)
         return 0
 
-    if chunk_set == "vbpl" and not args.only and not args.extra_manifest:
+    extras = {path.resolve() for path in args.extra_manifest}
+    if chunk_set == "vbpl" and not args.only and VBPL_MANIFEST.resolve() not in extras:
         # A full run purges unknown documents: without that manifest, every imported one.
         parser.error("a full vbpl ingest needs --extra-manifest corpus/vbpl/manifest.json")
 

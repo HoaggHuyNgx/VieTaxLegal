@@ -464,10 +464,16 @@ Retrieval options:
 - `RAG_MIN_TOP_SCORE` returns "no source" when the original question's best dense cosine is below
   the threshold.
 
-`scripts/corpus_import_vbpl.py` (extra `corpus`) imports filtered documents from the vbpl dataset into
-`corpus/vbpl/` (not in git). Ingest them with
-`corpus_ingest.py --chunk-set vbpl --extra-manifest corpus/vbpl/manifest.json` (a full run without the
-extra manifest is refused, because it would delete everything imported) and set `RAG_CHUNK_SET=vbpl`.
+`scripts/corpus_import_vbpl.py` (extra `corpus`) imports documents from the vbpl dataset into
+`corpus/vbpl/` (not in git). It takes the dataset's `metadata` and `content` parquet files and an
+inventory CSV (`tier`, `fields`, `id`): only `A_core` rows are imported, documents already in
+`corpus/manifest.json` are skipped, and each document gets the field `tax`, `enterprise` or `labor`
+from its inventory tags. Amending documents are kept and marked in `notes`. Documents whose dataset
+copy is missing or broken are added by hand from Công báo files in `corpus/vbpl/manual/` (own
+`manifest.json`, `raw/`, `texts/`; the import never touches it). Ingest them with
+`corpus_ingest.py --chunk-set vbpl --extra-manifest corpus/vbpl/manifest.json --extra-manifest corpus/vbpl/manual/manifest.json`
+(`--extra-manifest` is repeatable; a full run without `corpus/vbpl/manifest.json` is refused, because it
+would delete everything imported) and set `RAG_CHUNK_SET=vbpl`.
 Their status comes from a snapshot of the vbpl portal and has not been checked by a person.
 
 ### Evaluation

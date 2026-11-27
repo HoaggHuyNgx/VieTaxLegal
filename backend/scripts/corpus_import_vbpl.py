@@ -1,15 +1,19 @@
-"""Import a filtered slice of th1nhng0/vietnamese-legal-documents into corpus/vbpl/ (not in git).
+"""Import the documents of a coverage inventory from th1nhng0/vietnamese-legal-documents into
+corpus/vbpl/ (not in git).
 
-Needs the `corpus` extra and two parquet files from the dataset's `metadata` and `content` configs.
-From backend/:
-  .venv/Scripts/python.exe scripts/corpus_import_vbpl.py --metadata m.parquet --content c.parquet
+Needs the `corpus` extra, the dataset's `metadata` and `content` parquet files and the inventory CSV
+(columns `tier`, `fields`, `id`; only `A_core` rows are imported). From backend/:
+  .venv/Scripts/python.exe scripts/corpus_import_vbpl.py --metadata m.parquet --content c.parquet \
+      --inventory inventory.csv
 
 Status comes from the portal snapshot, which can lag reality, so it is recorded in `notes` as not
 verified by a person. Documents that fail the structure checks are skipped, never cut by length.
-Amending documents only make sense next to the text they amend, so they are skipped too.
+Amending documents are kept (the base texts are not consolidated, so they carry the current rule)
+and marked in `notes`.
 """
 
 import argparse
+import csv
 import hashlib
 import json
 import re
@@ -29,11 +33,13 @@ from app.services.rag.ingest.text_extraction import clean_text  # noqa: E402
 DATASET_REVISION = "8977887f17be2defae4c5171d55562e1cde7d695"
 OUTPUT_DIR = CORPUS_DIR / "vbpl"
 DOC_TYPES = {"Luật": "luat", "Bộ luật": "bo_luat", "Nghị định": "nghi_dinh", "Thông tư": "thong_tu",
-             "Thông tư liên tịch": "thong_tu_lien_tich"}  # fmt: skip
+             "Thông tư liên tịch": "thong_tu_lien_tich", "Văn bản hợp nhất": "vbhn"}  # fmt: skip
 PARTLY_EXPIRED = "Hết hiệu lực một phần"
-STATUSES = {"Còn hiệu lực", PARTLY_EXPIRED}
-KEYWORDS = ("thuế", "tài chính", "kế toán", "doanh nghiệp", "đầu tư", "thương mại")
-MIN_YEAR = 2020
+CORE_TIER = "A_core"
+# Inventory tags -> the project's three fields, first match wins (a tax + enterprise text is tax).
+FIELD_PRIORITY = (("thue", "tax"), ("ho_kinh_doanh", "tax"), ("doanh_nghiep", "enterprise"),
+                  ("dau_tu", "enterprise"), ("lao_dong", "labor"), ("bhxh", "labor"),
+                  ("tien_luong", "labor"))  # fmt: skip
 MIN_CHARS = 300
 MAX_EMBED_TOKENS = 8000  # the embedding API rejects a single input above 8192
 AMENDING = re.compile(r"sửa đổi|bổ sung|bãi bỏ|sừa đổi", re.IGNORECASE)
@@ -44,33 +50,34 @@ def low(value: str | None) -> str:
     return (value or "").strip().lower()
 
 
-def issue_year(row: dict) -> int:
-    tail = (row["ngay_ban_hanh"] or "")[-4:]
-    return int(tail) if tail.isdigit() else 0
-
-
 def iso_date(value: str | None) -> str | None:
     match = re.fullmatch(r"(\d{2})/(\d{2})/(\d{4})", (value or "").strip())
     return f"{match[3]}-{match[2]}-{match[1]}" if match else None
 
 
-def is_candidate(row: dict) -> bool:
-    labels = f"{low(row['linh_vuc'])} | {low(row['nganh'])}"
-    return (
-        row["pham_vi"] == "Trung ương"
-        and row["loai_van_ban"] in DOC_TYPES
-        and row["tinh_trang_hieu_luc"] in STATUSES
-        and issue_year(row) >= MIN_YEAR
-        and not AMENDING.search(row["title"] or "")
-        and any(keyword in labels for keyword in KEYWORDS)
-    )
+def primary_field(tags: str) -> str:
+    present = set(tags.split(";"))
+    return next(field for tag, field in FIELD_PRIORITY if tag in present)
 
 
-def select_rows(rows: list[dict], known_numbers: set[str]) -> dict[str, dict]:
+def load_inventory(path: Path) -> dict[str, str]:
+    """Dataset id -> project field for the inventory's core rows."""
+    with path.open(encoding="utf-8-sig", newline="") as stream:
+        rows = [r for r in csv.DictReader(stream) if r["tier"] == CORE_TIER and r["id"]]
+    return {row["id"]: primary_field(row["fields"]) for row in rows}
+
+
+def is_candidate(row: dict, inventory: dict[str, str]) -> bool:
+    return row["id"] in inventory and row["loai_van_ban"] in DOC_TYPES
+
+
+def select_rows(
+    rows: list[dict], known_numbers: set[str], inventory: dict[str, str]
+) -> dict[str, dict]:
     """Candidates by id, one per document number, preferring the fully in-force record."""
     seen, chosen = set(known_numbers), {}
     ordered = sorted(rows, key=lambda r: (r["tinh_trang_hieu_luc"] == PARTLY_EXPIRED, r["id"]))
-    for row in filter(is_candidate, ordered):
+    for row in (r for r in ordered if is_candidate(r, inventory)):
         number = low(row["so_ky_hieu"])
         if number and number not in seen:
             seen.add(number)
@@ -115,13 +122,14 @@ def has_oversized_chunk(chunks: list[ChunkDraft], count_tokens) -> bool:
     return any(count_tokens([embedding_text(chunk)]) > MAX_EMBED_TOKENS for chunk in chunks)
 
 
-def manifest_entry(row: dict, slug: str, text: str) -> dict:
+def manifest_entry(row: dict, slug: str, text: str, field: str) -> dict:
+    amending = "; amending document" if AMENDING.search(row["title"] or "") else ""
     return {
         "slug": slug,
         "number": row["so_ky_hieu"],
         "title": row["title"],
         "doc_type": DOC_TYPES[row["loai_van_ban"]],
-        "field": "vbpl",
+        "field": field,
         "file": f"vbpl/texts/{slug}.txt",
         "text_file": f"vbpl/texts/{slug}.txt",
         "sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
@@ -132,7 +140,7 @@ def manifest_entry(row: dict, slug: str, text: str) -> dict:
         "effective_from": iso_date(row["ngay_co_hieu_luc"]),
         "effective_to": iso_date(row["ngay_het_hieu_luc"]),
         "notes": f"vbpl dataset {DATASET_REVISION[:7]}, status not verified by a person: "
-        f"{row['tinh_trang_hieu_luc']}",
+        f"{row['tinh_trang_hieu_luc']}{amending}",
     }
 
 
@@ -143,10 +151,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--metadata", type=Path, required=True)
     parser.add_argument("--content", type=Path, required=True)
+    parser.add_argument("--inventory", type=Path, required=True)
     args = parser.parse_args()
 
     known = {low(doc.number) for doc in load_manifest()}
-    wanted = select_rows(pq.read_table(args.metadata).to_pylist(), known)
+    inventory = load_inventory(args.inventory)
+    wanted = select_rows(pq.read_table(args.metadata).to_pylist(), known, inventory)
     (OUTPUT_DIR / "texts").mkdir(parents=True, exist_ok=True)
     entries, outcome = [], Counter()
     count = _openai_token_counter(get_settings().embedding_model)
@@ -159,7 +169,7 @@ def main() -> int:
             text = html_to_text(html or "")
             parsed = parse(text)
             slug = "vbpl-" + re.sub(r"[^A-Za-z0-9_-]", "-", doc_id)
-            entry = manifest_entry(wanted[doc_id], slug, text)
+            entry = manifest_entry(wanted[doc_id], slug, text, inventory[doc_id])
             issue = structure_issue(text, parsed)
             if not issue and has_oversized_chunk(article_chunks(_build(entry), parsed), count):
                 issue = "chunk_too_long"
