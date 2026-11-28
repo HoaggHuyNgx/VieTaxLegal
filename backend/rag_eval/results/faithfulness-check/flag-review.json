@@ -1,0 +1,69 @@
+{
+  "reviewer": "Claude (AI) on 2026-11-28; not a person or a lawyer",
+  "flags": [
+    {
+      "run": "2026-11-28-rag-app-cohere-vbpl-expand-generation-test",
+      "id": "q005",
+      "label": "unsupported",
+      "quote": "Nguồn hiện có không nêu cụ thể hồ sơ, giấy phép hay thủ tục để xác định cơ sở có chức năng kinh doanh dịch vụ tang lễ.",
+      "real_error": false,
+      "why": "says the sources do not state something; not a claim the checker should score"
+    },
+    {
+      "run": "2026-11-28-rag-app-cohere-vbpl-expand-generation-test",
+      "id": "q041",
+      "label": "unsupported",
+      "quote": "Nếu bạn chỉ muốn nói doanh nghiệp đang **tạm ngừng hoạt động**, thì dữ liệu được cung cấp chưa đủ căn cứ để kết luận hợp đồng lao động tự động chấm dứt.",
+      "real_error": false,
+      "why": "says the sources do not state something; not a claim the checker should score"
+    },
+    {
+      "run": "2026-11-28-rag-app-cohere-vbpl-expand-generation-test",
+      "id": "q046",
+      "label": "unsupported",
+      "quote": "Các nguồn được cung cấp **không nêu hội nghị người lao động phải tổ chức bao lâu một lần**, nên chưa đủ căn cứ để xác định tần suất.",
+      "real_error": false,
+      "why": "says the sources do not state something; not a claim the checker should score"
+    },
+    {
+      "run": "2026-11-28-rag-app-cohere-vbpl-expand-generation-test",
+      "id": "q049",
+      "label": "unsupported",
+      "quote": "Nguồn được cung cấp không nêu chi tiết cách tính mức lương hoặc từng chế độ cụ thể, nên chưa đủ căn cứ để kết luận mọi khoản quyền lợi sẽ có mức hưởng giống hệt nhân viên làm đủ thời gian.",
+      "real_error": false,
+      "why": "says the sources do not state something; not a claim the checker should score"
+    },
+    {
+      "run": "2026-11-28-rag-app-cohere-vbpl-expand-generation-test",
+      "id": "q063",
+      "label": "unsupported",
+      "quote": "Nếu bạn nộp theo phương thức khác, các nguồn được cung cấp chưa nêu rõ nơi tra cứu kết quả trực tuyến.",
+      "real_error": false,
+      "why": "says the sources do not state something; not a claim the checker should score"
+    },
+    {
+      "run": "2026-11-28-ab-expand-on-generation-dev",
+      "id": "q020",
+      "label": "unsupported",
+      "quote": "Giá xe là 2 tỷ đồng chưa VAT, nên tỷ lệ được khấu trừ là 1,6 tỷ / 2 tỷ = 80%. Vì vậy, công ty được khấu trừ 80% số VAT đầu vào trên hóa đơn; phần 20% còn lại không được khấu trừ theo giới hạn này.",
+      "real_error": false,
+      "why": "80% is 1.6 billion (source) / 2 billion (question): a correct derivation"
+    },
+    {
+      "run": "2026-11-28-ab-expand-on-generation-dev",
+      "id": "q047",
+      "label": "contradicted",
+      "quote": "Theo nguồn được cung cấp, nếu cả hai vợ chồng cùng tham gia bảo hiểm xã hội bắt buộc mà anh không nghỉ việc, mức hưởng trợ cấp thai sản được tính trên cơ sở mức bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội bắt buộc của người mẹ.",
+      "real_error": false,
+      "why": "correct: the source gives the mother's salary when the father does not take leave; the checker read the sentence for when he does"
+    },
+    {
+      "run": "2026-11-28-ab-expand-on-generation-dev",
+      "id": "q068",
+      "label": "unsupported",
+      "quote": "lưu ý: nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "real_error": false,
+      "why": "the closing disclaimer"
+    }
+  ]
+}

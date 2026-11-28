@@ -1,0 +1,548 @@
+{
+  "model": "gpt-4.1-mini",
+  "first_version_caught": {
+    "number": [
+      5,
+      12
+    ],
+    "flip": [
+      4,
+      12
+    ]
+  },
+  "caught": {
+    "number": [
+      10,
+      12
+    ],
+    "flip": [
+      3,
+      12
+    ]
+  },
+  "cases": [
+    {
+      "id": "test:q003",
+      "original": "Theo các nguồn được cung cấp, các quan hệ thân nhân có thu nhập từ chuyển nhượng, thừa kế hoặc tặng cho bất động sản thuộc diện miễn thuế thu nhập cá nhân gồm:\n\n- Vợ với chồng;\n- Cha đẻ, mẹ đẻ với con đẻ;\n- Cha nuôi, mẹ nuôi với con nuôi;\n- Cha chồng, mẹ chồng với con dâu; cha vợ, mẹ vợ với con rể;\n- Ông nội, bà nội với cháu nội; ông ngoại, bà ngoại với cháu ngoại;\n- Anh, chị, em ruột với nhau. [4]\n\nTheo nguồn hướng dẫn, anh chị em ruột có thể có cùng cha mẹ, cùng cha khác mẹ hoặc cùng mẹ khác cha. [1] Nguồn quy định chi tiết cũng nêu trường hợp cha/mẹ chồng với con dâu, cha/mẹ vợ với con rể vẫn thuộc diện miễn thuế khi người vợ hoặc chồng đã mất. [2]\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo các nguồn không được cung cấp, các quan hệ thân nhân có thu nhập từ chuyển nhượng, thừa kế hoặc tặng cho bất động sản thuộc diện miễn thuế thu nhập cá nhân gồm:\n\n- Vợ với chồng;\n- Cha đẻ, mẹ đẻ với con đẻ;\n- Cha nuôi, mẹ nuôi với con nuôi;\n- Cha chồng, mẹ chồng với con dâu; cha vợ, mẹ vợ với con rể;\n- Ông nội, bà nội với cháu nội; ông ngoại, bà ngoại với cháu ngoại;\n- Anh, chị, em ruột với nhau. [4]\n\nTheo nguồn hướng dẫn, anh chị em ruột có thể có cùng cha mẹ, cùng cha khác mẹ hoặc cùng mẹ khác cha. [1] Nguồn quy định chi tiết cũng nêu trường hợp cha/mẹ chồng với con dâu, cha/mẹ vợ với con rể vẫn thuộc diện miễn thuế khi người vợ hoặc chồng đã mất. [2]\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "Theo các nguồn không được cung cấp, các quan hệ thân nhân có thu nhập từ chuyển nhượng, thừa kế hoặc tặng cho bất động sản thuộc diện miễn thuế thu nhập cá nhân gồm:\n\n- Vợ với chồng;\n- Cha đẻ, mẹ đẻ với con đẻ;\n- Cha nuôi, mẹ nuôi với con nuôi;\n- Cha chồng, mẹ chồng với con dâu; cha vợ, mẹ vợ với con rể;\n- Ông nội, bà nội với cháu nội; ông ngoại, bà ngoại với cháu ngoại;\n- Anh, chị, em ruột với nhau. [4]",
+          "evidence": "Luật Thuế thu nhập cá nhân 109/2025/QH15 > Chương I - NHỮNG QUY ĐỊNH CHUNG > Điều 4. Thu nhập được miễn thuế\n1. Thu nhập từ chuyển nhượng, nhận thừa kế, quà tặng là bất động sản giữa vợ với chồng; cha đẻ, mẹ đẻ với con đẻ; cha nuôi, mẹ nuôi với con nuôi; cha chồng, mẹ chồng với con dâu; cha vợ, mẹ vợ với con rể; ông nội, bà nội với cháu nội; ông ngoại, bà ngoại với cháu ngoại; anh, chị, em ruột với nhau.",
+          "label": "supported"
+        },
+        {
+          "quote": "Theo nguồn hướng dẫn, anh chị em ruột có thể có cùng cha mẹ, cùng cha khác mẹ hoặc cùng mẹ khác cha. [1]",
+          "evidence": "Thông tư số 80/2021/TT-BTC ...Điều 53. ...e) Đối với bất động sản chuyển nhượng, thừa kế, quà tặng giữa anh, chị, em ruột với nhau cần có giấy tờ sau: bản sao Sổ hộ khẩu hoặc bản sao Giấy khai sinh của người chuyển nhượng và của người nhận chuyển nhượng thể hiện mối quan hệ có chung cha mẹ hoặc cùng cha khác mẹ hoặc cùng mẹ khác cha hoặc các giấy tờ khác có xác nhận của cơ quan cấp có thẩm quyền chứng minh có quan hệ huyết thống.",
+          "label": "supported"
+        },
+        {
+          "quote": "Nguồn quy định chi tiết cũng nêu trường hợp cha/mẹ chồng với con dâu, cha/mẹ vợ với con rể vẫn thuộc diện miễn thuế khi người vợ hoặc chồng đã mất. [2]",
+          "evidence": "Nghị định quy định chi tiết ... Điều 18. Thu nhập từ chuyển nhượng, nhận thừa kế, quà tặng là bất động sản\n1. Miễn thuế thu nhập cá nhân đối với thu nhập từ chuyển nhượng, nhận thừa kế, quà tặng là bất động sản (bao gồm cả nhà ở, công trình xây dựng hình thành trong tương lai theo quy định của pháp luật về kinh doanh bất động sản) giữa: ... cha chồng, mẹ chồng với con dâu (kể cả khi chồng chết); cha vợ, mẹ vợ với con rể (kể cả khi vợ chết); ...",
+          "label": "supported"
+        }
+      ],
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: 'Theo các nguồn được cung cấp, các quan hệ thân nhân có thu nhập '",
+      "new": null,
+      "caught": false
+    },
+    {
+      "id": "test:q005",
+      "original": "Theo dữ liệu được cung cấp, **dịch vụ tang lễ** bao gồm: cho thuê nhà tang lễ; cho thuê xe ô tô phục vụ tang lễ; táng người chết dưới các hình thức; di chuyển mộ; và chăm sóc mộ. Các dịch vụ này phải do **cơ sở có chức năng kinh doanh dịch vụ tang lễ** cung cấp. [1]\n\nNguồn hiện có không nêu cụ thể hồ sơ, giấy phép hay thủ tục để xác định cơ sở có chức năng kinh doanh dịch vụ tang lễ. Vì vậy, chưa đủ căn cứ trong các nguồn đã cung cấp để liệt kê thêm các điều kiện pháp lý cụ thể đối với đơn vị cung cấp. [1]\n\nVề thuế giá trị gia tăng, dịch vụ tang lễ thuộc đối tượng không chịu thuế theo nguồn luật được cung cấp. [2]\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "answer": "Theo dữ liệu được cung cấp, **dịch vụ tang lễ** bao gồm: cho thuê nhà tang lễ; cho thuê xe ô tô phục vụ tang lễ; táng người chết dưới các hình thức; di chuyển mộ; và chăm sóc mộ. Các dịch vụ này không phải do **cơ sở có chức năng kinh doanh dịch vụ tang lễ** cung cấp. [1]\n\nNguồn hiện có không nêu cụ thể hồ sơ, giấy phép hay thủ tục để xác định cơ sở có chức năng kinh doanh dịch vụ tang lễ. Vì vậy, chưa đủ căn cứ trong các nguồn đã cung cấp để liệt kê thêm các điều kiện pháp lý cụ thể đối với đơn vị cung cấp. [1]\n\nVề thuế giá trị gia tăng, dịch vụ tang lễ thuộc đối tượng không chịu thuế theo nguồn luật được cung cấp. [2]\n\n*Lưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "claims": [
+        {
+          "quote": "dịch vụ tang lễ bao gồm: cho thuê nhà tang lễ; cho thuê xe ô tô phục vụ tang lễ; táng người chết dưới các hình thức; di chuyển mộ; và chăm sóc mộ. Các dịch vụ này không phải do cơ sở có chức năng kinh doanh dịch vụ tang lễ cung cấp.",
+          "evidence": "Dịch vụ tang lễ bao gồm dịch vụ cho thuê nhà tang lễ, xe ô tô phục vụ tang lễ, táng người chết dưới các hình thức, di chuyển mộ, chăm sóc mộ và phải do các cơ sở có chức năng kinh doanh dịch vụ tang lễ cung cấp.",
+          "label": "contradicted"
+        },
+        {
+          "quote": "Nguồn hiện có không nêu cụ thể hồ sơ, giấy phép hay thủ tục để xác định cơ sở có chức năng kinh doanh dịch vụ tang lễ. Vì vậy, chưa đủ căn cứ trong các nguồn đã cung cấp để liệt kê thêm các điều kiện pháp lý cụ thể đối với đơn vị cung cấp.",
+          "evidence": "",
+          "label": "unsupported"
+        },
+        {
+          "quote": "Về thuế giá trị gia tăng, dịch vụ tang lễ thuộc đối tượng không chịu thuế theo nguồn luật được cung cấp.",
+          "evidence": "11. Dịch vụ tang lễ.",
+          "label": "supported"
+        }
+      ],
+      "kind": "flip",
+      "change": "'phải' -> 'không phải' near: 'ức; di chuyển mộ; và chăm sóc mộ. Các dịch vụ này phải do **cơ sở có chức năng kinh doanh dịch vụ ta'",
+      "new": null,
+      "caught": true
+    },
+    {
+      "id": "test:q007",
+      "original": "Theo tài liệu được cung cấp, hồ sơ khoản chi cho người được biệt phái sang tham gia quản trị, điều hành hoặc kiểm soát **tổ chức tín dụng được kiểm soát đặc biệt** gồm:\n\n- Quyết định biệt phái của cơ quan có thẩm quyền;\n- Văn bản chấp thuận hoặc tiếp nhận biệt phái của tổ chức tín dụng nhận người được biệt phái;\n- Hợp đồng hoặc thỏa thuận giữa các bên liên quan, nếu có. [1]\n\nLuật Thuế thu nhập doanh nghiệp liệt kê khoản chi thực tế này là khoản chi được xem xét tính vào chi phí được trừ; hồ sơ nêu trên là hồ sơ theo quy định của Bộ Tài chính trong tài liệu được cung cấp. [1][2]\n\nTôi chưa thể xác minh hiệu lực hiện hành của các quy định này ngoài nội dung trích dẫn đã cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo tài liệu không được cung cấp, hồ sơ khoản chi cho người được biệt phái sang tham gia quản trị, điều hành hoặc kiểm soát **tổ chức tín dụng được kiểm soát đặc biệt** gồm:\n\n- Quyết định biệt phái của cơ quan có thẩm quyền;\n- Văn bản chấp thuận hoặc tiếp nhận biệt phái của tổ chức tín dụng nhận người được biệt phái;\n- Hợp đồng hoặc thỏa thuận giữa các bên liên quan, nếu có. [1]\n\nLuật Thuế thu nhập doanh nghiệp liệt kê khoản chi thực tế này là khoản chi được xem xét tính vào chi phí được trừ; hồ sơ nêu trên là hồ sơ theo quy định của Bộ Tài chính trong tài liệu được cung cấp. [1][2]\n\nTôi chưa thể xác minh hiệu lực hiện hành của các quy định này ngoài nội dung trích dẫn đã cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "hồ sơ khoản chi cho người được biệt phái sang tham gia quản trị, điều hành hoặc kiểm soát **tổ chức tín dụng được kiểm soát đặc biệt** gồm:\n\n- Quyết định biệt phái của cơ quan có thẩm quyền;\n- Văn bản chấp thuận hoặc tiếp nhận biệt phái của tổ chức tín dụng nhận người được biệt phái;\n- Hợp đồng hoặc thỏa thuận giữa các bên liên quan, nếu có. [1]",
+          "evidence": "8. Hồ sơ của khoản chi thực tế cho người được biệt phái tham gia quản trị, điều hành, kiểm soát tổ chức tín dụng được kiểm soát đặc biệt, ngân hàng thương mại được chuyển giao bắt buộc theo quy định của Luật Các tổ chức tín dụng quy định tại điểm b8 khoản 1 Điều 9 của Luật Thuế thu nhập doanh nghiệp gồm:\na) Quyết định biệt phái của cơ quan có thẩm quyền;\nb) Văn bản chấp thuận hoặc tiếp nhận biệt phái của tổ chức tín dụng nhận người được biệt phái;\nc) Hợp đồng, thỏa thuận (nếu có) giữa các bên liên quan.",
+          "label": "supported"
+        },
+        {
+          "quote": "Luật Thuế thu nhập doanh nghiệp liệt kê khoản chi thực tế này là khoản chi được xem xét tính vào chi phí được trừ; hồ sơ nêu trên là hồ sơ theo quy định của Bộ Tài chính trong tài liệu được cung cấp. [1][2]",
+          "evidence": "Điều 9. Các khoản chi được trừ và không được trừ khi xác định thu nhập chịu thuế\n1. Trừ các khoản chi quy định tại khoản 2 Điều này, doanh nghiệp được trừ các khoản chi khi xác định thu nhập chịu thuế nếu đáp ứng đủ các điều kiện sau đây:\n...\n    b8) Khoản chi thực tế cho người được biệt phái tham gia quản trị, điều hành, kiểm soát tổ chức tín dụng được kiểm soát đặc biệt, ngân hàng thương mại được chuyển giao bắt buộc theo quy định của Luật Các tổ chức tín dụng;\n...\nBộ Tài chính quy định hồ sơ của khoản chi được tính vào chi phí được trừ quy định tại điểm b, điểm c khoản 1 Điều này.",
+          "label": "supported"
+        }
+      ],
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: 'Theo tài liệu được cung cấp, hồ sơ khoản chi cho người được biệ'",
+      "new": null,
+      "caught": false
+    },
+    {
+      "id": "test:q008",
+      "original": "**Không thể kết luận chung cho mọi loại thuế chỉ từ các nguồn được cung cấp.** Quy định có thể khác nhau theo loại thuế và trường hợp cụ thể.\n\n- **Thuế thu nhập doanh nghiệp bổ sung theo Quy định về thuế tối thiểu toàn cầu:** nếu chọn khai và nộp bằng Đồng Việt Nam thì khai, nộp bằng Đồng Việt Nam; nếu đủ điều kiện chọn khai bằng ngoại tệ theo quy định thì được khai và nộp bằng ngoại tệ đó. Nguồn không nêu quyền khai bằng một loại tiền rồi tự do nộp bằng loại tiền khác. [1]\n- **Hoạt động dầu khí và bán dầu khí:** đồng tiền nộp thuế được xác định theo đồng tiền khai thuế tương ứng với trường hợp cụ thể. [2]\n- Với các trường hợp khai, nộp bằng ngoại tệ được liệt kê tại Thông tư 80/2021/TT-BTC, quy định cũng mô tả việc khai và nộp bằng loại ngoại tệ được áp dụng cho trường hợp đó. [3]\n\nVì vậy, **không nên mặc nhiên đổi sang loại tiền khác khi nộp**. Để trả lời chính xác, cần biết doanh nghiệp đang nộp loại thuế nào và thuộc trường hợp nào. Tôi chưa thể xác minh hiệu lực hiện hành của các văn bản được trích dẫn.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "**Không thể kết luận chung cho mọi loại thuế chỉ từ các nguồn không được cung cấp.** Quy định có thể khác nhau theo loại thuế và trường hợp cụ thể.\n\n- **Thuế thu nhập doanh nghiệp bổ sung theo Quy định về thuế tối thiểu toàn cầu:** nếu chọn khai và nộp bằng Đồng Việt Nam thì khai, nộp bằng Đồng Việt Nam; nếu đủ điều kiện chọn khai bằng ngoại tệ theo quy định thì được khai và nộp bằng ngoại tệ đó. Nguồn không nêu quyền khai bằng một loại tiền rồi tự do nộp bằng loại tiền khác. [1]\n- **Hoạt động dầu khí và bán dầu khí:** đồng tiền nộp thuế được xác định theo đồng tiền khai thuế tương ứng với trường hợp cụ thể. [2]\n- Với các trường hợp khai, nộp bằng ngoại tệ được liệt kê tại Thông tư 80/2021/TT-BTC, quy định cũng mô tả việc khai và nộp bằng loại ngoại tệ được áp dụng cho trường hợp đó. [3]\n\nVì vậy, **không nên mặc nhiên đổi sang loại tiền khác khi nộp**. Để trả lời chính xác, cần biết doanh nghiệp đang nộp loại thuế nào và thuộc trường hợp nào. Tôi chưa thể xác minh hiệu lực hiện hành của các văn bản được trích dẫn.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "**Thuế thu nhập doanh nghiệp bổ sung theo Quy định về thuế tối thiểu toàn cầu:** nếu chọn khai và nộp bằng Đồng Việt Nam thì khai, nộp bằng Đồng Việt Nam; nếu đủ điều kiện chọn khai bằng ngoại tệ theo quy định thì được khai và nộp bằng ngoại tệ đó. Nguồn không nêu quyền khai bằng một loại tiền rồi tự do nộp bằng loại tiền khác. [1]",
+          "evidence": "Nghị định số 236/2025/NĐ-CP Quy định chi tiết một số điều của Nghị quyết số 107/2023/QH15 ngày 29 tháng 11 năm 2023 của Quốc hội về việc áp dụng thuế thu nhập doanh nghiệp bổ sung theo quy định chống xói mòn cơ sở thuế toàn cầu 236/2025/NĐ-CP > Chương II > Mục 4 > Điều 17. Đồng tiền khai thuế, nộp thuế\n\n2. Đơn vị hợp thành chịu trách nhiệm kê khai thực hiện khai Tờ khai thuế thu nhập doanh nghiệp bổ sung, nộp thuế thu nhập doanh nghiệp bổ sung bằng Đồng Việt Nam, trừ trường hợp lựa chọn áp dụng quy định tại khoản 3 Điều này.\n3. Trường hợp số thuế bổ sung phải nộp trên Tờ khai thông tin theo Quy định về thuế tối thiểu toàn cầu được trình bày bằng đồng tiền sử dụng lập báo cáo tài chính hợp nhất của công ty mẹ tối cao (khác Đồng Việt Nam) thì đơn vị hợp thành chịu trách nhiệm kê khai được lựa chọn khai Tờ khai thuế thu nhập doanh nghiệp bổ sung, nộp thuế thu nhập doanh nghiệp bổ sung bằng đồng tiền này.",
+          "label": "supported"
+        },
+        {
+          "quote": "**Hoạt động dầu khí và bán dầu khí:** đồng tiền nộp thuế được xác định theo đồng tiền khai thuế tương ứng với trường hợp cụ thể. [2]",
+          "evidence": "Nghị định quy định chi tiết một số điều và biện pháp để tổ chức, hướng dẫn thi hành Luật Quản lý thuế 252/2026/NĐ-CP > Chương II - CÁC CHỨC NĂNG QUẢN LÝ THUẾ > Mục 2 - KHAI THUẾ; THỜI HẠN NỘP HỒ SƠ KHAI THUẾ; KỲ TÍNH THUẾ; THÔNG BÁO THUẾ, KHẤU TRỪ THUẾ, KHAI THAY, NỘP THAY THUẾ > Điều 14. Đồng tiền khai thuế, khoản thu khác, nộp thuế, khoản thu khác; tỷ giá khai thuế, khoản thu khác quy đổi; tỷ giá tính thuế\n\n2. Đồng tiền nộp thuế, khoản thu khác đối với hoạt động dầu khí và bán dầu khí thực hiện như sau:\na) Đối với khai thuế, khoản thu khác theo tháng, quý, từng lần phát sinh và từng lần xuất bán: đồng tiền nộp thuế, khoản thu khác là đồng tiền khai thuế, khoản thu khác quy định tại điểm b.1 khoản 1 Điều này;",
+          "label": "supported"
+        },
+        {
+          "quote": "Với các trường hợp khai, nộp bằng ngoại tệ được liệt kê tại Thông tư 80/2021/TT-BTC, quy định cũng mô tả việc khai và nộp bằng loại ngoại tệ được áp dụng cho trường hợp đó. [3]",
+          "evidence": "Thông tư số 80/2021/TT-BTC Hướng dẫn thi hành một số điều của Luật Quản lý thuế và Nghị định số 126/2020/NĐ-CP ngày 19 tháng 10 năm 2020 của Chính phủ quy định chi tiết một số điều của Luật Quản lý thuế 80/2021/TT-BTC > Chương I > Điều 4. Đồng tiền khai thuế, nộp thuế bằng ngoại tệ tự do chuyển đổi và tỷ giá giao dịch thực tế\n\n1. Các trường hợp khai thuế, nộp thuế bằng ngoại tệ tự do chuyển đổi bao gồm:\na) Hoạt động tìm kiếm, thăm dò, khai thác dầu khí (trừ trường hợp dầu thô, condensate, khí thiên nhiên bán tại thị trường Việt Nam hoặc Chính phủ có quy định khác) gồm: thuế tài nguyên, thuế thu nhập doanh nghiệp; phụ thu đối với phần dầu lãi được chia khi giá dầu thô biến động tăng; tiền lãi dầu, khí nước chủ nhà được chia; tiền hoa hồng chữ ký; tiền hoa hồng phát hiện thương mại dầu, khí; tiền hoa hồng sản xuất; tiền đọc và sử dụng tài liệu dầu, khí; tiền đền bù không thực hiện các cam kết tối thiểu; thuế thu nhập doanh nghiệp đối với thu nhập từ chuyển nhượng quyền lợi tham gia hợp đồng dầu khí; thuế đặc biệt, khoản phụ thu và thuế thu nhập doanh nghiệp từ kết dư phần dầu để lại của hoạt động dầu khí của Liên doanh Vietsovpetro tại Lô 09.1 thực hiện khai, nộp vào ngân sách nhà nước bằng loại ngoại tệ tự do chuyển đổi sử dụng trong giao dịch thanh toán.\n\nb) Phí, lệ phí và các khoản thu khác do các cơ quan đại diện nước Cộng hòa xã hội chủ nghĩa Việt Nam ở nước ngoài thực hiện thu:\n\nKhai và nộp vào ngân sách nhà nước bằng loại ngoại tệ tự do chuyển đổi được quy định tại văn bản quy định về mức thu phí, lệ phí và các khoản thu khác.\n\nc) Phí, lệ phí do các cơ quan, tổ chức tại Việt Nam được phép thu phí, lệ phí bằng ngoại tệ:\n\nKhai và nộp vào ngân sách nhà nước bằng loại ngoại tệ tự do chuyển đổi được quy định tại văn bản quy định về mức thu phí, lệ phí.\n\nd) Hoạt động kinh doanh thương mại điện tử, kinh doanh dựa trên nền tảng số và các dịch vụ khác của nhà cung cấp ở nước ngoài không có cơ sở thường trú tại Việt Nam:\n\nKhai và nộp vào ngân sách nhà nước bằng loại ngoại tệ tự do chuyển đổi.",
+          "label": "supported"
+        }
+      ],
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: ' kết luận chung cho mọi loại thuế chỉ từ các nguồn được cung cấp.** Quy định có thể khác nhau theo l'",
+      "new": null,
+      "caught": false
+    },
+    {
+      "id": "test:q009",
+      "original": "**Có thể thuộc đối tượng không chịu thuế GTGT, nhưng không phải cứ nhập khẩu hàng để hỗ trợ bão lũ là tự động được áp dụng.**\n\nTheo nguồn được cung cấp, hàng hóa nhập khẩu để ủng hộ, tài trợ khắc phục hậu quả thiên tai thuộc diện không chịu thuế GTGT khi được **cơ quan, tổ chức được nêu trong quy định tiếp nhận**. Các cơ quan, tổ chức tiếp nhận có trách nhiệm ban hành văn bản tiếp nhận theo đề nghị của bên ủng hộ, tài trợ. [1][2]\n\nVì vậy, doanh nghiệp cần xác định lô hàng có được cơ quan, tổ chức thuộc diện nêu trên tiếp nhận và có văn bản tiếp nhận hay không. Nếu doanh nghiệp tự nhập hàng mà chưa đáp ứng điều kiện tiếp nhận này, thì thông tin hiện có chưa đủ căn cứ để kết luận lô hàng được không chịu thuế GTGT. [1]\n\nNhận định trên dựa trên các nguồn được cung cấp; tôi chưa thể xác minh hiệu lực hiện hành của các văn bản từ dữ liệu này. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "**Có thể thuộc đối tượng không chịu thuế GTGT, nhưng không phải cứ nhập khẩu hàng để hỗ trợ bão lũ là tự động không được áp dụng.**\n\nTheo nguồn được cung cấp, hàng hóa nhập khẩu để ủng hộ, tài trợ khắc phục hậu quả thiên tai thuộc diện không chịu thuế GTGT khi được **cơ quan, tổ chức được nêu trong quy định tiếp nhận**. Các cơ quan, tổ chức tiếp nhận có trách nhiệm ban hành văn bản tiếp nhận theo đề nghị của bên ủng hộ, tài trợ. [1][2]\n\nVì vậy, doanh nghiệp cần xác định lô hàng có được cơ quan, tổ chức thuộc diện nêu trên tiếp nhận và có văn bản tiếp nhận hay không. Nếu doanh nghiệp tự nhập hàng mà chưa đáp ứng điều kiện tiếp nhận này, thì thông tin hiện có chưa đủ căn cứ để kết luận lô hàng được không chịu thuế GTGT. [1]\n\nNhận định trên dựa trên các nguồn được cung cấp; tôi chưa thể xác minh hiệu lực hiện hành của các văn bản từ dữ liệu này. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "Theo nguồn được cung cấp, hàng hóa nhập khẩu để ủng hộ, tài trợ khắc phục hậu quả thiên tai thuộc diện không chịu thuế GTGT khi được **cơ quan, tổ chức được nêu trong quy định tiếp nhận**. Các cơ quan, tổ chức tiếp nhận có trách nhiệm ban hành văn bản tiếp nhận theo đề nghị của bên ủng hộ, tài trợ.",
+          "evidence": "Nghị định quy định chi tiết thi hành một số điều của Luật Thuế giá trị gia tăng 181/2025/NĐ-CP > Chương I - NHỮNG QUY ĐỊNH CHUNG > Điều 4. Đối tượng không chịu thuế\n15.\nd) Hàng hóa nhập khẩu ủng hộ, tài trợ cho phòng, chống, khắc phục hậu quả thảm họa, thiên tai, dịch bệnh, chiến tranh là hàng hóa ủng hộ, tài trợ được các bộ, cơ quan ngang bộ, Ủy ban nhân dân các tỉnh, thành phố, Ủy ban Mặt trận Tổ quốc Việt Nam các tỉnh, thành phố tiếp nhận. Các cơ quan, tổ chức tiếp nhận có trách nhiệm ban hành văn bản tiếp nhận theo đề nghị của tổ chức, cá nhân ủng hộ, tài trợ.",
+          "label": "supported"
+        }
+      ],
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: 'phải cứ nhập khẩu hàng để hỗ trợ bão lũ là tự động được áp dụng.**\\n\\nTheo nguồn được cung cấp, hàng h'",
+      "new": null,
+      "caught": false
+    },
+    {
+      "id": "test:q012",
+      "original": "Kinh phí để cơ quan quản lý nhà nước tra cứu, cung cấp và sử dụng thông tin hóa đơn điện tử được cấp từ **ngân sách nhà nước**, trên cơ sở dự toán kinh phí hằng năm đã được phê duyệt cho cơ quan, đơn vị theo quy định pháp luật. [2]\n\nNội dung này chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Kinh phí để cơ quan quản lý nhà nước tra cứu, cung cấp và sử dụng thông tin hóa đơn điện tử không được cấp từ **ngân sách nhà nước**, trên cơ sở dự toán kinh phí hằng năm đã được phê duyệt cho cơ quan, đơn vị theo quy định pháp luật. [2]\n\nNội dung này chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "Kinh phí để cơ quan quản lý nhà nước tra cứu, cung cấp và sử dụng thông tin hóa đơn điện tử không được cấp từ **ngân sách nhà nước**, trên cơ sở dự toán kinh phí hằng năm đã được phê duyệt cho cơ quan, đơn vị theo quy định pháp luật.",
+          "evidence": "Điều 42. Kinh phí thực hiện\nKinh phí thực hiện việc tra cứu, cung cấp, sử dụng thông tin hóa đơn điện tử của các cơ quan quản lý nhà nước theo quy định tại Nghị định này được cấp từ ngân sách nhà nước trên cơ sở dự toán kinh phí hàng năm được phê duyệt cho các cơ quan, đơn vị theo quy định của pháp luật.",
+          "label": "contradicted"
+        }
+      ],
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: 'cứu, cung cấp và sử dụng thông tin hóa đơn điện tử được cấp từ **ngân sách nhà nước**, trên cơ sở dự'",
+      "new": null,
+      "caught": true
+    },
+    {
+      "id": "test:q013",
+      "original": "Các nhóm dự phòng được nhắc đến gồm:\n\n- Dự phòng giảm giá hàng tồn kho;\n- Dự phòng tổn thất các khoản đầu tư tài chính;\n- Dự phòng nợ phải thu khó đòi;\n- Dự phòng bảo hành sản phẩm, hàng hóa, công trình xây lắp;\n- Dự phòng rủi ro nghề nghiệp của doanh nghiệp thẩm định giá và doanh nghiệp cung cấp dịch vụ kiểm toán độc lập. [1]\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Các nhóm dự phòng được nhắc đến gồm:\n\n- Dự phòng giảm giá hàng tồn kho;\n- Dự phòng tổn thất các khoản đầu tư tài chính;\n- Dự phòng nợ không phải thu khó đòi;\n- Dự phòng bảo hành sản phẩm, hàng hóa, công trình xây lắp;\n- Dự phòng rủi ro nghề nghiệp của doanh nghiệp thẩm định giá và doanh nghiệp cung cấp dịch vụ kiểm toán độc lập. [1]\n\nLưu ý: Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "- Dự phòng nợ không phải thu khó đòi;",
+          "evidence": "- Dự phòng nợ phải thu khó đòi,",
+          "label": "contradicted"
+        }
+      ],
+      "kind": "flip",
+      "change": "'phải' -> 'không phải' near: 'ổn thất các khoản đầu tư tài chính;\\n- Dự phòng nợ phải thu khó đòi;\\n- Dự phòng bảo hành sản phẩm, hà'",
+      "new": null,
+      "caught": true
+    },
+    {
+      "id": "test:q014",
+      "original": "Theo nội dung nguồn được cung cấp, để ghi nhận phần giá trị tài sản, hàng hóa bị bão làm tổn thất nhưng không được bồi thường vào chi phí được trừ, công ty cần lưu: [1]\n\n- **Biên bản kiểm kê giá trị tài sản, hàng hóa bị tổn thất** do công ty lập. Biên bản cần nêu rõ giá trị và nguyên nhân tổn thất; trách nhiệm của tổ chức, cá nhân liên quan; chủng loại, số lượng, đơn giá, giá trị tài sản, hàng hóa có thể thu hồi (nếu có). [1]\n- **Bảng kê xuất, nhập, tồn** của hàng hóa bị tổn thất, có chữ ký xác nhận của người đại diện hợp pháp của công ty và người này chịu trách nhiệm trước pháp luật. [1]\n- **Hồ sơ bồi thường của cơ quan bảo hiểm**, nếu có. [1]\n- **Hồ sơ quy định trách nhiệm bồi thường của tổ chức, cá nhân**, nếu có. [1]\n\nNguồn được cung cấp chưa đủ để tôi xác minh quy định này còn hiệu lực hiện hành hay không. Nội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo nội dung nguồn không được cung cấp, để ghi nhận phần giá trị tài sản, hàng hóa bị bão làm tổn thất nhưng không được bồi thường vào chi phí được trừ, công ty cần lưu: [1]\n\n- **Biên bản kiểm kê giá trị tài sản, hàng hóa bị tổn thất** do công ty lập. Biên bản cần nêu rõ giá trị và nguyên nhân tổn thất; trách nhiệm của tổ chức, cá nhân liên quan; chủng loại, số lượng, đơn giá, giá trị tài sản, hàng hóa có thể thu hồi (nếu có). [1]\n- **Bảng kê xuất, nhập, tồn** của hàng hóa bị tổn thất, có chữ ký xác nhận của người đại diện hợp pháp của công ty và người này chịu trách nhiệm trước pháp luật. [1]\n- **Hồ sơ bồi thường của cơ quan bảo hiểm**, nếu có. [1]\n- **Hồ sơ quy định trách nhiệm bồi thường của tổ chức, cá nhân**, nếu có. [1]\n\nNguồn được cung cấp chưa đủ để tôi xác minh quy định này còn hiệu lực hiện hành hay không. Nội dung trên chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "- **Biên bản kiểm kê giá trị tài sản, hàng hóa bị tổn thất** do công ty lập. Biên bản cần nêu rõ giá trị và nguyên nhân tổn thất; trách nhiệm của tổ chức, cá nhân liên quan; chủng loại, số lượng, đơn giá, giá trị tài sản, hàng hóa có thể thu hồi (nếu có). [1]",
+          "evidence": "7. Hồ sơ của phần giá trị tổn thất do thiên tai, dịch bệnh và trường hợp bất khả kháng khác không được bồi thường quy định tại điểm b7 khoản 1 Điều 9 của Luật Thuế thu nhập doanh nghiệp gồm:\na) Biên bản kiểm kê giá trị tài sản, hàng hóa bị tổn thất do doanh nghiệp lập, trong đó phải xác định rõ giá trị tài sản, hàng hóa bị tổn thất, nguyên nhân tổn thất, trách nhiệm của tổ chức, cá nhân về những tổn thất, chủng loại, số lượng, đơn giá, giá trị tài sản, hàng hóa có thể thu hồi được (nếu có);",
+          "label": "supported"
+        },
+        {
+          "quote": "- **Bảng kê xuất, nhập, tồn** của hàng hóa bị tổn thất, có chữ ký xác nhận của người đại diện hợp pháp của công ty và người này chịu trách nhiệm trước pháp luật. [1]",
+          "evidence": "b) Bảng kê xuất nhập tồn hàng hóa bị tổn thất do đại diện hợp pháp của doanh nghiệp xác nhận, ký và chịu trách nhiệm trước pháp luật;",
+          "label": "supported"
+        },
+        {
+          "quote": "- **Hồ sơ bồi thường của cơ quan bảo hiểm**, nếu có. [1]",
+          "evidence": "c) Hồ sơ bồi thường thiệt hại được cơ quan bảo hiểm chấp nhận bồi thường (nếu có);",
+          "label": "supported"
+        },
+        {
+          "quote": "- **Hồ sơ quy định trách nhiệm bồi thường của tổ chức, cá nhân**, nếu có. [1]",
+          "evidence": "d) Hồ sơ quy định trách nhiệm của tổ chức, cá nhân phải bồi thường (nếu có).",
+          "label": "supported"
+        }
+      ],
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: 'Theo nội dung nguồn được cung cấp, để ghi nhận phần giá trị tài sản, '",
+      "new": null,
+      "caught": false
+    },
+    {
+      "id": "test:q018",
+      "original": "Nếu **25 triệu đồng/tháng là thu nhập tính thuế**, khoản này nằm ở **bậc có phần thu nhập tính thuế trên 10 triệu đến 30 triệu đồng/tháng**. [1]\n\nNguồn được cung cấp không hiển thị thuế suất của bậc này, nên chưa đủ căn cứ để nêu thuế suất hoặc tính số thuế phải nộp. [1] Tôi cũng chưa thể xác minh hiệu lực hiện hành của biểu thuế từ các nguồn đã cung cấp.\n\n*Thông tin chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "answer": "Nếu **32 triệu đồng/tháng là thu nhập tính thuế**, khoản này nằm ở **bậc có phần thu nhập tính thuế trên 10 triệu đến 30 triệu đồng/tháng**. [1]\n\nNguồn được cung cấp không hiển thị thuế suất của bậc này, nên chưa đủ căn cứ để nêu thuế suất hoặc tính số thuế phải nộp. [1] Tôi cũng chưa thể xác minh hiệu lực hiện hành của biểu thuế từ các nguồn đã cung cấp.\n\n*Thông tin chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "claims": [
+        {
+          "quote": "**32 triệu đồng/tháng là thu nhập tính thuế**, khoản này nằm ở **bậc có phần thu nhập tính thuế trên 10 triệu đến 30 triệu đồng/tháng**. [1]",
+          "evidence": "Biểu thuế luỹ tiến từng phần được quy định như sau: Bậc thuế Phần thu nhập tính thuế/tháng (triệu đồng) Thuế suất (%) Đến 10\nTrên 10 đến 30\n...",
+          "label": "contradicted"
+        }
+      ],
+      "kind": "number",
+      "change": "25 triệu -> 32 triệu",
+      "new": "32",
+      "caught": true
+    },
+    {
+      "id": "test:q019",
+      "original": "Theo quy định về giảm thuế giá trị gia tăng được trích trong nguồn:\n\n- **Cửa hàng của bạn** — nếu tính thuế theo phương pháp khấu trừ và bán hàng hóa, dịch vụ đủ điều kiện giảm thuế — khi áp dụng các mức thuế suất khác nhau phải ghi rõ thuế suất của từng hàng hóa, dịch vụ trên hóa đơn giá trị gia tăng. Với hàng hóa, dịch vụ thuộc diện giảm, ghi thuế suất **8%**, tiền thuế và tổng tiền thanh toán; các mặt hàng không thuộc diện giảm thì không áp dụng mức này. [2]\n\n- **Đơn vị dùng hóa đơn bán hàng** — nếu tính thuế theo tỷ lệ phần trăm trên doanh thu — ghi đầy đủ tiền hàng trước khi giảm tại cột “Thành tiền”; tại dòng “Cộng tiền hàng hóa, dịch vụ” ghi số tiền sau khi giảm 20% mức tỷ lệ % tính thuế giá trị gia tăng. Đồng thời ghi chú số tiền được giảm theo mẫu: “đã giảm… (số tiền) tương ứng 20% mức tỷ lệ % để tính thuế giá trị gia tăng theo Nghị quyết số 204/2025/QH15”. [2]\n\nPhần trên căn cứ vào nội dung nguồn được cung cấp; tôi chưa thể xác minh độc lập hiệu lực hiện hành của quy định. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo quy định về giảm thuế giá trị gia tăng được trích trong nguồn:\n\n- **Cửa hàng của bạn** — nếu tính thuế theo phương pháp khấu trừ và bán hàng hóa, dịch vụ đủ điều kiện giảm thuế — khi áp dụng các mức thuế suất khác nhau phải ghi rõ thuế suất của từng hàng hóa, dịch vụ trên hóa đơn giá trị gia tăng. Với hàng hóa, dịch vụ thuộc diện giảm, ghi thuế suất **15%**, tiền thuế và tổng tiền thanh toán; các mặt hàng không thuộc diện giảm thì không áp dụng mức này. [2]\n\n- **Đơn vị dùng hóa đơn bán hàng** — nếu tính thuế theo tỷ lệ phần trăm trên doanh thu — ghi đầy đủ tiền hàng trước khi giảm tại cột “Thành tiền”; tại dòng “Cộng tiền hàng hóa, dịch vụ” ghi số tiền sau khi giảm 20% mức tỷ lệ % tính thuế giá trị gia tăng. Đồng thời ghi chú số tiền được giảm theo mẫu: “đã giảm… (số tiền) tương ứng 20% mức tỷ lệ % để tính thuế giá trị gia tăng theo Nghị quyết số 204/2025/QH15”. [2]\n\nPhần trên căn cứ vào nội dung nguồn được cung cấp; tôi chưa thể xác minh độc lập hiệu lực hiện hành của quy định. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "cửa hàng của bạn — nếu tính thuế theo phương pháp khấu trừ và bán hàng hóa, dịch vụ đủ điều kiện giảm thuế — khi áp dụng các mức thuế suất khác nhau phải ghi rõ thuế suất của từng hàng hóa, dịch vụ trên hóa đơn giá trị gia tăng. Với hàng hóa, dịch vụ thuộc diện giảm, ghi thuế suất 15%, tiền thuế và tổng tiền thanh toán; các mặt hàng không thuộc diện giảm thì không áp dụng mức này.",
+          "evidence": "4. Trường hợp cơ sở kinh doanh theo quy định tại điểm a khoản 2 Điều này khi bán hàng hóa, cung cấp dịch vụ áp dụng các mức thuế suất khác nhau thì trên hóa đơn giá trị gia tăng phải ghi rõ thuế suất của từng hàng hóa, dịch vụ theo quy định tại khoản 3 Điều này.\n\n2. Mức giảm thuế giá trị gia tăng:\na) Cơ sở kinh doanh tính thuế giá trị gia tăng theo phương pháp khấu trừ được áp dụng mức thuế suất thuế giá trị gia tăng 8% đối với hàng hóa, dịch vụ quy định tại khoản 1 Điều này.",
+          "label": "contradicted"
+        },
+        {
+          "quote": "Đơn vị dùng hóa đơn bán hàng — nếu tính thuế theo tỷ lệ phần trăm trên doanh thu — ghi đầy đủ tiền hàng trước khi giảm tại cột “Thành tiền”; tại dòng “Cộng tiền hàng hóa, dịch vụ” ghi số tiền sau khi giảm 20% mức tỷ lệ % tính thuế giá trị gia tăng. Đồng thời ghi chú số tiền được giảm theo mẫu: “đã giảm… (số tiền) tương ứng 20% mức tỷ lệ % để tính thuế giá trị gia tăng theo Nghị quyết số 204/2025/QH15”.",
+          "evidence": "b) Đối với cơ sở kinh doanh quy định tại điểm b khoản 2 Điều này, khi lập hóa đơn bán hàng cung cấp hàng hóa, dịch vụ thuộc đối tượng giảm thuế giá trị gia tăng, tại cột “Thành tiền” ghi đầy đủ tiền hàng hóa, dịch vụ trước khi giảm, tại\n\ndòng “Cộng tiền hàng hóa, dịch vụ” ghi theo số đã giảm 20% mức tỷ lệ % trên doanh thu, đồng thời ghi chú: “đã giảm… (số tiền) tương ứng 20% mức tỷ lệ % để tính thuế giá trị gia tăng theo Nghị quyết số 204/2025/QH15”.",
+          "label": "supported"
+        }
+      ],
+      "kind": "number",
+      "change": "8% -> 15%",
+      "new": "15",
+      "caught": true
+    },
+    {
+      "id": "test:q022",
+      "original": "Nếu bạn là **cá nhân cư trú** và món quà thuộc loại tài sản chịu thuế theo quy định được trích dẫn, thì **phần giá trị vượt quá 20 triệu đồng cho mỗi lần nhận** là thu nhập tính thuế; không phải toàn bộ giá trị món quà. Luật liệt kê các tài sản như chứng khoán, phần vốn, bất động sản và tài sản phải đăng ký quyền sở hữu hoặc quyền sử dụng trong nhóm thu nhập từ quà tặng chịu thuế. [1][2][5]\n\n**Cách xác định giá trị** phụ thuộc vào loại tài sản:\n\n- Nguyên tắc chung là căn cứ vào giá giao dịch thông thường trên thị trường của tài sản cùng loại hoặc tương đương tại thời điểm phát sinh thu nhập. [1]\n- Với **bất động sản**, phần giá trị đất căn cứ vào bảng giá đất và hệ số điều chỉnh giá đất (nếu có); phần nhà, công trình gắn liền với đất căn cứ vào giá tính lệ phí trước bạ nhà do UBND cấp tỉnh quy định, hoặc căn cứ thay thế được nêu trong quy định nếu địa phương không có mức giá đó. [1]\n- Với **chứng khoán, phần vốn** hoặc tài sản khác phải đăng ký quyền sở hữu/quyền sử dụng, căn cứ định giá được xác định theo từng loại tài sản, như giá tham chiếu, giá trị sổ sách kế toán hoặc giá tính lệ phí trước bạ tương ứng. [1]\n\nBạn chưa nêu loại quà và tình trạng cư trú, nên chưa thể xác định chắc chắn món quà cụ thể có thuộc diện chịu thuế hay cách định giá áp dụng. Các thông tin trên phản ánh nội dung trong nguồn được cung cấp; tôi chưa thể xác minh hiệu lực hiện hành của các văn bản đó.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Nếu bạn là **cá nhân cư trú** và món quà thuộc loại tài sản chịu thuế theo quy định được trích dẫn, thì **phần giá trị vượt quá 27 triệu đồng cho mỗi lần nhận** là thu nhập tính thuế; không phải toàn bộ giá trị món quà. Luật liệt kê các tài sản như chứng khoán, phần vốn, bất động sản và tài sản phải đăng ký quyền sở hữu hoặc quyền sử dụng trong nhóm thu nhập từ quà tặng chịu thuế. [1][2][5]\n\n**Cách xác định giá trị** phụ thuộc vào loại tài sản:\n\n- Nguyên tắc chung là căn cứ vào giá giao dịch thông thường trên thị trường của tài sản cùng loại hoặc tương đương tại thời điểm phát sinh thu nhập. [1]\n- Với **bất động sản**, phần giá trị đất căn cứ vào bảng giá đất và hệ số điều chỉnh giá đất (nếu có); phần nhà, công trình gắn liền với đất căn cứ vào giá tính lệ phí trước bạ nhà do UBND cấp tỉnh quy định, hoặc căn cứ thay thế được nêu trong quy định nếu địa phương không có mức giá đó. [1]\n- Với **chứng khoán, phần vốn** hoặc tài sản khác phải đăng ký quyền sở hữu/quyền sử dụng, căn cứ định giá được xác định theo từng loại tài sản, như giá tham chiếu, giá trị sổ sách kế toán hoặc giá tính lệ phí trước bạ tương ứng. [1]\n\nBạn chưa nêu loại quà và tình trạng cư trú, nên chưa thể xác định chắc chắn món quà cụ thể có thuộc diện chịu thuế hay cách định giá áp dụng. Các thông tin trên phản ánh nội dung trong nguồn được cung cấp; tôi chưa thể xác minh hiệu lực hiện hành của các văn bản đó.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "**phần giá trị vượt quá 27 triệu đồng cho mỗi lần nhận** là thu nhập tính thuế",
+          "evidence": "2. Thu nhập tính thuế từ nhận thừa kế, quà tặng là phần giá trị tài sản thừa kế, quà tặng vượt trên 20 triệu đồng mà người nộp thuế nhận được theo từng lần phát sinh.",
+          "label": "contradicted"
+        },
+        {
+          "quote": "Luật liệt kê các tài sản như chứng khoán, phần vốn, bất động sản và tài sản phải đăng ký quyền sở hữu hoặc quyền sử dụng trong nhóm thu nhập từ quà tặng chịu thuế.",
+          "evidence": "9. Thu nhập từ nhận thừa kế, quà tặng là chứng khoán, phần vốn trong các tổ chức kinh tế, cơ sở kinh doanh, bất động sản và các tài sản phải đăng ký sở hữu hoặc đăng ký sử dụng.",
+          "label": "supported"
+        },
+        {
+          "quote": "- Nguyên tắc chung là căn cứ vào giá giao dịch thông thường trên thị trường của tài sản cùng loại hoặc tương đương tại thời điểm phát sinh thu nhập.",
+          "evidence": "2. Việc xác định thu nhập tính thuế đối với các loại tài sản nhận thừa kế, quà tặng phải bảo đảm phù hợp với giá giao dịch thông thường trên thị trường của tài sản cùng loại hoặc tương đương tại thời điểm phát sinh thu nhập.",
+          "label": "supported"
+        },
+        {
+          "quote": "- Với **bất động sản**, phần giá trị đất căn cứ vào bảng giá đất và hệ số điều chỉnh giá đất (nếu có); phần nhà, công trình gắn liền với đất căn cứ vào giá tính lệ phí trước bạ nhà do UBND cấp tỉnh quy định, hoặc căn cứ thay thế được nêu trong quy định nếu địa phương không có mức giá đó.",
+          "evidence": "c) Đối với nhận thừa kế, quà tặng là bất động sản, thu nhập tính thuế được xác định như sau:\nĐối với phần trị giá đất: được xác định căn cứ theo bảng giá đất, hệ số điều chỉnh giá đất (nếu có) theo quy định của pháp luật về đất đai tại thời điểm cá nhân làm thủ tục đăng ký quyền sử dụng, quyền sở hữu bất động sản.\nĐối với phần trị giá nhà, kết cấu hạ tầng và công trình kiến trúc gắn liền với đất: được xác định theo giá tính lệ phí trước bạ nhà do Ủy ban nhân dân cấp tỉnh quy định tại thời điểm cá nhân làm thủ tục đăng ký quyền sử dụng, quyền sở hữu bất động sản. Trường hợp Ủy ban nhân dân cấp tỉnh không có quy định giá tính lệ phí trước bạ nhà thì căn cứ vào quy định của Bộ Xây dựng về phân loại nhà, về tiêu chuẩn, về định mức xây dựng cơ bản; giá trị còn lại thực tế của công trình trên đất.",
+          "label": "supported"
+        },
+        {
+          "quote": "- Với **chứng khoán, phần vốn** hoặc tài sản khác phải đăng ký quyền sở hữu/quyền sử dụng, căn cứ định giá được xác định theo từng loại tài sản, như giá tham chiếu, giá trị sổ sách kế toán hoặc giá tính lệ phí trước bạ tương ứng.",
+          "evidence": "a) Đối với nhận thừa kế, quà tặng là chứng khoán, thu nhập tính thuế được xác định tại thời điểm làm thủ tục đăng ký quyền sở hữu hoặc thời điểm nộp hồ sơ khai thuế với cơ quan thuế, cụ thể:\nĐối với chứng khoán niêm yết, đăng ký giao dịch trên Sở Giao dịch chứng khoán: giá trị của chứng khoán được căn cứ vào giá tham chiếu trên Sở giao dịch chứng khoán.\nĐối với chứng khoán không thuộc trường hợp trên: giá trị của chứng khoán được căn cứ vào giá trị sổ sách kế toán của công ty phát hành loại chứng khoán đó tại thời điểm lập báo cáo tài chính gần nhất theo quy định của pháp luật về kế toán.\nb) Đối với nhận thừa kế, quà tặng là phần vốn trong các tổ chức, cơ sở kinh doanh, thu nhập tính thuế được xác định căn cứ vào giá trị sổ sách kế toán tại thời điểm gần nhất trước thời điểm đăng ký quyền sở hữu phần vốn góp;\nd) Đối với nhận thừa kế, quà tặng là tài sản khác phải đăng ký quyền sở hữu, quyền sử dụng, việc xác định thu nhập tính thuế được căn cứ vào giá tính lệ phí trước bạ của tài sản đó hoặc tài sản cùng loại (nếu có) tại thời điểm cá nhân làm thủ tục đăng ký quyền sở hữu, quyền sử dụng tài sản thừa kế, quà tặng.",
+          "label": "supported"
+        }
+      ],
+      "kind": "number",
+      "change": "20 triệu -> 27 triệu",
+      "new": "27",
+      "caught": true
+    },
+    {
+      "id": "test:q023",
+      "original": "Theo nội dung nguồn được cung cấp:\n\n- **Cục Hải quan** có trách nhiệm xây dựng cơ sở dữ liệu về chứng từ điện tử và thông báo các loại chứng từ đã phát hành, bị báo mất hoặc không còn giá trị sử dụng. [1]\n- **Chi cục Hải quan khu vực** phụ trách trên địa bàn: quản lý việc tạo, phát hành chứng từ; kiểm tra việc tạo, phát hành và sử dụng; theo dõi, kiểm tra việc hủy chứng từ. [1]\n\nTôi chưa thể xác minh độc lập hiệu lực hiện hành của quy định được trích dẫn. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo nội dung nguồn không được cung cấp:\n\n- **Cục Hải quan** có trách nhiệm xây dựng cơ sở dữ liệu về chứng từ điện tử và thông báo các loại chứng từ đã phát hành, bị báo mất hoặc không còn giá trị sử dụng. [1]\n- **Chi cục Hải quan khu vực** phụ trách trên địa bàn: quản lý việc tạo, phát hành chứng từ; kiểm tra việc tạo, phát hành và sử dụng; theo dõi, kiểm tra việc hủy chứng từ. [1]\n\nTôi chưa thể xác minh độc lập hiệu lực hiện hành của quy định được trích dẫn. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "Cục Hải quan có trách nhiệm xây dựng cơ sở dữ liệu về chứng từ điện tử và thông báo các loại chứng từ đã phát hành, bị báo mất hoặc không còn giá trị sử dụng.",
+          "evidence": "1. Cục Hải quan có trách nhiệm:\na) Xây dựng cơ sở dữ liệu về chứng từ điện tử để phục vụ công tác quản lý thuế, phục vụ công tác quản lý nhà nước của các cơ quan khác của nhà nước;\nb) Thông báo các loại chứng từ đã được phát hành, được báo mất, không còn giá trị sử dụng.",
+          "label": "supported"
+        },
+        {
+          "quote": "Chi cục Hải quan khu vực phụ trách trên địa bàn: quản lý việc tạo, phát hành chứng từ; kiểm tra việc tạo, phát hành và sử dụng; theo dõi, kiểm tra việc hủy chứng từ.",
+          "evidence": "2. Chi cục Hải quan khu vực có trách nhiệm:\na) Quản lý hoạt động tạo, phát hành chứng từ của các tổ chức đã đăng ký tạo, phát hành chứng từ với cơ quan hải quan trên địa bàn quản lý;\nb) Kiểm tra hoạt động tạo, phát hành và sử dụng chứng từ trên địa bàn;\nc) Theo dõi, kiểm tra hoạt động hủy chứng từ theo quy định của Bộ Tài chính trên địa bàn.",
+          "label": "supported"
+        }
+      ],
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: 'Theo nội dung nguồn được cung cấp:\\n\\n- **Cục Hải quan** có trách nhiệm'",
+      "new": null,
+      "caught": false
+    },
+    {
+      "id": "test:q025",
+      "original": "Theo các điều khoản được cung cấp của Luật Quản lý thuế 108/2025/QH15, nếu việc khai sai tờ khai xuất nhập khẩu làm thiếu thuế, công ty vẫn có thể bị xử phạt trong các trường hợp sau, ngoài việc phải nộp đủ thuế thiếu và tiền chậm nộp: [1]\n\n1. **Công ty tự phát hiện và khai bổ sung muộn**: sau khi cơ quan hải quan thông báo kiểm tra trực tiếp hồ sơ hải quan; hoặc sau 60 ngày kể từ ngày thông quan nhưng trước khi có quyết định kiểm tra sau thông quan, thanh tra hoặc kiểm tra. Mức phạt được quy định là **10% số thuế khai thiếu**. [1][2]\n\n2. **Cơ quan hải quan phát hiện sai phạm** trong khi làm thủ tục hải quan hoặc khi kiểm tra sau thông quan, thanh tra, kiểm tra; công ty sau đó tự nguyện khắc phục bằng cách nộp đủ thuế phải nộp. Mức phạt là **20% số thuế khai thiếu**. [1][2]\n\n3. **Trường hợp khác ngoài hai trường hợp trên**, nếu công ty tự nguyện nộp đủ số thuế phải nộp, vẫn có thể bị phạt **20% số thuế khai thiếu**. [1][2]\n\n**Ngoại lệ cần lưu ý:** không xử phạt nếu công ty khai bổ sung trước khi cơ quan hải quan thông báo kiểm tra trực tiếp hồ sơ đối với hàng đang làm thủ tục; hoặc khai bổ sung trong vòng 60 ngày kể từ ngày thông quan và trước khi có quyết định kiểm tra, thanh tra đối với hàng đã thông quan. [2]\n\nNếu việc khai sai bị xác định là **trốn thuế** — chẳng hạn khai sai thực tế hàng hóa nhưng không tự nguyện khắc phục bằng cách nộp đủ thuế, hoặc cố ý không kê khai hay khai sai thuế đối với hàng xuất nhập khẩu — mức phạt có thể là **từ 1 lần đến 3 lần số thuế trốn**. Việc áp dụng trường hợp này phụ thuộc vào tình tiết cụ thể, đặc biệt là hành vi và việc công ty có tự nguyện khắc phục hay không. [1][2]\n\nCác mức và trường hợp trên được nêu trong những điều khoản của Luật 108/2025/QH15 do bạn cung cấp; tôi chưa thể xác minh hiệu lực hiện hành của văn bản. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo các điều khoản được cung cấp của Luật Quản lý thuế 108/2025/QH15, nếu việc khai sai tờ khai xuất nhập khẩu làm thiếu thuế, công ty vẫn có thể bị xử phạt trong các trường hợp sau, ngoài việc phải nộp đủ thuế thiếu và tiền chậm nộp: [1]\n\n1. **Công ty tự phát hiện và khai bổ sung muộn**: sau khi cơ quan hải quan thông báo kiểm tra trực tiếp hồ sơ hải quan; hoặc sau 67 ngày kể từ ngày thông quan nhưng trước khi có quyết định kiểm tra sau thông quan, thanh tra hoặc kiểm tra. Mức phạt được quy định là **10% số thuế khai thiếu**. [1][2]\n\n2. **Cơ quan hải quan phát hiện sai phạm** trong khi làm thủ tục hải quan hoặc khi kiểm tra sau thông quan, thanh tra, kiểm tra; công ty sau đó tự nguyện khắc phục bằng cách nộp đủ thuế phải nộp. Mức phạt là **20% số thuế khai thiếu**. [1][2]\n\n3. **Trường hợp khác ngoài hai trường hợp trên**, nếu công ty tự nguyện nộp đủ số thuế phải nộp, vẫn có thể bị phạt **20% số thuế khai thiếu**. [1][2]\n\n**Ngoại lệ cần lưu ý:** không xử phạt nếu công ty khai bổ sung trước khi cơ quan hải quan thông báo kiểm tra trực tiếp hồ sơ đối với hàng đang làm thủ tục; hoặc khai bổ sung trong vòng 60 ngày kể từ ngày thông quan và trước khi có quyết định kiểm tra, thanh tra đối với hàng đã thông quan. [2]\n\nNếu việc khai sai bị xác định là **trốn thuế** — chẳng hạn khai sai thực tế hàng hóa nhưng không tự nguyện khắc phục bằng cách nộp đủ thuế, hoặc cố ý không kê khai hay khai sai thuế đối với hàng xuất nhập khẩu — mức phạt có thể là **từ 1 lần đến 3 lần số thuế trốn**. Việc áp dụng trường hợp này phụ thuộc vào tình tiết cụ thể, đặc biệt là hành vi và việc công ty có tự nguyện khắc phục hay không. [1][2]\n\nCác mức và trường hợp trên được nêu trong những điều khoản của Luật 108/2025/QH15 do bạn cung cấp; tôi chưa thể xác minh hiệu lực hiện hành của văn bản. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "1. **Công ty tự phát hiện và khai bổ sung muộn**: sau khi cơ quan hải quan thông báo kiểm tra trực tiếp hồ sơ hải quan; hoặc sau 67 ngày kể từ ngày thông quan nhưng trước khi có quyết định kiểm tra sau thông quan, thanh tra hoặc kiểm tra. Mức phạt được quy định là **10% số thuế khai thiếu**.",
+          "evidence": "3. Người nộp thuế tự phát hiện và khai bổ sung sau thời điểm cơ quan hải quan thông báo việc kiểm tra trực tiếp hồ sơ hải quan đối với hàng hóa đang làm thủ tục hải quan hoặc sau thời hạn 60 ngày kể từ ngày thông quan và trước thời điểm quyết định kiểm tra sau thông quan, thanh tra, kiểm tra đối với hàng hóa đã thông quan;",
+          "label": "contradicted"
+        },
+        {
+          "quote": "1. **Công ty tự phát hiện và khai bổ sung muộn**: sau khi cơ quan hải quan thông báo kiểm tra trực tiếp hồ sơ hải quan; hoặc sau 67 ngày kể từ ngày thông quan nhưng trước khi có quyết định kiểm tra sau thông quan, thanh tra hoặc kiểm tra. Mức phạt được quy định là **10% số thuế khai thiếu**.",
+          "evidence": "3.a) Phạt 10% tính trên số tiền thuế khai thiếu số tiền thuế phải nộp hoặc số tiền thuế khai tăng trong trường hợp được miễn, giảm, hoàn, không thu thuế đối với hành vi quy định tại điểm a khoản 3 Điều 45 của Luật này;",
+          "label": "contradicted"
+        },
+        {
+          "quote": "2. **Cơ quan hải quan phát hiện sai phạm** trong khi làm thủ tục hải quan hoặc khi kiểm tra sau thông quan, thanh tra, kiểm tra; công ty sau đó tự nguyện khắc phục bằng cách nộp đủ thuế phải nộp. Mức phạt là **20% số thuế khai thiếu**.",
+          "evidence": "3.b) Phạt 20% tính trên số tiền thuế khai thiếu số tiền thuế phải nộp hoặc số tiền thuế khai tăng trong trường hợp được miễn, giảm, hoàn, không thu thuế đối với hành vi quy định tại khoản 2 và điểm b, điểm c khoản 3 Điều 45 của Luật này;",
+          "label": "contradicted"
+        },
+        {
+          "quote": "3. **Trường hợp khác ngoài hai trường hợp trên**, nếu công ty tự nguyện nộp đủ số thuế phải nộp, vẫn có thể bị phạt **20% số thuế khai thiếu**.",
+          "evidence": "3.b) Phạt 20% tính trên số tiền thuế khai thiếu số tiền thuế phải nộp hoặc số tiền thuế khai tăng trong trường hợp được miễn, giảm, hoàn, không thuế đối với hành vi quy định tại khoản 2 và điểm b, điểm c khoản 3 Điều 45 của Luật này;",
+          "label": "contradicted"
+        },
+        {
+          "quote": "**Ngoại lệ cần lưu ý:** không xử phạt nếu công ty khai bổ sung trước khi cơ quan hải quan thông báo kiểm tra trực tiếp hồ sơ đối với hàng đang làm thủ tục; hoặc khai bổ sung trong vòng 60 ngày kể từ ngày thông quan và trước khi có quyết định kiểm tra, thanh tra đối với hàng đã thông quan.",
+          "evidence": "2.b) Trường hợp người nộp thuế có hành vi khai sai quy định tại khoản 3 Điều 45 của Luật này nhưng đã khai bổ sung trước thời điểm cơ quan hải quan thông báo việc kiểm tra trực tiếp hồ sơ hải quan đối với hàng hóa đang làm thủ tục hải quan; người nộp thuế khai bổ sung trong thời hạn 60 ngày kể từ ngày thông quan và trước thời điểm quyết định thanh tra, kiểm tra đối với hàng hóa đã thông quan, kiểm tra sau thông quan và các trường hợp khác theo quy định của Chính phủ.",
+          "label": "supported"
+        },
+        {
+          "quote": "Nếu việc khai sai bị xác định là **trốn thuế** — chẳng hạn khai sai thực tế hàng hóa nhưng không tự nguyện khắc phục bằng cách nộp đủ thuế, hoặc cố ý không kê khai hay khai sai thuế đối với hàng xuất nhập khẩu — mức phạt có thể là **từ 1 lần đến 3 lần số thuế trốn**.",
+          "evidence": "3.c) Phạt từ 01 lần đến 03 lần số tiền thuế trốn đối với hành vi quy định tại khoản 4 Điều 45 của Luật này.",
+          "label": "supported"
+        }
+      ],
+      "kind": "number",
+      "change": "60 ngày -> 67 ngày",
+      "new": "67",
+      "caught": true
+    },
+    {
+      "id": "test:q030",
+      "original": "**Có.** Theo dữ liệu được cung cấp, các khoản phạt do vi phạm luật giao thông, quy định về đăng ký kinh doanh, kế toán và pháp luật về thuế đều thuộc nhóm **tiền phạt về vi phạm hành chính**. Quy định này cũng nêu rõ nhóm đó bao gồm **tiền chậm nộp thuế** theo pháp luật về quản lý thuế. [1]\n\nLưu ý: tiền chậm nộp thuế được nêu trong nhóm khoản không được trừ khi xác định thu nhập chịu thuế; điều đó không nhất thiết có nghĩa khoản này đồng nhất về bản chất pháp lý với tiền phạt hành chính. Cũng cần phân biệt tiền chậm nộp thuế với **tiền chậm nộp tiền phạt** — khoản sau phát sinh khi chậm nộp tiền phạt vi phạm hành chính. [1][2]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "**Có.** Theo dữ liệu không được cung cấp, các khoản phạt do vi phạm luật giao thông, quy định về đăng ký kinh doanh, kế toán và pháp luật về thuế đều thuộc nhóm **tiền phạt về vi phạm hành chính**. Quy định này cũng nêu rõ nhóm đó bao gồm **tiền chậm nộp thuế** theo pháp luật về quản lý thuế. [1]\n\nLưu ý: tiền chậm nộp thuế được nêu trong nhóm khoản không được trừ khi xác định thu nhập chịu thuế; điều đó không nhất thiết có nghĩa khoản này đồng nhất về bản chất pháp lý với tiền phạt hành chính. Cũng cần phân biệt tiền chậm nộp thuế với **tiền chậm nộp tiền phạt** — khoản sau phát sinh khi chậm nộp tiền phạt vi phạm hành chính. [1][2]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "các khoản phạt do vi phạm luật giao thông, quy định về đăng ký kinh doanh, kế toán và pháp luật về thuế đều thuộc nhóm **tiền phạt về vi phạm hành chính**. Quy định này cũng nêu rõ nhóm đó bao gồm **tiền chậm nộp thuế** theo pháp luật về quản lý thuế.",
+          "evidence": "2. Các khoản tiền phạt về vi phạm hành chính bao gồm: Vi phạm luật giao thông, vi phạm quy định đăng ký kinh doanh, vi phạm quy định kế toán, vi phạm pháp luật về thuế bao gồm cả tiền chậm nộp thuế theo quy định của Luật Quản lý thuế và các khoản phạt về vi phạm hành chính khác theo quy định của pháp luật.",
+          "label": "supported"
+        }
+      ],
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: '**Có.** Theo dữ liệu được cung cấp, các khoản phạt do vi phạm luật gia'",
+      "new": null,
+      "caught": false
+    },
+    {
+      "id": "test:q031",
+      "original": "Theo nguồn được cung cấp, hồ sơ của khoản chi được tính vào chi phí được trừ có thể lưu dưới một trong các hình thức sau:\n\n- Bản chính;\n- Bản sao có chứng thực;\n- Bản sao có đóng dấu của doanh nghiệp; hoặc\n- Chứng từ điện tử theo quy định của pháp luật. [1]\n\nQuy định được trích dẫn áp dụng cho hồ sơ khoản chi thuộc điểm b và điểm c khoản 1 Điều 9 Luật Thuế thu nhập doanh nghiệp. [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo nguồn không được cung cấp, hồ sơ của khoản chi được tính vào chi phí được trừ có thể lưu dưới một trong các hình thức sau:\n\n- Bản chính;\n- Bản sao có chứng thực;\n- Bản sao có đóng dấu của doanh nghiệp; hoặc\n- Chứng từ điện tử theo quy định của pháp luật. [1]\n\nQuy định được trích dẫn áp dụng cho hồ sơ khoản chi thuộc điểm b và điểm c khoản 1 Điều 9 Luật Thuế thu nhập doanh nghiệp. [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "hồ sơ của khoản chi được tính vào chi phí được trừ có thể lưu dưới một trong các hình thức sau:\n\n- Bản chính;\n- Bản sao có chứng thực;\n- Bản sao có đóng dấu của doanh nghiệp; hoặc\n- Chứng từ điện tử theo quy định của pháp luật. [1]",
+          "evidence": "14. Hồ sơ của khoản chi được tính vào chi phí được trừ quy định tại Điều này là bản chính hoặc bản sao có chứng thực hoặc bản sao có đóng dấu của doanh nghiệp hoặc chứng từ điện tử theo quy định của pháp luật.",
+          "label": "supported"
+        },
+        {
+          "quote": "Quy định được trích dẫn áp dụng cho hồ sơ khoản chi thuộc điểm b và điểm c khoản 1 Điều 9 Luật Thuế thu nhập doanh nghiệp. [1]",
+          "evidence": "Bộ Tài chính quy định hồ sơ của khoản chi được tính vào chi phí được trừ quy định tại điểm b, điểm c khoản 1 Điều này.",
+          "label": "supported"
+        }
+      ],
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: 'Theo nguồn được cung cấp, hồ sơ của khoản chi được tính vào '",
+      "new": null,
+      "caught": false
+    },
+    {
+      "id": "test:q034",
+      "original": "Chi nhánh công ty nước ngoài tại Việt Nam phải lưu giữ hồ sơ, tài liệu liên quan đến thông tin về chủ sở hữu pháp lý và chủ sở hữu hưởng lợi của công ty mẹ trong thời gian hoạt động. Thời hạn lưu trữ tối thiểu là **05 năm**, tính từ khi kết thúc năm dương lịch hoặc kỳ báo cáo có liên quan. [1]\n\nNội dung này áp dụng theo Điều 63 khoản 4 điểm b Nghị định 252/2026/NĐ-CP. **Lưu ý: nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.**",
+      "answer": "Chi nhánh công ty nước ngoài tại Việt Nam phải lưu giữ hồ sơ, tài liệu liên quan đến thông tin về chủ sở hữu pháp lý và chủ sở hữu hưởng lợi của công ty mẹ trong thời gian hoạt động. Thời hạn lưu trữ tối thiểu là **12 năm**, tính từ khi kết thúc năm dương lịch hoặc kỳ báo cáo có liên quan. [1]\n\nNội dung này áp dụng theo Điều 63 khoản 4 điểm b Nghị định 252/2026/NĐ-CP. **Lưu ý: nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.**",
+      "claims": [
+        {
+          "quote": "Chi nhánh công ty nước ngoài tại Việt Nam phải lưu giữ hồ sơ, tài liệu liên quan đến thông tin về chủ sở hữu pháp lý và chủ sở hữu hưởng lợi của công ty mẹ trong thời gian hoạt động. Thời hạn lưu trữ tối thiểu là **12 năm**, tính từ khi kết thúc năm dương lịch hoặc kỳ báo cáo có liên quan.",
+          "evidence": "b) Chi nhánh, văn phòng đại diện có trách nhiệm lưu giữ hồ sơ, tài liệu liên quan đến thông tin quy định tại điểm a khoản này trong thời gian hoạt động, bảo đảm cung cấp kịp thời theo yêu cầu của cơ quan thuế; thời hạn lưu trữ tối thiểu là 05 năm kể từ khi kết thúc năm dương lịch hoặc kỳ báo cáo có liên quan;",
+          "label": "contradicted"
+        }
+      ],
+      "kind": "number",
+      "change": "05 năm -> 12 năm",
+      "new": "12",
+      "caught": true
+    },
+    {
+      "id": "test:q036",
+      "original": "Theo quy định được trích dẫn, các mô hình nhận trẻ trong độ tuổi như sau:\n\n- **Nhà trẻ, nhóm trẻ độc lập:** nhận trẻ từ **03 tháng tuổi đến 03 tuổi**.\n- **Trường mẫu giáo, lớp mẫu giáo độc lập:** nhận trẻ từ **03 tuổi đến 06 tuổi**.\n- **Trường mầm non, lớp mầm non độc lập** (kết hợp nhà trẻ và mẫu giáo): nhận trẻ từ **03 tháng tuổi đến 06 tuổi**. [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo quy định được trích dẫn, các mô hình nhận trẻ trong độ tuổi như sau:\n\n- **Nhà trẻ, nhóm trẻ độc lập:** nhận trẻ từ **10 tháng tuổi đến 03 tuổi**.\n- **Trường mẫu giáo, lớp mẫu giáo độc lập:** nhận trẻ từ **03 tuổi đến 06 tuổi**.\n- **Trường mầm non, lớp mầm non độc lập** (kết hợp nhà trẻ và mẫu giáo): nhận trẻ từ **03 tháng tuổi đến 06 tuổi**. [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "- **Nhà trẻ, nhóm trẻ độc lập:** nhận trẻ từ **10 tháng tuổi đến 03 tuổi**.",
+          "evidence": "1. Nhà trẻ, nhóm trẻ độc lập nhận trẻ em từ 03 tháng tuổi đến 03 tuổi.",
+          "label": "contradicted"
+        },
+        {
+          "quote": "- **Trường mẫu giáo, lớp mẫu giáo độc lập:** nhận trẻ từ **03 tuổi đến 06 tuổi**.",
+          "evidence": "2. Trường mẫu giáo, lớp mẫu giáo độc lập nhận trẻ em từ 03 tuổi đến 06 tuổi.",
+          "label": "supported"
+        },
+        {
+          "quote": "- **Trường mầm non, lớp mầm non độc lập** (kết hợp nhà trẻ và mẫu giáo): nhận trẻ từ **03 tháng tuổi đến 06 tuổi**.",
+          "evidence": "3. Trường mầm non, lớp mầm non độc lập là cơ sở giáo dục kết hợp nhà trẻ và mẫu giáo, nhận trẻ em từ 03 tháng tuổi đến 06 tuổi.",
+          "label": "supported"
+        }
+      ],
+      "kind": "number",
+      "change": "03 tháng -> 10 tháng",
+      "new": "10",
+      "caught": true
+    },
+    {
+      "id": "test:q037",
+      "original": "Doanh nghiệp cần căn cứ **chế độ tiền lương áp dụng cho từng giai đoạn đóng BHXH** của người lao động, cùng với tiền lương làm căn cứ đóng BHXH trong hồ sơ đóng; không nên lấy riêng mức lương hiện tại để bình quân.\n\n- **Nếu toàn bộ thời gian đóng BHXH theo chế độ tiền lương do người sử dụng lao động quyết định:** tính bình quân tiền lương làm căn cứ đóng BHXH của **toàn bộ thời gian đóng**. [4]\n- **Nếu có cả thời gian theo chế độ tiền lương do Nhà nước quy định và thời gian theo chế độ do người sử dụng lao động quyết định:** tính bình quân chung của các thời gian; phần tiền lương theo chế độ Nhà nước được xác định theo quy tắc riêng tại Điều 72 Luật BHXH. [4] [2]\n- Với người thuộc chế độ tiền lương Nhà nước, số năm tiền lương dùng để tính bình quân phụ thuộc vào thời điểm bắt đầu tham gia BHXH: có thể là 5, 6, 8, 10, 15 hoặc 20 năm cuối, hoặc toàn bộ thời gian. [4]\n\nMức bình quân này là căn cứ dùng khi tính lương hưu và trợ cấp một lần theo quy định liên quan; **không đồng nghĩa với số tiền trợ cấp một lần được nhận**. [2] [4]\n\nCăn cứ được cung cấp là Điều 72 Luật BHXH và Điều 15 Nghị định 158/2025/NĐ-CP; nếu người lao động thuộc nhóm quân nhân, công an hoặc cơ yếu thì cần đối chiếu quy định riêng tương ứng. [4] [2] [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Doanh nghiệp cần căn cứ **chế độ tiền lương áp dụng cho từng giai đoạn đóng BHXH** của người lao động, cùng với tiền lương làm căn cứ đóng BHXH trong hồ sơ đóng; không nên lấy riêng mức lương hiện tại để bình quân.\n\n- **Nếu toàn bộ thời gian đóng BHXH theo chế độ tiền lương do người sử dụng lao động quyết định:** tính bình quân tiền lương làm căn cứ đóng BHXH của **toàn bộ thời gian đóng**. [4]\n- **Nếu có cả thời gian theo chế độ tiền lương do Nhà nước quy định và thời gian theo chế độ do người sử dụng lao động quyết định:** tính bình quân chung của các thời gian; phần tiền lương theo chế độ Nhà nước được xác định theo quy tắc riêng tại Điều 72 Luật BHXH. [4] [2]\n- Với người thuộc chế độ tiền lương Nhà nước, số năm tiền lương dùng để tính bình quân phụ thuộc vào thời điểm bắt đầu tham gia BHXH: có thể là 5, 6, 8, 10, 15 hoặc 27 năm cuối, hoặc toàn bộ thời gian. [4]\n\nMức bình quân này là căn cứ dùng khi tính lương hưu và trợ cấp một lần theo quy định liên quan; **không đồng nghĩa với số tiền trợ cấp một lần được nhận**. [2] [4]\n\nCăn cứ được cung cấp là Điều 72 Luật BHXH và Điều 15 Nghị định 158/2025/NĐ-CP; nếu người lao động thuộc nhóm quân nhân, công an hoặc cơ yếu thì cần đối chiếu quy định riêng tương ứng. [4] [2] [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "**Nếu toàn bộ thời gian đóng BHXH theo chế độ tiền lương do người sử dụng lao động quyết định:** tính bình quân tiền lương làm căn cứ đóng BHXH của **toàn bộ thời gian đóng**. [4]",
+          "evidence": "2. Người lao động có toàn bộ thời gian đóng bảo hiểm xã hội theo chế độ tiền lương do người sử dụng lao động quyết định thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội của toàn bộ thời gian.",
+          "label": "supported"
+        },
+        {
+          "quote": "**Nếu có cả thời gian theo chế độ tiền lương do Nhà nước quy định và thời gian theo chế độ do người sử dụng lao động quyết định:** tính bình quân chung của các thời gian; phần tiền lương theo chế độ Nhà nước được xác định theo quy tắc riêng tại Điều 72 Luật BHXH. [4] [2]",
+          "evidence": "3. Người lao động vừa có thời gian đóng bảo hiểm xã hội thuộc đối tượng thực hiện chế độ tiền lương do Nhà nước quy định, vừa có thời gian đóng bảo hiểm xã hội theo chế độ tiền lương do người sử dụng lao động quyết định thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội chung của các thời gian, trong đó thời gian đóng theo chế độ tiền lương do Nhà nước quy định được tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội theo quy định tại khoản 1 Điều này.",
+          "label": "supported"
+        },
+        {
+          "quote": "Với người thuộc chế độ tiền lương Nhà nước, số năm tiền lương dùng để tính bình quân phụ thuộc vào thời điểm bắt đầu tham gia BHXH: có thể là 5, 6, 8, 10, 15 hoặc 27 năm cuối, hoặc toàn bộ thời gian. [4]",
+          "evidence": "1. Người lao động thuộc đối tượng thực hiện chế độ tiền lương do Nhà nước quy định có toàn bộ thời gian đóng bảo hiểm xã hội theo chế độ tiền lương này thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội của số năm đóng bảo hiểm xã hội trước khi nghỉ hưu như sau:\na) Bắt đầu tham gia bảo hiểm xã hội trước ngày 01 tháng 01 năm 1995 thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội của 05 năm cuối trước khi nghỉ hưu;\nb) Bắt đầu tham gia bảo hiểm xã hội trong khoảng thời gian từ ngày 01 tháng 01 năm 1995 đến ngày 31 tháng 12 năm 2000 thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội của 06 năm cuối trước khi nghỉ hưu;\nc) Bắt đầu tham gia bảo hiểm xã hội trong khoảng thời gian từ ngày 01 tháng 01 năm 2001 đến ngày 31 tháng 12 năm 2006 thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội của 08 năm cuối trước khi nghỉ hưu;\nd) Bắt đầu tham gia bảo hiểm xã hội trong khoảng thời gian từ ngày 01 tháng 01 năm 2007 đến ngày 31 tháng 12 năm 2015 thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội của 10 năm cuối trước khi nghỉ hưu;\nđ) Bắt đầu tham gia bảo hiểm xã hội từ ngày 01 tháng 01 năm 2016 đến ngày 31 tháng 12 năm 2019 thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội của 15 năm cuối trước khi nghỉ hưu;\ne) Bắt đầu tham gia bảo hiểm xã hội từ ngày 01 tháng 01 năm 2020 đến ngày 31 tháng 12 năm 2024 thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội của 20 năm cuối trước khi nghỉ hưu;\ng) Bắt đầu tham gia bảo hiểm xã hội từ ngày 01 tháng 01 năm 2025 trở đi thì tính bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội của toàn bộ thời gian đóng bảo hiểm xã hội.",
+          "label": "supported"
+        },
+        {
+          "quote": "Mức bình quân này là căn cứ dùng khi tính lương hưu và trợ cấp một lần theo quy định liên quan; **không đồng nghĩa với số tiền trợ cấp một lần được nhận**. [2] [4]",
+          "evidence": "Điều 15. Mức bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội để tính lương hưu, trợ cấp một lần\nMức bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội để tính lương hưu, trợ cấp một lần thực hiện theo quy định tại Điều 72 của Luật Bảo hiểm xã hội và được quy định chi tiết như sau: ...\n7. Mức bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội để tính lương hưu, trợ cấp một lần quy định tại Điều 72 của Luật Bảo hiểm xã hội được dùng để tính hưởng bảo hiểm xã hội một lần, trợ cấp tuất một lần đối với thân nhân của người đang tham gia bảo hiểm xã hội hoặc đang bảo lưu thời gian đóng bảo hiểm xã hội chết và trợ cấp hằng tháng đối với người lao động không đủ điều kiện hưởng lương hưu và chưa đủ tuổi hưởng trợ cấp hưu trí xã hội.",
+          "label": "supported"
+        },
+        {
+          "quote": "Căn cứ được cung cấp là Điều 72 Luật BHXH và Điều 15 Nghị định 158/2025/NĐ-CP; nếu người lao động thuộc nhóm quân nhân, công an hoặc cơ yếu thì cần đối chiếu quy định riêng tương ứng. [4] [2] [1]",
+          "evidence": "Nghị định số 157/2025/NĐ-CP... tại Điều 16. Mức bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội để tính lương hưu, trợ cấp một lần.\nNghị định quy định chi tiết và hướng dẫn thi hành một số điều của Luật Bảo hiểm xã hội về bảo hiểm xã hội bắt buộc 158/2025/NĐ-CP > ... Điều 15. Mức bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội để tính lương hưu, trợ cấp một lần.\nLuật Bảo hiểm xã hội 41/2024/QH15 > ... Điều 72. Mức bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội để tính lương hưu, trợ cấp một lần.\nThông tư số 90/2025/TT-BQP... Điều 19. Mức bình quân tiền lương làm căn cứ đóng bảo hiểm xã hội để tính lương hưu, trợ cấp một lần, hướng dẫn riêng cho quân nhân, công an, cơ yếu.",
+          "label": "supported"
+        }
+      ],
+      "kind": "number",
+      "change": "20 năm -> 27 năm",
+      "new": "27",
+      "caught": false
+    },
+    {
+      "id": "test:q039",
+      "original": "Theo các nguồn hiện có, Nhà nước khuyến khích phát triển bảo hiểm hưu trí bổ sung thông qua **chính sách ưu đãi theo pháp luật về thuế**. Tuy nhiên, nguồn được cung cấp không nêu cụ thể loại ưu đãi, mức ưu đãi hay điều kiện áp dụng, nên chưa đủ căn cứ để xác định doanh nghiệp hoặc người lao động được hưởng ưu đãi nào. [1]\n\nNhà nước cũng định hướng hoàn thiện pháp luật, tổ chức thực hiện chính sách theo hướng chuyên nghiệp, hiện đại và minh bạch, đồng thời tạo điều kiện để người sử dụng lao động và người lao động có thêm lựa chọn đóng góp nhằm hưởng mức lương hưu cao hơn. Chính sách của Nhà nước về bảo hiểm xã hội còn nêu việc khuyến khích tham gia bảo hiểm hưu trí bổ sung. [1][2]\n\nLuật giao Chính phủ quy định về bảo hiểm hưu trí bổ sung. Các nguồn hiện có chưa cung cấp quy định chi tiết về cách doanh nghiệp đăng ký hoặc tổ chức chương trình, mức đóng, điều kiện tham gia hay thủ tục thực hiện; vì vậy, tôi chưa thể xác minh các nội dung này hoặc hiệu lực hiện hành của quy định chi tiết. [1]\n\n*Thông tin chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "answer": "Theo các nguồn hiện có, Nhà nước khuyến khích phát triển bảo hiểm hưu trí bổ sung thông qua **chính sách ưu đãi theo pháp luật về thuế**. Tuy nhiên, nguồn không được cung cấp không nêu cụ thể loại ưu đãi, mức ưu đãi hay điều kiện áp dụng, nên chưa đủ căn cứ để xác định doanh nghiệp hoặc người lao động được hưởng ưu đãi nào. [1]\n\nNhà nước cũng định hướng hoàn thiện pháp luật, tổ chức thực hiện chính sách theo hướng chuyên nghiệp, hiện đại và minh bạch, đồng thời tạo điều kiện để người sử dụng lao động và người lao động có thêm lựa chọn đóng góp nhằm hưởng mức lương hưu cao hơn. Chính sách của Nhà nước về bảo hiểm xã hội còn nêu việc khuyến khích tham gia bảo hiểm hưu trí bổ sung. [1][2]\n\nLuật giao Chính phủ quy định về bảo hiểm hưu trí bổ sung. Các nguồn hiện có chưa cung cấp quy định chi tiết về cách doanh nghiệp đăng ký hoặc tổ chức chương trình, mức đóng, điều kiện tham gia hay thủ tục thực hiện; vì vậy, tôi chưa thể xác minh các nội dung này hoặc hiệu lực hiện hành của quy định chi tiết. [1]\n\n*Thông tin chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "claims": null,
+      "kind": "flip",
+      "change": "'được' -> 'không được' near: ' ưu đãi theo pháp luật về thuế**. Tuy nhiên, nguồn được cung cấp không nêu cụ thể loại ưu đãi, mức ư'",
+      "new": null,
+      "caught": false
+    },
+    {
+      "id": "test:q053",
+      "original": "Vì con bạn **8 tháng tuổi** (dưới 12 tháng), bạn được nghỉ **60 phút mỗi ngày trong thời giờ làm việc** để cho con bú, vắt hoặc trữ sữa, nghỉ ngơi. Thời gian nghỉ này **vẫn được hưởng đủ tiền lương theo hợp đồng lao động**, không bị trừ lương. [1][2]\n\nNếu muốn sắp xếp thời gian nghỉ linh hoạt hơn, bạn có thể thỏa thuận với người sử dụng lao động. [2]\n\n*Thông tin chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "answer": "Vì con bạn **15 tháng tuổi** (dưới 12 tháng), bạn được nghỉ **60 phút mỗi ngày trong thời giờ làm việc** để cho con bú, vắt hoặc trữ sữa, nghỉ ngơi. Thời gian nghỉ này **vẫn được hưởng đủ tiền lương theo hợp đồng lao động**, không bị trừ lương. [1][2]\n\nNếu muốn sắp xếp thời gian nghỉ linh hoạt hơn, bạn có thể thỏa thuận với người sử dụng lao động. [2]\n\n*Thông tin chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.*",
+      "claims": [
+        {
+          "quote": "Vì con bạn **15 tháng tuổi** (dưới 12 tháng), bạn được nghỉ **60 phút mỗi ngày trong thời giờ làm việc** để cho con bú, vắt hoặc trữ sữa, nghỉ ngơi. Thời gian nghỉ này **vẫn được hưởng đủ tiền lương theo hợp đồng lao động**, không bị trừ lương.",
+          "evidence": "2. Nghỉ trong thời gian nuôi con dưới 12 tháng tuổi:\na) Lao động nữ trong thời gian nuôi con dưới 12 tháng tuổi có quyền được\nnghỉ mỗi ngày 60 phút trong thời gian làm việc để cho con bú, vắt, trữ sữa, nghỉ\nngơi. Thời gian nghỉ vẫn được hưởng đủ tiền lương theo hợp đồng lao động;",
+          "label": "contradicted"
+        },
+        {
+          "quote": "Nếu muốn sắp xếp thời gian nghỉ linh hoạt hơn, bạn có thể thỏa thuận với người sử dụng lao động.",
+          "evidence": "4. Nghỉ trong thời gian nuôi con dưới 12 tháng tuổi:\nb) Trường hợp lao động nữ có nhu cầu nghỉ linh hoạt hơn so với quy định tại\ndiểm a khoản này thì người lao động thỏa thuận với người sử dụng lao động để\nđược bố trí nghỉ phù hợp với điều kiện thực tế tại nơi làm việc và nhu cầu của lao\nđộng nữ;",
+          "label": "supported"
+        }
+      ],
+      "kind": "number",
+      "change": "8 tháng -> 15 tháng",
+      "new": "15",
+      "caught": true
+    },
+    {
+      "id": "test:q058",
+      "original": "Nếu đây là công ty cổ phần áp dụng quy định chung của Luật Doanh nghiệp, cổ đông hoặc nhóm cổ đông sở hữu từ **5% tổng số cổ phần phổ thông trở lên**, hoặc tỷ lệ thấp hơn theo Điều lệ công ty, có quyền xem xét, tra cứu, trích lục:\n\n- Sổ biên bản và nghị quyết, quyết định của Hội đồng quản trị;\n- Báo cáo tài chính giữa năm và hằng năm;\n- Báo cáo của Ban kiểm soát;\n- Hợp đồng, giao dịch phải được Hội đồng quản trị thông qua;\n- Các tài liệu khác của công ty. [1]\n\nTuy nhiên, quyền xem xét theo nhóm quyền này **không bao gồm tài liệu liên quan đến bí mật thương mại hoặc bí mật kinh doanh của công ty**. [1]\n\nNgoài ra, cổ đông phổ thông có quyền xem xét, tra cứu, trích lục hoặc sao chụp Điều lệ công ty, biên bản họp và nghị quyết Đại hội đồng cổ đông; quy định này được nêu riêng, không gắn với ngưỡng sở hữu nêu trên. [1]\n\nTôi chưa thể xác minh từ các nguồn được cung cấp liệu quy định này còn hiệu lực hiện hành hay không; Điều lệ công ty cũng có thể quy định tỷ lệ thấp hơn ngưỡng luật định. [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Nếu đây là công ty cổ phần áp dụng quy định chung của Luật Doanh nghiệp, cổ đông hoặc nhóm cổ đông sở hữu từ **12% tổng số cổ phần phổ thông trở lên**, hoặc tỷ lệ thấp hơn theo Điều lệ công ty, có quyền xem xét, tra cứu, trích lục:\n\n- Sổ biên bản và nghị quyết, quyết định của Hội đồng quản trị;\n- Báo cáo tài chính giữa năm và hằng năm;\n- Báo cáo của Ban kiểm soát;\n- Hợp đồng, giao dịch phải được Hội đồng quản trị thông qua;\n- Các tài liệu khác của công ty. [1]\n\nTuy nhiên, quyền xem xét theo nhóm quyền này **không bao gồm tài liệu liên quan đến bí mật thương mại hoặc bí mật kinh doanh của công ty**. [1]\n\nNgoài ra, cổ đông phổ thông có quyền xem xét, tra cứu, trích lục hoặc sao chụp Điều lệ công ty, biên bản họp và nghị quyết Đại hội đồng cổ đông; quy định này được nêu riêng, không gắn với ngưỡng sở hữu nêu trên. [1]\n\nTôi chưa thể xác minh từ các nguồn được cung cấp liệu quy định này còn hiệu lực hiện hành hay không; Điều lệ công ty cũng có thể quy định tỷ lệ thấp hơn ngưỡng luật định. [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": null,
+      "kind": "number",
+      "change": "5% -> 12%",
+      "new": "12",
+      "caught": false
+    },
+    {
+      "id": "test:q065",
+      "original": "Theo Điều 75 Luật Doanh nghiệp 59/2020/QH14, chủ sở hữu công ty TNHH một thành viên phải góp đủ và đúng loại tài sản đã cam kết trong **90 ngày kể từ ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp**. [1]\n\nKhông tính vào thời hạn này thời gian **vận chuyển, nhập khẩu tài sản góp vốn** và thời gian **thực hiện thủ tục hành chính để chuyển quyền sở hữu tài sản**. [1]\n\nTôi chưa thể xác minh hiệu lực hiện hành của quy định từ các nguồn được cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo Điều 75 Luật Doanh nghiệp 59/2020/QH14, chủ sở hữu công ty TNHH một thành viên phải góp đủ và đúng loại tài sản đã cam kết trong **97 ngày kể từ ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp**. [1]\n\nKhông tính vào thời hạn này thời gian **vận chuyển, nhập khẩu tài sản góp vốn** và thời gian **thực hiện thủ tục hành chính để chuyển quyền sở hữu tài sản**. [1]\n\nTôi chưa thể xác minh hiệu lực hiện hành của quy định từ các nguồn được cung cấp. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "chủ sở hữu công ty TNHH một thành viên phải góp đủ và đúng loại tài sản đã cam kết trong **97 ngày kể từ ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp**.",
+          "evidence": "Chủ sở hữu công ty phải góp vốn cho công ty đủ và đúng loại tài sản đã cam kết khi đăng ký thành lập doanh nghiệp trong thời hạn 90 ngày kể từ ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp, không kể thời gian vận chuyển, nhập khẩu tài sản góp vốn, thực hiện thủ tục hành chính để chuyển quyền sở hữu tài sản.",
+          "label": "contradicted"
+        },
+        {
+          "quote": "Không tính vào thời hạn này thời gian **vận chuyển, nhập khẩu tài sản góp vốn** và thời gian **thực hiện thủ tục hành chính để chuyển quyền sở hữu tài sản**.",
+          "evidence": "Chủ sở hữu công ty phải góp vốn cho công ty đủ và đúng loại tài sản đã cam kết khi đăng ký thành lập doanh nghiệp trong thời hạn 90 ngày kể từ ngày được cấp Giấy chứng nhận đăng ký doanh nghiệp, không kể thời gian vận chuyển, nhập khẩu tài sản góp vốn, thực hiện thủ tục hành chính để chuyển quyền sở hữu tài sản.",
+          "label": "supported"
+        }
+      ],
+      "kind": "number",
+      "change": "90 ngày -> 97 ngày",
+      "new": "97",
+      "caught": true
+    },
+    {
+      "id": "test:h01",
+      "original": "Theo các nguồn được cung cấp, cá nhân cư trú kinh doanh có **doanh thu cả năm từ 500 triệu đồng trở xuống** thì không phải nộp thuế thu nhập cá nhân. Mức này tính theo **doanh thu**, không phải lợi nhuận. [1][2]\n\nLưu ý: câu trả lời căn cứ trên các nguồn đã cung cấp; tôi chưa thể xác minh riêng hiệu lực hiện hành của các văn bản này. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Theo các nguồn được cung cấp, cá nhân cư trú kinh doanh có **doanh thu cả năm từ 507 triệu đồng trở xuống** thì không phải nộp thuế thu nhập cá nhân. Mức này tính theo **doanh thu**, không phải lợi nhuận. [1][2]\n\nLưu ý: câu trả lời căn cứ trên các nguồn đã cung cấp; tôi chưa thể xác minh riêng hiệu lực hiện hành của các văn bản này. Nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "cá nhân cư trú kinh doanh có **doanh thu cả năm từ 507 triệu đồng trở xuống** thì không phải nộp thuế thu nhập cá nhân",
+          "evidence": "1. Cá nhân cư trú có hoạt động sản xuất, kinh doanh có mức doanh thu năm từ 500 triệu đồng trở xuống không phải nộp thuế thu nhập cá nhân. 2. Cá nhân cư trú có hoạt động sản xuất, kinh doanh, bao gồm cả cá nhân đăng ký thành lập hộ kinh doanh hoặc người được các thành viên hộ gia đình ủy quyền làm người đại diện hộ kinh doanh (sau đây gọi là cá nhân kinh doanh) có mức doanh thu năm từ 500 triệu đồng trở xuống không phải nộp thuế thu nhập cá nhân.",
+          "label": "contradicted"
+        }
+      ],
+      "kind": "number",
+      "change": "500 triệu -> 507 triệu",
+      "new": "507",
+      "caught": true
+    },
+    {
+      "id": "test:h03",
+      "original": "Người lao động làm công việc trong điều kiện bình thường, nếu làm đủ 12 tháng cho cùng một người sử dụng lao động, được nghỉ hằng năm hưởng nguyên lương **12 ngày làm việc**. [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "answer": "Người lao động làm công việc trong điều kiện bình thường, nếu làm đủ 19 tháng cho cùng một người sử dụng lao động, được nghỉ hằng năm hưởng nguyên lương **12 ngày làm việc**. [1]\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
+      "claims": [
+        {
+          "quote": "Người lao động làm công việc trong điều kiện bình thường, nếu làm đủ 19 tháng cho cùng một người sử dụng lao động, được nghỉ hằng năm hưởng nguyên lương **12 ngày làm việc**.",
+          "evidence": "1. Người lao động làm việc đủ 12 tháng cho một người sử dụng lao động thì được nghỉ hằng năm, hưởng nguyên lương theo hợp đồng lao động như sau:\na) 12 ngày làm việc đối với người làm công việc trong điều kiện bình thường;",
+          "label": "contradicted"
+        }
+      ],
+      "kind": "number",
+      "change": "12 tháng -> 19 tháng",
+      "new": "19",
+      "caught": true
+    }
+  ],
+  "note": "First set, used to fix the checker. Most of its 'flip' cases only changed the phrase 'nguon duoc cung cap', not a legal claim: do not quote their rate. Quote planted-errors-fresh.json."
+}

@@ -34,25 +34,28 @@ Counts are small (tens of questions): differences of a few points are within noi
 
 ## Generation tier
 `answer correct`: an LLM judge compares each answerable question with its gold answer.
+`claims backed`: an LLM splits each answer into claims and checks them against the
+sources that answer was given (`scripts/eval_faithfulness.py`). An LLM's labels: see
+`faithfulness-check/` for the flags reviewed and the planted errors it missed.
 `rerank fallbacks` of `-` in a rerank run: not recorded, so the rerank may have been
 skipped on some questions (rate limit).
 `unsupported ref`: a document number or article that neither the retrieved passages nor
 the question contain. Not proof of fabrication; undefined without retrieval.
 `OOC refused (hand)`: set `refused` on each out-of-corpus row of the result file first.
 
-| config | answered | answer correct | partial/incorrect/refused | errors | truncated | cit. precision | cit. recall | unsupported ref | unknown doc | needs review | OOC no-cite | OOC refused (hand) | TTFT ms p50/p95 | end-to-end ms p50/p95 | tokens in/out | rerank fallbacks | date |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| norag [dev] | 47 | 0.512 | 13/6/1 | 0 | 0 | - | 0.000 | - | 0.362 | 14 | 1.000 | 0.000 | 9653/17828 | 13271/20630 | 8517/80576 | - | 2026-11-26 |
-| rag-full-incorpus [dev] | 41 | 0.659 | 11/0/3 | 0 | 0 | 0.690 | 0.890 | 0.000 | 0.024 | 2 | - | - | 1896/4401 | 9061/13435 | 92912/16360 | - | 2026-11-26 |
-| rag-full-ooc [dev] | 6 | - | - | 0 | 0 | - | - | 0.000 | 0.000 | 0 | 0.500 | 1.000 | 1239/2227 | 7866/9507 | 9759/1324 | - | 2026-11-26 |
-| rag-hybrid-article [dev] | 47 | 0.610 | 10/0/6 | 0 | 0 | 0.717 | 0.817 | 0.000 | 0.021 | 0 | 0.500 | 1.000 | 1884/3442 | 4273/7493 | 110840/17715 | - | 2026-11-26 |
-| rag-app-cohere [dev] | 47 | 0.683 | 9/0/4 | 0 | 0 | 0.693 | 0.846 | 0.000 | 0.021 | 2 | 0.500 | - | 2109/4924 | 7745/13770 | 111485/19579 | - | 2026-11-27 |
-| rag-app-cohere-vbpl-expand [dev] | 47 | 0.707 | 8/1/3 | 0 | 0 | 0.694 | 0.837 | 0.000 | 0.021 | 4 | 0.500 | - | 2234/5174 | 7441/11694 | 247983/21660 | - | 2026-11-27 |
-| rag-app-cohere-vbpl [dev] | 47 | 0.707 | 7/0/5 | 0 | 0 | 0.625 | 0.789 | 0.000 | 0.021 | 2 | 0.667 | - | 1884/3848 | 6710/11310 | 119780/17768 | - | 2026-11-27 |
-| ab-expand-off [dev] | 47 | 0.732 | 8/2/1 | 0 | 0 | 0.671 | 0.862 | 0.000 | 0.021 | 5 | 0.500 | - | 1932/3996 | 8010/11678 | 134515/18722 | 0 | 2026-11-28 |
-| ab-expand-on [dev] | 47 | 0.780 | 6/1/2 | 0 | 0 | 0.667 | 0.870 | 0.000 | 0.021 | 2 | 0.500 | - | 1862/5894 | 8158/13976 | 246434/20841 | 0 | 2026-11-28 |
-| rag-app-cohere-vbpl-expand [dev] | 47 | 0.659 | 8/4/2 | 0 | 0 | 0.677 | 0.862 | 0.000 | 0.021 | 4 | 0.667 | - | 2070/4168 | 7815/11312 | 247677/19282 | - | 2026-11-28 |
-| rag-app-cohere-vbpl-expand [test] | 44 | 0.800 | 6/2/0 | 0 | 0 | 0.700 | 0.887 | 0.000 | 0.023 | 3 | 0.500 | - | 2165/4496 | 7845/11876 | 218114/17350 | 0 | 2026-11-28 |
+| config | answered | answer correct | partial/incorrect/refused | errors | truncated | cit. precision | cit. recall | unsupported ref | unknown doc | needs review | OOC no-cite | OOC refused (hand) | TTFT ms p50/p95 | end-to-end ms p50/p95 | tokens in/out | rerank fallbacks | claims backed | answers with unbacked claim | date |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| norag [dev] | 47 | 0.512 | 13/6/1 | 0 | 0 | - | 0.000 | - | 0.362 | 14 | 1.000 | 0.000 | 9653/17828 | 13271/20630 | 8517/80576 | - | - | - | 2026-11-26 |
+| rag-full-incorpus [dev] | 41 | 0.659 | 11/0/3 | 0 | 0 | 0.690 | 0.890 | 0.000 | 0.024 | 2 | - | - | 1896/4401 | 9061/13435 | 92912/16360 | - | - | - | 2026-11-26 |
+| rag-full-ooc [dev] | 6 | - | - | 0 | 0 | - | - | 0.000 | 0.000 | 0 | 0.500 | 1.000 | 1239/2227 | 7866/9507 | 9759/1324 | - | - | - | 2026-11-26 |
+| rag-hybrid-article [dev] | 47 | 0.610 | 10/0/6 | 0 | 0 | 0.717 | 0.817 | 0.000 | 0.021 | 0 | 0.500 | 1.000 | 1884/3442 | 4273/7493 | 110840/17715 | - | - | - | 2026-11-26 |
+| rag-app-cohere [dev] | 47 | 0.683 | 9/0/4 | 0 | 0 | 0.693 | 0.846 | 0.000 | 0.021 | 2 | 0.500 | - | 2109/4924 | 7745/13770 | 111485/19579 | - | - | - | 2026-11-27 |
+| rag-app-cohere-vbpl-expand [dev] | 47 | 0.707 | 8/1/3 | 0 | 0 | 0.694 | 0.837 | 0.000 | 0.021 | 4 | 0.500 | - | 2234/5174 | 7441/11694 | 247983/21660 | - | - | - | 2026-11-27 |
+| rag-app-cohere-vbpl [dev] | 47 | 0.707 | 7/0/5 | 0 | 0 | 0.625 | 0.789 | 0.000 | 0.021 | 2 | 0.667 | - | 1884/3848 | 6710/11310 | 119780/17768 | - | - | - | 2026-11-27 |
+| ab-expand-off [dev] | 47 | 0.732 | 8/2/1 | 0 | 0 | 0.671 | 0.862 | 0.000 | 0.021 | 5 | 0.500 | - | 1932/3996 | 8010/11678 | 134515/18722 | 0 | - | - | 2026-11-28 |
+| ab-expand-on [dev] | 47 | 0.780 | 6/1/2 | 0 | 0 | 0.667 | 0.870 | 0.000 | 0.021 | 2 | 0.500 | - | 1862/5894 | 8158/13976 | 246434/20841 | 0 | 0.971 | 3 | 2026-11-28 |
+| rag-app-cohere-vbpl-expand [dev] | 47 | 0.659 | 8/4/2 | 0 | 0 | 0.677 | 0.862 | 0.000 | 0.021 | 4 | 0.667 | - | 2070/4168 | 7815/11312 | 247677/19282 | - | - | - | 2026-11-28 |
+| rag-app-cohere-vbpl-expand [test] | 44 | 0.800 | 6/2/0 | 0 | 0 | 0.700 | 0.887 | 0.000 | 0.023 | 3 | 0.500 | - | 2165/4496 | 7845/11876 | 218114/17350 | 0 | 0.943 | 5 | 2026-11-28 |
 
 ## Error analysis (retrieval misses)
 
