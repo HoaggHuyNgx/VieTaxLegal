@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useI18n } from '../../i18n/useI18n'
 import AssistantMessage from './AssistantMessage'
 import { discardDraft, readDraft, saveDraft } from './chat-draft'
-import { DocumentIcon, LogoMark, PaperclipIcon, SendIcon, ShieldIcon, SparkleIcon } from './ChatIcons'
+import { LogoMark, SendIcon, ShieldIcon, SparkleIcon } from './ChatIcons'
 import { formatMessageTime } from './message-time'
 import SuggestionGrid from './SuggestionGrid'
 
@@ -11,17 +11,6 @@ const NEAR_BOTTOM_PX = 80
 
 // Sparkles are drawn over the logo; positions are the old absolute offsets.
 const SPARKLE = 'absolute text-chat-sparkle-soft'
-// Controls without a backend share this look.
-const COMING_SOON = 'opacity-[0.62]'
-const TOOLTIP =
-  'relative inline-flex after:pointer-events-none after:absolute after:bottom-[calc(100%+7px)] after:left-1/2 after:z-5 after:rounded-[6px] after:bg-chat-tooltip after:px-2 after:py-1 after:text-[9.5px] after:font-semibold after:whitespace-nowrap after:text-white after:opacity-0 after:content-[attr(data-tooltip)] after:[transform:translateX(-50%)] after:transition-[opacity] after:duration-150 after:ease-[ease] hover:after:opacity-100 motion-reduce:after:transition-none'
-
-// The backend has no upload endpoint yet, so these render inert with a
-// "coming soon" hint rather than faking attachments.
-const COMPOSER_TOOLS = [
-  { id: 'attach', labelKey: 'chat.workspace.attachFile', Icon: PaperclipIcon },
-  { id: 'document', labelKey: 'chat.workspace.attachDocument', Icon: DocumentIcon },
-]
 
 export default function ChatWorkspace({
   messages,
@@ -189,27 +178,10 @@ export default function ChatWorkspace({
                 })}
               </span>
             ) : null}
-            <div className="ml-auto flex items-center gap-[5px]">
-              {COMPOSER_TOOLS.map(({ id, labelKey, Icon }) => (
-                // A disabled button fires no pointer events, so the tooltip must
-                // sit on a non-disabled wrapper for :hover to trigger.
-                <span className={TOOLTIP} key={id} data-tooltip={t('chat.workspace.comingSoon')}>
-                  <button
-                    type="button"
-                    className={`grid size-[34px] place-items-center rounded-chat-sm border border-chat-border bg-chat-surface p-0 lte-760:size-[30px] ${COMING_SOON}`}
-                    disabled
-                    aria-disabled="true"
-                    aria-label={t('chat.workspace.comingSoonAria', { name: t(labelKey) })}
-                  >
-                    <Icon />
-                  </button>
-                </span>
-              ))}
-            </div>
             {isStreaming ? (
               <button
                 type="button"
-                className="flex min-h-[38px] items-center gap-[7px] rounded-chat-sm border border-chat-stop-border bg-chat-surface px-[13px]"
+                className="ml-auto flex min-h-[38px] items-center gap-[7px] rounded-chat-sm border border-chat-stop-border bg-chat-surface px-[13px]"
                 onClick={onStop}
               >
                 <span className="size-2 rounded-[2px] bg-chat-stop-dot" /> {t('chat.workspace.stop')}
@@ -217,7 +189,7 @@ export default function ChatWorkspace({
             ) : (
               <button
                 type="submit"
-                className="send-button grid size-10 place-items-center rounded-chat-sm border-0 bg-chat-blue shadow-chat-send hover:not-disabled:bg-chat-blue-strong disabled:cursor-not-allowed disabled:opacity-[0.55] lte-760:size-9"
+                className="send-button ml-auto grid size-10 place-items-center rounded-chat-sm border-0 bg-chat-blue shadow-chat-send hover:not-disabled:bg-chat-blue-strong disabled:cursor-not-allowed disabled:opacity-[0.55] lte-760:size-9"
                 disabled={!message.trim() || isLoading}
                 aria-label={t('chat.workspace.sendAria')}
               >

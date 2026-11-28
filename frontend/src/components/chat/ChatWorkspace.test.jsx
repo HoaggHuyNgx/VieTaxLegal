@@ -35,14 +35,6 @@ function renderWorkspace(props) {
   )
 }
 
-describe('ChatWorkspace composer tools', () => {
-  it('keeps the attach buttons disabled while no upload endpoint exists', () => {
-    renderWorkspace()
-    expect(screen.getByRole('button', { name: /Đính kèm tệp/ }).disabled).toBe(true)
-    expect(screen.getByRole('button', { name: /Chọn văn bản tham chiếu/ }).disabled).toBe(true)
-  })
-})
-
 describe('ChatWorkspace composer', () => {
   it('fills the composer from a suggestion card', () => {
     renderWorkspace()

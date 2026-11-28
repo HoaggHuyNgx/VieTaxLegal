@@ -32,7 +32,6 @@ This is a graduation thesis project.
 | English questions answered in English from the same sources    | Done            |
 | Real citations: stored, returned and shown                     | Done            |
 | RAG evaluation (questions, metrics, runner, comparison, export) | Done            |
-| Tax calculation, contract scanning, file attachments           | Not built       |
 
 When RAG is off or finds nothing, the assistant shows no sources, never invents document numbers or
 articles, and always reminds the user to check that a document is still in force.

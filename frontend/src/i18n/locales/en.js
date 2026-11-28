@@ -109,15 +109,10 @@ const en = {
             'Less time spent searching, help spotting risks, and better-prepared information before you sit down with a professional.',
         },
         {
-          id: 'contracts',
-          question: 'Does VieTaxLegal analyse contracts?',
-          answer: 'Not yet. Contract analysis is planned for a later stage and is not part of the Beta.',
-        },
-        {
           id: 'tax',
           question: 'Does VieTaxLegal handle tax questions?',
           answer:
-            'The Beta has no dedicated tax calculator. Use the chat area for legal research at a reference level only.',
+            'Yes. Ask in the chat; answers are for reference and research, with sources when they are found.',
         },
         {
           id: 'lawyer',
@@ -134,8 +129,7 @@ const en = {
         {
           id: 'security',
           question: 'Is my data secure?',
-          answer:
-            'The Beta does not support file uploads. Conversations are scoped per account and reachable only through the application backend.',
+          answer: 'Conversations are scoped per account and reachable only through the application backend.',
         },
         {
           id: 'audience',
@@ -332,10 +326,6 @@ const en = {
 
   chat: {
     workspace: {
-      comingSoon: 'Coming soon',
-      comingSoonAria: '{{name}} — coming soon',
-      attachFile: 'Attach file',
-      attachDocument: 'Pick a reference document',
       suggestionAria: 'Use suggested question: {{question}}',
       loading: 'Loading conversation…',
       emptyHeading: 'What legal question can I look up for you?',

@@ -110,16 +110,10 @@ const vi = {
             'Giảm thời gian tra cứu, hỗ trợ phát hiện rủi ro và chuẩn bị thông tin trước khi làm việc với chuyên gia.',
         },
         {
-          id: 'contracts',
-          question: 'VieTaxLegal có hỗ trợ phân tích hợp đồng không?',
-          answer:
-            'Chưa. Phân tích hợp đồng là tính năng dự kiến cho giai đoạn sau và không xuất hiện trong bản Beta.',
-        },
-        {
           id: 'tax',
           question: 'VieTaxLegal có hỗ trợ câu hỏi về thuế không?',
           answer:
-            'Bản Beta chưa có công cụ tính thuế chuyên biệt. Người dùng chỉ nên dùng khu vực chat để tra cứu pháp luật ở mức tham khảo.',
+            'Có. Hãy hỏi trong khung chat; câu trả lời dùng để tra cứu, tham khảo và kèm nguồn khi tìm được.',
         },
         {
           id: 'lawyer',
@@ -134,9 +128,8 @@ const vi = {
         },
         {
           id: 'security',
-          question: 'Dữ liệu và tài liệu tải lên có được bảo mật không?',
-          answer:
-            'Bản Beta chưa hỗ trợ tải tài liệu. Hội thoại được phân quyền theo tài khoản và chỉ truy cập qua backend của ứng dụng.',
+          question: 'Dữ liệu của tôi có được bảo mật không?',
+          answer: 'Hội thoại được phân quyền theo tài khoản và chỉ truy cập qua backend của ứng dụng.',
         },
         {
           id: 'audience',
@@ -337,10 +330,6 @@ const vi = {
 
   chat: {
     workspace: {
-      comingSoon: 'Sắp có',
-      comingSoonAria: '{{name}} — tính năng sắp có',
-      attachFile: 'Đính kèm tệp',
-      attachDocument: 'Chọn văn bản tham chiếu',
       suggestionAria: 'Dùng câu hỏi gợi ý: {{question}}',
       loading: 'Đang tải cuộc trò chuyện…',
       emptyHeading: 'Bạn cần tra cứu vấn đề pháp luật nào?',

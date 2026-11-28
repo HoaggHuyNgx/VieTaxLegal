@@ -133,20 +133,6 @@ export function ChatBubbleIcon({ size = 26 }) {
   )
 }
 
-export function PaperclipIcon() {
-  return (
-    <Icon size={18}>
-      <path
-        d="M18 11.5 12.2 17.3a3.9 3.9 0 0 1-5.5-5.5l6.4-6.4a2.6 2.6 0 0 1 3.7 3.7l-6.4 6.4a1.3 1.3 0 0 1-1.9-1.8l5.6-5.6"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Icon>
-  )
-}
-
 export function DocumentIcon({ size = 18 }) {
   return (
     <Icon size={size}>
