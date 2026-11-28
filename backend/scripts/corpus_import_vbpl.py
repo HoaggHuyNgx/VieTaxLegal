@@ -1,10 +1,10 @@
-"""Import the documents of a coverage inventory from th1nhng0/vietnamese-legal-documents into
-corpus/vbpl/ (not in git).
+"""Import the documents of a coverage inventory from th1nhng0/vietnamese-legal-documents (CC-BY-4.0)
+into corpus/vbpl/ (committed, so the index can be rebuilt without the dataset).
 
 Needs the `corpus` extra, the dataset's `metadata` and `content` parquet files and the inventory CSV
 (columns `tier`, `fields`, `id`; only `A_core` rows are imported). From backend/:
   .venv/Scripts/python.exe scripts/corpus_import_vbpl.py --metadata m.parquet --content c.parquet \
-      --inventory inventory.csv
+      --inventory corpus/vbpl/selection/inventory.csv
 
 Status comes from the portal snapshot, which can lag reality, so it is recorded in `notes` as not
 verified by a person. Documents that fail the structure checks are skipped, never cut by length.

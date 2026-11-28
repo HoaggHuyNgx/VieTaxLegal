@@ -1,0 +1,113 @@
+{
+ "_note": "Documents added by hand because the vbpl dataset copy was missing or broken. Text extracted from the Công báo file with app/services/rag/ingest/text_extraction.py.",
+ "documents": [
+  {
+   "slug": "nghi-dinh-96-2026-nd-cp",
+   "number": "96/2026/NĐ-CP",
+   "title": "Nghị định quy định chi tiết và hướng dẫn thi hành một số điều của Luật Đầu tư",
+   "doc_type": "nghi_dinh",
+   "field": "enterprise",
+   "file": "vbpl/manual/raw/nghi-dinh-96-2026-nd-cp.docx",
+   "sha256": "e513d79f907379e75971e4c941847eddc8cdd1fa83f0dab92280399581cc8243",
+   "extra_files": [],
+   "text_file": "vbpl/manual/texts/nghi-dinh-96-2026-nd-cp.txt",
+   "source_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-96-2026-nd-cp-469246.htm",
+   "status": "in_force",
+   "partially_expired": true,
+   "issued_on": "2026-03-31",
+   "effective_from": "2026-03-31",
+   "notes": "Công báo (congbao.chinhphu.vn), downloaded 2026-11-27; status from vbpl snapshot 2026-08-08, not verified by a person. Điều 11, 12 effective 2026-07-01 (Điều 112)."
+  },
+  {
+   "slug": "nghi-dinh-103-2026-nd-cp",
+   "number": "103/2026/NĐ-CP",
+   "title": "Nghị định quy định về đầu tư ra nước ngoài",
+   "doc_type": "nghi_dinh",
+   "field": "enterprise",
+   "file": "vbpl/manual/raw/nghi-dinh-103-2026-nd-cp.docx",
+   "sha256": "22540d98cf2b11e872b51c09ee7e4adb9cadb880b39a63806b13d11fb17b9fda",
+   "extra_files": [],
+   "text_file": "vbpl/manual/texts/nghi-dinh-103-2026-nd-cp.txt",
+   "source_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-103-2026-nd-cp-469314/64160.htm",
+   "status": "in_force",
+   "partially_expired": false,
+   "issued_on": "2026-03-31",
+   "effective_from": "2026-04-03",
+   "notes": "Công báo (congbao.chinhphu.vn), downloaded 2026-11-27; status from vbpl snapshot 2026-08-08, not verified by a person."
+  },
+  {
+   "slug": "nghi-dinh-105-2026-nd-cp",
+   "number": "105/2026/NĐ-CP",
+   "title": "Nghị định quy định chi tiết và hướng dẫn thi hành một số điều của Luật Công đoàn về tài chính công đoàn",
+   "doc_type": "nghi_dinh",
+   "field": "labor",
+   "file": "vbpl/manual/raw/nghi-dinh-105-2026-nd-cp.docx",
+   "sha256": "ccae941f8eaf174f6fe6d8a1888ac8d9aba6f62cfea998b6fda5f4d2925f90a0",
+   "extra_files": [],
+   "text_file": "vbpl/manual/texts/nghi-dinh-105-2026-nd-cp.txt",
+   "source_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-105-2026-nd-cp-469290.htm",
+   "status": "in_force",
+   "partially_expired": false,
+   "issued_on": "2026-03-31",
+   "effective_from": "2026-05-16",
+   "notes": "Công báo (congbao.chinhphu.vn), downloaded 2026-11-27; status from vbpl snapshot 2026-08-08, not verified by a person."
+  },
+  {
+   "slug": "nghi-dinh-125-2020-nd-cp",
+   "number": "125/2020/NĐ-CP",
+   "title": "Nghị định quy định xử phạt vi phạm hành chính về thuế, hóa đơn",
+   "doc_type": "nghi_dinh",
+   "field": "tax",
+   "file": "vbpl/manual/raw/nghi-dinh-125-2020-nd-cp-part1.pdf",
+   "sha256": "77c1ed9f7d0d864041105226949e27da6f7aa4351c6466719aaef50310446319",
+   "extra_files": [
+    {
+     "file": "vbpl/manual/raw/nghi-dinh-125-2020-nd-cp-part2.pdf",
+     "sha256": "4f4c418ebe23d40cb76dacf67e799837c590896a52da45d1db78f19107e401d9"
+    }
+   ],
+   "text_file": "vbpl/manual/texts/nghi-dinh-125-2020-nd-cp.txt",
+   "source_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-125-2020-nd-cp-32305.htm",
+   "status": "in_force",
+   "partially_expired": true,
+   "issued_on": "2020-10-19",
+   "effective_from": "2020-12-05",
+   "notes": "Công báo (congbao.chinhphu.vn), downloaded 2026-11-27; status from vbpl snapshot 2026-08-08, not verified by a person. Amended by 102/2021/NĐ-CP, 310/2025/NĐ-CP and 291/2026/NĐ-CP (291/2026 not in corpus). Text edit: dot added after 'Điều 29' (missing in the gazette PDF)."
+  },
+  {
+   "slug": "nghi-dinh-10-2022-nd-cp",
+   "number": "10/2022/NĐ-CP",
+   "title": "Nghị định quy định về lệ phí trước bạ",
+   "doc_type": "nghi_dinh",
+   "field": "tax",
+   "file": "vbpl/manual/raw/nghi-dinh-10-2022-nd-cp.pdf",
+   "sha256": "4329641949266e67b6df85ea32296dd474df71bd2e4832d53c3330d45ab088b8",
+   "extra_files": [],
+   "text_file": "vbpl/manual/texts/nghi-dinh-10-2022-nd-cp.txt",
+   "source_url": "https://congbao.chinhphu.vn/van-ban/nghi-dinh-so-10-2022-nd-cp-36658.htm",
+   "status": "in_force",
+   "partially_expired": true,
+   "issued_on": "2022-01-15",
+   "effective_from": "2022-03-01",
+   "notes": "Công báo (congbao.chinhphu.vn), downloaded 2026-11-27; status from vbpl snapshot 2026-08-08, not verified by a person. Amended by 175/2025/NĐ-CP."
+  },
+  {
+   "slug": "nghi-dinh-310-2025-nd-cp",
+   "number": "310/2025/NĐ-CP",
+   "title": "Nghị định sửa đổi, bổ sung một số điều của Nghị định số 125/2020/NĐ-CP quy định xử phạt vi phạm hành chính về thuế, hóa đơn",
+   "doc_type": "nghi_dinh",
+   "field": "tax",
+   "file": "vbpl/manual/raw/nghi-dinh-310-2025-nd-cp.pdf",
+   "sha256": "06a5de5b6ce20984acb67920469efd5502e7f2f757bae7f473d9ee378de0e4ff",
+   "extra_files": [],
+   "text_file": "vbpl/manual/texts/nghi-dinh-310-2025-nd-cp.txt",
+   "source_url": "https://congbao.chinhphu.vn/detail/tai-ve?id=46755&slug=310-2025-nd-cp",
+   "status": "in_force",
+   "partially_expired": false,
+   "issued_on": "2025-12-02",
+   "effective_from": "2026-01-16",
+   "notes": "Công báo (congbao.chinhphu.vn), downloaded 2026-11-27; status from vbpl snapshot 2026-08-08, not verified by a person. Amending document.",
+   "is_amending": true
+  }
+ ]
+}

@@ -1,0 +1,793 @@
+BỘ NỘI VỤ
+
+-------
+
+CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+
+Độc lập - Tự do - Hạnh phúc
+
+---------------
+
+Số: 08/2026/TT-BNV
+
+Hà Nội, ngày 15 tháng 5 năm 2026
+
+THÔNG TƯ
+
+Quy định chi tiết và hướng dẫn thi hành một số điều của Nghị định số 337/2025/NĐ-CP ngày 24 tháng 12 năm 2025 của Chính phủ quy định về hợp đồng lao động điện tử
+
+Căn cứ Bộ luật Lao động số 45/2019/QH14;
+
+Căn cứ Luật Giao dịch điện tử số 20/2023/QH15;
+
+Căn cứ Luật Dữ liệu số 60/2024/QH15;
+
+Căn cứ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15;
+
+Căn cứ Luật Tiếp cận thông tin mạng số 104/2016/QH13;
+
+Căn cứ Luật An ninh mạng số 116/2025/QH15;
+
+Căn cứ Luật Lưu trữ số 33/2024/QH15;
+
+Căn cứ Luật Chuyển đổi số 148/2025/QH15;
+
+Căn cứ Nghị định số 337/2025/NĐ-CP ngày 24 tháng 12 năm 2025 của Chính phủ quy định về hợp đồng lao động điện tử;
+
+Căn cứ Nghị định số 25/2025/NĐ-CP ngày 21 tháng 02 năm 2025 của Chính phủ quy định chức năng, nhiệm vụ, quyền hạn và cơ cấu tổ chức của Bộ Nội vụ;
+
+Theo đề nghị của Cục trưởng Cục Tiền lương và Bảo hiểm xã hội;
+
+Bộ trưởng Bộ Nội vụ ban hành Thông tư quy định chi tiết và hướng dẫn thi hành một số điều của Nghị định số 337/2025/NĐ-CP ngày 24 tháng 12 năm 2025 của Chính phủ quy định về hợp đồng lao động điện tử.
+
+Chương I
+
+NHỮNG QUY ĐỊNH CHUNG
+
+Điều 1. Phạm vi điều chỉnh
+
+Thông tư này quy định chi tiết và hướng dẫn việc cấp mã định danh hợp đồng lao động điện tử (ID); cấp, khóa, mở khóa tài khoản truy cập Nền tảng hợp đồng lao động điện tử; kết nối với Nền tảng hợp đồng lao động điện tử; quản lý, sử dụng, khai thác Nền tảng hợp đồng lao động điện tử; dữ liệu và cập nhật, khai thác, lưu trữ, chia sẻ dữ liệu trên Nền tảng hợp đồng lao động điện tử.
+
+Điều 2. Đối tượng áp dụng
+
+1. Người lao động, người sử dụng lao động quy định tại khoản 1 và khoản 2 Điều 3 Bộ luật Lao động năm 2019 giao kết, thực hiện hợp đồng lao động điện tử.
+
+2. Nhà cung cấp eContract.
+
+3. Cơ quan, tổ chức, cá nhân khác có liên quan đến việc thực hiện quy định tại Thông tư này.
+
+Điều 3. Giải thích từ ngữ
+
+Trong Thông tư này, các từ ngữ dưới đây được hiểu như sau:
+
+1. Tài khoản truy cập Nền tảng hợp đồng lao động điện tử là tài khoản hoặc quyền sử dụng do Nền tảng hợp đồng lao động điện tử công nhận để thực hiện tra cứu, gửi, nhận, khai thác, quản trị hoặc xử lý nghiệp vụ trên Nền tảng hợp đồng lao động điện tử.
+
+2. Quyền truy cập trên Nền tảng hợp đồng lao động điện tử là quyền đăng nhập; sử dụng chức năng, giao diện lập trình ứng dụng tiêu chuẩn (API), dữ liệu hoặc nghiệp vụ trên Nền tảng hợp đồng lao động điện tử; quyền này được xác lập độc lập với trạng thái pháp lý của tài khoản định danh điện tử quốc gia.
+
+3. Tạm dừng kết nối eContract là việc ngừng có thời hạn kết nối kỹ thuật, đồng bộ dữ liệu, chia sẻ dữ liệu hoặc nghiệp vụ giữa eContract và Nền tảng hợp đồng lao động điện tử.
+
+4. Chấm dứt kết nối eContract là việc ngắt kết nối, thu hồi khóa kỹ thuật, chấm dứt quyền kết nối giữa eContract và Nền tảng hợp đồng lao động điện tử.
+
+5. Người dùng cuối là người sử dụng lao động và người lao động có quyền, lợi ích bị ảnh hưởng bởi việc xử lý tài khoản hoặc xử lý kết nối eContract.
+
+6. Gói dữ liệu chuyển giao là tập hợp: các dữ liệu bằng chứng của dịch vụ chứng thực thông điệp dữ liệu được quy định tại Thông tư số 53/2025/TT-BKHCN ngày 31 tháng 12 năm 2025 của Bộ Khoa học và Công nghệ ban hành quy chuẩn kỹ thuật quốc gia về yêu cầu đối với dịch vụ chứng thực thông điệp dữ liệu; các dữ liệu được quy định tại Điều 14 Nghị định số 337/2025/NĐ-CP ngày 24 tháng 12 năm 2025 của Chính phủ quy định về hợp đồng lao động điện tử và khoản 1 Điều 6 Thông tư này; trạng thái nghiệp vụ cần thiết để tiếp nhận, duy trì hoặc thay thế kết nối eContract.
+
+7. EContract, Nhà cung cấp eContract, ID là các cụm từ được hiểu theo quy định tại các khoản 3, 4 và 5 Điều 3 Nghị định số 337/2025/NĐ-CP.
+
+Chương II
+
+CẤP MÃ ĐỊNH DANH HỢP ĐỒNG LAO ĐỘNG ĐIỆN TỬ; CẤP, KHÓA, MỞ KHÓA TÀI KHOẢN TRUY CẬP NỀN TẢNG HỢP ĐỒNG LAO ĐỘNG ĐIỆN TỬ; KẾT NỐI VỚI NỀN TẢNG HỢP ĐỒNG LAO ĐỘNG ĐIỆN TỬ
+
+Điều 4. Nguyên tắc cấp mã định danh hợp đồng lao động điện tử
+
+1. Mỗi hợp đồng lao động điện tử khi được gửi về Nền tảng hợp đồng lao động điện tử nếu đảm bảo quy định sẽ được cấp một ID duy nhất và không trùng lặp với bất kỳ hợp đồng lao động điện tử nào khác.
+
+2. ID được cấp một lần, không thay đổi cả trong trường hợp hợp đồng lao động điện tử được sửa đổi, bổ sung, tạm hoãn hoặc chấm dứt. Phụ lục, thông báo tạm hoãn, thông báo chấm dứt hợp đồng lao động điện tử được gắn ID của hợp đồng lao động điện tử đó.
+
+3. Cơ quan nhà nước dùng ID làm mã quản lý dữ liệu số về hợp đồng lao động điện tử. Việc cấp ID đối với hợp đồng lao động điện tử không làm thay đổi thời điểm giao kết, nội dung, thời điểm có hiệu lực của hợp đồng lao động điện tử đã được các bên giao kết.
+
+4. ID được liên kết với các mã hiển thị hoặc mã tra cứu (theo mã số đơn vị hành chính, mã định danh người lao động, mã số thuế của người sử dụng lao động) do Nền tảng hợp đồng lao động điện tử xây dựng phục vụ nhu cầu khai thác dữ liệu nhưng các mã này không thay thế cho ID.
+
+Điều 5. Cấu trúc mã định danh hợp đồng lao động điện tử
+
+Cấu trúc của ID do Nền tảng hợp đồng lao động điện tử thực hiện theo thuật toán tự động, bao gồm 01 ký tự chữ và 12 ký tự số, trong đó:
+
+1. Ký tự chữ là A hoặc B hoặc C, trong đó: chữ cái A là ký tự gán cho hợp đồng lao động điện tử được giao kết từ ngày 01 tháng 7 năm 2026 thông qua các eContract bảo đảm quy định tại Điều 6 Nghị định số 337/2025/NĐ-CP; chữ cái B là ký tự gán cho hợp đồng lao động điện tử được chuyển đổi từ hợp đồng lao động bằng văn bản giấy; chữ cái C là ký tự gán cho hợp đồng lao động điện tử được giao kết trước ngày 01 tháng 7 năm 2026.
+
+2. 12 ký tự số được cấu thành như sau: 02 ký tự số đầu tiên là 02 số cuối của năm hợp đồng lao động điện tử được Nền tảng hợp đồng lao động điện tử cấp ID; 10 ký tự số sau là dãy số tự nhiên được cấp ngẫu nhiên.
+
+Điều 6. Quy trình cấp mã định danh hợp đồng lao động điện tử
+
+1. Nhà cung cấp eContract gửi hợp đồng lao động điện tử về Nền tảng hợp đồng lao động điện tử như sau:
+
+a) Đối với hợp đồng lao động điện tử giao kết từ ngày 01 tháng 7 năm 2026 thông qua eContract bảo đảm quy định tại Điều 6 Nghị định số 337/2025/NĐ-CP, Nhà cung cấp eContract gửi hợp đồng lao động điện tử cùng với các dữ liệu quy định tại các điểm a, c và đ khoản 1 Điều 14 Nghị định số 337/2025/NĐ-CP (không bao gồm thông tin về ID) về Nền tảng hợp đồng lao động điện tử theo quy định tại khoản 4 Điều 6 Nghị định số 337/2025/NĐ-CP.
+
+b) Đối với hợp đồng lao động điện tử được chuyển đổi từ hợp đồng lao động bằng văn bản giấy theo quy định tại khoản 1 Điều 8 Nghị định số 337/2025/NĐ-CP, Nhà cung cấp eContract gửi hợp đồng lao động điện tử cùng với dữ liệu quy định tại điểm c khoản 1 Điều 14 Nghị định số 337/2025/NĐ-CP và thông tin về nhật ký chuyển đổi từ hợp đồng lao động bằng văn bản giấy sang hợp đồng lao động điện tử về Nền tảng hợp đồng lao động điện tử.
+
+Thông tin về nhật ký chuyển đổi từ hợp đồng lao động bằng văn bản giấy sang hợp đồng lao động điện tử quy định tại điểm này gồm: tên của hệ thống hoặc phần mềm thực hiện việc chuyển đổi; họ tên, chức vụ của cá nhân hoặc tên tổ chức thực hiện việc chuyển đổi; ngày, tháng, năm và giờ hoàn thành việc chuyển đổi tài liệu hợp đồng lao động; định dạng tệp tin, dung lượng và số trang tài liệu được chuyển đổi; chữ ký số chuyên dùng hoặc chữ ký số công cộng của cơ quan, tổ chức thực hiện chuyển đổi kèm theo dấu thời gian đính kèm vào tệp tin tài liệu chuyển đổi nhằm niêm phong, xác nhận tính toàn vẹn của tệp tin kể từ thời điểm chuyển đổi xong; trạng thái hệ thống xác nhận nội dung bản chuyển đổi đã được kiểm tra, đối chiếu khớp hoàn toàn với bản giấy gốc.
+
+c) Đối với hợp đồng lao động điện tử được giao kết trước ngày 01 tháng 7 năm 2026, Nhà cung cấp eContract có trách nhiệm hỗ trợ người sử dụng lao động và người lao động rà soát bổ sung chữ ký số, dấu thời gian gắn kèm chữ ký số của các chủ thể giao kết và chứng thực thông điệp dữ liệu của Nhà cung cấp eContract vào hợp đồng lao động điện tử trên eContract theo quy định tại khoản 4 Điều 6 Nghị định số 337/2025/NĐ-CP. Sau khi các bên hoàn thành việc rà soát bổ sung, Nhà cung cấp eContract có trách nhiệm gửi hợp đồng lao động điện tử và các dữ liệu quy định tại các điểm a, c và đ khoản 1 Điều 14 Nghị định số 337/2025/NĐ-CP (không bao gồm thông tin về ID) về Nền tảng hợp đồng lao động điện tử.
+
+2. Nền tảng hợp đồng lao động điện tử tiếp nhận, kiểm tra thông tin và thực hiện cấp ID cho hợp đồng lao động điện tử trong vòng 24 giờ kể từ thời điểm tiếp nhận. Việc cấp ID được thực hiện tự động thông qua hệ thống thông tin của Nền tảng hợp đồng lao động điện tử. Trường hợp xảy ra sự cố kỹ thuật trong quá trình đồng bộ, việc cấp ID được thực hiện ngay sau khi sự cố được khắc phục.
+
+Thông tin được kiểm tra bởi Nền tảng hợp đồng lao động điện tử quy định tại khoản này bao gồm: thông tin xác thực định danh của người lao động, người sử dụng lao động; dấu thời gian gắn kèm chữ ký số của các chủ thể giao kết và chứng thực thông điệp dữ liệu của Nhà cung cấp eContract.
+
+3. Thông tin về ID được cấp sẽ đồng thời được gửi về hệ thống của Nhà cung cấp eContract để quản lý và lưu trữ cùng với hợp đồng lao động điện tử. Thời hạn lưu trữ hợp đồng lao động điện tử theo thỏa thuận cung cấp dịch vụ giữa các bên nhưng tối thiểu bằng thời hạn lưu trữ trên Nền tảng hợp đồng lao động điện tử quy định tại khoản 3 Điều 18 Thông tư này.
+
+4. Phụ lục, thông báo tạm hoãn và thông báo chấm dứt hợp đồng lao động điện tử phát sinh trong quá trình thực hiện hợp đồng lao động điện tử được cấp cùng ID với hợp đồng lao động điện tử đó theo quy định tại các khoản 1, 2 và 3 Điều này.
+
+5. Nền tảng hợp đồng lao động điện tử không cấp ID cho hợp đồng lao động điện tử và tự động gửi thông báo lý do không cấp ID về hệ thống của Nhà cung cấp eContract trong các trường hợp sau:
+
+a) Hợp đồng lao động điện tử giao kết từ ngày 01 tháng 7 năm 2026 trở về sau không bảo đảm quy định tại khoản 4 Điều 6 Nghị định số 337/2025/NĐ-CP hoặc điểm a khoản 1 Điều này.
+
+b) Hợp đồng lao động điện tử được chuyển đổi từ văn bản giấy không bảo đảm quy định tại khoản 1 Điều 8 Nghị định số 337/2025/NĐ-CP hoặc điểm b khoản 1 Điều này.
+
+c) Hợp đồng lao động điện tử giao kết trước ngày 01 tháng 7 năm 2026 không bảo đảm theo quy định tại điểm c khoản 1 Điều này hoặc thông tin xác thực định danh không đúng.
+
+Điều 7. Đăng ký tài khoản truy cập Nền tảng hợp đồng lao động điện tử
+
+1. Việc đăng ký tài khoản truy cập Nền tảng hợp đồng lao động điện tử của người sử dụng lao động, người lao động được thực hiện như sau:
+
+a) Đăng ký tài khoản định danh điện tử theo quy định pháp luật về định danh và xác thực điện tử, sử dụng tài khoản định danh điện tử do Hệ thống định danh và xác thực điện tử quốc gia (VNeID) cấp theo quy định của pháp luật để đăng nhập Nền tảng hợp đồng lao động điện tử: người lao động sử dụng tài khoản định danh điện tử cá nhân; người sử dụng lao động là tổ chức sử dụng tài khoản định danh điện tử tổ chức, người sử dụng lao động là cá nhân sử dụng tài khoản định danh điện tử cá nhân. Trường hợp người sử dụng lao động là tổ chức không đăng ký được tài khoản định danh tổ chức theo quy định pháp luật về định danh và xác thực điện tử thì đề nghị Bộ Nội vụ cấp tài khoản truy cập Nền tảng hợp đồng lao động điện tử.
+
+b) Nền tảng hợp đồng lao động điện tử khai thác trạng thái hiệu lực của tài khoản định danh điện tử do Hệ thống định danh và xác thực điện tử quốc gia cung cấp.
+
+c) Trường hợp tài khoản định danh điện tử của người sử dụng lao động, người lao động bị khóa hoặc thay đổi trạng thái theo quy định của pháp luật, Nền tảng hợp đồng lao động điện tử thực hiện việc điều chỉnh quyền truy cập, sử dụng tài khoản tương ứng trên cơ sở kết quả xác thực do Hệ thống định danh và xác thực điện tử cung cấp.
+
+2. Tổng Liên đoàn Lao động Việt Nam; Sở Nội vụ; Ban quản lý khu công nghiệp, khu kinh tế, khu chế xuất; các đơn vị thuộc Bộ Nội vụ; công chức, viên chức, người lao động của các cơ quan, đơn vị nêu trên được giao nhiệm vụ quản lý, vận hành, khai thác Nền tảng hợp đồng lao động điện tử sử dụng tài khoản do Bộ Nội vụ cấp.
+
+3. Tổ chức, cá nhân khác thực hiện đăng ký tài khoản truy cập Nền tảng hợp đồng lao động điện tử theo quy định tại khoản 1 Điều này.
+
+Điều 8. Khóa, mở khóa tài khoản truy cập Nền tảng hợp đồng lao động điện tử
+
+1. Tài khoản truy cập Nền tảng hợp đồng lao động điện tử bị khóa trong các trường hợp sau đây:
+
+a) Theo đề nghị của chủ tài khoản.
+
+b) Tài khoản định danh điện tử của chủ tài khoản bị khóa.
+
+c) Sự kiện an toàn thông tin khẩn cấp gồm mọi trường hợp có nguy cơ gây mất bí mật, mất toàn vẹn, mất sẵn sàng của hệ thống, dịch vụ hoặc dữ liệu nếu không áp dụng biện pháp ngăn chặn ngay.
+
+d) Theo quyết định của cơ quan có thẩm quyền.
+
+đ) Các trường hợp khác theo quy định pháp luật.
+
+2. Tài khoản truy cập Nền tảng hợp đồng lao động điện tử bị khóa được mở khóa trong các trường hợp sau:
+
+a) Không còn căn cứ khóa tài khoản truy cập Nền tảng hợp đồng lao động điện tử.
+
+b) Theo quyết định của cơ quan có thẩm quyền.
+
+3. Thông báo về việc khóa, mở khóa tài khoản truy cập được Nền tảng hợp đồng lao động điện tử gửi tự động cho chủ tài khoản theo địa chỉ thư điện tử hoặc số điện thoại do chủ tài khoản đăng ký khi truy cập Nền tảng hợp đồng lao động điện tử.
+
+Điều 9. Kết nối eContract với Nền tảng hợp đồng lao động điện tử
+
+Nhà cung cấp eContract bảo đảm các điều kiện quy định tại khoản 3 Điều 6 Nghị định số 337/2025/NĐ-CP thực hiện việc kết nối eContract với Nền tảng hợp đồng lao động điện tử như sau:
+
+1. Nhà cung cấp eContract nộp hồ sơ đề nghị kết nối tới Bộ Nội vụ (nộp trực tiếp tại Bộ Nội vụ hoặc gửi qua đường bưu chính hoặc nộp trực tuyến qua Cổng Dịch vụ công quốc gia). Thành phần hồ sơ gồm:
+
+a) Văn bản đề nghị kết nối Nền tảng hợp đồng lao động điện tử theo Mẫu số 01 tại Phụ lục I ban hành kèm theo Thông tư này;
+
+b) Bản sao có chứng thực của một trong các giấy tờ sau: giấy chứng nhận đăng ký doanh nghiệp, giấy chứng nhận đăng ký đầu tư đối với nhà đầu tư nước ngoài, quyết định thành lập hoặc giấy chứng nhận, giấy phép tương đương hợp lệ khác theo quy định của pháp luật về đầu tư và pháp luật về doanh nghiệp (đối với trường hợp các thông tin này chưa được tích hợp và không thể kiểm tra trực tuyến trên Cơ sở dữ liệu quốc gia về đăng ký doanh nghiệp);
+
+c) Phương án kỹ thuật kết nối và thuyết minh về khả năng kết nối theo tài liệu hướng dẫn của Bộ Nội vụ.
+
+2. Trong thời hạn 20 ngày làm việc kể từ ngày nhận được đủ hồ sơ đề nghị kết nối với Nền tảng hợp đồng lao động điện tử theo quy định tại khoản 1 Điều này, Bộ Nội vụ kiểm tra tính hợp lệ của hồ sơ, thực hiện kiểm thử kỹ thuật và thông báo cấp tài khoản kết nối cho Nhà cung cấp eContract. Trường hợp hồ sơ chưa hợp lệ hoặc kiểm thử kỹ thuật không đạt, Bộ Nội vụ thông báo cho Nhà cung cấp eContract theo địa chỉ thư điện tử hoặc địa chỉ trụ sở chính ghi trong văn bản đề nghị kết nối và nêu rõ lý do từ chối kết nối Nền tảng hợp đồng lao động điện tử.
+
+3. Trường hợp Nhà cung cấp eContract có sự thay đổi một trong các nội dung trong hồ sơ đề nghị kết nối thì phải thông báo về việc thay đổi thông tin kèm theo bản sao các giấy tờ, tài liệu chứng minh sự thay đổi đó đến Bộ Nội vụ để xác minh, điều chỉnh thông tin.
+
+Điều 10. Tạm dừng, chấm dứt kết nối eContract với Nền tảng hợp đồng lao động điện tử
+
+1. Bộ Nội vụ tạm dừng kết nối eContract với Nền tảng hợp đồng lao động điện tử trong các trường hợp sau:
+
+a) Theo đề nghị của Nhà cung cấp eContract;
+
+b) Nhà cung cấp eContract không thực hiện đúng phương án kỹ thuật đã đăng ký theo quy định tại điểm c khoản 1 Điều 9 Thông tư này;
+
+c) Nhà cung cấp eContract không thực hiện chế độ báo cáo theo quy định tại khoản 6 Điều 21 Nghị định số 337/2025/NĐ-CP và khoản 1 Điều 19 Thông tư này;
+
+d) Nhà cung cấp eContract không còn bảo đảm điều kiện quy định tại khoản 3 Điều 6 Nghị định số 337/2025/NĐ-CP;
+
+đ) Nhà cung cấp eContract có từ 5% số hợp đồng lao động điện tử trở lên cộng dồn trong 01 tháng không được Nền tảng hợp đồng lao động điện tử cấp ID theo quy định tại khoản 5 Điều 6 Thông tư này.
+
+2. Thời hạn tạm dừng kết nối eContract không quá 06 tháng, trừ trường hợp pháp luật có quy định khác hoặc sự kiện bất khả kháng được cơ quan có thẩm quyền chấp nhận.
+
+3. Bộ Nội vụ chấm dứt kết nối eContract với Nền tảng hợp đồng lao động điện tử trong các trường hợp sau:
+
+a) Theo đề nghị của Nhà cung cấp eContract;
+
+b) Nhà cung cấp eContract chấm dứt hoạt động;
+
+c) Trong vòng 01 năm kể từ ngày được cấp tài khoản kết nối với Nền tảng hợp đồng lao động điện tử mà Nhà cung cấp eContract không triển khai dịch vụ eContract và gửi hợp đồng lao động điện tử đã giao kết thông qua eContract do đơn vị cung cấp tới Nền tảng hợp đồng lao động điện tử;
+
+d) Có hành vi giả mạo hồ sơ trong quá trình cấp tài khoản kết nối hoặc duy trì kết nối;
+
+đ) Thực hiện hành vi bị nghiêm cấm theo quy định tại Điều 6 Luật Giao dịch điện tử năm 2023;
+
+e) Không khắc phục nguyên nhân bị tạm dừng kết nối trong thời hạn tạm dừng kết nối;
+
+g) Các trường hợp khác theo quyết định của cơ quan có thẩm quyền.
+
+4. Khi chấm dứt kết nối eContract, Nhà cung cấp eContract có nghĩa vụ phối hợp lập và chuyển giao đầy đủ gói dữ liệu chuyển giao cho Nền tảng hợp đồng lao động điện tử, bảo đảm tính đầy đủ, toàn vẹn, truy vết và khả năng tiếp tục khai thác hợp pháp của dữ liệu liên quan đến người dùng cuối.
+
+5. Việc tạm dừng, chấm dứt kết nối eContract không làm ảnh hưởng đến nội dung và hiệu lực pháp lý của hợp đồng lao động điện tử đã được giao kết hợp lệ, trừ trường hợp pháp luật có quy định khác hoặc có kết luận về giả mạo, gian lận, vô hiệu hoặc trái pháp luật của cơ quan có thẩm quyền trong việc giao kết hợp đồng lao động.
+
+Điều 11. Thông báo tạm dừng, chấm dứt kết nối eContract và quyền giải trình của Nhà cung cấp eContract
+
+1. Bộ Nội vụ phải thông báo trước ít nhất 03 ngày làm việc cho Nhà cung cấp eContract về việc tạm dừng, chấm dứt kết nối eContract. Trường hợp khẩn cấp, Bộ Nội vụ được tạm dừng hoặc chấm dứt kết nối eContract ngay, sau đó thông báo cho Nhà cung cấp eContract trong vòng 24 giờ kể từ thời điểm tạm dừng hoặc chấm dứt kết nối eContract.
+
+2. Thông báo về việc tạm dừng, chấm dứt kết nối eContract được gửi theo địa chỉ thư điện tử hoặc địa chỉ trụ sở chính ghi trong văn bản đề nghị kết nối của Nhà cung cấp eContract. Nội dung chủ yếu của thông báo gồm: hình thức xử lý, lý do áp dụng hình thức xử lý, thời điểm bắt đầu áp dụng hình thức xử lý, nội dung cần khắc phục.
+
+3. Nhà cung cấp eContract bị áp dụng biện pháp tạm dừng, chấm dứt kết nối eContract có quyền giải trình, cung cấp chứng cứ và khiếu nại theo quy định của pháp luật.
+
+Điều 12. Khôi phục kết nối eContract với Nền tảng hợp đồng lao động điện tử
+
+1. EContract bị tạm dừng kết nối Nền tảng hợp đồng lao động điện tử được khôi phục kết nối trong các trường hợp sau:
+
+a) Nhà cung cấp eContract đã khắc phục đầy đủ nguyên nhân bị tạm dừng kết nối trong thời hạn tạm dừng kết nối;
+
+b) Không còn căn cứ tạm dừng kết nối eContract;
+
+c) Theo quyết định của cơ quan có thẩm quyền.
+
+2. Việc khôi phục kết nối được thực hiện trong thời hạn 24 giờ kể từ khi cơ quan, đơn vị có thẩm quyền xác nhận đủ điều kiện khôi phục về pháp lý và kỹ thuật đồng thời được thông báo cho Nhà cung cấp eContract thông qua địa chỉ thư điện tử ghi trong văn bản đề nghị kết nối.
+
+3. Nhà cung cấp eContract có eContract bị chấm dứt kết nối theo quy định tại khoản 3 Điều 10 Thông tư này khi muốn tiếp tục kết nối với Nền tảng hợp đồng lao động điện tử thì thực hiện theo quy định tại Điều 9 Thông tư này.
+
+Điều 13. Kết nối từ các hệ thống thông tin, cơ sở dữ liệu khác đến Nền tảng hợp đồng lao động điện tử
+
+Việc kết nối các hệ thống thông tin, cơ sở dữ liệu khác của cơ quan nhà nước đến Nền tảng hợp đồng lao động điện tử được thực hiện như sau:
+
+1. Hệ thống thông tin, cơ sở dữ liệu phải đảm bảo tuân thủ Khung kiến trúc tổng thể quốc gia số và các tiêu chuẩn, quy chuẩn kỹ thuật về kết nối, an ninh mạng, dữ liệu số do cơ quan có thẩm quyền ban hành tại thời điểm thực hiện.
+
+2. Chủ quản hệ thống thông tin, cơ sở dữ liệu có văn bản đề nghị kết nối với Nền tảng hợp đồng lao động điện tử gửi về Bộ Nội vụ theo Mẫu số 02 tại Phụ lục I ban hành kèm theo Thông tư này.
+
+3. Bộ Nội vụ có trách nhiệm:
+
+a) Cung cấp tài liệu kỹ thuật phục vụ kết nối, chia sẻ, khai thác dữ liệu của Nền tảng hợp đồng lao động điện tử cho chủ quản hệ thống thông tin, cơ sở dữ liệu có đề nghị kết nối;
+
+b) Phối hợp, hướng dẫn các chủ quản hệ thống thông tin, cơ sở dữ liệu trong quá trình kết nối, kiểm thử kỹ thuật;
+
+c) Phối hợp với Bộ Công an và đơn vị có liên quan tiến hành kiểm tra, đánh giá việc bảo đảm an ninh mạng hệ thống thông tin của cơ quan, tổ chức có đề nghị kết nối.
+
+4. Việc kết nối được thực hiện theo nguyên tắc không can thiệp nội dung hợp đồng lao động điện tử, không sao chép dữ liệu gốc và tuân thủ quy định pháp luật về dữ liệu, bảo vệ dữ liệu cá nhân.
+
+5. Bộ Nội vụ từ chối hoặc tạm ngừng kết nối, chia sẻ dữ liệu trên Nền tảng hợp đồng lao động điện tử theo quy định tại khoản 4 Điều 16 Nghị định số 337/2025/NĐ-CP.
+
+Điều 14. Kiểm tra an toàn thông tin
+
+Việc kết nối, truy cập, khai thác, chia sẻ dữ liệu trên Nền tảng hợp đồng lao động điện tử được kiểm soát chặt chẽ, bảo đảm an toàn thông tin như sau:
+
+1. Việc bảo đảm an ninh mạng phải tuân thủ quy định của pháp luật về an ninh mạng, dữ liệu, bảo vệ dữ liệu cá nhân và các quy định pháp luật có liên quan.
+
+2. Thông tin được bảo vệ nhằm bảo đảm không bị truy cập trái phép, không bị sửa đổi, mất mát và luôn sẵn sàng phục vụ hoạt động quản lý, khai thác theo thẩm quyền.
+
+3. Các yêu cầu về an ninh mạng phải được tích hợp ngay trong quá trình thiết kế, xây dựng, nâng cấp Nền tảng hợp đồng lao động điện tử và các hệ thống kết nối.
+
+4. Việc truy cập, khai thác, sử dụng thông tin phải được kiểm soát chặt chẽ theo nguyên tắc đúng đối tượng, đúng thẩm quyền, đúng mục đích; mọi hoạt động truy cập phải được ghi nhật ký và có khả năng truy vết.
+
+5. Không thực hiện sao chép, chuyển giao, chia sẻ thông tin, dữ liệu ngoài phạm vi, mục đích đã được Bộ Nội vụ cho phép; dữ liệu gốc được bảo vệ và lưu trữ tại hệ thống nguồn theo quy định.
+
+6. Hoạt động kết nối, chia sẻ dữ liệu với các hệ thống bên ngoài phải được thực hiện thông qua cơ chế, phương thức bảo đảm an ninh mạng.
+
+7. Việc giám sát an ninh mạng phải được thực hiện thường xuyên; khi xảy ra sự cố phải kịp thời phát hiện, khoanh vùng, xử lý và khắc phục hậu quả theo quy định.
+
+8. Cơ quan quản lý, đơn vị vận hành Nền tảng hợp đồng lao động điện tử và các tổ chức, cá nhân tham gia kết nối có trách nhiệm phối hợp trong việc bảo đảm an ninh mạng và chịu trách nhiệm đối với các hành vi vi phạm.
+
+Điều 15. Bảo đảm liên tục dịch vụ và bảo vệ người dùng cuối
+
+1. Khi áp dụng hình thức tạm dừng, khóa hoặc chấm dứt kết nối đối với eContract hoặc tài khoản truy cập Nền tảng hợp đồng lao động điện tử, phải ưu tiên bảo vệ quyền tra cứu, tải xuống, chứng minh và tiếp cận dữ liệu hợp pháp của người dùng cuối.
+
+2. Trường hợp tạm dừng hoặc chấm dứt kết nối eContract, dữ liệu của các hợp đồng lao động điện tử đã giao kết hợp lệ phải được chuyển sang chế độ bảo toàn; không được sửa lịch sử giao dịch gốc trái pháp luật.
+
+3. Các phụ lục, thông báo tạm hoãn, thông báo chấm dứt hợp đồng lao động điện tử phát sinh sau khi thay đổi Nhà cung cấp eContract vẫn được gắn ID của hợp đồng lao động điện tử đó theo quy định.
+
+4. Nhà cung cấp eContract bị tạm dừng hoặc chấm dứt kết nối có trách nhiệm phối hợp với cơ quan quản lý, vận hành Nền tảng hợp đồng lao động điện tử và người sử dụng lao động để chuyển giao dữ liệu, hỗ trợ xuất hồ sơ, hỗ trợ gói dữ liệu chuyển giao, bảo đảm không làm mất khả năng chứng minh quyền và nghĩa vụ của người dùng cuối.
+
+5. Không được chuyển chi phí và rủi ro do lỗi của Nhà cung cấp eContract sang người lao động hoặc người sử dụng lao động không có lỗi, trừ trường hợp các bên có thỏa thuận khác phù hợp quy định pháp luật.
+
+Chương III
+
+QUẢN LÝ, SỬ DỤNG, KHAI THÁC NỀN TẢNG HỢP ĐỒNG LAO ĐỘNG ĐIỆN TỬ
+
+Điều 16. Sử dụng tài khoản trên Nền tảng hợp đồng lao động điện tử
+
+1. Tài khoản của các đơn vị thuộc Bộ Nội vụ, Tổng Liên đoàn Lao động Việt Nam, Sở Nội vụ, Ban quản lý khu công nghiệp, khu kinh tế, khu chế xuất do Bộ Nội vụ cấp là tài khoản quản trị của Nền tảng hợp đồng lao động điện tử. Các đơn vị này được sử dụng tài khoản quản trị để trao quyền cho công chức, viên chức, người lao động của mình khai thác, xử lý nghiệp vụ trên các hợp phần của Nền tảng hợp đồng lao động điện tử; chịu trách nhiệm quản lý tài khoản quản trị và các tài khoản do đơn vị trao quyền đảm bảo an ninh mạng của Nền tảng hợp đồng lao động điện tử; thu hồi tài khoản trong trường hợp công chức, viên chức, người lao động chuyển công tác hoặc không tiếp tục tham gia thực hiện quản trị, xử lý nghiệp vụ trên Nền tảng hợp đồng lao động điện tử hoặc vi phạm quy định pháp luật về quản lý, khai thác, sử dụng Nền tảng hợp đồng lao động điện tử.
+
+2. Người sử dụng lao động được sử dụng tài khoản để khai thác, chia sẻ các thông tin về hợp đồng lao động điện tử của mình trên Nền tảng hợp đồng lao động điện tử; thực hiện các báo cáo về lao động theo quy định của pháp luật lao động thông qua Nền tảng hợp đồng lao động điện tử; khai thác một số chức năng, dịch vụ được Nền tảng hợp đồng lao động điện tử cho phép.
+
+3. Người lao động được sử dụng tài khoản để khai thác, chia sẻ các thông tin về hợp đồng lao động điện tử của mình trên Nền tảng hợp đồng lao động điện tử và khai thác một số chức năng, dịch vụ được Nền tảng hợp đồng lao động điện tử cho phép.
+
+4. Công chức, viên chức, người lao động của Bộ Nội vụ, Tổng Liên đoàn Lao động Việt Nam, Sở Nội vụ, Ban quản lý khu công nghiệp, khu kinh tế, khu chế xuất được Bộ Nội vụ cấp tài khoản sử dụng tài khoản để thực hiện khai thác, xử lý nghiệp vụ trên các hợp phần của Nền tảng hợp đồng lao động điện tử theo phạm vi quyền hạn được giao.
+
+Điều 17. Dữ liệu chủ, dữ liệu mở, dữ liệu dùng chung trên Nền tảng hợp đồng lao động điện tử
+
+Dữ liệu chủ, dữ liệu mở, dữ liệu dùng chung trên Nền tảng hợp đồng lao động điện tử được quản lý, sử dụng như sau:
+
+1. Dữ liệu chủ, dữ liệu mở, dữ liệu dùng chung được quản lý, sử dụng theo các nguyên tắc, gồm:
+
+a) Việc quản lý dữ liệu chủ, dữ liệu mở, dữ liệu dùng chung phải tuân thủ quy định của pháp luật về dữ liệu, bảo vệ dữ liệu cá nhân, an ninh mạng và các quy định pháp luật có liên quan; bảo đảm thống nhất trong quản lý nhà nước, tránh trùng lặp, chồng chéo.
+
+b) Mỗi loại dữ liệu phải được xác định rõ phạm vi sử dụng, mục đích khai thác, cơ quan chủ quản, đơn vị quản lý, đơn vị khai thác; bảo đảm dữ liệu được sử dụng đúng chức năng, nhiệm vụ và thẩm quyền.
+
+c) Dữ liệu chủ phải là dữ liệu chính thức, có giá trị làm căn cứ dùng chung, được cập nhật kịp thời, đồng bộ và là nguồn tham chiếu thống nhất cho các hệ thống, nền tảng có liên quan.
+
+d) Dữ liệu dùng chung được chia sẻ, khai thác thông qua Nền tảng hợp đồng lao động điện tử, hạ tầng kết nối, chia sẻ dữ liệu theo quy định; bảo đảm kiểm soát truy cập, phân quyền sử dụng và ghi nhận đầy đủ quá trình khai thác dữ liệu.
+
+đ) Dữ liệu mở phải được công bố công khai, ở định dạng mở, dễ truy cập, dễ sử dụng; bảo đảm không chứa thông tin thuộc danh mục bí mật nhà nước, dữ liệu cá nhân hoặc thông tin hạn chế tiếp cận theo quy định pháp luật.
+
+e) Việc quản lý, chia sẻ và khai thác dữ liệu chủ, dữ liệu mở, dữ liệu dùng chung phải bảo đảm các yêu cầu về an ninh mạng, bảo vệ dữ liệu cá nhân; có biện pháp phòng ngừa, phát hiện và xử lý rủi ro trong suốt vòng đời dữ liệu.
+
+2. Dữ liệu trên Nền tảng hợp đồng lao động điện tử được thu thập thông qua trách nhiệm báo cáo, cung cấp thông tin của Nhà cung cấp eContract, người sử dụng lao động, người lao động, Sở Nội vụ, Ban quản lý khu công nghiệp, khu kinh tế, khu chế xuất theo quy định tại Thông tư này. Danh mục dữ liệu trên Nền tảng hợp đồng lao động điện tử được quy định chi tiết tại Phụ lục II ban hành kèm theo Thông tư này. Danh mục dữ liệu chủ, dữ liệu mở, dữ liệu dùng chung do Bộ Nội vụ công bố theo quy định của pháp luật.
+
+Điều 18. Lưu trữ, khai thác, chia sẻ dữ liệu trên Nền tảng hợp đồng lao động điện tử
+
+1. Dữ liệu mở trên Nền tảng hợp đồng lao động điện tử được đồng bộ về Trung tâm Dữ liệu quốc gia. Tổ chức, cá nhân liên quan đến việc giao kết, thực hiện hợp đồng lao động điện tử có nhu cầu khai thác, sử dụng dữ liệu thuộc danh mục dữ liệu mở thực hiện đăng ký khai thác và sử dụng dữ liệu theo quy định về khai thác, sử dụng dữ liệu của Trung tâm Dữ liệu quốc gia.
+
+2. Tổ chức, cá nhân liên quan đến việc giao kết, thực hiện hợp đồng lao động điện tử có nhu cầu khai thác, sử dụng dữ liệu thuộc danh mục dữ liệu chủ, dữ liệu dùng chung trên Nền tảng hợp đồng lao động điện tử thực hiện đăng ký bằng văn bản với Bộ Nội vụ theo mẫu tại Phụ lục III ban hành kèm theo Thông tư này. Thông tin dữ liệu được chia sẻ hoặc thông báo từ chối chia sẻ và lý do từ chối chia sẻ thông tin dữ liệu sẽ được gửi tới địa chỉ hòm thư điện tử của tổ chức, cá nhân ghi trong văn bản đăng ký.
+
+3. Thời hạn lưu trữ dữ liệu về hợp đồng lao động điện tử, phụ lục hợp đồng lao động điện tử và các văn bản điện tử khác liên quan trên Nền tảng hợp đồng lao động điện tử là 10 năm kể từ ngày hợp đồng lao động chấm dứt. Trường hợp người sử dụng lao động và người lao động giao kết nhiều hợp đồng lao động liên tục theo quy định tại Điều 20 Bộ luật Lao động năm 2019 thì thời hạn 10 năm được tính từ ngày chấm dứt hợp đồng lao động cuối cùng.
+
+4. Việc khai thác, chia sẻ dữ liệu trên Nền tảng hợp đồng lao động điện tử phải bảo đảm các nguyên tắc sau đây:
+
+a) Mọi hoạt động xử lý dữ liệu trên Nền tảng hợp đồng lao động điện tử phải tuân thủ pháp luật về dữ liệu, bảo vệ dữ liệu cá nhân, an ninh mạng, lưu trữ và các quy định có liên quan.
+
+b) Dữ liệu phải được xử lý theo nguyên tắc đúng mục đích, tối thiểu cần thiết, đúng thẩm quyền, đúng phạm vi, có thời hạn lưu trữ phù hợp và có biện pháp bảo vệ tính bí mật, toàn vẹn, sẵn sàng.
+
+c) Dữ liệu cá nhân, dữ liệu nhạy cảm, dữ liệu thuộc bí mật nhà nước, bí mật kinh doanh chỉ được khai thác, chia sẻ hoặc chuyển giao khi có căn cứ pháp lý phù hợp và bảo đảm đủ biện pháp bảo vệ.
+
+d) Mọi truy cập, chia sẻ hoặc xuất dữ liệu vượt ngưỡng thông thường phải được ghi nhận, cảnh báo và rà soát.
+
+Điều 19. Chế độ báo cáo
+
+Người sử dụng lao động, Nhà cung cấp eContract, Sở Nội vụ, Ban quản lý khu công nghiệp, khu kinh tế, khu chế xuất thực hiện trách nhiệm báo cáo thông qua Nền tảng hợp đồng lao động điện tử như sau:
+
+1. Nhà cung cấp eContract có trách nhiệm báo cáo như sau:
+
+a) Báo cáo định kỳ hằng quý (trước ngày 05 của tháng đầu quý sau) và báo cáo đột xuất về tình hình hoạt động cung cấp dịch vụ giao kết hợp đồng lao động điện tử khi có yêu cầu từ Bộ Nội vụ. Báo cáo định kỳ thực hiện theo mẫu tại Phụ lục IV ban hành kèm theo Thông tư này.
+
+b) Báo cáo kết quả kiểm toán kỹ thuật cho dịch vụ chứng thực thông điệp dữ liệu theo quy định tại Thông tư số 19/2025/TT-BKHCN ngày 06 tháng 10 năm 2025 của Bộ Khoa học và Công nghệ quy định kiểm toán kỹ thuật đối với chữ ký điện tử và dịch vụ tin cậy (nộp bản sao có chứng thực chứng nhận kiểm toán kỹ thuật kèm theo báo cáo kiểm toán kỹ thuật cho dịch vụ chứng thực thông điệp dữ liệu còn hiệu lực) cho Bộ Nội vụ trong vòng 01 năm kể từ ngày được cấp tài khoản hoặc khi chứng nhận kiểm toán kỹ thuật đã nộp trước đó hết hiệu lực.
+
+2. Người sử dụng lao động có trách nhiệm báo cáo tình hình thay đổi về lao động theo quy định tại khoản 2 Điều 4 Nghị định số 145/2020/NĐ-CP ngày 14 tháng 12 năm 2020 của Chính phủ quy định chi tiết và hướng dẫn thi hành một số điều của Bộ luật Lao động về điều kiện lao động và quan hệ lao động đã được sửa đổi năm 2025 thông qua Nền tảng hợp đồng lao động điện tử.
+
+3. Sở Nội vụ, Ban quản lý khu công nghiệp, khu kinh tế, khu chế xuất thực hiện báo cáo về tình hình sử dụng lao động trên địa bàn theo quy định tại khoản 3 Điều 4 Nghị định số 145/2020/NĐ-CP và các báo cáo khác theo yêu cầu của Bộ Nội vụ.
+
+Điều 20. Xử lý sự cố
+
+Trong quá trình quản lý, vận hành, khai thác Nền tảng hợp đồng lao động điện tử nếu xảy ra sự cố thì việc xử lý sự cố được thực hiện theo quy trình như sau:
+
+1. Phát hiện, tiếp nhận và ghi nhận sự cố: sự cố của Nền tảng hợp đồng lao động điện tử được phát hiện thông qua hệ thống giám sát, cảnh báo kỹ thuật, kiểm tra định kỳ hoặc phản ánh của người sử dụng; mọi sự cố phải được ghi nhận đầy đủ về thời gian phát sinh, phạm vi ảnh hưởng và mức độ tác động. Trường hợp do người sử dụng phát hiện sự cố thì đề nghị xử lý sự cố, hỗ trợ, giải đáp vướng mắc trong quá trình thao tác, sử dụng các chức năng, thực hiện kết nối, chia sẻ, khai thác dữ liệu với Nền tảng hợp đồng lao động điện tử thông qua số điện thoại liên hệ, qua làm việc tại trụ sở đơn vị được Bộ Nội vụ giao quản lý, vận hành Nền tảng hợp đồng lao động điện tử hoặc bằng văn bản đề nghị hỗ trợ, giải quyết vướng mắc.
+
+2. Phân loại và đánh giá mức độ sự cố: đơn vị quản lý, vận hành Nền tảng hợp đồng lao động điện tử có trách nhiệm phân loại sự cố theo mức độ ảnh hưởng đến hoạt động của Nền tảng hợp đồng lao động điện tử, an ninh mạng, dữ liệu và quyền lợi của các bên liên quan để xác định biện pháp xử lý phù hợp.
+
+3. Thực hiện biện pháp khắc phục và ứng phó sự cố: căn cứ mức độ sự cố, đơn vị vận hành, quản lý Nền tảng hợp đồng lao động điện tử triển khai các biện pháp kỹ thuật, nghiệp vụ cần thiết nhằm cô lập, hạn chế tác động, khắc phục sự cố và bảo đảm an ninh mạng, tính toàn vẹn và khả năng sẵn sàng của Nền tảng hợp đồng lao động điện tử.
+
+4. Thông báo và phối hợp xử lý: trường hợp sự cố ảnh hưởng đến hoạt động cung cấp dịch vụ hoặc quyền lợi của các bên tham gia, đơn vị vận hành phải kịp thời thông báo cho các cơ quan, tổ chức, cá nhân liên quan và phối hợp với cơ quan có thẩm quyền để xử lý theo quy định.
+
+5. Khôi phục hoạt động và kiểm tra sau sự cố: sau khi khắc phục, Nền tảng hợp đồng lao động điện tử phải được kiểm tra, đánh giá lại nhằm bảo đảm hoạt động ổn định, an toàn trước khi đưa vào vận hành bình thường; dữ liệu bị ảnh hưởng (nếu có) phải được khôi phục theo quy định.
+
+6. Báo cáo, lưu trữ và rút kinh nghiệm: việc xử lý sự cố phải được lập báo cáo, lưu trữ hồ sơ và nhật ký liên quan; kết quả xử lý là căn cứ để rà soát, hoàn thiện quy trình, biện pháp phòng ngừa sự cố trong quá trình vận hành Nền tảng hợp đồng lao động điện tử.
+
+Điều 21. Công bố danh sách Nhà cung cấp eContract
+
+1. Bộ Nội vụ công bố danh sách các Nhà cung cấp eContract có eContract đang kết nối, đang tạm dừng, đã chấm dứt kết nối với Nền tảng hợp đồng lao động điện tử trên trang giới thiệu của Nền tảng hợp đồng lao động điện tử.
+
+2. Việc công bố quy định tại khoản 1 Điều này được thực hiện trong vòng 24 giờ kể từ thời điểm eContract kết nối thành công hoặc tạm dừng hoặc chấm dứt kết nối với Nền tảng hợp đồng lao động điện tử.
+
+Điều 22. Quyền và trách nhiệm của tổ chức, cá nhân trong quản lý, vận hành, khai thác, sử dụng các chức năng, dịch vụ trên Nền tảng hợp đồng lao động điện tử
+
+1. Khai thác, sử dụng chức năng, dịch vụ cung cấp trên Nền tảng hợp đồng lao động điện tử phù hợp với mức độ an toàn theo hình thức xác thực khi đăng nhập.
+
+2. Chịu trách nhiệm trước pháp luật về những thông tin kê khai, đăng ký tài khoản trên Nền tảng hợp đồng lao động điện tử, chỉ sử dụng Nền tảng hợp đồng lao động điện tử cho các mục đích hợp pháp và phải chịu trách nhiệm về mọi hoạt động được thực hiện bằng tài khoản của mình.
+
+3. Quản lý tài khoản, giữ bí mật thông tin tài khoản, mật khẩu của mình. Trường hợp phát hiện mật khẩu bị mất hoặc bị đánh cắp hoặc phát hiện có người sử dụng trái phép tài khoản của mình phải thông báo ngay cho đơn vị quản lý, vận hành Nền tảng hợp đồng lao động điện tử.
+
+4. Chịu trách nhiệm đối với tất cả các nội dung do mình gửi, đăng ký, cung cấp khi sử dụng các chức năng, dữ liệu, dịch vụ trên Nền tảng hợp đồng lao động điện tử và phải có trách nhiệm đối với các bên liên quan khác trước pháp luật.
+
+5. Theo yêu cầu của tổ chức, cá nhân, Bộ Nội vụ xem xét cung cấp các dữ liệu trên Nền tảng hợp đồng lao động điện tử theo quy định của pháp luật về cung cấp thông tin, bảo vệ dữ liệu cá nhân, bảo mật thông tin.
+
+6. Bộ Nội vụ là cơ quan chủ quản của Nền tảng hợp đồng lao động điện tử, có trách nhiệm: quản lý, vận hành Nền tảng hợp đồng lao động điện tử; ban hành quy chế hoạt động, các tài liệu hướng dẫn việc truy cập, kết nối, khai thác, sử dụng Nền tảng hợp đồng lao động điện tử; phân công đơn vị chủ trì thực hiện quản lý, vận hành Nền tảng hợp đồng lao động điện tử, quản trị dữ liệu trên Nền tảng hợp đồng lao động điện tử.
+
+Chương IV
+
+ĐIỀU KHOẢN THI HÀNH
+
+Điều 23. Hiệu lực thi hành
+
+1. Thông tư này có hiệu lực thi hành kể từ ngày 01 tháng 7 năm 2026.
+
+2. Trường hợp các văn bản quy phạm pháp luật viện dẫn trong Thông tư này được sửa đổi, bổ sung hoặc thay thế thì thực hiện theo văn bản quy phạm pháp luật đã được sửa đổi, bổ sung hoặc thay thế.
+
+Điều 24. Điều khoản chuyển tiếp
+
+1. Kể từ ngày 01 tháng 7 năm 2026, hợp đồng lao động điện tử sau khi giao kết phải được gửi về Nền tảng hợp đồng lao động điện tử để thực hiện cấp ID theo quy định tại Thông tư này.
+
+2. Trường hợp Nhà cung cấp eContract bảo đảm các điều kiện quy định tại khoản 3 Điều 6 Nghị định số 337/2025/NĐ-CP đã gửi hồ sơ đề nghị kết nối tới Bộ Nội vụ theo quy định tại khoản 1 Điều 9 Thông tư này nhưng tới thời điểm ngày 01 tháng 7 năm 2026 chưa hoàn thành việc kết nối eContract với Nền tảng hợp đồng lao động điện tử thì:
+
+a) Được tiếp tục cung cấp dịch vụ giao kết hợp đồng lao động điện tử trong thời gian chờ kết nối với Nền tảng hợp đồng lao động điện tử. Chậm nhất là ngày 20 tháng 7 năm 2026, Nhà cung cấp eContract phải hoàn thành việc kết nối eContract với Nền tảng hợp đồng lao động điện tử.
+
+b) Hợp đồng lao động điện tử được giao kết bởi các eContract trong thời gian chờ kết nối với Nền tảng hợp đồng lao động điện tử có giá trị pháp lý theo quy định của pháp luật và được gửi về Nền tảng hợp đồng lao động điện tử để cấp ID ngay sau khi Nhà cung cấp eContract hoàn thành việc kết nối eContract với Nền tảng hợp đồng lao động điện tử.
+
+c) Việc cấp ID đối với hợp đồng lao động điện tử trong trường hợp quy định tại điểm b khoản này thực hiện như đối với hợp đồng lao động điện tử giao kết trước ngày 01 tháng 7 năm 2026 theo quy định tại Thông tư này./.
+
+Nơi nhận:
+- Thủ tướng và các Phó Thủ tướng Chính phủ;
+
+- Văn phòng Trung ương Đảng và các Ban của Đảng;
+
+- Văn phòng Quốc hội;
+
+- Văn phòng Chủ tịch nước;
+
+- Văn phòng Chính phủ;
+
+- Văn phòng BCĐ TW về phòng, chống tham nhũng;
+
+- Các Bộ, cơ quan ngang Bộ, cơ quan thuộc Chính phủ;
+
+- HĐND, UBND tỉnh, thành phố trực thuộc TW;
+
+- Tòa án nhân dân tối cao;
+
+- Viện Kiểm sát nhân dân tối cao;
+
+- Kiểm toán Nhà nước;
+
+- Cơ quan Trung ương của các tổ chức chính trị - xã hội;
+
+- Cục Kiểm tra văn bản và tổ chức thi hành pháp luật-BTP;
+
+- Sở Nội vụ các tỉnh, thành phố trực thuộc Trung ương;
+
+- Ban quản lý khu công nghiệp, khu kinh tế, khu chế xuất các tỉnh, thành phố trực thuộc Trung ương;
+
+- Công báo;
+
+- Cổng thông tin điện tử Chính phủ;
+
+- Cổng thông tin điện tử Bộ Nội vụ;
+
+- Bộ Nội vụ: Bộ trưởng, các Thứ trưởng, các đơn vị thuộc và trực thuộc Bộ;
+
+- Lưu: Văn thư, Cục TL&BHXH.
+
+KT. BỘ TRƯỞNG
+THỨ TRƯỞNG
+
+Nguyễn Mạnh Khương
+
+Phụ lục I
+
+(Kèm theo Thông tư số 08/2026/TT-BNV ngày 15 tháng 5 năm 2026 của Bộ trưởng Bộ Nội vụ)
+
+Mẫu số 01
+
+TÊN NHÀ CUNG CẤP
+ECONTRACT
+
+-------
+
+CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+
+Độc lập - Tự do - Hạnh phúc
+
+---------------
+
+......., ngày ...... tháng ...... năm ........
+
+ĐỀ NGHỊ KẾT NỐI
+NỀN TẢNG HỢP ĐỒNG LAO ĐỘNG ĐIỆN TỬ
+
+Kính gửi: Bộ Nội vụ
+
+1. Tên tổ chức, doanh nghiệp viết bằng tiếng Việt: .....................(1)........................
+
+2. Mã số doanh nghiệp, tổ chức: ........................(2)................................................
+
+3. Địa chỉ trụ sở chính: ............................................................................................
+
+Điện thoại:........................................; E-mail: .........................................................
+
+4. Người đại diện theo pháp luật của doanh nghiệp, tổ chức
+
+Họ và tên: .................................................................................................................
+
+Số định danh cá nhân: ..............................................................................................
+
+Chức danh(3): ...........................................................................................................
+
+5. Số hiệu giấy phép kinh doanh dịch vụ tin cậy (4).......................... Cơ quan cấp giấy phép kinh doanh dịch vụ tin cậy .......................................................................................................
+
+6. Thông tin tra cứu chứng thư chữ ký số cho dịch vụ chứng thực thông điệp dữ liệu: ......................................................................................................................................
+
+Đề nghị được kết nối Nền tảng hợp đồng lao động điện tử để phục vụ hoạt động giao kết hợp đồng lao động điện tử theo quy định của pháp luật.
+
+... {Tên doanh nghiệp, tổ chức}... cam kết chịu trách nhiệm về tính chính xác và tính hợp pháp của các thông tin cung cấp nêu trên cùng các tài liệu kèm theo, tuân thủ các quy định pháp luật về giao kết hợp đồng lao động điện tử và pháp luật liên quan.
+
+Tài liệu kèm theo gồm: .............................................................................................
+
+Nơi nhận:
+- ............;
+
+- ............;
+
+NGƯỜI ĐẠI DIỆN THEO PHÁP LUẬT
+CỦA DOANH NGHIỆP, TỔ CHỨC
+(Ký, ghi rõ họ tên, chức danh và đóng dấu)
+
+Ghi chú:
+
+(1) Tên tổ chức, doanh nghiệp đề nghị kết nối Nền tảng hợp đồng lao động điện tử
+
+(2) Mã số doanh nghiệp theo Giấy chứng nhận đăng ký doanh nghiệp hoặc số quyết định thành lập tổ chức.
+
+(3) Chức danh người đại diện theo pháp luật trong doanh nghiệp, tổ chức.
+
+(4) Số hiệu của Giấy phép kinh doanh dịch vụ tin cậy còn hiệu lực trong đó nêu rõ được phép kinh doanh dịch vụ chứng thực thông điệp dữ liệu.
+
+Mẫu số 02
+
+TÊN CƠ QUAN, TỔ CHỨC
+
+-------
+
+CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+
+Độc lập - Tự do - Hạnh phúc
+
+---------------
+
+......., ngày ...... tháng ...... năm ........
+
+ĐỀ NGHỊ KẾT NỐI
+
+NỀN TẢNG HỢP ĐỒNG LAO ĐỘNG ĐIỆN TỬ
+
+Kính gửi: Bộ Nội vụ
+
+1. Tên cơ quan, tổ chức viết bằng tiếng Việt: ......................................................................
+
+2. Địa chỉ trụ sở chính: ........................................................................................................
+
+Điện thoại: ..................................................; E-mail:...........................................................
+
+3. Người đại diện của cơ quan, tổ chức
+
+Họ và tên: ...........................................................................................................................
+
+Số định danh cá nhân: .......................................................................................................
+
+Chức danh: ..........................................................................................................................
+
+Đề nghị được kết nối Nền tảng hợp đồng lao động điện tử ................(1).............................
+
+...{Tên cơ quan, tổ chức}.... cam kết chịu trách nhiệm về tính chính xác và tính hợp pháp của các thông tin cung cấp nêu trên cùng các tài liệu kèm theo, tuân thủ các quy định pháp luật liên quan việc kết nối, chia sẻ, khai thác Nền tảng hợp đồng lao động điện tử.
+
+Tài liệu kèm theo gồm: ..........................................................................................................
+
+Nơi nhận:
+- ............;
+
+- ............;
+
+NGƯỜI ĐẠI DIỆN CỦA CƠ QUAN,
+TỔ CHỨC
+(Ký, ghi rõ họ tên, chức danh và đóng dấu)
+
+Ghi chú:
+
+(1) Mục đích kết nối
+
+Phụ lục II
+
+(Kèm theo Thông tư số 08/2026/TT-BNV ngày 15 tháng 5 năm 2026 của Bộ trưởng Bộ Nội vụ)
+
+Danh mục dữ liệu trên Nền tảng hợp đồng lao động điện tử
+
+STT
+
+Trường dữ liệu
+
+I
+
+Thông tin người sử dụng lao động (doanh nghiệp, cơ quan, tổ chức, hợp tác xã...)
+
+Tên người sử dụng lao động
+
+Địa chỉ
+
+Điện thoại
+
+Email
+
+Website
+
+Họ và tên người đại diện giao kết hợp đồng lao động điện tử
+
+Số định danh của người đại diện giao kết hợp đồng lao động điện tử
+
+Chức danh của người đại diện giao kết hợp đồng lao động điện tử
+
+II
+
+Thông tin người lao động
+
+Số định danh người lao động
+
+Họ và tên
+
+Địa chỉ nơi cư trú (nơi ở hiện tại)
+
+Số điện thoại
+
+Ngày tháng năm sinh
+
+Giới tính
+
+Email
+
+III
+
+Thông tin chủ yếu của hợp đồng lao động điện tử
+
+Mã định danh hợp đồng lao động điện tử
+
+Mã số hợp đồng lao động điện tử
+
+Thời hạn hợp đồng lao động điện tử
+
+Thời điểm bắt đầu thực hiện hợp đồng lao động điện tử
+
+Thời điểm chấm dứt thực hiện hợp đồng lao động điện tử
+
+Bảo hiểm xã hội/bảo hiểm y tế/bảo hiểm thất nghiệp
+
+Công việc (vị trí việc làm)
+
+Mức lương
+
+Phụ cấp lương
+
+Các khoản bổ sung
+
+Chế độ nâng bậc/ nâng lương
+
+Kỳ hạn trả lương
+
+Hình thức trả lương
+
+Chế độ và phúc lợi khác
+
+IV
+
+Thông tin tổng hợp (theo thời kỳ, thời điểm)
+
+Tổng số doanh nghiệp thực hiện giao kết hợp đồng lao động điện tử
+
+Tổng số hợp đồng lao động điện tử được giao kết
+
+Tổng số hợp đồng lao động được giao kết
+
+Số hợp đồng lao động xác định thời hạn
+
+Số hợp đồng lao động không xác định thời hạn
+
+Số lao động tham gia bảo hiểm xã hội bắt buộc
+
+Tổng số lao động làm việc trong các doanh nghiệp, hợp tác xã, cơ quan, tổ chức
+
+Số lao động nữ
+
+Số lao động trên 35 tuổi
+
+Số lao động có vị trí việc làm là nhà quản lý
+
+Số lao động có vị trí việc làm chuyên môn kỹ thuật bậc cao
+
+Số lao động có vị trí việc làm chuyên môn kỹ thuật bậc trung
+
+Số lao động có vị trí việc làm khác
+
+Phụ lục III
+
+(Kèm theo Thông tư số 08/2026/TT-BNV ngày 15 tháng 5 năm 2026 của Bộ trưởng Bộ Nội vụ)
+
+CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+
+Độc lập - Tự do - Hạnh phúc
+
+---------------
+
+......, ngày...... tháng...... năm ......
+
+ĐỀ NGHỊ KHAI THÁC, CHIA SẺ DỮ LIỆU
+TRÊN NỀN TẢNG HỢP ĐỒNG LAO ĐỘNG ĐIỆN TỬ
+
+Kính gửi: Bộ Nội vụ
+
+I. Thông tin cá nhân, tổ chức đề nghị
+
+1. Tên tổ chức, cá nhân đề nghị (viết bằng tiếng Việt): ........................................................
+
+2. Tên người đại diện (đối với tổ chức): .................................................................................
+
+3. Địa chỉ nơi cư trú (đối với cá nhân), địa chỉ trụ sở chính (đối với tổ chức):
+
+…………………………………………………………………………….....…………...…………..
+
+Điện thoại: ...........................................; E-mail:.....................................................................
+
+4. Số định danh cá nhân (đối với tổ chức là số định danh cá nhân của người đại diện): ………………………………………………………………………………………...…………..
+
+5. Chức danh của người đại diện (đối với tổ chức): ..............................................................
+
+II. Nội dung đề nghị
+
+1. Phạm vi thông tin đề nghị khai thác, chia sẻ ....................................................................
+
+2. Mục đích yêu cầu khai thác, chia sẻ .................................................................................
+
+3. Địa chỉ hòm thư điện tử nhận kết quả: ..............................................................................
+
+Nơi nhận:
+- ............;
+
+- ............;
+
+TM. TỔ CHỨC
+
+(hoặc người gửi hồ sơ)
+(Ký, ghi rõ họ tên, chức danh và đóng dấu)
+
+Phụ lục IV
+
+(Kèm theo Thông tư số 08/2026/TT-BNV ngày 15 tháng 5 năm 2026 của Bộ trưởng Bộ Nội vụ)
+
+TÊN NHÀ CUNG CẤP
+ECONTRACT
+
+-------
+
+CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+
+Độc lập - Tự do - Hạnh phúc
+
+---------------
+
+......., ngày ...... tháng ...... năm ........
+
+BÁO CÁO TÌNH HÌNH CUNG CẤP DỊCH VỤ
+GIAO KẾT HỢP ĐỒNG LAO ĐỘNG ĐIỆN TỬ
+
+Kính gửi: Bộ Nội vụ
+
+... {Tên nhà cung cấp eContract}... báo cáo tình hình cung cấp dịch vụ giao kết hợp đồng lao động điện tử động quý ... năm ... như sau:
+
+Chỉ tiêu
+
+Đầu kỳ
+
+Tăng trong kỳ
+
+Giảm trong kỳ
+
+Cuối kỳ
+
+Ghi chú
+
+1. Tổng số người sử dụng lao động sử dụng dịch vụ giao kết hợp đồng lao động điện tử trên eContract của nhà cung cấp
+
+2. Số hợp đồng lao động đã giao kết theo quy định tại Nghị định số 337/2025/NĐ-CP
+
+3. Số phụ lục hợp đồng lao động đã giao kết
+
+4. Số hợp đồng lao động đã chấm dứt, trong đó:
+
+5. Số hợp đồng lao động điện tử được chuyển đổi từ văn bản giấy
+
+6. Số hợp đồng lao động điện tử giao kết trước ngày 01 tháng 7 năm 2026 được rà soát, bổ sung và gửi tới Nền tảng hợp đồng lao động điện tử
+
+7. Số hợp đồng lao động điện tử gửi tới Nền tảng hợp đồng lao động điện tử không được cấp ID do không bảo đảm quy định
+
+ĐẠI DIỆN CỦA NHÀ CUNG CẤP ECONTRACT
+(Ghi đầy đủ họ tên, ký, đóng dấu)

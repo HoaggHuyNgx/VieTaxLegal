@@ -1,0 +1,479 @@
+BỘ CÔNG AN
+
+Số: 46/2026/TT-BCA
+
+CỘNG HOÀ XÃ HỘI CHỦ NGHĨA VIỆT NAM
+
+Độc lập - Tự do - Hạnh phúc
+
+Hà Nội, ngày 08 tháng 5 năm 2026
+
+THÔNG TƯ
+
+Quy định quy trình giải quyết hưởng chế độ
+
+bảo hiểm xã hội trong Công an nhân dân
+
+Căn cứ Luật Bảo hiểm xã hội số 41/2024/QH15;
+
+Căn cứ Luật An toàn, vệ sinh lao động số 84/2015/QH13;
+
+Căn cứ Nghị định số 02/2025/NĐ-CP ngày 18 tháng 02 năm 2025 của Chính phủ quy định chức năng, nhiệm vụ, quyền hạn và cơ cấu tổ chức của Bộ Công an được sửa đổi, bổ sung bởi Nghị định số 11/2025/NĐ-CP;
+
+Căn cứ Nghị định số 164/2025/NĐ-CP ngày 29 tháng 6 năm 2025 của Chính phủ quy định về giao dịch điện tử trong lĩnh vực bảo hiểm xã hội và Cơ sở dữ liệu quốc gia về bảo hiểm;
+
+Theo đề nghị của Cục trưởng Cục Tổ chức cán bộ;
+
+Bộ trưởng Bộ Công an ban hành Thông tư quy định quy trình giải quyết hưởng chế độ bảo hiểm xã hội trong Công an nhân dân.
+
+Chương I
+
+QUY ĐỊNH CHUNG
+
+Điều 1. Phạm vi điều chỉnh
+
+Thông tư này quy định quy trình giải quyết hưởng chế độ ốm đau, thai sản, dưỡng sức, phục hồi sức khỏe, tai nạn lao động, bệnh nghề nghiệp, hưu trí, bảo hiểm xã hội một lần, tử tuất trong Công an nhân dân.
+
+Điều 2. Đối tượng áp dụng
+
+1. Người lao động tham gia bảo hiểm xã hội bắt buộc trong Công an nhân dân (sau đây viết gọn là cán bộ, chiến sĩ), bao gồm:
+
+a) Sĩ quan, hạ sĩ quan nghiệp vụ; sĩ quan, hạ sĩ quan chuyên môn kỹ thuật;
+
+b) Hạ sĩ quan, chiến sĩ nghĩa vụ;
+
+c) Học viên hưởng sinh hoạt phí học tại các trường Công an nhân dân hoặc gửi học tại các trường ngoài Công an nhân dân do Công an nhân dân trả sinh hoạt phí (sau đây viết gọn là học viên);
+
+d) Công nhân công an;
+
+đ) Người làm việc theo hợp đồng lao động không xác định thời hạn, hợp đồng lao động xác định thời hạn, hợp đồng lao động theo mùa vụ hoặc theo một công việc nhất định có thời hạn từ đủ 01 tháng trở lên, bao gồm cả hợp đồng lao động được ký kết giữa người sử dụng lao động với người đại diện theo pháp luật của người dưới 15 tuổi theo quy định của pháp luật về lao động tại các cơ quan, đơn vị thuộc Công an nhân dân;
+
+e) Công dân được tạm tuyển trước khi chính thức được tuyển chọn vào Công an nhân dân (sau đây viết gọn là công dân tạm tuyển).
+
+2. Người sử dụng lao động tham gia bảo hiểm xã hội bắt buộc trong Công an nhân dân (sau đây gọi chung là Công an đơn vị, địa phương), bao gồm:
+
+a) Đơn vị thuộc cơ quan Bộ Công an (sau đây viết gọn là đơn vị cấp cục); Công an tỉnh, thành phố (sau đây viết gọn là Công an cấp tỉnh);
+
+b) Doanh nghiệp, đơn vị sự nghiệp công lập trong Công an nhân dân (sau đây viết gọn là doanh nghiệp).
+
+3. Thân nhân cán bộ, chiến sĩ.
+
+4. Các tổ chức, cá nhân có liên quan trong thực hiện giải quyết hưởng bảo hiểm xã hội trong Công an nhân dân.
+
+Điều 3. Giải thích từ ngữ
+
+Trong phạm vi Thông tư này các từ ngữ dưới đây được hiểu như sau:
+
+1. Cơ sở dữ liệu: tập hợp dữ liệu bảo hiểm xã hội, bảo hiểm y tế, bảo hiểm thất nghiệp của cán bộ, chiến sĩ; được sắp xếp, tổ chức quản lý tập trung, thống nhất tại Bảo hiểm xã hội Công an nhân dân theo các quy định về an toàn thông tin, bảo vệ bí mật nhà nước để phục vụ việc truy cập, khai thác, chia sẻ, cập nhật thông qua phương tiện điện tử; trong đó, thông tin của cán bộ, chiến sĩ được xác thực với Cơ sở dữ liệu quốc gia về dân cư.
+
+2. Hệ thống: bao gồm các phần mềm nghiệp vụ bảo hiểm xã hội, bảo hiểm thất nghiệp và cơ sở dữ liệu do Bảo hiểm xã hội Công an nhân dân quản lý, bảo đảm các quy định về bảo vệ bí mật nhà nước để thực hiện cấp, quản lý sổ bảo hiểm xã hội, xác nhận thời gian tham gia bảo hiểm xã hội, bảo hiểm thất nghiệp; giải quyết các chế độ bảo hiểm xã hội trên môi trường điện tử.
+
+3. Phần mềm cục bộ: là phần mềm bảo hiểm xã hội, bảo hiểm thất nghiệp được cài đặt trên các máy tính độc lập tại Công an đơn vị, địa phương mà không kết nối đến hệ thống; dùng để tạo lập hồ sơ bảo hiểm xã hội; có thể trích xuất, đồng bộ dữ liệu với hệ thống bằng phương thức ngoại tuyến.
+
+4. Ký số: là hoạt động sử dụng chữ ký số hợp lệ được cấp theo quy định của pháp luật hoặc chữ ký số chuyên dùng công vụ được cấp bởi tổ chức cung cấp dịch vụ chứng thực số chuyên dùng công vụ trong Công an nhân dân; nhằm mục đích ký, xác nhận các tài liệu, dữ liệu về công tác bảo hiểm xã hội trên hệ thống.
+
+5. Cơ quan tổ chức cán bộ: phòng có chức năng thực hiện công tác tổ chức cán bộ thuộc Công an cấp tỉnh, đơn vị cấp cục; bộ phận có chức năng thực hiện công tác bảo hiểm xã hội tại doanh nghiệp.
+
+6. Cơ quan tài chính: phòng có chức năng thực hiện công tác tài chính bảo hiểm xã hội thuộc Công an cấp tỉnh, đơn vị cấp cục; bộ phận có chức năng thực hiện công tác tài chính bảo hiểm xã hội tại doanh nghiệp.
+
+7. Đơn vị trực tiếp quản lý: đơn vị thuộc Công an cấp tỉnh, đơn vị thuộc đơn vị cấp cục; Công an xã, phường, đặc khu; đồn Công an.
+
+Điều 4. Một số quy định chung
+
+1. Số hồ sơ hưởng chế độ tai nạn lao động, bệnh nghề nghiệp, hưu trí, bảo hiểm xã hội một lần, tử tuất là mã số bảo hiểm xã hội.
+
+2. Việc lập, gửi, tiếp nhận và giải quyết hồ sơ hưởng các chế độ bảo hiểm xã hội phải thực hiện trên hệ thống, trừ hồ sơ của cán bộ, chiến sĩ làm nhiệm vụ đặc biệt hoặc khi không bảo đảm về giải pháp kỹ thuật; bảo đảm chặt chẽ, đúng quy định của pháp luật về bảo hiểm xã hội, hướng dẫn của Bảo hiểm xã hội Việt Nam, Bảo hiểm xã hội Công an nhân dân và các quy định về bảo vệ bí mật nhà nước trong lĩnh vực an ninh, trật tự, an toàn xã hội.
+
+3. Khi giải quyết hưởng các chế độ bảo hiểm xã hội phải thực hiện đối chiếu thông tin hồ sơ với cơ sở dữ liệu, bảo đảm trùng khớp thông tin, làm cơ sở giải quyết đầy đủ, chính xác chế độ bảo hiểm xã hội đối với cán bộ, chiến sĩ và thân nhân cán bộ, chiến sĩ. Mọi thông tin liên quan đến đóng, hưởng bảo hiểm xã hội khi có thay đổi phải được kịp thời cập nhật vào hệ thống đúng quy định. Mọi hoạt động truy cập, khai thác, sử dụng dữ liệu trên hệ thống được ghi nhận, lưu vết bảo đảm phát hiện, kịp thời xử lý các hành vi vi phạm.
+
+4. Quá trình giải quyết hưởng, chi trả các chế độ bảo hiểm xã hội, nếu phát hiện hồ sơ có dấu hiệu gian lận, giả mạo thì phải báo cáo ngay với Thủ trưởng đơn vị, Giám đốc Bảo hiểm xã hội Công an nhân dân để xử lý, giải quyết theo quy định của pháp luật. Trường hợp giải quyết không đúng chế độ bảo hiểm xã hội dẫn đến chi trả không đúng đối tượng hoặc nhiều hơn mức quy định thì số tiền chi trả sai phải được thu hồi đầy đủ theo nguyên tắc sai sót ở khâu nghiệp vụ nào thì bộ phận và cá nhân thực hiện nghiệp vụ ở khâu đó có trách nhiệm thu hồi; trường hợp không thu hồi được thì cá nhân có liên quan để xảy ra sai sót có trách nhiệm bồi hoàn đầy đủ số tiền không thu hồi được theo quy định của pháp luật.
+
+5. Hồ sơ, giấy tờ bản giấy phải được số hóa, ký sao y bởi cá nhân, đơn vị có thẩm quyền để tích hợp trên hệ thống. Trường hợp các thông tin, dữ liệu, hồ sơ, giấy tờ liên quan làm căn cứ để giải quyết hưởng các chế độ bảo hiểm xã hội đã được lưu trữ trên hệ thống bảo đảm tính pháp lý thì không yêu cầu tổ chức, cá nhân kê khai, nộp lại. Trường hợp hồ sơ làm căn cứ giải quyết chế độ bảo hiểm xã hội của cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ do cơ quan nước ngoài cấp thì phải được dịch ra tiếng Việt và chứng thực theo quy định của pháp luật Việt Nam.
+
+Điều 5. Biểu mẫu giải quyết hưởng chế độ bảo hiểm xã hội
+
+Biểu mẫu giải quyết hưởng các chế độ bảo hiểm xã hội trong Công an nhân dân do Giám đốc Bảo hiểm xã hội Công an nhân dân quy định; phù hợp với đặc thù của lực lượng Công an nhân, thống nhất với biểu mẫu do Bảo hiểm xã hội Việt Nam ban hành và được tích hợp trên Phần mềm Bảo hiểm xã hội Công an nhân dân; cụ thể:
+
+1. Phiếu lĩnh trợ cấp bảo hiểm xã hội một lần cho hạ sĩ quan, chiến sĩ phục vụ có thời hạn (mẫu 01-PTC).
+
+2. Danh sách đề nghị giải quyết hưởng chế độ ốm đau, thai sản, dưỡng sức phục hồi sức khỏe (mẫu 01B-HSB).
+
+3. Quyết định về việc thu hồi trợ cấp ốm đau, thai sản, dưỡng sức, phục hồi sức khỏe (mẫu 01C-HSB).
+
+4. Quyết định về việc hưởng trợ cấp tai nạn lao động hằng tháng (mẫu 03A-HSB).
+
+5. Quyết định về việc hưởng trợ cấp tai nạn lao động một lần (mẫu 03B-HSB).
+
+6. Quyết định về việc hưởng trợ cấp bệnh nghề nghiệp hằng tháng (mẫu 03C-HSB).
+
+7. Quyết định về việc hưởng trợ cấp bệnh nghề nghiệp một lần (mẫu 03D-HSB).
+
+8. Quyết định về việc hưởng trợ cấp tai nạn lao động hằng tháng do thương tật tái phát (mẫu 03E-HSB).
+
+9. Quyết định về việc hưởng trợ cấp tai nạn lao động một lần do thương tật tái phát (mẫu 03G-HSB).
+
+10. Quyết định về việc hưởng trợ cấp bệnh nghề nghiệp hằng tháng do bệnh tật tái phát (mẫu 03H-HSB).
+
+11. Quyết định về việc hưởng trợ cấp bệnh nghề nghiệp một lần do bệnh tật tái phát (mẫu 03K-HSB).
+
+12. Quyết định về việc hưởng trợ cấp tai nạn lao động/bệnh nghề nghiệp hằng tháng do giám định tổng hợp mức suy giảm khả năng lao động (mẫu 03M-HSB).
+
+13. Quyết định về việc hưởng trợ cấp tai nạn lao động/bệnh nghề nghiệp một lần do giám định tổng hợp mức suy giảm khả năng lao động (mẫu 03N-HSB).
+
+14. Quyết định cấp tiền mua phương tiện trợ giúp sinh hoạt, dụng cụ chỉnh hình (mẫu 03P-HSB).
+
+15. Bản quá trình đóng bảo hiểm xã hội (mẫu 04-HSB).
+
+16. Văn bản Công an đơn vị, địa phương đề nghị giải quyết chế độ bảo hiểm xã hội (mẫu 05A-HSB).
+
+17. Quyết định về việc điều chỉnh chế độ bảo hiểm xã hội (mẫu 06A-HSB).
+
+18. Quyết định về việc hủy quyết định hưởng chế độ bảo hiểm xã hội (mẫu 06B-HSB).
+
+19. Quyết định về việc hưởng chế độ hưu trí hằng tháng (mẫu 07A-HSB).
+
+20. Quyết định về việc hưởng trợ cấp bảo hiểm xã hội một lần (mẫu 07B-HSB).
+
+21. Quyết định về việc hưởng trợ cấp mai táng (mẫu 08A-HSB).
+
+22. Quyết định về việc hưởng chế độ trợ cấp tuất hằng tháng (mẫu 08C-HSB).
+
+23. Quyết định về việc hưởng chế độ trợ cấp tuất một lần (mẫu 08D-HSB).
+
+24. Tờ khai của thân nhân (mẫu 09-HSB).
+
+25. Quyết định về việc tạm dừng hưởng chế độ (mẫu 10-HSB).
+
+26. Văn bản ủy quyền (mẫu 13-HSB).
+
+27. Văn bản cán bộ, chiến sĩ đề nghị giải quyết chế độ bảo hiểm xã hội (mẫu 14-HSB).
+
+28. Thông báo chuyển hưởng lương hưu, trợ cấp bảo hiểm xã hội (mẫu 18-HSB).
+
+29. Danh sách thu hồi các chế độ bảo hiểm xã hội (mẫu 27A-HSB).
+
+30. Danh sách giải quyết hưởng chế độ ốm đau, thai sản, dưỡng sức phục hồi sức khỏe (mẫu C70a-HSB).
+
+Chương II
+
+QUY TRÌNH GIẢI QUYẾT HƯỞNG CHẾ ĐỘ BẢO HIỂM XÃ HỘI
+
+Điều 6. Quy trình giải quyết hưởng chế độ ốm đau, thai sản
+
+1. Chậm nhất là 45 ngày, kể từ ngày trở lại làm việc, cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ có trách nhiệm nộp cho đơn vị trực tiếp quản lý các giấy tờ phù hợp với chế độ bảo hiểm xã hội đề nghị hưởng, cụ thể:
+
+a) Chế độ ốm đau: theo quy định tại Điều 47 Luật Bảo hiểm xã hội;
+
+b) Chế độ thai sản: theo quy định tại Điều 61 Luật Bảo hiểm xã hội.
+
+2. Đơn vị trực tiếp quản lý tiếp nhận từ cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ các giấy tờ quy định tại khoản 1 Điều này; kiểm tra thành phần, tính hợp lệ của hồ sơ theo quy định tại Điều 47 và Điều 61 Luật Bảo hiểm xã hội; trong thời hạn 07 ngày làm việc kể từ ngày nhận đủ các giấy tờ, thực hiện lập danh sách đề nghị giải quyết hưởng chế độ ốm đau, thai sản, nộp cho cơ quan tổ chức cán bộ; trường hợp hồ sơ không đúng, không đủ thành phần hồ sơ thì trả cho người nộp và hướng dẫn hoàn thiện hồ sơ.
+
+3. Cơ quan tổ chức cán bộ tiếp nhận hồ sơ đề nghị giải quyết chế độ ốm đau, thai sản do đơn vị trực tiếp quản lý chuyển đến; kiểm tra tính hợp lệ của các thành phần hồ sơ theo quy định tại Điều 47 và Điều 61 Luật Bảo hiểm xã hội; đối tượng, điều kiện hưởng theo quy định; nếu bảo đảm quy định thì trong thời hạn 07 ngày làm việc kể từ ngày tiếp nhận hồ sơ từ đơn vị trực tiếp quản lý cán bộ, chiến sĩ phải lập hồ sơ đề nghị giải quyết chế độ ốm đau trên hệ thống, bao gồm hồ sơ quy định tại khoản 1, khoản 2 Điều này và danh sách cán bộ, chiến sĩ hưởng chế độ ốm đau, thai sản; báo cáo Thủ trưởng Công an đơn vị, địa phương ký, xác nhận trên hệ thống theo quy định; gửi cơ quan tài chính và đơn vị trực tiếp quản lý danh sách cán bộ, chiến sĩ hưởng chế độ ốm đau, thai sản đã được ký, duyệt (bản điện tử hoặc bản giấy được sao y từ bản điện tử); thông qua đơn vị trực tiếp quản lý, thông báo cho cán bộ, chiến sĩ biết kết quả giải quyết; thực hiện lưu trữ hồ sơ; trường hợp không giải quyết phải trả lời bằng văn bản và nêu rõ lý do.
+
+4. Cơ quan tài chính căn cứ danh sách cán bộ, chiến sĩ hưởng chế độ ốm đau, thai sản đã được Thủ trưởng Công an đơn vị, địa phương duyệt, ký; trực tiếp hoặc chuyển kinh phí cho đơn vị trực tiếp quản lý chi trả tiền trợ cấp cho cán bộ, chiến sĩ, thân nhân cán bộ, chiến sĩ.
+
+5. Công an đơn vị, địa phương lập biên bản đối với các trường hợp trong thời hạn 30 ngày kể từ khi cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ nhận được thông báo chi trả mà không nhận trợ cấp; giao cơ quan tài chính quản lý số tiền trợ cấp mà cán bộ, chiến sĩ không nhận để xử lý theo quy định.
+
+6. Hằng tháng, hệ thống tự động trích lập thống kê số lượng, nội dung giải quyết chế độ để tổng hợp. Trường hợp Công an đơn vị, địa phương không thực hiện được việc lập, chuyển hồ sơ trên hệ thống thì thực hiện số hóa các hồ sơ đã được giải quyết kèm theo dữ liệu trích xuất từ phần mềm cục bộ, gửi Bảo hiểm xã hội Công an nhân dân trước ngày cuối cùng của tháng.
+
+Điều 7. Quy trình giải quyết hưởng chế độ dưỡng sức, phục hồi sức khỏe
+
+1. Cán bộ, chiến sĩ có nguyện vọng nghỉ dưỡng sức, phục hồi sức khỏe sau ốm đau, thai sản, điều trị thương tật, bệnh tật do tai nạn lao động, bệnh nghề nghiệp có trách nhiệm báo cáo cho đơn vị trực tiếp quản lý.
+
+2. Đơn vị trực tiếp quản lý căn cứ vào tình trạng sức khỏe, điều kiện nghỉ dưỡng sức, phục hồi sức khỏe theo quy định và nguyện vọng của cán bộ, chiến sĩ; trong thời hạn 03 ngày làm việc kể từ ngày nhận được báo cáo của cán bộ, chiến sĩ, thực hiện lập danh sách đề nghị giải quyết hưởng chế độ dưỡng sức phục hồi sức khỏe nộp cho cơ quan tổ chức cán bộ.
+
+3. Cơ quan tổ chức cán bộ tiếp nhận danh sách đề nghị giải quyết hưởng chế độ dưỡng sức phục hồi sức khỏe do đơn vị trực tiếp chuyển đến; đối chiếu với hồ sơ ốm đau, thai sản, tai nạn lao động, bệnh nghề nghiệp đã được giải quyết, kiểm tra đối tượng, điều kiện hưởng theo quy định; căn cứ ý kiến của y tế cơ quan, đơn vị hoặc Ban Chấp hành công đoàn cơ sở đề xuất thời gian nghỉ dưỡng sức, phục hồi sức khỏe đối với cán bộ, chiến sĩ; trong thời hạn 07 ngày làm việc kể từ ngày tiếp nhận hồ sơ từ đơn vị trực tiếp quản lý cán bộ, chiến sĩ, thực hiện lập danh sách người lao động hưởng chế độ dưỡng sức, phục hồi sức khỏe; báo cáo Thủ trưởng Công an đơn vị, địa phương ký, xác nhận theo quy định; gửi cơ quan tài chính và đơn vị trực tiếp quản lý danh sách người lao động hưởng chế độ dưỡng sức, phục hồi sức khỏe đã được ký, duyệt (bản điện tử hoặc bản giấy được sao y từ bản điện tử); thực hiện lưu trữ hồ sơ trên hệ thống; trường hợp không giải quyết phải trả lời bằng văn bản và nêu rõ lý do.
+
+4. Cơ quan tài chính căn cứ danh sách người lao động hưởng chế độ dưỡng sức, phục hồi sức khỏe đã được Thủ trưởng Công an đơn vị, địa phương duyệt, ký, trực tiếp hoặc chuyển kinh phí cho đơn vị trực tiếp quản lý chi trả tiền trợ cấp cho cán bộ, chiến sĩ.
+
+5. Đơn vị trực tiếp quản lý thực hiện chi trả tiền trợ cấp cho cán bộ, chiến sĩ và thông báo để cán bộ, chiến sĩ thực hiện nghỉ dưỡng sức, phục hồi sức khỏe theo quy định; lưu trữ danh sách người lao động hưởng chế độ dưỡng sức, phục hồi sức khỏe để tổng hợp, theo dõi số ngày nghỉ dưỡng sức, phục hồi sức khỏe của cán bộ, chiến sĩ.
+
+6. Công an đơn vị, địa phương lập biên bản đối với các trường hợp trong thời hạn 30 ngày kể từ khi cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ nhận được thông báo chi trả mà không nhận trợ cấp; giao cơ quan tài chính quản lý số tiền trợ cấp mà cán bộ, chiến sĩ không nhận để xử lý theo quy định.
+
+7. Hằng tháng, hệ thống tự động trích lập thống kê số lượng, nội dung giải quyết chế độ để tổng hợp. Trường hợp Công an đơn vị, địa phương không thực hiện được việc lập, chuyển hồ sơ trên hệ thống thì thực hiện số hóa các hồ sơ đã được giải quyết kèm theo dữ liệu trích xuất từ phần mềm cục bộ, gửi Bảo hiểm xã hội Công an nhân dân trước ngày cuối cùng của tháng.
+
+Điều 8. Quy trình giải quyết hưởng chế độ tai nạn lao động, bệnh nghề nghiệp
+
+1. Sau khi có kết luận của Đoàn điều tra tai nạn lao động, bệnh nghề nghiệp về việc cán bộ, chiến sĩ bị tai nạn lao động, bệnh nghề nghiệp, Thủ trưởng Công an đơn vị, địa phương hoặc Thủ trưởng đơn vị trực tiếp quản lý giới thiệu cán bộ, chiến sĩ đến Hội đồng giám định y khoa có thẩm quyền để giám định mức suy giảm khả năng lao động làm căn cứ giải quyết chế độ tai nạn lao động, bệnh nghề nghiệp.
+
+2. Cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ có trách nhiệm nộp cho đơn vị trực tiếp quản lý các giấy tờ phù hợp với các trường hợp cụ thể như sau:
+
+a) Trường hợp bị tai nạn lao động, bệnh nghề nghiệp lần đầu: hồ sơ quy định tại khoản 2, khoản 3 Điều 57 hoặc khoản 2, khoản 3 Điều 58 Luật An toàn, vệ sinh lao động; hóa đơn, chứng từ thu phí giám định và bảng kê các nội dung giám định của cơ sở thực hiện giám định y khoa nếu thanh toán phí giám định y khoa; chỉ định của cơ sở khám bệnh, chữa bệnh, cơ sở chỉnh hình, phục hồi chức năng theo quy định về việc trang cấp phương tiện trợ giúp sinh hoạt, dụng cụ chỉnh hình;
+
+b) Trường hợp hưởng chế độ tai nạn lao động, bệnh nghề nghiệp do thương tật, bệnh tật tái phát: hồ sơ quy định tại khoản 2, khoản 3, khoản 4, khoản 5, khoản 6 Điều 7 Nghị định số 88/2020/NĐ-CP ngày 28 tháng 7 năm 2020 của Chính phủ quy định chi tiết và hướng dẫn thi hành một số điều của Luật An toàn, vệ sinh lao động về bảo hiểm tai nạn lao động, bệnh nghề nghiệp bắt buộc; hóa đơn, chứng từ thu phí giám định và bảng kê các nội dung giám định của cơ sở thực hiện giám định y khoa nếu thanh toán phí giám định y khoa;
+
+c) Trường hợp đã bị tai nạn lao động, bệnh nghề nghiệp nay tiếp tục bị tai nạn lao động hoặc bệnh nghề nghiệp: hồ sơ quy định tại khoản 2, khoản 3, khoản 4, khoản 5, khoản 6, khoản 7 Điều 8 Nghị định số 88/2020/NĐ-CP; hóa đơn, chứng từ thu phí giám định và bảng kê các nội dung giám định của cơ sở thực hiện giám định y khoa nếu thanh toán phí giám định y khoa;
+
+d) Trường hợp cấp phương tiện trợ giúp sinh hoạt, dụng cụ chỉnh hình đối với người đang hưởng trợ cấp tai nạn lao động, bệnh nghề nghiệp trước ngày 01 tháng 01 năm 2027: hóa đơn, chứng từ mua các phương tiện được trang cấp; vé tàu xe đi lại để làm hoặc nhận phương tiện trang cấp;
+
+đ) Các hồ sơ, tài liệu khác có liên quan.
+
+3. Đơn vị trực tiếp quản lý tiếp nhận từ cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ hồ sơ quy định tại khoản 2 Điều này; kiểm tra tính hợp lệ của hồ sơ và chuyển cho cơ quan tổ chức cán bộ trong thời hạn 07 ngày làm việc, kể từ ngày nhận đủ hồ sơ; trường hợp hồ sơ không đúng, không đủ thành phần hồ sơ thì trả cho người nộp và hướng dẫn hoàn thiện hồ sơ.
+
+4. Cơ quan tổ chức cán bộ tiếp nhận hồ sơ do đơn vị trực tiếp quản lý chuyển đến; kiểm tra tính hợp lệ của các thành phần hồ sơ, đối tượng, điều kiện hưởng theo quy định; nếu bảo đảm quy định thì trong thời hạn 10 ngày làm việc kể từ ngày nhận hồ sơ từ đơn vị trực tiếp quản lý, thực hiện lập hồ sơ đề nghị giải quyết chế độ tai nạn lao động, bệnh nghề nghiệp; báo cáo Thủ trưởng Công an đơn vị, địa phương ký, xác nhận trên hệ thống để gửi Bảo hiểm xã hội Công an nhân dân, gồm:
+
+a) Văn bản đề nghị của Công an đơn vị, địa phương;
+
+b) Hồ sơ quy định tại khoản 2 Điều này đã được số hóa;
+
+c) Bản quá trình đóng bảo hiểm xã hội;
+
+d) Trường hợp lần bị tai nạn lao động, bệnh nghề nghiệp trước đó tại đơn vị khác nhưng chưa được giải quyết chế độ phải có văn bản đề nghị giải quyết của đơn vị nơi xảy ra tai nạn lao động, bệnh nghề nghiệp;
+
+đ) Các hồ sơ, tài liệu khác có liên quan.
+
+5. Trường hợp Công an đơn vị, địa phương không thực hiện được việc lập, chuyển hồ sơ trên hệ thống thì trong thời hạn 10 ngày làm việc, kể từ ngày nhận hồ sơ từ đơn vị trực tiếp quản lý phải lập hồ sơ quy định tại khoản 4 Điều này đã được ký số, ký số xác thực cùng với sổ bảo hiểm xã hội bản giấy, kèm theo dữ liệu phù hợp với hồ sơ đề nghị giải quyết chế độ tai nạn lao động, bệnh nghề nghiệp được trích xuất từ phần mềm cục bộ gửi Bảo hiểm xã hội Công an nhân dân.
+
+6. Bảo hiểm xã hội Công an nhân dân tiếp nhận hồ sơ đề nghị giải quyết chế độ tai nạn lao động, bệnh nghề nghiệp do Công an đơn vị, địa phương chuyển đến, thực hiện:
+
+a) Cập nhật hồ sơ đã được số hóa, dữ liệu điện tử vào hệ thống đối với trường hợp hồ sơ lập theo quy định tại khoản 5 Điều này;
+
+b) Thẩm định, ký ban hành: quyết định hưởng chế độ tai nạn lao động, bệnh nghề nghiệp; bản quá trình đóng bảo hiểm xã hội và các giấy tờ khác có liên quan;
+
+c) Thông báo trên hệ thống để Công an đơn vị, địa phương biết, phối hợp quản lý, đồng thời thông báo cho cán bộ, chiến sĩ biết qua hệ thống tin nhắn tự động hoặc qua VNeID;
+
+d) Trường hợp cán bộ, chiến sĩ hưởng trợ cấp tai nạn lao động hằng tháng, bệnh nghề nghiệp hằng tháng đồng thời di chuyển về nơi cư trú thì chuyển Bảo hiểm xã hội Việt Nam bản điện tử hồ sơ tai nạn lao động, bệnh nghề nghiệp đã được giải quyết kèm dữ liệu để làm thủ tục đăng ký, quản lý, chi trả trợ cấp bảo hiểm xã hội theo quy định (trừ trường hợp đã giải quyết hưởng chế độ tai nạn lao động hằng tháng, bệnh nghề nghiệp hằng tháng trước thời điểm Thông tư này có hiệu lực thi hành);
+
+đ) Trong thời hạn 10 ngày làm việc, kể từ ngày nhận đủ hồ sơ theo quy định, Bảo hiểm xã hội Công an nhân dân có trách nhiệm giải quyết; trường hợp không giải quyết phải trả lời bằng văn bản và nêu rõ lý do.
+
+7. Công an đơn vị, địa phương tiếp nhận hồ sơ đã được Bảo hiểm xã hội Công an nhân dân giải quyết, thực hiện sao y hồ sơ theo hình thức từ văn bản điện tử sang bản giấy; giao cơ quan tổ chức cán bộ, cơ quan tài chính thực hiện:
+
+a) Trực tiếp chi trả hoặc chuyển kinh phí cho đơn vị trực tiếp quản lý chi trả trợ cấp tai nạn lao động, bệnh nghề nghiệp đối với cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ;
+
+b) Trực tiếp hoặc chuyển cho đơn vị trực tiếp quản lý giao cho cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ 01 bộ hồ sơ gồm: quyết định hưởng chế độ tai nạn lao động, bệnh nghề nghiệp, bản quá trình đóng bảo hiểm xã hội;
+
+c) Lập biên bản và báo cáo Bảo hiểm xã hội Công an nhân dân đối với trường hợp trong thời hạn 30 ngày kể từ khi cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ nhận được thông báo chi trả mà không nhận trợ cấp;
+
+d) Lưu trữ 01 bộ hồ sơ theo quy định tại khoản 4 Điều này và quyết định hưởng trợ cấp tai nạn lao động, bệnh nghề nghiệp.
+
+Điều 9. Quy trình giải quyết hưởng chế độ hưu trí
+
+1. Sau khi cấp có thẩm quyền ký ban hành quyết định nghỉ công tác, thôi việc, chấm dứt hợp đồng lao động để hưởng chế độ hưu trí đối với cán bộ, chiến sĩ; cơ quan tổ chức cán bộ có trách nhiệm trực tiếp hoặc thông qua đơn vị trực tiếp quản lý phổ biến cho cán bộ, chiến sĩ biết về quyền lợi, mức hưởng chế độ hưu trí; đề nghị cán bộ, chiến sĩ cung cấp các giấy tờ (nếu có) để làm căn cứ giải quyết chế độ hưu trí.
+
+2. Cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ có trách nhiệm nộp cho đơn vị trực tiếp quản lý các giấy tờ sau:
+
+a) Biên bản giám định mức suy giảm khả năng lao động của Hội đồng giám định y khoa hoặc bản sao giấy xác nhận mức độ khuyết tật nặng, đặc biệt nặng có thể hiện kết luận của Hội đồng giám định y khoa ghi rõ tỷ lệ phần trăm suy giảm khả năng lao động đối với trường hợp quy định tại Điều 65 Luật Bảo hiểm xã hội;
+
+b) Bản sao giấy chứng nhận bị nhiễm HIV do tai nạn rủi ro nghề nghiệp đối với trường hợp quy định tại điểm d khoản 1 và điểm c khoản 2 Điều 64 Luật Bảo hiểm xã hội;
+
+c) Văn bản đề nghị giải quyết chế độ hưu trí đối với trường hợp bị kết án tù giam hoặc bị kỷ luật bằng hình thức tước danh hiệu Công an nhân dân từ ngày 01 tháng 01 năm 1995 trở đi mà chưa hưởng chế độ bảo hiểm xã hội một lần, đã đủ điều kiện hưởng lương hưu và chưa được Bảo hiểm xã hội Công an nhân dân bảo lưu thời gian tham gia bảo hiểm xã hội;
+
+d) Các hồ sơ, tài liệu khác có liên quan.
+
+3. Đơn vị trực tiếp quản lý tiếp nhận từ cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ các giấy tờ quy định tại khoản 2 Điều này; kiểm tra tính hợp lệ của hồ sơ và chuyển cho cơ quan tổ chức cán bộ trong thời hạn 07 ngày làm việc, kể từ ngày nhận đủ hồ sơ; trường hợp hồ sơ không đúng, không đủ thành phần hồ sơ thì trả cho người nộp và hướng dẫn hoàn thiện hồ sơ.
+
+4. Cơ quan tổ chức cán bộ tiếp nhận hồ sơ do đơn vị trực tiếp quản lý chuyển đến; kiểm tra tính hợp lệ của các thành phần hồ sơ, đối tượng, điều kiện hưởng theo quy định; nếu bảo đảm quy định thì hoàn thiện quá trình tham gia bảo hiểm xã hội trên hệ thống (chốt sổ bảo hiểm xã hội); lập hồ sơ đề nghị giải quyết chế độ hưu trí; báo cáo Thủ trưởng Công an đơn vị, địa phương ký, xác nhận; chuyển Bảo hiểm xã hội Công an nhân dân trước 90 ngày tính đến thời điểm hưởng (trừ trường hợp cán bộ, chiến sĩ không có thời gian nghỉ chờ hưu), gồm:
+
+a) Văn bản đề nghị của Công an đơn vị, địa phương;
+
+b) Quyết định nghỉ công tác, thôi việc, chấm dứt hợp đồng lao động để hưởng chế độ hưu trí;
+
+c) Hồ sơ quy định tại khoản 2 Điều này đã được số hóa;
+
+d) Bản quá trình đóng bảo hiểm xã hội;
+
+đ) Các hồ sơ, tài liệu khác có liên quan.
+
+5. Trường hợp Công an đơn vị, địa phương không thực hiện được việc lập, chuyển hồ sơ trên hệ thống thì lập hồ sơ quy định tại khoản 4 Điều này đã được ký số, ký số xác thực cùng với sổ bảo hiểm xã hội bản giấy, kèm theo dữ liệu phù hợp với hồ sơ đề nghị giải quyết chế độ hưu trí được trích xuất từ phần mềm cục bộ gửi Bảo hiểm xã hội Công an nhân dân trước 90 ngày tính đến thời điểm hưởng (trừ trường hợp cán bộ, chiến sĩ không có thời gian nghỉ chờ hưu).
+
+6. Bảo hiểm xã hội Công an nhân dân tiếp nhận hồ sơ đề nghị giải quyết chế độ hưu trí do Công an đơn vị, địa phương chuyển đến, thực hiện:
+
+a) Cập nhật hồ sơ đã được số hóa, dữ liệu điện tử vào hệ thống đối với trường hợp hồ sơ lập theo quy định tại khoản 5 Điều này;
+
+b) Thẩm định, ký ban hành trên hệ thống: quyết định hưởng; bản quá trình đóng bảo hiểm xã hội; thông báo chuyển hưởng lương hưu, trợ cấp bảo hiểm xã hội và các giấy tờ khác liên quan;
+
+c) Thông báo trên hệ thống để Công an đơn vị, địa phương biết, phối hợp quản lý, đồng thời thông báo cho cán bộ, chiến sĩ biết qua hệ thống tin nhắn tự động hoặc qua VNeID;
+
+d) Chuyển Bảo hiểm xã hội Việt Nam bản điện tử hồ sơ hưu trí đã được giải quyết kèm dữ liệu để làm thủ tục đăng ký, quản lý, chi trả trợ cấp bảo hiểm xã hội theo quy định;
+
+đ) Khóa và lưu trữ dữ liệu trên hệ thống đối với quá trình tham gia bảo hiểm xã hội;
+
+e) Trong thời hạn 20 ngày làm việc, kể từ ngày nhận đủ hồ sơ theo quy định, Bảo hiểm xã hội Công an nhân dân có trách nhiệm giải quyết; trường hợp không giải quyết phải trả lời bằng văn bản và nêu rõ lý do.
+
+7. Công an đơn vị, địa phương tiếp nhận hồ sơ đã được Bảo hiểm xã hội Công an nhân dân giải quyết, thực hiện sao y hồ sơ theo hình thức từ văn bản điện tử sang bản giấy; giao cơ quan tổ chức cán bộ, cơ quan tài chính thực hiện:
+
+a) Trực tiếp chi trả hoặc chuyển kinh phí cho đơn vị trực tiếp quản lý chi trả đối với cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ trợ cấp một lần khi nghỉ hưu;
+
+b) Trực tiếp hoặc chuyển cho đơn vị trực tiếp quản lý giao cho cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ 01 bộ hồ sơ gồm: quyết định hưởng chế độ hưu trí hằng tháng, bản quá trình đóng bảo hiểm xã hội và các hồ sơ, tài liệu khác liên quan (nếu có);
+
+c) Lập biên bản đồng thời báo cáo Bảo hiểm xã hội Công an nhân dân đối với các trường hợp đã thông báo bằng văn bản nhưng cá nhân không nhận quyết định hưởng chế độ hưu trí, trợ cấp một lần khi nghỉ hưu;
+
+d) Lưu trữ 01 bộ hồ sơ theo quy định tại khoản 4 Điều này.
+
+8. Bảo hiểm xã hội Công an nhân dân thực hiện thông báo Bảo hiểm xã hội Việt Nam để cơ quan bảo hiểm xã hội nơi cán bộ, chiến sĩ cư trú tiếp nhận hồ sơ và chi trả lương hưu đối với cán bộ, chiến sĩ.
+
+Điều 10. Quy trình giải quyết hưởng chế độ bảo hiểm xã hội một lần
+
+1. Sau khi cấp có thẩm quyền ký ban hành quyết định xuất ngũ, thôi việc, tước danh hiệu Công an nhân dân, buộc thôi việc, buộc thôi học hoặc văn bản chấm dứt hợp đồng lao động, hợp đồng làm việc đối với trường hợp lao động hợp đồng hết tuổi lao động mà chưa đủ điều kiện nghỉ hưu; cơ quan tổ chức cán bộ có trách nhiệm trực tiếp hoặc thông qua đơn vị trực tiếp quản lý thông báo, hướng dẫn cho cán bộ, chiến sĩ về điều kiện, quyền lợi và thủ tục giải quyết hưởng chế độ bảo hiểm xã hội một lần.
+
+2. Cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ có trách nhiệm nộp cho đơn vị trực tiếp quản lý văn bản đề nghị giải quyết chế độ bảo hiểm xã hội một lần và một trong các giấy tờ phù hợp với trường hợp được giải quyết chế độ bảo hiểm xã hội một lần, như sau:
+
+a) Bản sao giấy xác nhận của cơ quan có thẩm quyền về việc thôi quốc tịch Việt Nam hoặc bản dịch tiếng Việt được chứng thực hoặc công chứng một trong các giấy tờ: hộ chiếu do nước ngoài cấp; thị thực của cơ quan nước ngoài có thẩm quyền cấp có xác nhận việc cho phép nhập cảnh để định cư ở nước ngoài; thẻ thường trú dài hạn ở nước ngoài của cơ quan nước ngoài có thẩm quyền cấp; giấy tờ hợp pháp khác thể hiện việc định cư ở nước ngoài theo quy định của Chính phủ đối với trường hợp ra nước ngoài để định cư;
+
+b) Tóm tắt hồ sơ bệnh án hoặc bản chính hoặc bản sao giấy ra viện đối với trường hợp đang mắc một trong những bệnh ung thư, bại liệt, xơ gan mất bù, lao nặng, AIDS;
+
+c) Biên bản giám định mức suy giảm khả năng lao động của Hội đồng giám định y khoa hoặc bản sao giấy xác nhận mức độ khuyết tật đặc biệt nặng đối với trường hợp suy giảm khả năng lao động từ 81% trở lên hoặc người khuyết tật đặc biệt nặng;
+
+d) Các hồ sơ, tài liệu khác có liên quan.
+
+3. Đơn vị trực tiếp quản lý tiếp nhận từ cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ các giấy tờ quy định tại khoản 2 Điều này; kiểm tra tính hợp lệ của hồ sơ và chuyển cho cơ quan tổ chức cán bộ trong thời hạn 07 ngày làm việc, kể từ ngày nhận đủ hồ sơ; trường hợp hồ sơ không đúng, không đủ thành phần hồ sơ thì trả cho người nộp và hướng dẫn hoàn thiện hồ sơ.
+
+4. Cơ quan tổ chức cán bộ tiếp nhận hồ sơ do đơn vị trực tiếp quản lý chuyển đến; kiểm tra tính hợp lệ của các thành phần hồ sơ, đối tượng, điều kiện hưởng theo quy định; nếu bảo đảm quy định thì hoàn thiện quá trình tham gia bảo hiểm xã hội trên hệ thống (chốt sổ bảo hiểm xã hội); trong thời hạn 10 ngày làm việc, kể từ ngày nhận hồ sơ từ đơn vị trực tiếp quản lý, lập hồ sơ đề nghị giải quyết chế độ bảo hiểm xã hội một lần; báo cáo Thủ trưởng Công an đơn vị, địa phương ký, xác nhận; chuyển Bảo hiểm xã hội Công an nhân dân:
+
+a) Văn bản đề nghị của Công an đơn vị, địa phương;
+
+b) Hồ sơ quy định tại khoản 2 Điều này đã được số hóa;
+
+c) Bản quá trình đóng bảo hiểm xã hội.
+
+5. Cơ quan tổ chức cán bộ lập Phiếu lĩnh trợ cấp bảo hiểm xã hội một lần, báo cáo Thủ trưởng Công an đơn vị, địa phương ký, xác nhận; cơ quan tổ chức cán bộ, cơ quan tài chính thực hiện chi trả hoặc chuyển kinh phí cho đơn vị trực tiếp quản lý chi trả trợ cấp bảo hiểm xã hội một lần đối với trường hợp giải quyết hưởng chế độ bảo hiểm xã hội một lần đối với hạ sĩ quan, chiến sĩ nghĩa vụ, học viên Công an nhân dân hưởng sinh hoạt phí mà chưa được cấp sổ bảo hiểm xã hội; khóa và lưu trữ dữ liệu trên hệ thống đối với quá trình tham gia bảo hiểm xã hội.
+
+6. Trường hợp Công an đơn vị, địa phương không thực hiện được việc lập, chuyển hồ sơ trên hệ thống thì trong thời hạn 10 ngày làm việc, kể từ ngày nhận hồ sơ từ đơn vị trực tiếp quản lý phải lập hồ sơ quy định tại khoản 4 Điều này đã được ký số, ký số xác thực cùng với sổ bảo hiểm xã hội bản giấy, kèm theo dữ liệu phù hợp với hồ sơ đề nghị giải quyết chế độ bảo hiểm xã hội một lần được trích xuất từ phần mềm cục bộ gửi Bảo hiểm xã hội Công an nhân dân.
+
+7. Bảo hiểm xã hội Công an nhân dân tiếp nhận hồ sơ đề nghị giải quyết chế độ bảo hiểm xã hội một lần do Công an đơn vị, địa phương chuyển đến, thực hiện:
+
+a) Cập nhật hồ sơ đã được số hóa, dữ liệu điện tử vào hệ thống đối với trường hợp hồ sơ lập theo quy định tại khoản 6 Điều này;
+
+b) Thẩm định, ký ban hành trên hệ thống: quyết định hưởng; bản quá trình đóng bảo hiểm xã hội và các giấy tờ khác liên quan;
+
+c) Thông báo trên hệ thống để Công an đơn vị, địa phương biết, phối hợp quản lý, đồng thời thông báo cho cán bộ, chiến sĩ biết qua hệ thống tin nhắn tự động hoặc qua VNeID;
+
+d) Khóa và lưu trữ dữ liệu trên hệ thống đối với quá trình tham gia bảo hiểm xã hội;
+
+đ) Trong thời hạn 10 ngày làm việc, kể từ ngày nhận đủ hồ sơ theo quy định, Bảo hiểm xã hội Công an nhân dân có trách nhiệm giải quyết; trường hợp không giải quyết thì phải trả lời bằng văn bản và nêu rõ lý do.
+
+8. Công an đơn vị, địa phương tiếp nhận hồ sơ đã được Bảo hiểm xã hội Công an nhân dân giải quyết, thực hiện sao y hồ sơ theo hình thức từ văn bản điện tử sang bản giấy; giao cơ quan tổ chức cán bộ, cơ quan tài chính thực hiện:
+
+a) Trực tiếp chi trả hoặc chuyển kinh phí cho đơn vị trực tiếp quản lý chi trả đối với cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ trợ cấp bảo hiểm xã hội một lần;
+
+b) Trực tiếp hoặc chuyển cho đơn vị trực tiếp quản lý giao cho cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ 01 bộ hồ sơ gồm: quyết định hưởng trợ cấp bảo hiểm xã hội một lần, bản quá trình đóng bảo hiểm xã hội;
+
+c) Lập biên bản đối với các trường hợp đã thông báo bằng văn bản nhưng cá nhân không nhận quyết định, trợ cấp bảo hiểm xã hội một lần; báo cáo Bảo hiểm xã hội Công an nhân dân để hủy quyết định hưởng trợ cấp bảo hiểm xã hội một lần, đồng thời thực hiện bảo lưu thời gian tham gia bảo hiểm xã hội theo quy định;
+
+d) Lưu trữ 01 bộ hồ sơ theo quy định tại khoản 4 Điều này.
+
+Điều 11. Quy trình giải quyết hưởng chế độ tử tuất
+
+1. Cơ quan tổ chức cán bộ có trách nhiệm trực tiếp hoặc thông qua đơn vị trực tiếp quản lý thông báo, hướng dẫn thân nhân cán bộ, chiến sĩ về điều kiện, quyền lợi và thủ tục giải quyết hưởng chế độ tử tuất. Trường hợp thân nhân cán bộ, chiến sĩ thuộc trường hợp bị khuyết tật nặng hoặc bị suy giảm khả năng lao động từ 81% trở lên thì Thủ trưởng Công an đơn vị, địa phương hoặc Thủ trưởng đơn vị trực tiếp quản lý theo phân cấp quy định tại điểm b khoản 1 Điều 15 Thông tư này có trách nhiệm giới thiệu thân nhân cán bộ, chiến sĩ đến Hội đồng giám định y khoa có thẩm quyền để xác nhận mức độ khuyết tật đặc biệt nặng hoặc giám định mức suy giảm khả năng lao động làm căn cứ giải quyết các chế độ tử tuất.
+
+2. Trong thời hạn 90 ngày kể từ ngày cán bộ, chiến sĩ chết, thân nhân cán bộ, chiến sĩ có trách nhiệm nộp cho đơn vị trực tiếp quản lý các hồ sơ, giấy tờ quy định tại khoản b, khoản c, khoản d, khoản đ khoản 1 Điều 90 Luật Bảo hiểm xã hội và các hồ sơ, tài liệu khác có liên quan.
+
+3. Đơn vị trực tiếp quản lý tiếp nhận từ thân nhân cán bộ, chiến sĩ các giấy tờ quy định tại khoản 2 Điều này; kiểm tra tính hợp lệ của hồ sơ và chuyển cho cơ quan tổ chức cán bộ trong thời hạn 07 ngày làm việc, kể từ ngày nhận đủ hồ sơ; trường hợp hồ sơ không đúng, không đủ thành phần hồ sơ thì trả cho người nộp và hướng dẫn hoàn thiện hồ sơ.
+
+4. Cơ quan tổ chức cán bộ tiếp nhận hồ sơ do đơn vị trực tiếp quản lý chuyển đến; kiểm tra tính hợp lệ của các thành phần hồ sơ, đối tượng, điều kiện hưởng theo quy định; nếu bảo đảm quy định thì hoàn thiện quá trình tham gia bảo hiểm xã hội trên hệ thống (chốt sổ bảo hiểm xã hội); trong thời hạn 10 ngày kể từ ngày tiếp nhận hồ sơ từ đơn vị trực tiếp quản lý phải lập hồ sơ đề nghị giải quyết chế tử tuất; báo cáo Thủ trưởng Công an đơn vị, địa phương ký, xác nhận; chuyển Bảo hiểm xã hội Công an nhân dân:
+
+a) Văn bản đề nghị của Công an đơn vị, địa phương;
+
+b) Hồ sơ quy định tại khoản 2 Điều này đã được số hóa;
+
+c) Bản quá trình đóng bảo hiểm xã hội.
+
+5. Trường hợp Công an đơn vị, địa phương không thực hiện được việc lập, chuyển hồ sơ trên hệ thống thì trong vòng 10 ngày làm việc, kể từ ngày nhận hồ sơ từ đơn vị trực tiếp quản lý phải lập hồ sơ quy định tại khoản 4 Điều này đã được ký số, ký số xác thực cùng với sổ bảo hiểm xã hội bản giấy, kèm theo dữ liệu phù hợp với hồ sơ đề nghị giải quyết chế độ tử tuất được trích xuất từ phần mềm cục bộ gửi Bảo hiểm xã hội Công an nhân dân.
+
+6. Bảo hiểm xã hội Công an nhân dân tiếp nhận hồ sơ đề nghị giải quyết chế độ tử tuất do Công an đơn vị, địa phương chuyển đến, thực hiện:
+
+a) Cập nhật hồ sơ đã được số hóa, dữ liệu điện tử vào hệ thống đối với trường hợp hồ sơ lập theo quy định tại khoản 5 Điều này;
+
+b) Thẩm định, ký ban hành trên hệ thống: quyết định hưởng; bản quá trình đóng bảo hiểm xã hội và các giấy tờ khác liên quan;
+
+c) Thông báo trên hệ thống để Công an đơn vị, địa phương biết, phối hợp quản lý, trường hợp giải quyết phải trả lời bằng văn bản và nêu rõ lý do; đồng thời thông báo cho thân nhân cán bộ, chiến sĩ biết qua hệ thống tin nhắn tự động;
+
+d) Chuyển Bảo hiểm xã hội Việt Nam bản điện tử hồ sơ đã được giải quyết kèm dữ liệu để làm thủ tục đăng ký, quản lý, chi trả trợ cấp bảo hiểm xã hội theo quy định đối với trường hợp thân nhân cán bộ, chiến sĩ hưởng chế độ tử tuất hằng tháng;
+
+đ) Khóa và lưu trữ dữ liệu trên hệ thống đối với quá trình tham gia bảo hiểm xã hội;
+
+e) Trong thời hạn 10 ngày làm việc, kể từ ngày nhận đủ hồ sơ theo quy định, Bảo hiểm xã hội Công an nhân dân có trách nhiệm giải quyết; trường hợp không giải quyết thì phải trả lời bằng văn bản và nêu rõ lý do.
+
+7. Công an đơn vị, địa phương tiếp nhận hồ sơ đã được Bảo hiểm xã hội Công an nhân dân giải quyết, thực hiện sao y hồ sơ theo hình thức từ văn bản điện tử sang bản giấy; giao cơ quan tổ chức cán bộ, cơ quan tài chính thực hiện:
+
+a) Trực tiếp chi trả hoặc chuyển kinh phí cho đơn vị trực tiếp quản lý chi trả đối với thân nhân cán bộ, chiến sĩ trợ cấp tử tuất một lần, trợ cấp mai táng, trợ cấp khu vực một lần, trợ cấp tai nạn lao động một lần;
+
+b) Trực tiếp hoặc chuyển cho đơn vị trực tiếp quản lý giao cho thân nhân cán bộ, chiến sĩ 01 bộ hồ sơ gồm: quyết định hưởng chế độ tử tuất; bản quá trình đóng bảo hiểm xã hội và các hồ sơ, tài liệu khác có liên quan;
+
+c) Lập biên bản đối với các trường hợp đã thông báo bằng văn bản nhưng thân nhân cán bộ, chiến sĩ không nhận quyết định, trợ cấp, đồng thời báo cáo Bảo hiểm xã hội Công an nhân dân;
+
+d) Lưu trữ 01 bộ hồ sơ theo quy định tại khoản 4 Điều này.
+
+8. Bảo hiểm xã hội Công an nhân dân thực hiện thông báo Bảo hiểm xã hội Việt Nam để cơ quan bảo hiểm xã hội nơi thân nhân cán bộ, chiến sĩ cư trú tiếp nhận hồ sơ và chi trả trợ cấp tử tuất hằng tháng đối với thân nhân cán bộ, chiến sĩ. Trường hợp thân nhân cán bộ, chiến sĩ không nhận quyết định, trợ cấp thì Bảo hiểm xã hội Công an nhân dân thông báo để cơ quan bảo hiểm xã hội phối hợp trong việc quản lý hồ sơ và chi trả.
+
+Điều 12. Tạm dừng, hưởng tiếp, điều chỉnh, hủy, chấm dứt hưởng chế độ bảo hiểm xã hội
+
+1. Trách nhiệm thực hiện việc tạm dừng, hưởng tiếp, điều chỉnh, hủy, chấm dứt hưởng chế độ bảo hiểm xã hội được thực hiện như sau:
+
+a) Cơ quan bảo hiểm xã hội nơi đang chi trả thực hiện việc tạm dừng, chấm dứt, tiếp tục hưởng theo quy định tại Điều 75 Luật Bảo hiểm xã hội đối với các trường hợp cán bộ, chiến sĩ đang hưởng trợ cấp hưu trí hằng tháng, tai nạn lao động hằng tháng, bệnh nghề nghiệp hằng tháng; thân nhân cán bộ, chiến sĩ đang hưởng trợ cấp tử tuất hằng tháng;
+
+b) Bảo hiểm xã hội Công an nhân dân thực hiện việc tạm dừng, chấm dứt, tiếp tục hưởng theo quy định tại Điều 75 Luật Bảo hiểm xã hội đối với các trường hợp cán bộ, chiến sĩ đang hưởng trợ cấp tai nạn lao động hằng tháng, bệnh nghề nghiệp hằng tháng mà do Bảo hiểm xã hội Công an nhân dân chi trả;
+
+c) Bảo hiểm xã hội Công an nhân dân thực hiện việc điều chỉnh, hủy hưởng đối với trường hợp cán bộ, chiến sĩ hưởng chế độ tai nạn lao động một lần, bệnh nghề nghiệp một lần, bảo hiểm xã hội một lần, tử tuất một lần, hưu trí hằng tháng hoặc trợ cấp một lần khi nghỉ hưu;
+
+d) Công an đơn vị, địa phương thực hiện việc điều chỉnh, hủy hưởng đối với trường hợp cán bộ, chiến sĩ hưởng chế độ ốm đau, thai sản, dưỡng sức, phục hồi sức khỏe.
+
+2. Quy trình thực hiện tạm dừng, hưởng tiếp, điều chỉnh, hủy, chấm dứt hưởng chế độ bảo hiểm xã hội theo quy định tại điểm b, điểm c, điểm d khoản 1 Điều này thực hiện như sau:
+
+a) Việc tạm dừng, hưởng tiếp, điều chỉnh, hủy, chấm dứt hưởng chế độ bảo hiểm xã hội được thực hiện trên cơ sở rà soát của Bảo hiểm xã hội Công an nhân dân, Công an đơn vị, địa phương hoặc theo đề nghị của cá nhân, tổ chức có liên quan phù hợp với các quy định;
+
+b) Cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ có trách nhiệm nộp cho đơn vị trực tiếp quản lý tài liệu, giấy tờ làm căn cứ tạm dừng, hưởng tiếp, điều chỉnh, hủy, chấm dứt hưởng kèm theo văn bản đề nghị đối với trường hợp cá nhân có nguyện vọng;
+
+c) Công an đơn vị địa phương, Bảo hiểm xã hội Công an nhân dân có trách nhiệm tiếp nhận, hoàn thiện, thẩm định, ký ban hành các quyết định tạm dừng, hưởng tiếp, điều chỉnh, hủy, chấm dứt hưởng và tiến hành truy thu, truy trả cho cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ theo quy trình, thẩm quyền như quy định tại Điều 6, Điều 7, Điều 8, Điều 9, Điều 10, Điều 11 Thông tư này, phù hợp với từng loại chế độ;
+
+d) Bảo hiểm xã hội Công an nhân dân có trách nhiệm chuyển hồ sơ điều chỉnh, hủy quyết định hưởng đến cơ quan bảo hiểm xã hội cấp tỉnh nơi đang chi trả chế độ để quản lý, chi trả (trừ trường hợp điều chỉnh do thay đổi mức tham chiếu); chủ động phối hợp với cơ quan bảo hiểm xã hội các địa phương giải quyết vướng mắc phát sinh trong quá trình hưởng chế độ bảo hiểm xã hội của cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ.
+
+Chương III
+
+ĐIỀU KHOẢN THI HÀNH
+
+Điều 13. Quy định chuyển tiếp
+
+1. Hồ sơ đề nghị giải quyết hưởng chế độ bảo hiểm xã hội được Công an đơn vị, địa phương lập, gửi Bảo hiểm xã hội Công an nhân dân trước thời điểm Thông tư này có hiệu lực thi hành được tiếp tục sử dụng để giải quyết, chi trả trợ cấp theo quy định.
+
+2. Quy định giải quyết hưởng chế độ bảo hiểm xã hội đối với cán bộ, chiến sĩ làm nhiệm vụ đặc biệt do Bộ trưởng Bộ Công an quyết định trên cơ sở đề xuất của Cục trưởng Cục Tổ chức cán bộ, Giám đốc Bảo hiểm xã hội Công an nhân dân. Công an đơn vị, địa phương báo cáo về Bộ Công an (qua Cục Tổ chức cán bộ) đối với các trường hợp không thực hiện lập hồ sơ đề nghị giải quyết chế độ bảo hiểm xã hội trên hệ thống để bảo đảm các quy định về bảo vệ bí mật nhà nước trong lĩnh vực an ninh, trật tự an toàn xã hội.
+
+3. Người bị kết án tù giam hoặc bị kỷ luật bằng hình thức tước danh hiệu Công an nhân dân từ ngày 01 tháng 01 năm 1995 trở đi mà chưa hưởng chế độ bảo hiểm xã hội một lần và chưa được Bảo hiểm xã hội Công an nhân dân bảo lưu thời gian tham gia bảo hiểm xã hội; nếu đủ điều kiện theo quy định tại điểm a khoản 1 Điều 64 Luật Bảo hiểm xã hội thì được Bảo hiểm xã hội Công an nhân dân giải quyết chế độ hưu trí; quy trình thực hiện như đối với quy định tại Điều 8 Thông tư này.
+
+Điều 14. Hiệu lực thi hành
+
+1. Thông tư này có hiệu lực thi hành kể từ ngày 01 tháng 7 năm 2026.
+
+2. Thông tư số 122/2020/TT-BCA ngày 11 tháng 11 năm 2020 của Bộ trưởng Bộ Công an quy định quy trình giải quyết hưởng chế độ bảo hiểm xã hội trong Công an nhân dân hết hiệu lực thi hành kể từ ngày Thông tư này có hiệu lực thi hành.
+
+3. Trường hợp các văn bản dẫn chiếu trong Thông tư này được sửa đổi, bổ sung hoặc thay thế bằng các văn bản khác thì thực hiện theo quy định tại các văn bản được sửa đổi, bổ sung, thay thế.
+
+Điều 15. Trách nhiệm thi hành
+
+1. Công an đơn vị, địa phương có trách nhiệm phổ biến, quán triệt và tổ chức thực hiện Thông tư này và có trách nhiệm:
+
+a) Lập hồ sơ, thẩm định và thực hiện chi trả chế độ ốm đau, thai sản; cấp tiền mua phương tiện trợ giúp sinh hoạt, dụng cụ chỉnh hình; trợ cấp dưỡng sức, phục hồi sức khỏe; chế độ bảo hiểm xã hội một lần từ nguồn quỹ bảo hiểm xã hội đối với hạ sĩ quan, chiến sĩ nghĩa vụ, học viên Công an nhân dân hưởng sinh hoạt phí mà chưa được cấp sổ bảo hiểm xã hội;
+
+b) Giới thiệu cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ đến Hội đồng giám định y khoa có thẩm quyền để giám định mức suy giảm khả năng lao động làm căn cứ giải quyết các chế độ bảo hiểm xã hội. Trường hợp đơn vị cấp cục đóng quân trên nhiều tỉnh, thành phố thì được thực hiện việc phân cấp, giao Thủ trưởng đơn vị trực tiếp quản lý giới thiệu cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ đến Hội đồng giám định y khoa;
+
+c) Thực hiện lưu trữ hồ sơ; chi trả chế độ bảo hiểm xã hội, thanh toán chi phí giám định y khoa đối với cán bộ, chiến sĩ hoặc thân nhân cán bộ, chiến sĩ bảo đảm thuận lợi, đúng quy định và phù hợp với tổ chức bộ máy của đơn vị;
+
+d) Quyết định việc giao Thủ trưởng Công an đơn vị, địa phương hoặc Thủ trưởng cơ quan tổ chức cán bộ thừa lệnh thực hiện ký số trên bản quá trình đóng bảo hiểm xã hội khi lập hồ sơ đề nghị giải quyết hưởng các chế độ: tai nạn lao động, bệnh nghề nghiệp, hưu trí, tử tuất, bảo hiểm xã hội một lần.
+
+2. Cục Tổ chức cán bộ (Bảo hiểm xã hội Công an nhân dân) có trách nhiệm hướng dẫn, kiểm tra việc thực hiện Thông tư này; chủ trì phối hợp với đơn vị có liên quan xây dựng giải pháp kỹ thuật đáp ứng đầy đủ các quy định tại Thông tư này.
+
+3. Cục Cảnh sát quản lý hành chính về trật tự xã hội, Tổng công ty Viễn thông Mobifone có trách nhiệm phối hợp với Cục Tổ chức cán bộ (Bảo hiểm xã hội Công an nhân dân) và các đơn vị chức năng xây dựng quy trình, triển khai phương án kỹ thuật trong việc thông báo đến cán bộ, chiến sĩ kết quả tiếp nhận, giải quyết các thủ tục liên quan đến công tác giải quyết hưởng chế độ bảo hiểm xã hội thông qua ứng dụng VNeID hoặc hệ thống tin nhắn.
+
+Trong quá trình thực hiện, nếu phát sinh khó khăn, vướng mắc, Công an đơn vị, địa phương báo cáo về Bộ Công an (qua Cục Tổ chức cán bộ) để hướng dẫn, giải quyết./.
+
+Nơi nhận:
+
+- Bộ Tài chính;
+
+- Các đồng chí Thứ trưởng;
+
+- Các đơn vị thuộc cơ quan Bộ Công an;
+
+- Công an tỉnh, thành phố;
+
+- Công báo, Cổng TTĐT của Chính phủ;
+
+- Cổng TTĐT Bộ Công an;
+
+- Cục KTVB và QLXLVPHC thuộc BTP;
+
+- Lưu: VT, V03, X01(P9, 140b).
+
+BỘ TRƯỞNG
+
+Đại tướng Lương Tam Quang

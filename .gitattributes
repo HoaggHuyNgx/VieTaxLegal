@@ -1,0 +1,3 @@
+# Corpus files are hashed in the manifests and chunk ids depend on their exact bytes: never
+# convert line endings.
+backend/corpus/vbpl/** -text
