@@ -14,6 +14,11 @@ services:
     build: ./backend
     depends_on:
       - qdrant
+    # Every variable in the root `.env` reaches the backend, so none is silently dropped; the
+    # `environment` entries below win over it.
+    env_file:
+      - path: .env
+        required: false
     environment:
       APP_ENV: ${APP_ENV:-development}
       DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL (Supabase Session pooler URL)}
@@ -58,7 +63,7 @@ services:
     depends_on:
       - backend
     ports:
-      - "3000:80"
+      - "127.0.0.1:3000:80" # loopback only: plain HTTP, so not offered to the local network
     restart: unless-stopped
 
 volumes:

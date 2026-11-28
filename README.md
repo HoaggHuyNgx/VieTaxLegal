@@ -161,13 +161,42 @@ $env:ANTHROPIC_API_KEY = "..."   # or OPENAI_API_KEY + CHAT_PROVIDER=openai
 docker compose up --build
 ```
 
-Open <http://localhost:3000>. The same variables can live in a `.env` file at the repository root
-(gitignored). Compose does not read `backend/.env`: set `RAG_ENABLED=true` and, if wanted,
-`RAG_CHUNK_SET`, `RAG_QUERY_PLANNER_MODEL`, `RAG_RERANK_MODEL` (+ `COHERE_API_KEY`),
-`RAG_MIN_TOP_SCORE`, `RAG_EXPAND_ARTICLES` and `CHAT_MAX_OUTPUT_TOKENS` in the root `.env`.
-`backend/corpus/` is mounted read-only; build the Qdrant index with `scripts/corpus_ingest.py`. If a
-standalone Qdrant container is running (`scripts/start-qdrant.ps1`), stop it first: both use port
-6333.
+Open <http://localhost:3000>. The port is published on `127.0.0.1` only, so other machines on your
+network cannot reach the app. To open it from a phone, change `127.0.0.1:3000:80` to `3000:80` in
+`docker-compose.yml`, knowing that the connection is plain HTTP.
+
+The same variables can live in a `.env` file at the repository root (gitignored). Compose does not
+read `backend/.env`. The backend gets every variable in the root `.env`; those listed under
+`environment` in `docker-compose.yml` (such as `QDRANT_URL`) keep the Compose value. If a standalone
+Qdrant container is running (`scripts/start-qdrant.ps1`), stop it first: both use port 6333.
+
+### RAG under Docker
+
+`docker compose up` alone gives chat without RAG: `RAG_ENABLED` is false and the index is empty. For
+the evaluated setup, put these in the root `.env`, next to `DATABASE_URL`, `JWT_SECRET`,
+`OPENAI_API_KEY` and `COHERE_API_KEY`:
+
+```text
+CHAT_PROVIDER=openai
+CHAT_MODEL=gpt-6-luna
+CHAT_MAX_OUTPUT_TOKENS=4000
+RAG_ENABLED=true
+RAG_CHUNK_SET=vbpl
+RAG_QUERY_PLANNER_MODEL=gpt-4.1-mini
+RAG_RERANK_MODEL=rerank-v5.0-fast
+RAG_MIN_TOP_SCORE=0.5
+RAG_EXPAND_ARTICLES=true
+```
+
+Then build the index inside the backend image. This calls the OpenAI embedding API (about US$0.10 by
+the dry-run estimate) and keeps the index in the `qdrant_data` volume; `backend/corpus/` is mounted
+read-only.
+
+```powershell
+docker compose run --rm backend python scripts/corpus_ingest.py --chunk-set vbpl --extra-manifest corpus/vbpl/manifest.json --extra-manifest corpus/vbpl/manual/manifest.json
+```
+
+Add `--dry-run` to see the chunk count and cost estimate without calling the API.
 
 ## Authentication and roles
 
