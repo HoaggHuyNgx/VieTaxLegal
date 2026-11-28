@@ -84,6 +84,7 @@ def generation_rows(results: list[dict]) -> list[list[str]]:
             _fmt(s["ooc_no_citation_rate"]), _fmt(refusal_rate(result.get("questions", []))),
             _ms(s["ttft_ms"]), _ms(s.get("end_to_end_ms")),
             f"{s['input_tokens']}/{s['output_tokens']}", _fmt(s.get("rerank_fallbacks")),
+            _fmt(s.get("claims_supported_rate")), _fmt(s.get("answers_with_unbacked_claim")),
             result["meta"].get("date", "-"),
         ])  # fmt: skip
     return rows
@@ -96,7 +97,8 @@ GENERATION_HEADER = ["config", "answered", "answer correct", "partial/incorrect/
                      "errors", "truncated", "cit. precision", "cit. recall",
                      "unsupported ref", "unknown doc", "needs review", "OOC no-cite",
                      "OOC refused (hand)", "TTFT ms p50/p95", "end-to-end ms p50/p95",
-                     "tokens in/out", "rerank fallbacks", "date"]  # fmt: skip
+                     "tokens in/out", "rerank fallbacks", "claims backed",
+                     "answers with unbacked claim", "date"]  # fmt: skip
 
 
 def markdown_table(header: list[str], rows: list[list[str]]) -> str:

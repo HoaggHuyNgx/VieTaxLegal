@@ -84,6 +84,16 @@ def test_generation_row_shows_answer_verdicts_and_rerank_fallbacks():
         assert _column(unrecorded, name) == "-"
 
 
+def test_generation_row_shows_how_many_claims_the_sources_back():
+    checked = _generation([])
+    checked["summary"].update(claims_supported_rate=0.9, answers_with_unbacked_claim=3)
+
+    assert _column(checked, "claims backed") == "0.900"
+    assert _column(checked, "answers with unbacked claim") == "3"
+    for name in ("claims backed", "answers with unbacked claim"):
+        assert _column(_generation([]), name) == "-"  # not checked
+
+
 def test_refusal_rate_appears_only_once_every_question_is_labelled():
     assert _column(_generation([True, None]), "OOC refused (hand)") == "-"
     assert _column(_generation([True, False, True]), "OOC refused (hand)") == "0.667"
