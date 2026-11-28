@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from dataclasses import replace
 
 from qdrant_client import AsyncQdrantClient, models
 
@@ -154,3 +155,51 @@ def test_misconfigured_rag_degrades_to_no_sources_instead_of_failing_chat(monkey
 
     assert isinstance(retriever, NullRetriever)
     assert NO_SOURCE_RULES in prompt_with_context(asyncio.run(retriever.retrieve("q")))
+
+
+def _part(ordinal: int, article: int, clause: int | None, start: int, label: str = ""):
+    locator = f"Điều {label or article}" + (f" khoản {clause}" if clause else "")
+    return replace(
+        _chunk(ordinal, f"phần {ordinal}"), article_no=article, article_nos=(article,),
+        clause_no=clause, locator=locator, char_start=start, char_end=start + 10,
+    )  # fmt: skip
+
+
+def test_expand_articles_returns_whole_articles_once_each():
+    """Small-to-big: a Khoan chunk becomes its whole Dieu; a second chunk of it is dropped."""
+    intro, k1, k2 = _part(1, 5, None, 0), _part(2, 5, 1, 20), _part(3, 5, 2, 40)
+    whole, other = _part(4, 6, None, 60), _part(5, 5, None, 80, label="5a")  # 5a: own Dieu
+    chunks = [intro, k1, k2, whole, other]
+    hits = [Hit(c.id, 1.0, c.to_payload()) for c in (k2, whole, k1, other)]
+
+    async def run():
+        retriever = await _retriever(chunks)
+        return await retriever.expand_articles(hits, limit=5)
+
+    expanded = asyncio.run(run())
+
+    assert [h.payload["locator"] for h in expanded] == ["Điều 5", "Điều 6", "Điều 5a"]
+    assert expanded[0].payload["content"] == "phần 1\nphần 2\nphần 3"
+    assert expanded[0].payload["clause_no"] is None and expanded[0].id == k2.id
+    assert expanded[1].payload == whole.to_payload()
+
+
+def test_expand_keeps_the_khoan_when_the_whole_article_is_too_long(monkeypatch):
+    chunks = [_part(1, 5, 1, 0), _part(2, 5, 2, 20)]
+    monkeypatch.setattr("app.services.rag.retrieve.qdrant_retriever.EXPAND_MAX_TOKENS", 1)
+
+    async def run():
+        retriever = await _retriever(chunks)
+        return await retriever.expand_articles([Hit(chunks[1].id, 1.0, chunks[1].to_payload())], 5)
+
+    assert asyncio.run(run())[0].payload == chunks[1].to_payload()
+
+
+def test_expand_stops_at_the_limit():
+    chunks = [_part(i, i, None, i * 10) for i in range(1, 5)]
+
+    async def run():
+        retriever = await _retriever(chunks)
+        return await retriever.expand_articles([Hit(c.id, 1.0, c.to_payload()) for c in chunks], 2)
+
+    assert len(asyncio.run(run())) == 2

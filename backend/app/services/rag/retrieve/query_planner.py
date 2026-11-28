@@ -104,7 +104,7 @@ class QueryPlanner:
 
 
 class RetrievalPipeline:
-    """Plan, search every query in parallel, gate, fuse with RRF, then rerank once."""
+    """Plan, search every query in parallel, gate, fuse with RRF, rerank once, expand to Dieu."""
 
     def __init__(
         self,
@@ -113,12 +113,14 @@ class RetrievalPipeline:
         planner: QueryPlanner | None = None,
         reranker: CohereReranker | None = None,
         min_top_score: float = 0.0,
+        expand: bool = False,
     ) -> None:
         self._inner = inner  # the plain dense/sparse/hybrid retriever being wrapped
         self._top_k = top_k
         self._planner = planner
         self._reranker = reranker
         self._min_top_score = min_top_score  # no-source gate; 0 = off
+        self._expand = expand  # whole Dieu per source (QdrantRetriever.expand_articles)
         self._rerank_timeouts = 0
 
     @property
@@ -159,7 +161,9 @@ class RetrievalPipeline:
         if plan.route == "invalid":
             return SearchOutcome(plan_info=plan_info)
         wanted = limit or self._top_k
-        fetch = max(wanted * 2, 10) if self._reranker else wanted
+        # Spare candidates: the reranker picks among them; expansion drops same-Dieu duplicates.
+        spare = self._reranker or self._expand
+        fetch = max(wanted * 2, 10) if spare else wanted
         outcomes = await asyncio.gather(
             *(self._inner.search(item, limit=fetch) for item in plan.queries)
         )
@@ -171,7 +175,11 @@ class RetrievalPipeline:
         hits = self._fuse(outcomes)
         if self._reranker:
             started = time.perf_counter()
-            hits = await self._rerank(plan.queries[0], hits, wanted)
+            hits = await self._rerank(plan.queries[0], hits, fetch if self._expand else wanted)
+            search_ms += (time.perf_counter() - started) * 1000
+        if self._expand:
+            started = time.perf_counter()
+            hits = await self._inner.expand_articles(hits, wanted)
             search_ms += (time.perf_counter() - started) * 1000
         return SearchOutcome(hits[:wanted], embed_ms, search_ms, plan_info, top_dense)
 
@@ -211,8 +219,9 @@ def build_pipeline(
         )
     if settings.rag_rerank_model:
         reranker = CohereReranker(settings.cohere_api_key, settings.rag_rerank_model)
-    if not (planner or reranker or settings.rag_min_top_score):
+    if not (planner or reranker or settings.rag_min_top_score or settings.rag_expand_articles):
         return retriever
     return RetrievalPipeline(
-        retriever, settings.rag_top_k, planner, reranker, settings.rag_min_top_score
-    )
+        retriever, settings.rag_top_k, planner, reranker, settings.rag_min_top_score,
+        settings.rag_expand_articles,
+    )  # fmt: skip

@@ -239,11 +239,33 @@ def test_invalid_route_searches_nothing():
     assert outcome.plan_info["route"] == "invalid"
 
 
+class _ExpandingInner(_Inner):
+    def __init__(self, ranking):
+        super().__init__(ranking)
+        self.expanded = []
+
+    async def expand_articles(self, hits, limit):
+        self.expanded.append(([hit.id for hit in hits], limit))
+        return hits[1:][:limit]  # pretend the first hit shared its Dieu with a later one
+
+
+def test_expand_runs_after_rerank_on_spare_candidates():
+    inner = _ExpandingInner({"a": ["1", "2", "3", "4"]})
+    reranker = _Reranker(order=["4", "3", "2", "1"])
+    retriever = RetrievalPipeline(inner, 2, reranker=reranker, expand=True)
+
+    outcome = asyncio.run(retriever.search("a"))
+
+    assert inner.calls == [("a", 10)]
+    assert inner.expanded == [(["4", "3", "2", "1"], 2)]  # reranker kept every candidate
+    assert [hit.id for hit in outcome.hits] == ["3", "2"]
+
+
 def test_pipeline_is_built_for_rerank_or_gate_alone():
     base = get_settings()
 
     rerank = {"rag_rerank_model": "rerank-test", "cohere_api_key": SecretStr("test-key")}
-    for update in (rerank, {"rag_min_top_score": 0.5}):
+    for update in (rerank, {"rag_min_top_score": 0.5}, {"rag_expand_articles": True}):
         built = build_pipeline(object(), base.model_copy(update=update))
         assert isinstance(built, RetrievalPipeline)
 

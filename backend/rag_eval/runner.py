@@ -39,6 +39,7 @@ class EvalConfig:
     query_planner_provider: str = "openai"
     query_planner_model: str | None = None  # None = no query planning
     min_top_score: float = 0.0  # no-source gate on the best dense cosine
+    expand_articles: bool = False  # whole Dieu per source after rerank (small-to-big)
     question_types: list[str] | None = None  # None = every type
     # custom = this project's pipeline; langchain_baseline = stock LangChain (retrieval tier only)
     pipeline: str = "custom"
@@ -91,9 +92,14 @@ def build_retriever(config: EvalConfig, settings: Settings) -> tuple[QdrantRetri
         if not config.rerank_model:
             raise ValueError("rerank='cohere' needs rerank_model.")
         reranker = CohereReranker(settings.cohere_api_key, config.rerank_model)
-    if planner or reranker or config.min_top_score:
+    if planner or reranker or config.min_top_score or config.expand_articles:
         retriever = RetrievalPipeline(
-            retriever, config.top_k, planner, reranker, config.min_top_score
+            retriever,
+            config.top_k,
+            planner,
+            reranker,
+            config.min_top_score,
+            config.expand_articles,
         )
     return retriever, embedder
 

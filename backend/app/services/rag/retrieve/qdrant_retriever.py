@@ -24,11 +24,14 @@ from app.services.rag.index.qdrant_store import (
     collection_name,
     get_async_client,
 )
+from app.services.rag.ingest.chunking import estimate_tokens
 from app.services.rag.retrieve.fusion import RRF_K, rrf_fuse
 from app.services.rag.retrieve.reranker import Reranker
 
 logger = logging.getLogger(__name__)
 EXCERPT_CHARS = 300
+# A whole Dieu above this stays as the matched Khoan (92% of split Dieu in the vbpl set fit).
+EXPAND_MAX_TOKENS = 3000
 
 
 @dataclass(frozen=True)
@@ -136,6 +139,48 @@ class QdrantRetriever:
         hits = [Hit(i, score, by_id[i].payload or {}) for i, score in fused[:limit]]
         return hits, (dense[0].score if dense else None)
 
+    async def expand_articles(self, hits: list[Hit], limit: int) -> list[Hit]:
+        """Small-to-big: one source per Dieu, a Khoan chunk replaced by its whole Dieu.
+
+        Long Dieu are indexed as an intro plus one chunk per Khoan, so search matches a precise
+        Khoan but the answer may need its siblings (definitions, exceptions). Later chunks of a
+        Dieu already returned are dropped, so `hits` should hold spare candidates.
+        """
+        unique, seen = [], set()
+        for hit in hits:
+            key = _article_key(hit.payload, hit.id)
+            if key not in seen:
+                seen.add(key)
+                unique.append(hit)
+            if len(unique) == limit:
+                break
+        return list(await asyncio.gather(*(self._whole_article(hit) for hit in unique)))
+
+    async def _whole_article(self, hit: Hit) -> Hit:
+        payload = hit.payload
+        if payload.get("article_no") is None:
+            return hit
+        conditions = [
+            models.FieldCondition(key=key, match=models.MatchValue(value=payload[key]))
+            for key in ("doc_slug", "article_no")
+        ]
+        points, _ = await self._client.scroll(
+            self._collection, scroll_filter=models.Filter(must=conditions), limit=200
+        )
+        key = _article_key(payload, hit.id)  # Dieu 5 and 5a share article_no; locator differs
+        parts = [p.payload or {} for p in points if _article_key(p.payload or {}, "") == key]
+        if len(parts) < 2:
+            return hit
+        parts.sort(key=lambda part: part.get("char_start", 0))
+        content = "\n".join(str(part.get("content", "")) for part in parts)
+        if estimate_tokens(content) > EXPAND_MAX_TOKENS:
+            return hit
+        whole = {
+            **payload, "content": content, "locator": _article_label(payload), "clause_no": None,
+            "char_start": parts[0].get("char_start"), "char_end": parts[-1].get("char_end"),
+        }  # fmt: skip
+        return Hit(hit.id, hit.score, whole)
+
     async def retrieve(self, query: str) -> RetrievalResult:
         try:
             outcome = await self.search(query)
@@ -143,6 +188,16 @@ class QdrantRetriever:
             logger.warning("RAG retrieval failed: %s", type(error).__name__)
             return RetrievalResult(searched=True)
         return hits_to_result(outcome.hits)
+
+
+def _article_label(payload: dict[str, Any]) -> str:
+    return str(payload.get("locator") or "").split(" khoản ")[0]  # "Điều 5a khoản 2" -> "Điều 5a"
+
+
+def _article_key(payload: dict[str, Any], chunk_id: str) -> tuple:
+    if payload.get("article_no") is None:  # not an article chunk: never merged
+        return ("chunk", chunk_id)
+    return (payload.get("doc_slug"), _article_label(payload))
 
 
 def hits_to_result(hits: list[Hit]) -> RetrievalResult:

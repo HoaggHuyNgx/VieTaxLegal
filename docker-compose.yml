@@ -45,6 +45,7 @@ services:
       RAG_RERANK_MODEL: ${RAG_RERANK_MODEL:-}
       COHERE_API_KEY: ${COHERE_API_KEY:-}
       RAG_MIN_TOP_SCORE: ${RAG_MIN_TOP_SCORE:-0}
+      RAG_EXPAND_ARTICLES: ${RAG_EXPAND_ARTICLES:-false}
       QDRANT_URL: http://qdrant:6333
     volumes:
       - ./backend/corpus:/app/corpus:ro # source of truth for RAG; the index is rebuildable

@@ -45,6 +45,8 @@ class Settings(BaseSettings):
     cohere_api_key: SecretStr | None = None
     # No sources when the question's best dense cosine is below this (0 = off).
     rag_min_top_score: float = 0.0
+    # Replace a matched Khoan chunk by its whole Dieu (one source per Dieu) after rerank.
+    rag_expand_articles: bool = False
     # Model that writes eval questions. Blank = CHAT_MODEL (set a different one to limit bias).
     eval_generator_model: str = ""
     embedding_provider: str = "openai"

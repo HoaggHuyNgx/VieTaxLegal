@@ -152,6 +152,7 @@ History is also capped at 40,000 characters (`MAX_HISTORY_CHARACTERS` in
 | `RAG_RERANK_MODEL`           | empty                    | Cohere Rerank model (e.g. `rerank-v5.0-fast`); empty = off.     |
 | `COHERE_API_KEY`             | empty                    | Needed when `RAG_RERANK_MODEL` is set.                          |
 | `RAG_MIN_TOP_SCORE`          | `0`                      | "No source" when the best dense cosine is lower; `0` = off.     |
+| `RAG_EXPAND_ARTICLES`        | `false`                  | Replace a matched Khoản chunk by its whole Điều (one per Điều). |
 | `EMBEDDING_PROVIDER`         | `openai`                 | `openai`, `bkai` (local, experiment only) or `fake` (tests).    |
 | `EMBEDDING_MODEL`            | `text-embedding-3-small` | Embedding model; the Qdrant collection name is derived from it. |
 | `EMBEDDING_DIMENSIONS`       | empty                    | OpenAI only: shorter vectors; empty = model default.            |
@@ -463,6 +464,10 @@ Retrieval options:
   `rerank_fallbacks` in eval results. Without the key RAG does not start (chat answers with no sources).
 - `RAG_MIN_TOP_SCORE` returns "no source" when the original question's best dense cosine is below
   the threshold.
+- `RAG_EXPAND_ARTICLES` (small-to-big): a long Điều is indexed as an intro plus one chunk per
+  Khoản, so search matches a precise Khoản; after rerank each source becomes its whole Điều
+  (all its chunks in order, kept as the Khoản when over 3000 tokens) and later chunks of the same
+  Điều are dropped, so the reranker returns spare candidates.
 
 `scripts/corpus_import_vbpl.py` (extra `corpus`) imports documents from the vbpl dataset into
 `corpus/vbpl/` (not in git). It takes the dataset's `metadata` and `content` parquet files and an
