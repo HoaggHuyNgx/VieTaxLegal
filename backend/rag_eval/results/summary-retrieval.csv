@@ -21,5 +21,7 @@ hybrid-vbpl-cohere [dev],vbpl,hybrid,cohere,41,0.707,0.878,0.878,0.789,372/524,7
 hybrid-vbpl-full-cohere-expand [dev],vbpl,hybrid,cohere,41,0.707,0.854,0.878,0.783,340/569,874/1319,3680/4817,2026-11-27
 hybrid-vbpl-full-cohere [dev],vbpl,hybrid,cohere,41,0.707,0.878,0.878,0.789,377/558,918/1119,3550/4691,2026-11-27
 hybrid-vbpl [dev],vbpl,hybrid,-,41,0.463,0.683,0.829,0.595,323/623,18/39,341/644,2026-11-27
+ab-planner-off [dev],vbpl,hybrid,cohere,41,0.707,0.878,0.878,0.789,354/535,770/903,1121/1322,2026-11-28
+ab-planner-on [dev],vbpl,hybrid,cohere,41,0.707,0.902,0.902,0.801,345/519,859/1037,3750/4409,2026-11-28
 hybrid-vbpl-full-cohere-expand [dev],vbpl,hybrid,cohere,41,0.732,0.927,0.927,0.825,344/557,863/1024,3969/4373,2026-11-28
 hybrid-vbpl-full-cohere-expand [test],vbpl,hybrid,cohere,40,0.725,0.900,0.925,0.806,342/570,863/1036,3720/4546,2026-11-28

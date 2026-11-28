@@ -27,6 +27,8 @@ Counts are small (tens of questions): differences of a few points are within noi
 | hybrid-vbpl-full-cohere-expand [dev] | vbpl | hybrid | cohere | 41 | 0.707 | 0.854 | 0.878 | 0.783 | 340/569 | 874/1319 | 3680/4817 | 2026-11-27 |
 | hybrid-vbpl-full-cohere [dev] | vbpl | hybrid | cohere | 41 | 0.707 | 0.878 | 0.878 | 0.789 | 377/558 | 918/1119 | 3550/4691 | 2026-11-27 |
 | hybrid-vbpl [dev] | vbpl | hybrid | - | 41 | 0.463 | 0.683 | 0.829 | 0.595 | 323/623 | 18/39 | 341/644 | 2026-11-27 |
+| ab-planner-off [dev] | vbpl | hybrid | cohere | 41 | 0.707 | 0.878 | 0.878 | 0.789 | 354/535 | 770/903 | 1121/1322 | 2026-11-28 |
+| ab-planner-on [dev] | vbpl | hybrid | cohere | 41 | 0.707 | 0.902 | 0.902 | 0.801 | 345/519 | 859/1037 | 3750/4409 | 2026-11-28 |
 | hybrid-vbpl-full-cohere-expand [dev] | vbpl | hybrid | cohere | 41 | 0.732 | 0.927 | 0.927 | 0.825 | 344/557 | 863/1024 | 3969/4373 | 2026-11-28 |
 | hybrid-vbpl-full-cohere-expand [test] | vbpl | hybrid | cohere | 40 | 0.725 | 0.900 | 0.925 | 0.806 | 342/570 | 863/1036 | 3720/4546 | 2026-11-28 |
 
@@ -47,6 +49,8 @@ the question contain. Not proof of fabrication; undefined without retrieval.
 | rag-app-cohere [dev] | 47 | 0.683 | 9/0/4 | 0 | 0 | 0.693 | 0.846 | 0.000 | 0.021 | 2 | 0.500 | - | 2109/4924 | 7745/13770 | 111485/19579 | - | 2026-11-27 |
 | rag-app-cohere-vbpl-expand [dev] | 47 | 0.707 | 8/1/3 | 0 | 0 | 0.694 | 0.837 | 0.000 | 0.021 | 4 | 0.500 | - | 2234/5174 | 7441/11694 | 247983/21660 | - | 2026-11-27 |
 | rag-app-cohere-vbpl [dev] | 47 | 0.707 | 7/0/5 | 0 | 0 | 0.625 | 0.789 | 0.000 | 0.021 | 2 | 0.667 | - | 1884/3848 | 6710/11310 | 119780/17768 | - | 2026-11-27 |
+| ab-expand-off [dev] | 47 | 0.732 | 8/2/1 | 0 | 0 | 0.671 | 0.862 | 0.000 | 0.021 | 5 | 0.500 | - | 1932/3996 | 8010/11678 | 134515/18722 | 0 | 2026-11-28 |
+| ab-expand-on [dev] | 47 | 0.780 | 6/1/2 | 0 | 0 | 0.667 | 0.870 | 0.000 | 0.021 | 2 | 0.500 | - | 1862/5894 | 8158/13976 | 246434/20841 | 0 | 2026-11-28 |
 | rag-app-cohere-vbpl-expand [dev] | 47 | 0.659 | 8/4/2 | 0 | 0 | 0.677 | 0.862 | 0.000 | 0.021 | 4 | 0.667 | - | 2070/4168 | 7815/11312 | 247677/19282 | - | 2026-11-28 |
 | rag-app-cohere-vbpl-expand [test] | 44 | 0.800 | 6/2/0 | 0 | 0 | 0.700 | 0.887 | 0.000 | 0.023 | 3 | 0.500 | - | 2165/4496 | 7845/11876 | 218114/17350 | 0 | 2026-11-28 |
 
@@ -262,6 +266,21 @@ the question contain. Not proof of fabrication; undefined without retrieval.
 - `q051` [wrong_document] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
 - `q059` [right_doc_wrong_article] Tôi đăng ký vốn công ty cao hơn số tiền thực góp, đồng thời định giá tài sản đưa vào góp vốn cao hơn giá trị thực thì có vi phạm điều cấm nào không? -> gold [['luat-doanh-nghiep-59-2020-qh14', 16]]
 - `q045` [wrong_document] Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+
+### ab-planner-off [dev]
+
+- `h11` [right_doc_wrong_article] Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào? -> gold [['luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh', 9]]
+- `h12` [right_doc_wrong_article] Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn? -> gold [['luat-doanh-nghiep-59-2020-qh14', 46]]
+- `q051` [right_doc_wrong_article] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `q001` [wrong_document] Doanh nghiệp tôi muốn biết cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế, thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế? -> gold [['luat-quan-ly-thue-108-2025-qh15', 18]]
+- `q045` [right_doc_wrong_article] Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+
+### ab-planner-on [dev]
+
+- `q045` [right_doc_wrong_article] Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `q001` [wrong_document] Doanh nghiệp tôi muốn biết cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế, thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế? -> gold [['luat-quan-ly-thue-108-2025-qh15', 18]]
+- `q051` [right_doc_wrong_article] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `h11` [right_doc_wrong_article] Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào? -> gold [['luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh', 9]]
 
 ### hybrid-vbpl-full-cohere-expand [dev]
 

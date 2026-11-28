@@ -1,0 +1,15 @@
+{
+  "require_in_force": true,
+  "top_k": 5,
+  "min_similarity": 0.0,
+  "name": "ab-planner-on",
+  "tier": "retrieval",
+  "chunk_set": "vbpl",
+  "mode": "hybrid",
+  "query_planner_provider": "openai",
+  "query_planner_model": "gpt-4.1-mini",
+  "rerank": "cohere",
+  "rerank_model": "rerank-v5.0-fast",
+  "min_top_score": 0.5,
+  "expand_articles": true
+}
