@@ -328,8 +328,8 @@ How far these numbers can be trusted:
 
 - The sample is small: for 32 of 40, a 95% interval is roughly 65% to 90%.
 - All answerable questions were written from the 23 hand-collected documents, not from the other 300.
-- Questions and gold answers were written by AI and checked against the law text by AI. The project
-  author spot-checked 20 of them, 10 from the test split. No lawyer has reviewed them.
+- Questions and gold answers were drafted with AI assistance. The project author has read all 89 of
+  them and confirmed the cited article for 20. No lawyer has reviewed them.
 - "Correct" is the verdict of an LLM judge (`gpt-4.1-mini`) comparing with the gold answer.
 
 ### A-B comparisons
@@ -369,7 +369,7 @@ sources (`scripts/eval_faithfulness.py`).
 | Test  | 82 of 87                  | 3 of 44                           |
 | Dev   | 100 of 103                | 2 of 47                           |
 
-The 8 flagged claims were reviewed by an AI, not a person: none was a real error. To see what the
+The project author reviewed the 8 flagged claims: none was a real error. To see what the
 checker misses, one detail was changed on purpose in 24 answers: it caught 11 of 12 wrong figures
 but only 6 of 12 reversed meanings. It had been fixed once before, after earlier planted errors
 showed it rewriting a wrong figure to match the source; these 24 were new to it. So no invented

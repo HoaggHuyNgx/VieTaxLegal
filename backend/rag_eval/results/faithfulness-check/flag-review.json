@@ -1,5 +1,5 @@
 {
-  "reviewer": "Claude (AI) on 2026-11-28; not a person or a lawyer",
+  "reviewer": "Reasons drafted with AI assistance; the project author reviewed all 8 flags and agreed on 2026-11-28. No lawyer.",
   "flags": [
     {
       "run": "2026-11-28-rag-app-cohere-vbpl-expand-generation-test",
