@@ -25,15 +25,14 @@ This is a graduation thesis project and is still in progress.
 | Anthropic and OpenAI providers (via LangChain)                 | Done            |
 | Per-minute and per-day chat limits                             | Done            |
 | Vietnamese / English interface                                 | Done            |
-| Legal corpus (23 documents, 21 indexed) and Điều/Khoản parser  | Done            |
+| Legal corpus (323 documents indexed) and Điều/Khoản parser     | Done            |
 | Qdrant index, OpenAI embeddings, dense / sparse / hybrid       | Done            |
-| Query rewriting, reranking, "no source" gate (optional)        | Done            |
+| Query rewriting, Cohere reranking, "no source" gate (optional) | Done            |
+| Whole-article expansion of each source (optional)              | Done            |
+| English questions answered in English from the same sources    | Done            |
 | Real citations: stored, returned and shown                     | Done            |
-| RAG evaluation (questions, metrics, runner, comparison, export) | Done\*          |
+| RAG evaluation (questions, metrics, runner, comparison, export) | Done            |
 | Tax calculation, contract scanning, file attachments           | Not built       |
-
-\* The evaluation questions still need human review. Until then every result is marked
-`provisional` and must not be quoted as a final number.
 
 When RAG is off or finds nothing, the assistant shows no sources, never invents document numbers or
 articles, and always reminds the user to check that a document is still in force.
@@ -235,24 +234,75 @@ error code table is in [backend/README.md](backend/README.md#error-format).
 
 ```text
 Legal documents (backend/corpus/, tracked in git)
-  → text extraction (DOCX / PDF)
+  → text extraction (DOCX / PDF / portal HTML)
   → split by Điều / Khoản / Điểm, check numbering order and gaps
   → dense embedding (OpenAI) + sparse vector (hand-written BM25)
   → Qdrant (rebuildable from corpus/)
   → [optional] rewrite the question into several queries
   → dense / sparse / hybrid (RRF) search, in-force documents only
-  → [optional] rerank, "no source" gate
-  → the model answers and writes [n]; only cited sources are stored and shown
+  → [optional] "no source" gate, rerank (Cohere), expand each source to its whole Điều
+  → the model answers in the question's language and writes [n]; only cited sources are
+    stored and shown
 ```
 
-`backend/corpus/` is the source of truth; the Qdrant index can be deleted and rebuilt at any time.
-Steps for building the index and running the evaluation are in
+`backend/corpus/` is the source of truth; the Qdrant index can be deleted and rebuilt at any time
+(rebuilding calls the embedding API). Steps for building the index and running the evaluation are in
 [backend/README.md](backend/README.md#ai-and-rag).
 
-Result tables are generated into `backend/rag_eval/results/SUMMARY.md` by
+### Corpus
+
+| Set                                        | Documents       | Used for                               |
+| ------------------------------------------ | --------------- | -------------------------------------- |
+| `corpus/manifest.json` (hand-collected)    | 23 (21 indexed) | `article` chunk set, early experiments |
+| plus `corpus/vbpl/` (imported + by hand)   | 323 indexed     | `vbpl` chunk set, the evaluated app    |
+
+The 323 documents are 23 laws, 95 decrees, 203 circulars and 2 consolidated texts on tax and
+household business (103), enterprise and investment (138), and labour, social insurance and wages
+(82), the newest issued in July 2026. All but 7 older laws were issued in 2020 or later.
+
+Most of `corpus/vbpl/texts/` comes from the dataset
+[th1nhng0/vietnamese-legal-documents](https://huggingface.co/datasets/th1nhng0/vietnamese-legal-documents)
+(revision `8977887`, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)), a snapshot of the
+vbpl.vn portal. Changes made here: only the selected documents were kept, their HTML was turned into
+plain text, and documents that failed the structure checks were left out. Documents missing or broken
+in the dataset were added from Công báo files (`corpus/vbpl/manual/`). The selection lists are in
+`corpus/vbpl/selection/`. Whether each document is still in force comes from that snapshot and from
+scans of effect clauses; no person has verified it.
+
+### Evaluation results
+
+Test split, run once on 2026-11-28 at commit `3543dea` with the settings the app uses: `vbpl` set,
+hybrid search, query planner `gpt-4.1-mini`, Cohere `rerank-v5.0-fast` (no fallbacks), gate 0.5,
+whole-article expansion, 5 sources, answers by OpenAI `gpt-6-luna`. Parameters were chosen on the
+dev split only.
+
+| Measure (40 answerable questions)              | Result                   |
+| ---------------------------------------------- | ------------------------ |
+| Gold article ranked first / in the top 5       | 72.5% / 92.5% (MRR 0.81) |
+| Answer correct / partial / incorrect           | 32 (80%) / 6 / 2         |
+| Citation precision / recall                    | 0.70 / 0.89              |
+| Answers with a reference not in their sources¹  | 0 of all 44              |
+| Time to full answer, median / 95th percentile  | 7.8 s / 11.9 s           |
+
+¹ A document number or article found neither in the retrieved passages nor in the question. 3
+answers name an article by the law's name only, which cannot be checked automatically.
+
+Both incorrect answers followed a search that missed the gold article. The gate stopped none of the
+4 out-of-corpus questions; whether the model's answers to them count as refusals still has to be
+marked by a person.
+
+How far these numbers can be trusted:
+
+- The sample is small: for 32 of 40, a 95% interval is roughly 65% to 90%.
+- All answerable questions were written from the 23 hand-collected documents, not from the other 300.
+- Questions and gold answers were written by AI and checked against the law text by AI. The project
+  author spot-checked 20 of them, 10 from the test split. No lawyer has reviewed them.
+- "Correct" is the verdict of an LLM judge (`gpt-4.1-mini`) comparing with the gold answer.
+
+All result tables are generated into `backend/rag_eval/results/SUMMARY.md` by
 `scripts/eval_export_results.py`. Results measured before 2026-11-26 are archived in
 `rag_eval/results/superseded-261126/` because the scoring changed; do not compare them with new
-results. All current numbers stay `provisional` until the question set is human-reviewed.
+results.
 
 ## Quality checks
 

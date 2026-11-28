@@ -425,7 +425,8 @@ Timeouts: chat provider 60 s, query embedding 15 s, planner and reranker 8 s eac
 ### Corpus and index
 
 - `corpus/` is the source of truth: `manifest.json` (maintained by a person), `raw/` (downloaded
-  files) and `texts/` (extracted text). Qdrant is a derived index that can be deleted and rebuilt.
+  files), `texts/` (extracted text) and `vbpl/` (the larger set, see below). Qdrant is a derived
+  index that can be deleted and rebuilt.
 - `status`, `effective_from` and `effective_to` in the manifest are filled by a person after checking
   the official source, never inferred. With `RAG_REQUIRE_IN_FORCE=true`, only `in_force` documents
   are returned. The manifest has 23 documents; 21 are indexed.
@@ -474,17 +475,35 @@ Retrieval options:
   (all its chunks in order, kept as the Khoản when over 3000 tokens) and later chunks of the same
   Điều are dropped, so the reranker returns spare candidates.
 
-`scripts/corpus_import_vbpl.py` (extra `corpus`) imports documents from the vbpl dataset into
-`corpus/vbpl/` (not in git). It takes the dataset's `metadata` and `content` parquet files and an
-inventory CSV (`tier`, `fields`, `id`): only `A_core` rows are imported, documents already in
+### The `vbpl` set
+
+`corpus/vbpl/` is committed, so the index of the evaluated app can be rebuilt without the original
+dataset. `.gitattributes` stops git from changing line endings there, because the manifests hash the
+texts and chunk ids depend on their bytes.
+
+```powershell
+.\.venv\Scripts\python.exe scripts\corpus_ingest.py --chunk-set vbpl --extra-manifest corpus/vbpl/manifest.json --extra-manifest corpus/vbpl/manual/manifest.json
+```
+
+Then set `RAG_CHUNK_SET=vbpl`. This indexes 323 documents (13,733 chunks) and calls the embedding
+API. `--extra-manifest` is repeatable; a full run without `corpus/vbpl/manifest.json` is refused,
+because it would delete everything imported.
+
+`scripts/corpus_import_vbpl.py` (extra `corpus`) made the imported part from the dataset
+[th1nhng0/vietnamese-legal-documents](https://huggingface.co/datasets/th1nhng0/vietnamese-legal-documents)
+(revision `8977887`, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)); the texts are plain
+text extracted from the dataset's HTML. It takes the dataset's `metadata` and `content` parquet files
+and an inventory CSV (`tier`, `fields`, `id`): only `A_core` rows are imported, documents already in
 `corpus/manifest.json` are skipped, and each document gets the field `tax`, `enterprise` or `labor`
 from its inventory tags. Amending documents are kept and marked in `notes`. Documents whose dataset
 copy is missing or broken are added by hand from Công báo files in `corpus/vbpl/manual/` (own
-`manifest.json`, `raw/`, `texts/`; the import never touches it). Ingest them with
-`corpus_ingest.py --chunk-set vbpl --extra-manifest corpus/vbpl/manifest.json --extra-manifest corpus/vbpl/manual/manifest.json`
-(`--extra-manifest` is repeatable; a full run without `corpus/vbpl/manifest.json` is refused, because it
-would delete everything imported) and set `RAG_CHUNK_SET=vbpl`.
-Their status comes from a snapshot of the vbpl portal and has not been checked by a person.
+`manifest.json`, `raw/`, `texts/`; the import never touches it).
+
+`corpus/vbpl/selection/` records which documents were chosen and dropped: `inventory.csv` (every
+candidate with its tier; the import input), `expiry-findings.csv` and `parent-findings.csv` (what the
+scans of effect clauses and of parent laws found, with the decision taken) and `import-skipped.csv`
+(documents not imported). The status of these documents comes from a snapshot of the vbpl portal and
+those scans, and has not been checked by a person.
 
 ### Evaluation
 
