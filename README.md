@@ -332,6 +332,50 @@ How far these numbers can be trusted:
   author spot-checked 20 of them, 10 from the test split. No lawyer has reviewed them.
 - "Correct" is the verdict of an LLM judge (`gpt-4.1-mini`) comparing with the gold answer.
 
+### A-B comparisons
+
+Dev split, 41 answerable questions unless noted. Each row changes one thing; p is an exact McNemar
+test on the same questions, and below 0.05 the difference is unlikely to be chance.
+
+| Without → with                | Measure                                    | Result                | p       |
+| ----------------------------- | ------------------------------------------ | --------------------- | ------- |
+| RAG¹                          | Answers naming a document outside the corpus (of 47) | 17 → 1      | < 0.001 |
+| RAG¹                          | Answers correct                            | 21 → 25               | 0.42    |
+| Cohere rerank                 | Gold article ranked first                  | 19 → 29               | 0.02    |
+| Hybrid instead of dense¹      | Gold article in the top 5                  | 28 → 34               | 0.07    |
+| Điều/Khoản chunks¹ ²          | Gold article in the top 5                  | 29 → 34               | 0.18    |
+| Query planner                 | Gold article in the top 5                  | 36 → 37               | 1.00    |
+|                               | Median retrieval time                      | 1.1 s → 3.8 s         |         |
+| Whole-article expansion       | Answers correct                            | 30 → 32               | 0.73    |
+|                               | Input tokens, 47 answers                   | 135k → 246k           |         |
+
+¹ Measured on 2026-11-26 on the 23 hand-collected documents; the other rows use the 323.
+² Fixed-size windows → Điều/Khoản chunks.
+
+A document outside the corpus is not necessarily invented: it can be real and simply not collected.
+
+The planner and the expansion have not shown a clear benefit on this sample, although both cost time
+or tokens. They stay on because the test result above was measured with them, and the planner is
+what lets an English question be searched in Vietnamese.
+
+### Faithfulness
+
+Are the claims in an answer backed by the text the model was given? An LLM (`gpt-4.1-mini`) splits
+each stored answer into claims, quoting it word for word, and checks them against the rebuilt
+sources (`scripts/eval_faithfulness.py`).
+
+| Split | Claims labelled supported | Answers that could not be checked |
+| ----- | ------------------------- | --------------------------------- |
+| Test  | 82 of 87                  | 3 of 44                           |
+| Dev   | 100 of 103                | 2 of 47                           |
+
+The 8 flagged claims were reviewed by an AI, not a person: none was a real error. To see what the
+checker misses, one detail was changed on purpose in 24 answers: it caught 11 of 12 wrong figures
+but only 6 of 12 reversed meanings. It had been fixed once before, after earlier planted errors
+showed it rewriting a wrong figure to match the source; these 24 were new to it. So no invented
+content was found, but a reversed meaning could pass unnoticed, and the checker takes only about 2
+claims from each answer. Details are in `backend/rag_eval/results/faithfulness-check/`.
+
 All result tables are generated into `backend/rag_eval/results/SUMMARY.md` by
 `scripts/eval_export_results.py`. Results measured before 2026-11-26 are archived in
 `rag_eval/results/superseded-261126/` because the scoring changed; do not compare them with new

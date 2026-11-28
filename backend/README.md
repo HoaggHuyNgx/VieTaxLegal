@@ -512,6 +512,7 @@ those scans, and has not been checked by a person.
 .\.venv\Scripts\python.exe scripts\eval_review.py          # human review: a/r/e/s/q
 .\.venv\Scripts\python.exe scripts\eval_run.py rag_eval/configs/retrieval/hybrid-article.json --split dev
 .\.venv\Scripts\python.exe scripts\eval_judge_answers.py rag_eval/results/<file>.json --model <id>
+.\.venv\Scripts\python.exe scripts\eval_faithfulness.py rag_eval/results/<file>.json --model <id>
 .\.venv\Scripts\python.exe scripts\eval_export_results.py  # rag_eval/results/SUMMARY.md + CSV
 .\.venv\Scripts\python.exe scripts\eval_compare.py rag_eval/results/A.json rag_eval/results/B.json
 ```
@@ -547,6 +548,8 @@ Configs live in `rag_eval/configs/`, split by `tier`: `retrieval/` (measures sea
     `false` on each `out_of_corpus` row of the result file, then rerun `eval_export_results.py`.
   - `eval_judge_answers.py` scores stored answers against `gold_answer` with a judge model (use a
     different model from the one that answered).
+  - `eval_faithfulness.py` checks the claims of stored answers against the sources they were given,
+    rebuilt from the Qdrant index; the corpus and retrieval code must be those of the run.
 - **Baseline**: `langchain-baseline.json` runs a textbook RAG pipeline (LangChain
   `RecursiveCharacterTextSplitter` 1200/200 characters, dense only, in memory) against the same
   questions and article-level scoring. Needs the `eval-baseline` extra and one full corpus
