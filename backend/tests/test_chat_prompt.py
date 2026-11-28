@@ -10,6 +10,11 @@ def test_rag_off_keeps_the_plain_prompt():
     assert prompt_with_context(RetrievalResult()) == SYSTEM_PROMPT
 
 
+def test_answers_follow_the_question_language_with_numbers_kept_verbatim():
+    assert "ngôn ngữ của câu hỏi" in SYSTEM_PROMPT
+    assert "giữ nguyên số hiệu" in SYSTEM_PROMPT and "chỉ văn bản tiếng Việt" in SYSTEM_PROMPT
+
+
 def test_sources_never_get_the_no_source_rules():
     context = RetrievedContext(content="Nội dung", citation_id="1")
 

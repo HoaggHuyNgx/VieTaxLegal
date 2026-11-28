@@ -40,7 +40,7 @@ class FakeProvider:
         max_output_tokens: int,
     ) -> AsyncIterator[ProviderEvent]:
         self.received_messages = list(messages)
-        assert "tiếng Việt" in system_prompt
+        assert "Bạn là trợ lý tra cứu pháp luật Việt Nam" in system_prompt
         assert max_output_tokens > 0
         for chunk in self.chunks:
             yield ProviderEvent(kind="delta", text=chunk)

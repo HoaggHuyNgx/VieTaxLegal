@@ -219,6 +219,46 @@ def test_gate_uses_the_original_question_not_a_rewrite():
     assert asyncio.run(retriever.search("a")).hits == []
 
 
+def test_a_foreign_question_is_gated_and_reranked_on_its_vietnamese_rewrite():
+    """Cross-lingual cosine is far lower (EN ~0.4, VI ~0.65): the English text would be gated."""
+    inner = _Inner({"en": ["1", "2"], "thuế": ["2", "3"]})
+    inner.top_dense = {"en": 0.4, "thuế": 0.7}
+    reranker = _Reranker(order=["3", "2"])
+    planner = _Planner(QueryPlan("law", ("en", "thuế")))
+    retriever = RetrievalPipeline(inner, 2, planner, reranker, min_top_score=0.5)
+
+    outcome = asyncio.run(retriever.search("en"))
+
+    assert [hit.id for hit in outcome.hits] == ["3", "2"]
+    assert reranker.queries == ["thuế"] and outcome.top_dense == 0.7
+    assert inner.calls == [("thuế", 10)]  # the English wording is not searched
+
+
+@pytest.mark.parametrize(
+    ("queries", "searched"),
+    [
+        (
+            ("What fine?", "What fine in Vietnam?", "Mức phạt là bao nhiêu?"),
+            ("Mức phạt là bao nhiêu?",),
+        ),
+        (("What fine?", "What fine in Vietnam?"), ("What fine?", "What fine in Vietnam?")),
+        (("Mức phạt?", "Mức phạt hóa đơn"), ("Mức phạt?", "Mức phạt hóa đơn")),
+        (("thue gtgt bao nhieu", "Thuế GTGT là bao nhiêu"), ("Thuế GTGT là bao nhiêu",)),
+    ],
+)
+def test_a_question_without_vietnamese_is_searched_by_its_vietnamese_rewrites(queries, searched):
+    assert QueryPlan("law", queries).searched == searched
+
+
+def test_a_foreign_question_without_a_rewrite_keeps_the_original():
+    inner = _Inner({"en": ["1"]})
+    inner.top_dense = {"en": 0.4}
+    planner = _Planner(QueryPlan("law", ("en",)))
+    retriever = RetrievalPipeline(inner, 5, planner, min_top_score=0.5)
+
+    assert asyncio.run(retriever.search("en")).hits == []
+
+
 def test_gate_passes_at_the_threshold_and_when_no_dense_score_exists():
     inner = _Inner({"a": ["1"], "b": ["2"]})
     inner.top_dense = {"a": 0.5}

@@ -463,7 +463,12 @@ Retrieval options:
   `COHERE_API_KEY`); on an API error or timeout the fused order is kept and counted as
   `rerank_fallbacks` in eval results. Without the key RAG does not start (chat answers with no sources).
 - `RAG_MIN_TOP_SCORE` returns "no source" when the original question's best dense cosine is below
-  the threshold.
+  the threshold. A question with no Vietnamese letters (English, or Vietnamese typed without marks)
+  is searched by the planner's Vietnamese rewrites only, and the gate and the reranker judge the
+  first of them: cross-lingual cosine is far lower (English ~0.4 vs Vietnamese ~0.65 for the same
+  question), so the English text would always be gated, and its own hits crowd out the right ones.
+  Without the planner or a Vietnamese rewrite, the question is searched as written. The answer
+  follows the question's language and keeps document, article and clause numbers as in the sources.
 - `RAG_EXPAND_ARTICLES` (small-to-big): a long Điều is indexed as an intro plus one chunk per
   Khoản, so search matches a precise Khoản; after rerank each source becomes its whole Điều
   (all its chunks in order, kept as the Khoản when over 3000 tokens) and later chunks of the same
