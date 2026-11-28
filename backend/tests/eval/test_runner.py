@@ -234,6 +234,36 @@ def test_generation_tier_counts_cut_off_answers_and_times_the_whole_retrieval():
     assert summary["end_to_end_ms"]["p50"] >= rows[0]["retrieval_ms"]
 
 
+def test_generation_tier_paces_questions_and_reports_rerank_fallbacks(monkeypatch):
+    """A rate-limited reranker falls back silently: pace the run and record how often it did."""
+    events = []
+
+    async def fake_sleep(seconds: float) -> None:
+        events.append(seconds)
+
+    class Recording:
+        index_info = {"rerank_fallbacks": 2}
+
+        async def search(self, query: str, limit: int | None = None) -> SearchOutcome:
+            events.append(query)
+            return SearchOutcome()
+
+    monkeypatch.setattr("rag_eval.generation_tier.asyncio.sleep", fake_sleep)
+    questions = [_question(text, text) for text in ("a", "b", "c")]
+    provider = FakeProvider({text: "ok" for text in ("a", "b", "c")})
+
+    async def run():
+        config = EvalConfig("t", tier="generation")
+        return await run_generation_tier(
+            config, Recording(), provider, questions, 100, pause_seconds=7
+        )
+
+    summary, _ = asyncio.run(run())
+
+    assert events == ["a", 7, "b", 7, "c"]  # one question at a time, no wait before the first
+    assert summary["rerank_fallbacks"] == 2
+
+
 def test_result_metadata_pins_code_questions_and_corpus_text():
     questions = [_question("q", "câu hỏi")]
     changed = [_question("q", "câu hỏi", article=3)]

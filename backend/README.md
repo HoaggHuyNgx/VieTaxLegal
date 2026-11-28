@@ -509,9 +509,10 @@ Configs live in `rag_eval/configs/`, split by `tier`: `retrieval/` (measures sea
   numbers from `--split test`. Questions written after parameters were fixed can be set by hand to
   `"split": "holdout"`; only `--split holdout` scores them. Without `--split`, everything except
   `holdout` is scored. Result files get a `-dev` / `-test` suffix.
-- **Rate limits**: `eval_run.py ... --pause 7` waits between questions (retrieval tier only), e.g.
-  for a Cohere trial key; the wait is not counted in latency. A rerank run is only valid when
-  `rerank_fallbacks` is 0.
+- **Rate limits**: `eval_run.py ... --pause 7` runs one question at a time with a wait between
+  them, e.g. for a Cohere trial key; the wait is not counted in latency. A rerank run is only valid
+  when `rerank_fallbacks` is 0. Generation results from before 2026-11-28 ran 3 questions at once and
+  did not record `rerank_fallbacks`.
 - **Retrieval tier**: one query embedding per question (plus planner / rerank if on), scoring the
   same `top_k` passages the app receives. The metric is **Hit@k**: the share of questions with at
   least one gold article in the top k (older files call it `recall@k`); MRR is MRR@5.

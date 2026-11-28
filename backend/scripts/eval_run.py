@@ -4,7 +4,7 @@ From backend/:
   .venv/Scripts/python.exe scripts/eval_run.py rag_eval/configs/retrieval/dense-article.json
 Retrieval tier needs only the query embedding (cheap). Generation tier calls the chat model.
 --provisional also scores unreviewed (pending) questions: for tuning only, flagged in the result.
---pause N waits N seconds between questions (retrieval tier), for rate-limited API keys.
+--pause N waits N seconds between questions, one at a time, for rate-limited API keys.
 """
 
 import argparse
@@ -40,17 +40,13 @@ async def main() -> int:
     parser.add_argument(
         "--split", choices=("dev", "test", "holdout"), help="tune on dev, report test and holdout"
     )
-    parser.add_argument(
-        "--pause", type=float, default=0.0, help="seconds between questions (retrieval tier)"
-    )
+    parser.add_argument("--pause", type=float, default=0.0, help="seconds between questions")
     args = parser.parse_args()
 
     config = EvalConfig.load(args.config)
     config.include_pending = config.include_pending or args.provisional
     config.tier = args.tier or config.tier
     config.split = args.split or config.split
-    if args.pause and config.tier != "retrieval":
-        parser.error("--pause supports the retrieval tier only.")
     settings = get_settings()
     questions = load_questions()
     chosen = select_questions(questions, config)
@@ -69,6 +65,7 @@ async def main() -> int:
             provider,
             chosen,
             config.max_output_tokens or settings.chat_max_output_tokens,
+            pause_seconds=args.pause,
         )
     searched = embedder is not None and (config.rag or config.tier == "retrieval")
     collection = collection_name(config.chunk_set, embedder.model) if searched else None

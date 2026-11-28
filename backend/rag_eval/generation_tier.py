@@ -152,14 +152,17 @@ def summarize(rows: list[dict]) -> dict:
 
 async def run_generation_tier(
     config: EvalConfig, retriever: QdrantRetriever, provider, questions, max_tokens: int,
-    concurrency: int = 3,
+    concurrency: int = 3, pause_seconds: float = 0.0,
 ):  # fmt: skip
-    gate = asyncio.Semaphore(concurrency)
+    # A pause is for rate-limited keys, so it also means one question at a time.
+    gate = asyncio.Semaphore(1 if pause_seconds else concurrency)
     numbers = {normalize_doc_number(d.number) for d in corpus_documents(config.chunk_set)}
 
-    async def guarded(q):
+    async def guarded(index, q):
         async with gate:
+            if index and pause_seconds:  # outside the timers, so latency is unchanged
+                await asyncio.sleep(pause_seconds)
             return await _one(config, retriever, provider, q, max_tokens, numbers)
 
-    rows = await asyncio.gather(*(guarded(q) for q in questions))
-    return summarize(rows), rows
+    rows = await asyncio.gather(*(guarded(i, q) for i, q in enumerate(questions)))
+    return {**summarize(rows), **getattr(retriever, "index_info", {})}, rows
