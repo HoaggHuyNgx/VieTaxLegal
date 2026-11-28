@@ -2509,7 +2509,7 @@
       "input_tokens": 7426,
       "output_tokens": 305,
       "answer": "Chưa đủ căn cứ trong các nguồn đã cung cấp để xác định **thuế nhập khẩu hiện nay** đối với ô tô điện có xuất xứ Trung Quốc. Nguồn hiện có chỉ liệt kê một số trường hợp miễn thuế nhập khẩu, không nêu thuế suất dành riêng cho ô tô điện từ Trung Quốc. [3]\n\nMức thuế cụ thể có thể phụ thuộc vào mã hàng và điều kiện áp dụng thuế ưu đãi; tôi chưa thể xác minh mức thuế hiện hành từ các nguồn này. Lưu ý: nội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
-      "refused": null
+      "refused": true
     },
     {
       "id": "q075",
@@ -2574,7 +2574,7 @@
       "input_tokens": 5129,
       "output_tokens": 125,
       "answer": "Các nguồn được cung cấp chưa nêu thời hạn bảo hộ nhãn hiệu, nên chưa đủ căn cứ để xác định thời hạn hoặc xác minh quy định hiện hành.\n\nNội dung chỉ mang tính tham khảo, không thay thế tư vấn pháp lý từ người có chuyên môn.",
-      "refused": null
+      "refused": true
     },
     {
       "id": "h01",

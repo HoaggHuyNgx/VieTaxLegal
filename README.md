@@ -287,9 +287,14 @@ dev split only.
 ¹ A document number or article found neither in the retrieved passages nor in the question. 3
 answers name an article by the law's name only, which cannot be checked automatically.
 
-Both incorrect answers followed a search that missed the gold article. The gate stopped none of the
-4 out-of-corpus questions; whether the model's answers to them count as refusals still has to be
-marked by a person.
+Both incorrect answers followed a search that missed the gold article.
+
+The run also had 4 out-of-corpus questions, and the gate stopped none of them. After seeing the
+results, the project author removed 2 of the 4 from the question set (`q069`, a traffic fine, and
+`q070`, a land-use certificate). The result files still contain all 4, and the question file used in
+the run is the one at commit `3543dea`. A keyword search of the 323 documents found no answer to the
+other 2, and the project author read both answers and marked them as refusals. `SUMMARY.md` shows no
+refusal rate for this run, because the 2 removed questions are unmarked in its result file.
 
 How far these numbers can be trusted:
 
