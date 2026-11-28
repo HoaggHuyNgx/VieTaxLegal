@@ -9,7 +9,7 @@ corpus → Qdrant index → retrieval (dense, sparse or hybrid) → an answer th
 is off by default (`RAG_ENABLED=false`); see [backend/README.md](backend/README.md#ai-and-rag) to
 build the index and turn it on.
 
-This is a graduation thesis project and is still in progress.
+This is a graduation thesis project.
 
 ## Feature status
 

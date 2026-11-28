@@ -130,7 +130,7 @@ const vi = {
           id: 'english',
           question: 'VieTaxLegal có hỗ trợ tiếng Anh không?',
           answer:
-            'Giao diện có cả tiếng Việt và tiếng Anh, chuyển đổi bằng nút VI/EN. Câu trả lời của trợ lý hiện vẫn bằng tiếng Việt, vì với văn bản pháp luật Việt Nam chỉ bản tiếng Việt mới có giá trị pháp lý.',
+            'Có. Giao diện có cả tiếng Việt và tiếng Anh, chuyển đổi bằng nút VI/EN. Trợ lý trả lời theo ngôn ngữ của câu hỏi và giữ nguyên số hiệu văn bản như trong nguồn. Với văn bản pháp luật Việt Nam, chỉ bản tiếng Việt mới có giá trị pháp lý.',
         },
         {
           id: 'security',
@@ -150,11 +150,9 @@ const vi = {
       tagline: 'Trợ lý tra cứu pháp luật cho doanh nghiệp Việt Nam',
       navAria: 'Điều hướng chân trang',
       backToTopAria: 'Lên đầu trang',
-      emailLabel: 'Email: {{address}}',
       links: [
         { id: 'product', label: 'Sản phẩm' },
         { id: 'features', label: 'Tính năng' },
-        { id: 'contact', label: 'Liên hệ' },
       ],
     },
   },

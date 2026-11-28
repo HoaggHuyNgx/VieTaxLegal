@@ -129,7 +129,7 @@ const en = {
           id: 'english',
           question: 'Does VieTaxLegal support English?',
           answer:
-            'The interface is available in both Vietnamese and English — switch with the VI/EN control. The assistant still answers in Vietnamese, because for Vietnamese legal documents only the Vietnamese text carries legal force.',
+            'Yes. The interface is available in both Vietnamese and English — switch with the VI/EN control. The assistant answers in the language of your question and keeps document numbers as in the sources. For Vietnamese legal documents, only the Vietnamese text carries legal force.',
         },
         {
           id: 'security',
@@ -149,11 +149,9 @@ const en = {
       tagline: 'Legal research assistant for Vietnamese businesses',
       navAria: 'Footer navigation',
       backToTopAria: 'Back to top',
-      emailLabel: 'Email: {{address}}',
       links: [
         { id: 'product', label: 'Product' },
         { id: 'features', label: 'Features' },
-        { id: 'contact', label: 'Contact' },
       ],
     },
   },
