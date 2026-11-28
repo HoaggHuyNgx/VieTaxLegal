@@ -64,19 +64,27 @@ def refusal_rate(rows: list[dict]) -> float | None:
     return sum(labels) / len(labels)
 
 
+def _other_verdicts(summary: dict) -> str:
+    if "answer_partial" not in summary:  # not judged
+        return "-"
+    return "/".join(str(summary[f"answer_{v}"]) for v in ("partial", "incorrect", "refused"))
+
+
 def generation_rows(results: list[dict]) -> list[list[str]]:
     rows = []
     for result in (r for r in results if r["meta"]["config"]["tier"] == "generation"):
         s = result["summary"]
         # `.get`: older result files measured references differently and have no such keys.
         rows.append([
-            _label(result), str(s["answered"]), _fmt(s.get("provider_errors")),
+            _label(result), str(s["answered"]), _fmt(s.get("answer_correct_rate")),
+            _other_verdicts(s), _fmt(s.get("provider_errors")),
             _fmt(s.get("truncated_answers")), _fmt(s["citation_precision"]),
             _fmt(s["citation_recall"]), _fmt(s.get("unsupported_reference_rate")),
             _fmt(s.get("unknown_doc_rate")), _fmt(s.get("answers_needing_review")),
             _fmt(s["ooc_no_citation_rate"]), _fmt(refusal_rate(result.get("questions", []))),
             _ms(s["ttft_ms"]), _ms(s.get("end_to_end_ms")),
-            f"{s['input_tokens']}/{s['output_tokens']}", result["meta"].get("date", "-"),
+            f"{s['input_tokens']}/{s['output_tokens']}", _fmt(s.get("rerank_fallbacks")),
+            result["meta"].get("date", "-"),
         ])  # fmt: skip
     return rows
 
@@ -84,10 +92,11 @@ def generation_rows(results: list[dict]) -> list[list[str]]:
 RETRIEVAL_HEADER = ["config", "chunks", "mode", "rerank", "n", "Hit@1", "Hit@3", "Hit@5", "MRR@5",
                     "embed ms p50/p95", "search ms p50/p95", "total ms p50/p95",
                     "date"]  # fmt: skip
-GENERATION_HEADER = ["config", "answered", "errors", "truncated", "cit. precision", "cit. recall",
+GENERATION_HEADER = ["config", "answered", "answer correct", "partial/incorrect/refused",
+                     "errors", "truncated", "cit. precision", "cit. recall",
                      "unsupported ref", "unknown doc", "needs review", "OOC no-cite",
                      "OOC refused (hand)", "TTFT ms p50/p95", "end-to-end ms p50/p95",
-                     "tokens in/out", "date"]  # fmt: skip
+                     "tokens in/out", "rerank fallbacks", "date"]  # fmt: skip
 
 
 def markdown_table(header: list[str], rows: list[list[str]]) -> str:

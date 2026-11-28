@@ -69,6 +69,21 @@ def test_generation_row_shows_errors_truncation_and_date():
     assert _column(result, "date") == "2026-11-26"
 
 
+def test_generation_row_shows_answer_verdicts_and_rerank_fallbacks():
+    judged = _generation([])
+    judged["summary"].update(
+        answer_correct_rate=0.8, answer_partial=6, answer_incorrect=2, answer_refused=0,
+        rerank_fallbacks=0,
+    )  # fmt: skip
+
+    assert _column(judged, "answer correct") == "0.800"
+    assert _column(judged, "partial/incorrect/refused") == "6/2/0"
+    assert _column(judged, "rerank fallbacks") == "0"
+    unrecorded = _generation([])  # never judged, and run before fallbacks were recorded
+    for name in ("answer correct", "partial/incorrect/refused", "rerank fallbacks"):
+        assert _column(unrecorded, name) == "-"
+
+
 def test_refusal_rate_appears_only_once_every_question_is_labelled():
     assert _column(_generation([True, None]), "OOC refused (hand)") == "-"
     assert _column(_generation([True, False, True]), "OOC refused (hand)") == "0.667"
