@@ -1,4 +1,4 @@
-# RAG evaluation summary (2026-11-26)
+# RAG evaluation summary (2026-11-28)
 
 Counts are small (tens of questions): differences of a few points are within noise.
 
@@ -21,18 +21,34 @@ Counts are small (tens of questions): differences of a few points are within noi
 | sparse-article [dev] | article | sparse | - | 41 | 0.439 | 0.805 | 0.878 | 0.622 | 235/270 | 10/19 | 249/283 | 2026-11-26 |
 | sparse-fixed [dev] | fixed | sparse | - | 41 | 0.439 | 0.732 | 0.780 | 0.568 | 235/322 | 5/7 | 240/330 | 2026-11-26 |
 | sparse-s256 [dev] | article_s256 | sparse | - | 41 | 0.390 | 0.780 | 0.878 | 0.583 | 233/298 | 6/10 | 241/304 | 2026-11-26 |
+| hybrid-article-cohere-pro [dev] | article | hybrid | cohere | 41 | 0.707 | 0.902 | 0.902 | 0.801 | 363/623 | 753/909 | 1151/1412 | 2026-11-27 |
+| hybrid-article-cohere [dev] | article | hybrid | cohere | 41 | 0.732 | 0.902 | 0.902 | 0.813 | 364/554 | 749/847 | 1114/1398 | 2026-11-27 |
+| hybrid-vbpl-cohere [dev] | vbpl | hybrid | cohere | 41 | 0.707 | 0.878 | 0.878 | 0.789 | 372/524 | 784/921 | 1175/1383 | 2026-11-27 |
+| hybrid-vbpl-full-cohere-expand [dev] | vbpl | hybrid | cohere | 41 | 0.707 | 0.854 | 0.878 | 0.783 | 340/569 | 874/1319 | 3680/4817 | 2026-11-27 |
+| hybrid-vbpl-full-cohere [dev] | vbpl | hybrid | cohere | 41 | 0.707 | 0.878 | 0.878 | 0.789 | 377/558 | 918/1119 | 3550/4691 | 2026-11-27 |
+| hybrid-vbpl [dev] | vbpl | hybrid | - | 41 | 0.463 | 0.683 | 0.829 | 0.595 | 323/623 | 18/39 | 341/644 | 2026-11-27 |
+| hybrid-vbpl-full-cohere-expand [dev] | vbpl | hybrid | cohere | 41 | 0.732 | 0.927 | 0.927 | 0.825 | 344/557 | 863/1024 | 3969/4373 | 2026-11-28 |
+| hybrid-vbpl-full-cohere-expand [test] | vbpl | hybrid | cohere | 40 | 0.725 | 0.900 | 0.925 | 0.806 | 342/570 | 863/1036 | 3720/4546 | 2026-11-28 |
 
 ## Generation tier
+`answer correct`: an LLM judge compares each answerable question with its gold answer.
+`rerank fallbacks` of `-` in a rerank run: not recorded, so the rerank may have been
+skipped on some questions (rate limit).
 `unsupported ref`: a document number or article that neither the retrieved passages nor
 the question contain. Not proof of fabrication; undefined without retrieval.
 `OOC refused (hand)`: set `refused` on each out-of-corpus row of the result file first.
 
-| config | answered | errors | truncated | cit. precision | cit. recall | unsupported ref | unknown doc | needs review | OOC no-cite | OOC refused (hand) | TTFT ms p50/p95 | end-to-end ms p50/p95 | tokens in/out | date |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| norag [dev] | 47 | 0 | 0 | - | 0.000 | - | 0.362 | 14 | 1.000 | 0.000 | 9653/17828 | 13271/20630 | 8517/80576 | 2026-11-26 |
-| rag-full-incorpus [dev] | 41 | 0 | 0 | 0.690 | 0.890 | 0.000 | 0.024 | 2 | - | - | 1896/4401 | 9061/13435 | 92912/16360 | 2026-11-26 |
-| rag-full-ooc [dev] | 6 | 0 | 0 | - | - | 0.000 | 0.000 | 0 | 0.500 | 1.000 | 1239/2227 | 7866/9507 | 9759/1324 | 2026-11-26 |
-| rag-hybrid-article [dev] | 47 | 0 | 0 | 0.717 | 0.817 | 0.000 | 0.021 | 0 | 0.500 | 1.000 | 1884/3442 | 4273/7493 | 110840/17715 | 2026-11-26 |
+| config | answered | answer correct | partial/incorrect/refused | errors | truncated | cit. precision | cit. recall | unsupported ref | unknown doc | needs review | OOC no-cite | OOC refused (hand) | TTFT ms p50/p95 | end-to-end ms p50/p95 | tokens in/out | rerank fallbacks | date |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| norag [dev] | 47 | 0.512 | 13/6/1 | 0 | 0 | - | 0.000 | - | 0.362 | 14 | 1.000 | 0.000 | 9653/17828 | 13271/20630 | 8517/80576 | - | 2026-11-26 |
+| rag-full-incorpus [dev] | 41 | 0.659 | 11/0/3 | 0 | 0 | 0.690 | 0.890 | 0.000 | 0.024 | 2 | - | - | 1896/4401 | 9061/13435 | 92912/16360 | - | 2026-11-26 |
+| rag-full-ooc [dev] | 6 | - | - | 0 | 0 | - | - | 0.000 | 0.000 | 0 | 0.500 | 1.000 | 1239/2227 | 7866/9507 | 9759/1324 | - | 2026-11-26 |
+| rag-hybrid-article [dev] | 47 | 0.610 | 10/0/6 | 0 | 0 | 0.717 | 0.817 | 0.000 | 0.021 | 0 | 0.500 | 1.000 | 1884/3442 | 4273/7493 | 110840/17715 | - | 2026-11-26 |
+| rag-app-cohere [dev] | 47 | 0.683 | 9/0/4 | 0 | 0 | 0.693 | 0.846 | 0.000 | 0.021 | 2 | 0.500 | - | 2109/4924 | 7745/13770 | 111485/19579 | - | 2026-11-27 |
+| rag-app-cohere-vbpl-expand [dev] | 47 | 0.707 | 8/1/3 | 0 | 0 | 0.694 | 0.837 | 0.000 | 0.021 | 4 | 0.500 | - | 2234/5174 | 7441/11694 | 247983/21660 | - | 2026-11-27 |
+| rag-app-cohere-vbpl [dev] | 47 | 0.707 | 7/0/5 | 0 | 0 | 0.625 | 0.789 | 0.000 | 0.021 | 2 | 0.667 | - | 1884/3848 | 6710/11310 | 119780/17768 | - | 2026-11-27 |
+| rag-app-cohere-vbpl-expand [dev] | 47 | 0.659 | 8/4/2 | 0 | 0 | 0.677 | 0.862 | 0.000 | 0.021 | 4 | 0.667 | - | 2070/4168 | 7815/11312 | 247677/19282 | - | 2026-11-28 |
+| rag-app-cohere-vbpl-expand [test] | 44 | 0.800 | 6/2/0 | 0 | 0 | 0.700 | 0.887 | 0.000 | 0.023 | 3 | 0.500 | - | 2165/4496 | 7845/11876 | 218114/17350 | 0 | 2026-11-28 |
 
 ## Error analysis (retrieval misses)
 
@@ -198,3 +214,63 @@ the question contain. Not proof of fabrication; undefined without retrieval.
 - `q051` [right_doc_wrong_article] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
 - `q029` [right_doc_wrong_article] Tôi là cá nhân cư trú kinh doanh. Tỷ lệ thuế tính trên doanh thu chịu thuế được xác định theo căn cứ nào? -> gold [['nghi-dinh-253-2026-nd-cp', 45]]
 - `h12` [right_doc_wrong_article] Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn? -> gold [['luat-doanh-nghiep-59-2020-qh14', 46]]
+
+### hybrid-article-cohere-pro [dev]
+
+- `h12` [right_doc_wrong_article] Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn? -> gold [['luat-doanh-nghiep-59-2020-qh14', 46]]
+- `q051` [right_doc_wrong_article] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `h11` [right_doc_wrong_article] Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào? -> gold [['luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh', 9]]
+- `q045` [right_doc_wrong_article] Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+
+### hybrid-article-cohere [dev]
+
+- `h12` [right_doc_wrong_article] Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn? -> gold [['luat-doanh-nghiep-59-2020-qh14', 46]]
+- `h11` [right_doc_wrong_article] Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào? -> gold [['luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh', 9]]
+- `q051` [right_doc_wrong_article] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `q045` [right_doc_wrong_article] Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+
+### hybrid-vbpl-cohere [dev]
+
+- `h11` [right_doc_wrong_article] Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào? -> gold [['luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh', 9]]
+- `h12` [right_doc_wrong_article] Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn? -> gold [['luat-doanh-nghiep-59-2020-qh14', 46]]
+- `q051` [right_doc_wrong_article] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `q001` [wrong_document] Doanh nghiệp tôi muốn biết cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế, thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế? -> gold [['luat-quan-ly-thue-108-2025-qh15', 18]]
+- `q045` [right_doc_wrong_article] Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+
+### hybrid-vbpl-full-cohere-expand [dev]
+
+- `q045` [right_doc_wrong_article] Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `h12` [right_doc_wrong_article] Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn? -> gold [['luat-doanh-nghiep-59-2020-qh14', 46]]
+- `q001` [wrong_document] Doanh nghiệp tôi muốn biết cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế, thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế? -> gold [['luat-quan-ly-thue-108-2025-qh15', 18]]
+- `q051` [right_doc_wrong_article] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `h11` [right_doc_wrong_article] Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào? -> gold [['luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh', 9]]
+
+### hybrid-vbpl-full-cohere [dev]
+
+- `q045` [right_doc_wrong_article] Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `q001` [wrong_document] Doanh nghiệp tôi muốn biết cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế, thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế? -> gold [['luat-quan-ly-thue-108-2025-qh15', 18]]
+- `h12` [right_doc_wrong_article] Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn? -> gold [['luat-doanh-nghiep-59-2020-qh14', 46]]
+- `q051` [right_doc_wrong_article] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `h11` [right_doc_wrong_article] Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào? -> gold [['luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh', 9]]
+
+### hybrid-vbpl [dev]
+
+- `q026` [wrong_document] Tôi bán phần vốn góp trong một công ty, bán chứng khoán hoặc chuyển nhượng vốn theo hình thức khác thì khoản thu nào được xếp vào thu nhập chịu thuế thu nhập cá nhân? -> gold [['luat-thue-tncn-109-2025-qh15', 3]]
+- `q001` [wrong_document] Doanh nghiệp tôi muốn biết cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế, thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế? -> gold [['luat-quan-ly-thue-108-2025-qh15', 18]]
+- `h11` [right_doc_wrong_article] Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào? -> gold [['luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh', 9]]
+- `h12` [right_doc_wrong_article] Công ty TNHH có nhiều thành viên thì được phép có tối đa bao nhiêu người góp vốn? -> gold [['luat-doanh-nghiep-59-2020-qh14', 46]]
+- `q051` [wrong_document] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+- `q059` [right_doc_wrong_article] Tôi đăng ký vốn công ty cao hơn số tiền thực góp, đồng thời định giá tài sản đưa vào góp vốn cao hơn giá trị thực thì có vi phạm điều cấm nào không? -> gold [['luat-doanh-nghiep-59-2020-qh14', 16]]
+- `q045` [wrong_document] Công ty tôi còn nợ một phần tiền bảo hiểm xã hội khi nhân viên nghỉ việc. Trong thời gian chưa thu đủ khoản nợ, công ty cần xác nhận quá trình đóng của nhân viên ra sao, và xử lý thế nào khi thu hồi được tiền? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+
+### hybrid-vbpl-full-cohere-expand [dev]
+
+- `h11` [right_doc_wrong_article] Bán hàng hóa dịch vụ thông thường thì chịu thuế giá trị gia tăng ở mức nào? -> gold [['luat-thue-gtgt-vbhn-12-2026-vbhn-vpqh', 9]]
+- `q001` [wrong_document] Doanh nghiệp tôi muốn biết cơ quan nào quy định cụ thể cách xử lý hồ sơ hoàn thuế, thu hồi tiền đã hoàn và dùng tiền hoàn để bù trừ khoản nợ thuế? -> gold [['luat-quan-ly-thue-108-2025-qh15', 18]]
+- `q051` [right_doc_wrong_article] Công ty điều chỉnh tăng mức lương dùng để tính bảo hiểm xã hội cho nhân viên và áp dụng mức mới cho cả những tháng trước đó. Công ty có phải nộp bù phần bảo hiểm xã hội của thời gian đã qua không? -> gold [['nghi-dinh-158-2025-nd-cp', 8]]
+
+### hybrid-vbpl-full-cohere-expand [test]
+
+- `q046` [right_doc_wrong_article] Doanh nghiệp tôi cần phối hợp với những bên nào để tổ chức cuộc họp người lao động, và phải tổ chức bao lâu một lần? -> gold [['nghi-dinh-145-2020-nd-cp', 47]]
+- `q008` [right_doc_wrong_article] Khi doanh nghiệp đã kê khai thuế bằng một loại tiền tệ thì có được nộp thuế bằng loại tiền khác không? -> gold [['luat-quan-ly-thue-108-2025-qh15', 14]]
+- `h05` [right_doc_wrong_article] Nhân viên làm trên một năm rồi nghỉ việc thì được trả khoản tiền gì thêm và tính theo cách nào? -> gold [['bo-luat-lao-dong-vbhn-18-2026-vbhn-vpqh', 46]]

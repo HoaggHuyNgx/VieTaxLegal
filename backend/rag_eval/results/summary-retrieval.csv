@@ -15,3 +15,11 @@ hybrid-s256 [dev],article_s256,hybrid,-,41,0.488,0.707,0.780,0.612,231/258,10/13
 sparse-article [dev],article,sparse,-,41,0.439,0.805,0.878,0.622,235/270,10/19,249/283,2026-11-26
 sparse-fixed [dev],fixed,sparse,-,41,0.439,0.732,0.780,0.568,235/322,5/7,240/330,2026-11-26
 sparse-s256 [dev],article_s256,sparse,-,41,0.390,0.780,0.878,0.583,233/298,6/10,241/304,2026-11-26
+hybrid-article-cohere-pro [dev],article,hybrid,cohere,41,0.707,0.902,0.902,0.801,363/623,753/909,1151/1412,2026-11-27
+hybrid-article-cohere [dev],article,hybrid,cohere,41,0.732,0.902,0.902,0.813,364/554,749/847,1114/1398,2026-11-27
+hybrid-vbpl-cohere [dev],vbpl,hybrid,cohere,41,0.707,0.878,0.878,0.789,372/524,784/921,1175/1383,2026-11-27
+hybrid-vbpl-full-cohere-expand [dev],vbpl,hybrid,cohere,41,0.707,0.854,0.878,0.783,340/569,874/1319,3680/4817,2026-11-27
+hybrid-vbpl-full-cohere [dev],vbpl,hybrid,cohere,41,0.707,0.878,0.878,0.789,377/558,918/1119,3550/4691,2026-11-27
+hybrid-vbpl [dev],vbpl,hybrid,-,41,0.463,0.683,0.829,0.595,323/623,18/39,341/644,2026-11-27
+hybrid-vbpl-full-cohere-expand [dev],vbpl,hybrid,cohere,41,0.732,0.927,0.927,0.825,344/557,863/1024,3969/4373,2026-11-28
+hybrid-vbpl-full-cohere-expand [test],vbpl,hybrid,cohere,40,0.725,0.900,0.925,0.806,342/570,863/1036,3720/4546,2026-11-28
